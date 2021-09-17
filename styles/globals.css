@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -13,4 +17,12 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.selected {
+  @apply text-gray-500 border-b-4 border-blue-500;
+}
+
+.link {
+  @apply text-gray-300 cursor-pointer hover:text-gray-400 pb-3;
 }
