@@ -4,14 +4,15 @@ import { Client } from '@hiveio/dhive';
 
 import axios from 'axios';
 
-import { MarketNav } from '.';
+import { MarketNav, NftCard } from '.';
 import { CoinCard } from '.';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { clientState, marketNavState } from '../atoms';
+import { clientState, marketNavState, nftState } from '../atoms';
 
 export const Market = () => {
   const [_recoilClient, setClientState] = useRecoilState(clientState);
+  const [nfts, setNfts] = useRecoilState(nftState);
   const client = new Client([
     'https://api.deathwing.me/',
     'https://rpc.ecency.com/',
@@ -24,7 +25,14 @@ export const Market = () => {
 
   useEffect(() => {
     setClientState(client);
-    // client.database.call('').then((response) => console.log(response));
+
+    const fetchNfts = async () => {
+      await axios.get('https://token.dlux.io/api/sales').then((response) => {
+        console.log(response);
+        setNfts(response.data.result);
+      });
+    };
+
     const fetchCoins = async () => {
       const { data: hiveData } = await axios.get(
         'https://api.coingecko.com/api/v3/coins/hive',
@@ -55,6 +63,7 @@ export const Market = () => {
 
     if (!coins.length) {
       fetchCoins();
+      fetchNfts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -72,7 +81,10 @@ export const Market = () => {
           <h1 className="text-3xl mx-10 mb-4 mt-10 text-white font-medium">
             NFT
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-10"></div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-10">
+            {nfts &&
+              nfts.map((nft: any) => <NftCard key={nft.item} nft={nft} />)}
+          </div>
         </>
       )}
       {selectedMarket === 'apps' && <h1>Apps screen</h1>}
