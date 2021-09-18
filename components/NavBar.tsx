@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
 
-import { AccountWidget } from './';
-
 import { useRecoilState } from 'recoil';
-import { currentScreenState } from '../atoms/currentScreen';
+import { currentScreenState, userState } from '../atoms';
+
+import { ImCross } from 'react-icons/im';
 
 import { useRouter } from 'next/router';
 
 export const NavBar = () => {
   const [selectedPage, setSelectedPage] = useRecoilState(currentScreenState);
+  const [signing, setSigning] = useState(false);
+  const [user, setUser] = useRecoilState(userState);
   const router = useRouter();
 
   const handleNavClick = (pageName: string) => {
     if (pageName !== '') {
-      console.log(pageName);
       setSelectedPage(pageName);
     } else {
       setSelectedPage('market');
     }
     router.push('/' + pageName);
+  };
+
+  const handleSignIn = () => {
+    setSigning(true);
   };
 
   return (
@@ -49,9 +54,26 @@ export const NavBar = () => {
           Settings
         </p>
       </div>
-      <div>
-        <AccountWidget />
+      <div onClick={handleSignIn} className="flex mr-5 link">
+        <h1>Login</h1>
       </div>
+      {signing && (
+        <div className="absolute left-0 top-0 w-full flex justify-center items-center h-full bg-gray-700 opacity-75 z-40">
+          <button className="m-5 absolute top-0 left-0">
+            <ImCross
+              size={25}
+              color="#fff"
+              opacity={100}
+              onClick={() => setSigning(false)}
+            />
+          </button>
+          <div className="">
+            <div className="rounded-xl p-5 bg-black">
+              <h1>To be done</h1>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
