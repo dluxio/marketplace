@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { coinState } from '../atoms';
-import { useRecoilState } from 'recoil';
+import { Client } from '@hiveio/dhive';
 
 import axios from 'axios';
 
 import { MarketNav } from '.';
 import { CoinCard } from '.';
 
+import { useRecoilValue } from 'recoil';
+import { marketNavState } from '../atoms';
+
 export const Market = () => {
-  const [coins, setCoins] = useRecoilState<any>(coinState);
+  const client = new Client('');
+  const selectedMarket = useRecoilValue(marketNavState);
+  const [coins, setCoins] = useState<any>([]);
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -49,10 +53,19 @@ export const Market = () => {
   return (
     <div className="w-full h-full">
       <MarketNav />
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 flex-grow mx-10">
-        {coins &&
-          coins.map((coin: any) => <CoinCard key={coin.id} coin={coin} />)}
-      </div>
+      {selectedMarket === 'exchange' && (
+        <>
+          <h1 className="text-3xl mx-10 my-4 text-white font-medium">TOKENS</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-10">
+            {coins &&
+              coins.map((coin: any) => <CoinCard key={coin.id} coin={coin} />)}
+          </div>
+          <h1 className="text-3xl mx-10 mb-4 mt-10 text-white font-medium">
+            NFT
+          </h1>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-10"></div>
+        </>
+      )}
     </div>
   );
 };

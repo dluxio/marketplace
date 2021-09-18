@@ -23,6 +23,7 @@ export const NavBar = () => {
   };
 
   const handleSignIn = () => {
+    // TODO: Check hive accounts, select found account
     setSigning(true);
   };
 

@@ -5,11 +5,6 @@ export const currentScreenState = atom({
   default: 'market',
 });
 
-export const coinState = atom({
-  key: 'coinState',
-  default: [],
-});
-
 export const userState = atom({
   key: 'userState',
   default: {},
