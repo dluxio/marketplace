@@ -1,25 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { AccountWidget } from './';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { currentScreenState, userState } from '../atoms';
 
-import { useRecoilState } from 'recoil';
-import { currentScreenState } from '../atoms/currentScreen';
+import { Login } from './Login';
 
 import { useRouter } from 'next/router';
 
 export const NavBar = () => {
   const [selectedPage, setSelectedPage] = useRecoilState(currentScreenState);
+  const [signing, setSigning] = useState(false);
+  const user: any = useRecoilValue(userState);
   const router = useRouter();
 
   const handleNavClick = (pageName: string) => {
     if (pageName !== '') {
-      console.log(pageName);
       setSelectedPage(pageName);
     } else {
       setSelectedPage('market');
     }
     router.push('/' + pageName);
   };
+
+  const handleSignIn = () => {
+    // TODO: Check hive accounts, select found account
+    setSigning(true);
+  };
+
+  useEffect(() => {
+    if (user) {
+      setSigning(false);
+    }
+  }, [user]);
 
   return (
     <div className="bg-black text-white px-5 font-normal py-3 pb-0 flex justify-between">
@@ -49,9 +61,17 @@ export const NavBar = () => {
           Settings
         </p>
       </div>
-      <div>
-        <AccountWidget />
-      </div>
+      {user && (
+        <div className="flex">
+          <h1>{user.name}</h1>
+        </div>
+      )}
+      {!user && (
+        <div onClick={handleSignIn} className="flex mr-5 link">
+          <h1>Login</h1>
+        </div>
+      )}
+      {signing && <Login handleClose={() => setSigning(false)} />}
     </div>
   );
 };
