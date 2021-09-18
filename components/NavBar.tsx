@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentScreenState, userState } from '../atoms';
 
-import { ImCross } from 'react-icons/im';
+import { Login } from './Login';
 
 import { useRouter } from 'next/router';
 
 export const NavBar = () => {
   const [selectedPage, setSelectedPage] = useRecoilState(currentScreenState);
   const [signing, setSigning] = useState(false);
-  const [user, setUser] = useRecoilState(userState);
+  const user: any = useRecoilValue(userState);
   const router = useRouter();
 
   const handleNavClick = (pageName: string) => {
@@ -26,6 +26,12 @@ export const NavBar = () => {
     // TODO: Check hive accounts, select found account
     setSigning(true);
   };
+
+  useEffect(() => {
+    if (user) {
+      setSigning(false);
+    }
+  }, [user]);
 
   return (
     <div className="bg-black text-white px-5 font-normal py-3 pb-0 flex justify-between">
@@ -55,26 +61,17 @@ export const NavBar = () => {
           Settings
         </p>
       </div>
-      <div onClick={handleSignIn} className="flex mr-5 link">
-        <h1>Login</h1>
-      </div>
-      {signing && (
-        <div className="absolute left-0 top-0 w-full flex justify-center items-center h-full bg-gray-700 opacity-75 z-40">
-          <button className="m-5 absolute top-0 left-0">
-            <ImCross
-              size={25}
-              color="#fff"
-              opacity={100}
-              onClick={() => setSigning(false)}
-            />
-          </button>
-          <div className="">
-            <div className="rounded-xl p-5 bg-black">
-              <h1>To be done</h1>
-            </div>
-          </div>
+      {user && (
+        <div className="flex">
+          <h1>{user.name}</h1>
         </div>
       )}
+      {!user && (
+        <div onClick={handleSignIn} className="flex mr-5 link">
+          <h1>Login</h1>
+        </div>
+      )}
+      {signing && <Login handleClose={() => setSigning(false)} />}
     </div>
   );
 };

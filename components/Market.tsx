@@ -7,15 +7,24 @@ import axios from 'axios';
 import { MarketNav } from '.';
 import { CoinCard } from '.';
 
-import { useRecoilValue } from 'recoil';
-import { marketNavState } from '../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { clientState, marketNavState } from '../atoms';
 
 export const Market = () => {
-  const client = new Client('');
+  const [_recoilClient, setClientState] = useRecoilState(clientState);
+  const client = new Client([
+    'https://api.deathwing.me/',
+    'https://rpc.ecency.com/',
+    'https://hived.emre.sh/',
+    'https://rpc.ausbit.dev/',
+    'https://api.hive.blog/',
+  ]);
   const selectedMarket = useRecoilValue(marketNavState);
   const [coins, setCoins] = useState<any>([]);
 
   useEffect(() => {
+    setClientState(client);
+    // client.database.call('').then((response) => console.log(response));
     const fetchCoins = async () => {
       const { data: hiveData } = await axios.get(
         'https://api.coingecko.com/api/v3/coins/hive',
@@ -66,6 +75,8 @@ export const Market = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-10"></div>
         </>
       )}
+      {selectedMarket === 'apps' && <h1>Apps screen</h1>}
+      {selectedMarket === 'news' && <h1>News screen</h1>}
     </div>
   );
 };
