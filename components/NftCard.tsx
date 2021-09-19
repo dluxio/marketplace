@@ -16,7 +16,7 @@ export const NftCard = ({ nft }: NftCardProp) => {
     fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then((response) => response.text())
       .then((data) => {
-        const code = `(//${data})("${nft.uid}")`;
+        const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
         document.getElementById(`image-${nft.set}-${nft.uid}`)!.innerHTML = SVG;
       });
