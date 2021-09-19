@@ -3,13 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../atoms';
 
+import Image from 'next/image';
+
 import axios from 'axios';
 
 const Inventory = () => {
   //TODO: fix up the types in this entire project
   const user: any = useRecoilValue(userState);
   const [inventoryNFTs, setInventoryNFTs] = useState([]);
-  const [isLogged, setIsLogged] = useState(user === null ? false : true);
+  const isLogged = user === null ? false : true;
 
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -25,6 +27,7 @@ const Inventory = () => {
     };
 
     fetchNFTs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -32,7 +35,14 @@ const Inventory = () => {
       {isLogged ? (
         <div>
           {inventoryNFTs.map((nft: any) => {
-            return <h1 key={nft.item}>{nft.item}</h1>;
+            const image = `https://ipfs.io/ipfs/QmPsxgySUZibuojuUWCMQJpT2uZhijY4Cf7tuJKR8gpZqq?${nft.item}`;
+            console.log(image);
+            return (
+              <div key={nft.item}>
+                <h1>{nft.item}</h1>
+                <Image src={image} alt="image" width={35} height={35} />
+              </div>
+            );
           })}
         </div>
       ) : (
