@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import objectSupport from 'dayjs/plugin/objectSupport';
 dayjs.extend(objectSupport);
 
+import { setColors } from '../constants';
+
 type NftCardProp = {
   nft: any;
 };
@@ -20,15 +22,17 @@ export const NftCard = ({ nft }: NftCardProp) => {
   }, []);
 
   return (
-    <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl px-2 py-4 text-white flex flex-col">
+    <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white flex flex-col">
       {time >= 0 ? (
         <>
-          <h1 className="text-center">
+          <h1
+            className="text-center w-full rounded-t-xl"
+            style={{ backgroundColor: setColors[set] }}
+          >
             {new Date(time * 1000).toISOString().substr(11, 8)}
           </h1>
-          <div>
+          <div className="px-2 py-4">
             <h1 className="text-2xl text-center">item: {name}</h1>
-            <h1 className="text-2xl text-center">set: {set}</h1>
           </div>
         </>
       ) : (
