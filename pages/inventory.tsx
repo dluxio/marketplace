@@ -35,12 +35,9 @@ const Inventory = () => {
       {isLogged ? (
         <div>
           {inventoryNFTs.map((nft: any) => {
-            const image = `https://ipfs.io/ipfs/QmPsxgySUZibuojuUWCMQJpT2uZhijY4Cf7tuJKR8gpZqq?${nft.item}`;
-            console.log(image);
             return (
-              <div key={nft.item}>
-                <h1>{nft.item}</h1>
-                <Image src={image} alt="image" width={35} height={35} />
+              <div key={`${nft.uid}_${nft.set}`}>
+                <h1>{nft.uid}</h1>
               </div>
             );
           })}

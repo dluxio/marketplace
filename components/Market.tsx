@@ -30,7 +30,6 @@ export const Market = () => {
 
     const fetchNfts = async () => {
       await axios.get('https://token.dlux.io/api/set/dlux').then((response) => {
-        console.log(response);
         setNfts(response.data.result);
       });
     };
