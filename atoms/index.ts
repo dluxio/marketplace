@@ -10,6 +10,11 @@ export const userState = atom({
   default: null,
 });
 
+export const inventoryNavState = atom({
+  key: 'inventoryNavState',
+  default: 'tokens',
+});
+
 export const marketNavState = atom({
   key: 'marketNavState',
   default: 'exchange',
@@ -23,9 +28,4 @@ export const clientState = atom({
 export const nftState = atom({
   key: 'nftListingState',
   default: [],
-});
-
-export const inventoryNavState = atom({
-  key: 'inventoryNavState',
-  default: 'tokens',
 });

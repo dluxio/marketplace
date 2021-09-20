@@ -3,17 +3,23 @@ import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userState, inventoryNavState } from '../atoms';
 
-import { InventoryItemCard, InventoryNav } from '../components';
+import { InventoryItemCard, InventoryNav, NftDetails } from '../components';
 
 import axios from 'axios';
-import { NftCard } from '../components';
+import { useRouter } from 'next/router';
 
 const Inventory = () => {
-  //TODO: fix up the types in this entire project
+  const router = useRouter();
   const user: any = useRecoilValue(userState);
   const inventoryPage = useRecoilValue(inventoryNavState);
+  const [nftDetail, setNftDetail] = useState({});
   const [inventoryNFTs, setInventoryNFTs] = useState([]);
   const isLogged = user === null ? false : true;
+
+  const handleNftClick = (nft: any) => {
+    router.push('#details');
+    setNftDetail(nft);
+  };
 
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -32,22 +38,40 @@ const Inventory = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (inventoryNFTs.length) {
+      setNftDetail(inventoryNFTs[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inventoryNFTs]);
+
   return (
     <div>
       <InventoryNav />
       {isLogged ? (
         <div>
           {inventoryPage === 'nft' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-4 w-4/5 gap-4 mx-10">
-              {inventoryNFTs.map((nft: any) => {
-                return (
-                  <InventoryItemCard key={`${nft.set}_${nft.uid}`} nft={nft} />
-                );
-              })}
+            <div className="flex flex-col sm:flex-row">
+              <div className="grid grid-cols-1 sm:grid-cols-4 w-3/4 gap-4 mx-10">
+                {inventoryNFTs.map((nft: any) => {
+                  return (
+                    <InventoryItemCard
+                      key={`${nft.set}_${nft.uid}`}
+                      nft={nft}
+                      onClick={() => {
+                        handleNftClick(nft);
+                      }}
+                    />
+                  );
+                })}
+              </div>
+              <div id="details" className="w-full">
+                <NftDetails nft={nftDetail} />
+              </div>
             </div>
           ) : (
             <div>
-              <h1>Hello</h1>
+              <h1>To be done</h1>
             </div>
           )}
         </div>
