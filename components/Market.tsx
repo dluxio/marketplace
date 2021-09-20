@@ -13,6 +13,8 @@ import { clientState, marketNavState, nftState } from '../atoms';
 export const Market = () => {
   const [_recoilClient, setClientState] = useRecoilState(clientState);
   const [nfts, setNfts] = useRecoilState(nftState);
+  const [forListingNFT, setForListingNFT] = useState([]);
+
   const client = new Client([
     'https://api.deathwing.me/',
     'https://rpc.ecency.com/',
@@ -27,8 +29,7 @@ export const Market = () => {
     setClientState(client);
 
     const fetchNfts = async () => {
-      await axios.get('https://token.dlux.io/api/sales').then((response) => {
-        console.log(response);
+      await axios.get('https://token.dlux.io/api/set/dlux').then((response) => {
         setNfts(response.data.result);
       });
     };
@@ -68,6 +69,10 @@ export const Market = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    setForListingNFT(nfts.filter((nft: any) => nft.owner === 'ls'));
+  }, [nfts]);
+
   return (
     <div className="w-full h-full">
       <MarketNav />
@@ -82,8 +87,10 @@ export const Market = () => {
             NFT
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-10">
-            {nfts &&
-              nfts.map((nft: any) => <NftCard key={nft.item} nft={nft} />)}
+            {forListingNFT &&
+              forListingNFT.map((nft: any) => (
+                <NftCard key={`${nft.set}_${nft.uid}`} nft={nft} />
+              ))}
           </div>
         </>
       )}
