@@ -51,10 +51,10 @@ const Inventory = () => {
       {isLogged ? (
         <div>
           {inventoryPage === 'nft' ? (
-            <div className="flex flex-col sm:flex-row">
-              <div className="grid grid-cols-1 sm:grid-cols-4 w-3/4 gap-4 mx-10">
-                {inventoryNFTs.map((nft: any) => {
-                  return (
+            <div className="flex h-auto flex-col sm:flex-row">
+              <div className="w-full">
+                <div className="grid grid-cols-1 grid-row-auto sm:grid-cols-4 w-3/4 gap-4 mx-10">
+                  {inventoryNFTs.map((nft: any) => (
                     <InventoryItemCard
                       key={`${nft.set}_${nft.uid}`}
                       nft={nft}
@@ -62,8 +62,8 @@ const Inventory = () => {
                         handleNftClick(nft);
                       }}
                     />
-                  );
-                })}
+                  ))}
+                </div>
               </div>
               <div id="details" className="w-full">
                 <NftDetails nft={nftDetail} />

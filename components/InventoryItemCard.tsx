@@ -21,7 +21,7 @@ export const InventoryItemCard = ({ nft, onClick }: InventoryNFTProps) => {
   return (
     <div
       onClick={onClick}
-      className="p-5 bg-gray-600 rounded-xl border-gray-700 border-4 cursor-pointer"
+      className="p-3 bg-gray-600 rounded-xl border-gray-700 border-4 cursor-pointer"
     >
       <div id={`image-${nft.set}-${nft.uid}`}></div>
     </div>
