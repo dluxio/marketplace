@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
 import { useRecoilValue } from 'recoil';
-import { userState } from '../atoms';
+import { userState, inventoryNavState } from '../atoms';
 
-import Image from 'next/image';
+import { InventoryItemCard, InventoryNav } from '../components';
 
 import axios from 'axios';
+import { NftCard } from '../components';
 
 const Inventory = () => {
   //TODO: fix up the types in this entire project
   const user: any = useRecoilValue(userState);
+  const inventoryPage = useRecoilValue(inventoryNavState);
   const [inventoryNFTs, setInventoryNFTs] = useState([]);
   const isLogged = user === null ? false : true;
 
@@ -32,15 +34,22 @@ const Inventory = () => {
 
   return (
     <div>
+      <InventoryNav />
       {isLogged ? (
         <div>
-          {inventoryNFTs.map((nft: any) => {
-            return (
-              <div key={`${nft.uid}_${nft.set}`}>
-                <h1>{nft.uid}</h1>
-              </div>
-            );
-          })}
+          {inventoryPage === 'nft' ? (
+            <div className="grid grid-cols-1 sm:grid-cols-4 w-4/5 gap-4 mx-10">
+              {inventoryNFTs.map((nft: any) => {
+                return (
+                  <InventoryItemCard key={`${nft.set}_${nft.uid}`} nft={nft} />
+                );
+              })}
+            </div>
+          ) : (
+            <div>
+              <h1>Hello</h1>
+            </div>
+          )}
         </div>
       ) : (
         <h1>Please log in</h1>

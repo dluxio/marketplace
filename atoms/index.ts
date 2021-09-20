@@ -24,3 +24,8 @@ export const nftState = atom({
   key: 'nftListingState',
   default: [],
 });
+
+export const inventoryNavState = atom({
+  key: 'inventoryNavState',
+  default: 'tokens',
+});

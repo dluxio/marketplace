@@ -12,7 +12,6 @@ type NftCardProp = {
 
 export const NftCard = ({ nft }: NftCardProp) => {
   useEffect(() => {
-    console.log(nft);
     fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then((response) => response.text())
       .then((data) => {
