@@ -49,16 +49,16 @@ export const NavBar = () => {
           Inventory
         </p>
         <p
-          className={`${selectedPage === 'tools' && 'selected'} link`}
-          onClick={() => handleNavClick('tools')}
+          className={`${selectedPage === 'auction' && 'selected'} link`}
+          onClick={() => handleNavClick('auction')}
         >
-          Tools
+          Auction house
         </p>
         <p
-          className={`${selectedPage === 'settings' && 'selected'} link`}
-          onClick={() => handleNavClick('settings')}
+          className={`${selectedPage === 'listings' && 'selected'} link`}
+          onClick={() => handleNavClick('listings')}
         >
-          Settings
+          Listings
         </p>
       </div>
       {user && (

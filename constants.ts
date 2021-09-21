@@ -1,3 +1,3 @@
 export const setColors: any = {
-  dlux: '#ADD8E6',
+  dlux: '#4169e1',
 };

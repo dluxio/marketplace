@@ -3,7 +3,7 @@ import React from 'react';
 const Settings = () => {
   return (
     <div>
-      <h1>Settings page</h1>
+      <h1>Listings</h1>
     </div>
   );
 };
