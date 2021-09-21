@@ -86,7 +86,7 @@ export const Market = () => {
           <h1 className="text-3xl mx-10 mb-4 mt-10 text-white font-medium">
             NFT
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-10">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mx-10 my-3">
             {forListingNFT &&
               forListingNFT.map((nft: any) => (
                 <NftCard key={`${nft.set}_${nft.uid}`} nft={nft} />
