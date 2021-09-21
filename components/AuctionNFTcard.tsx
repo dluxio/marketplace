@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { setColors } from '../constants';
 import { Countdown } from './Countdown';
 
+import { GiTakeMyMoney } from 'react-icons/gi';
+
 type AuctionCardProps = {
   nft: any;
 };
@@ -35,10 +37,11 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
       </div>
       <div className="px-2 py-4 w-full flex justify-center">
         <button
-          className="px-6 py-2 rounded-xl"
+          className="px-6 py-2 rounded-xl flex items-center gap-2"
           style={{ backgroundColor: setColors[nft.set] }}
         >
           Bid
+          <GiTakeMyMoney />
         </button>
       </div>
     </div>

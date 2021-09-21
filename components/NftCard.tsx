@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import objectSupport from 'dayjs/plugin/objectSupport';
 dayjs.extend(objectSupport);
 
+import { FaMoneyBillAlt } from 'react-icons/fa';
+
 import { setColors } from '../constants';
 
 type NftCardProp = {
@@ -40,10 +42,11 @@ export const NftCard = ({ nft }: NftCardProp) => {
       </div>
       <div className="px-2 py-4 w-full flex justify-center">
         <button
-          className="px-6 py-2 rounded-xl"
+          className="px-6 py-2 rounded-xl flex items-center gap-2"
           style={{ backgroundColor: setColors[nft.set] }}
         >
           Buy
+          <FaMoneyBillAlt />
         </button>
       </div>
     </div>
