@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@hiveio/dhive": "^1.1.0",
     "@hiveio/hive-js": "^2.0.4",
     "axios": "^0.21.4",
     "coingecko-api": "^1.0.10",

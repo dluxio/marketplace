@@ -1,33 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
-import { Client } from '@hiveio/dhive';
-
 import axios from 'axios';
 
 import { MarketNav, NftCard } from '.';
 import { CoinCard } from '.';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { clientState, marketNavState, nftState } from '../atoms';
+import { marketNavState, nftState } from '../atoms';
 
 export const Market = () => {
-  const [_recoilClient, setClientState] = useRecoilState(clientState);
   const [nfts, setNfts] = useRecoilState(nftState);
   const [forListingNFT, setForListingNFT] = useState([]);
 
-  const client = new Client([
-    'https://api.deathwing.me/',
-    'https://rpc.ecency.com/',
-    'https://hived.emre.sh/',
-    'https://rpc.ausbit.dev/',
-    'https://api.hive.blog/',
-  ]);
   const selectedMarket = useRecoilValue(marketNavState);
   const [coins, setCoins] = useState<any>([]);
 
   useEffect(() => {
-    setClientState(client);
-
     const fetchNfts = async () => {
       await axios.get('https://token.dlux.io/api/set/dlux').then((response) => {
         setNfts(response.data.result);

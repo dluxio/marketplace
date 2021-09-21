@@ -76,7 +76,9 @@ const Inventory = () => {
           )}
         </div>
       ) : (
-        <h1>Please log in</h1>
+        <div className="flex justify-center items-center h-80 w-full text-white text-2xl">
+          <h1>Please log in</h1>
+        </div>
       )}
     </div>
   );

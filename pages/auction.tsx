@@ -3,7 +3,7 @@ import React from 'react';
 const Tools = () => {
   return (
     <div>
-      <h1>Tools page</h1>
+      <h1>Auction house</h1>
     </div>
   );
 };
