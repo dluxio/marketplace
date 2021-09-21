@@ -61,20 +61,19 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
   }, [nft]);
 
   return (
-    <div className="w-full text-center">
-      <div id={`${nft.set}-${nft.uid}-details`} className="w-1/2 mx-auto"></div>
-      <h1 className="text-white text-2xl font-bold mt-5">{nft.uid}</h1>
-      <h2 className="text-white text-xl font-semibold">{nftDetails?.title}</h2>
+    <div className="w-full text-center bg-gray-600 py-10 rounded-xl border-4 border-gray-700">
+      <div id={`${nft.set}-${nft.uid}-details`} className="w-1/3 mx-auto"></div>
+      <h1 className="text-white text-xl font-bold mt-5">{nft.uid}</h1>
+      <h2 className="text-white text-md font-semibold">{nftDetails?.title}</h2>
       <p className="text-white text-md font-semibold mt-5">
-        For more info, visit:
-        <br />
+        For more info, visit:{'    '}
         <a
           target="_blank"
           rel="noreferrer"
           href={'https://peakd.com' + nftDetails?.url}
-          className="text-gray-400 text-md font-semibold hover:text-gray-700"
+          className="text-gray-400 text-md font-semibold hover:text-gray-500"
         >
-          {nftDetails?.url}
+          this link
         </a>
       </p>
       <div className="m-5 flex flex-col justify-center gap-5 sm:mx-48">

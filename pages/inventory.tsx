@@ -49,9 +49,9 @@ const Inventory = () => {
     <div>
       <InventoryNav />
       {isLogged ? (
-        <div>
+        <div className="p-10 sm:p-0">
           {inventoryPage === 'nft' ? (
-            <div className="flex h-auto flex-col sm:flex-row">
+            <div className="flex h-auto flex-col gap-8 sm:gap-0 sm:flex-row">
               <div className="w-full">
                 <div className="grid grid-cols-1 grid-row-auto sm:grid-cols-4 w-3/4 gap-4 mx-10">
                   {inventoryNFTs.map((nft: any) => (
@@ -65,7 +65,7 @@ const Inventory = () => {
                   ))}
                 </div>
               </div>
-              <div id="details" className="w-full">
+              <div id="details" className="w-full mx-auto sm:mx-10">
                 <NftDetails nft={nftDetail} />
               </div>
             </div>
