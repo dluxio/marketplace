@@ -5,6 +5,8 @@ import axios from 'axios';
 import { MarketNav, NftCard } from '.';
 import { CoinCard } from '.';
 
+import Link from 'next/link';
+
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { marketNavState, nftState } from '../atoms';
 
@@ -71,9 +73,11 @@ export const Market = () => {
             {coins &&
               coins.map((coin: any) => <CoinCard key={coin.id} coin={coin} />)}
           </div>
-          <h1 className="text-3xl mx-10 mb-4 mt-10 text-white font-medium">
-            NFT
-          </h1>
+          <Link href="/listings" passHref={true}>
+            <h1 className="cursor-pointer text-3xl mx-10 mb-4 mt-10 text-white font-medium">
+              NFT
+            </h1>
+          </Link>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mx-10 my-3">
             {forListingNFT &&
               forListingNFT.map((nft: any) => (
