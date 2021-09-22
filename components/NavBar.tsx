@@ -33,6 +33,17 @@ export const NavBar = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (router.pathname === '/') {
+      setSelectedPage('market');
+    } else {
+      const url = router.pathname.split('/')[1];
+      setSelectedPage(url);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="bg-black text-white px-5 font-normal py-3 pb-0 flex justify-between">
       <div className="flex gap-10 flex-grow justify-center">
