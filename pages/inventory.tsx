@@ -7,6 +7,7 @@ import { InventoryItemCard, InventoryNav, NftDetails } from '../components';
 
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { MintTokenScreen } from '../components/MintTokenScreen';
 
 const Inventory = () => {
   const router = useRouter();
@@ -50,8 +51,9 @@ const Inventory = () => {
       <InventoryNav />
       {isLogged ? (
         <div className="p-10 sm:p-0">
-          {inventoryPage === 'nft' ? (
-            <div className="flex h-auto flex-col gap-8 sm:gap-0 sm:flex-row">
+          {inventoryPage === 'mint' && <MintTokenScreen />}
+          {inventoryPage === 'nft' && (
+            <div className="flex h-auto flex-col gap-8 sm:flex-row">
               <div className="w-full">
                 <div className="grid grid-cols-1 grid-row-auto sm:grid-cols-4 w-3/4 gap-4 mx-10">
                   {inventoryNFTs.map((nft: any) => (
@@ -69,7 +71,8 @@ const Inventory = () => {
                 <NftDetails nft={nftDetail} />
               </div>
             </div>
-          ) : (
+          )}
+          {inventoryPage === 'tokens' && (
             <div>
               <h1>To be done</h1>
             </div>
