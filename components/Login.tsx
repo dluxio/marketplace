@@ -47,11 +47,11 @@ export const Login = ({ handleClose }: LoginProps) => {
   };
 
   return (
-    <div className="absolute left-0 top-0 w-full flex justify-center items-center h-full bg-gray-700 opacity-75 z-40">
+    <div className="absolute left-0 top-0 w-full flex justify-center items-center h-full bg-gray-700 bg-opacity-75 z-40">
       <button className="m-5 absolute top-0 left-0">
         <ImCross size={25} color="#fff" opacity={100} onClick={handleClose} />
       </button>
-      <div className="">
+      <div>
         <div className="rounded-xl p-5 bg-black">
           <h1 className="text-xl text-center mb-5">Input your username</h1>
           <input

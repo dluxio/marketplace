@@ -22,11 +22,6 @@ export const NavBar = () => {
     router.push('/' + pageName);
   };
 
-  const handleSignIn = () => {
-    // TODO: Check hive accounts, select found account
-    setSigning(true);
-  };
-
   useEffect(() => {
     if (user) {
       setSigning(false);
@@ -78,7 +73,7 @@ export const NavBar = () => {
         </div>
       )}
       {!user && (
-        <div onClick={handleSignIn} className="flex mr-5 link">
+        <div onClick={() => setSigning(true)} className="flex mr-5 link">
           <h1>Login</h1>
         </div>
       )}
