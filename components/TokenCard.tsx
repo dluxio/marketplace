@@ -6,7 +6,7 @@ import { ImArrowRight2 } from 'react-icons/im';
 import { toBase64 } from '../utils/base64';
 
 type TokenCardProps = {
-  token: any;
+  token?: any;
   set: string;
   script: string;
 };

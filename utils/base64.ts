@@ -9,9 +9,9 @@ export const toBase64 = (number: number) => {
   )
     throw 'The input is not valid';
   if (number < 0) throw "Can't represent negative numbers now";
-  var rixit;
-  var residual = Math.floor(number);
-  var result = '';
+  let rixit;
+  let residual = Math.floor(number);
+  let result = '';
   while (true) {
     rixit = residual % 64;
     result = _Rixits.charAt(rixit) + result;
