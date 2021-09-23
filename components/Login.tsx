@@ -36,7 +36,6 @@ export const Login = ({ handleClose }: LoginProps) => {
         (err: any, result: any) => {
           if (err) throw new Error(err);
           if (result !== []) {
-            console.log(result);
             setUser(result[0]);
           } else {
             console.log('User not found');

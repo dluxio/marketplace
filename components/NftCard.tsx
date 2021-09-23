@@ -33,7 +33,6 @@ export const NftCard = ({ nft }: NftCardProp) => {
       >
         {nft.uid}
       </h1>
-      {/* {svg && <Image src={svg} alt="image" width={35} height={35} />} */}
       <div className="py-5">
         <div
           id={`image-${nft.set}-${nft.uid}`}
