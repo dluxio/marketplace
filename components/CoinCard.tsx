@@ -2,12 +2,18 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import { tokenColors } from '../constants';
+
 type CoinCardProps = {
   coin: any;
 };
 export const CoinCard = ({ coin }: CoinCardProps) => {
+  console.log(coin);
   return (
-    <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl px-2 py-3 text-white">
+    <div
+      className="border shadow-xl h-auto border-transparent rounded-xl px-2 py-3 text-white"
+      style={{ backgroundColor: tokenColors[coin.id] }}
+    >
       <div className="flex justify-between items-center mr-4">
         <div className="flex items-center gap-8 ml-4">
           <Image
@@ -23,8 +29,8 @@ export const CoinCard = ({ coin }: CoinCardProps) => {
           <h1
             className={`${
               coin.market_data.price_change_percentage_1h_in_currency.usd > 0
-                ? 'text-green-500'
-                : 'text-red-500'
+                ? 'text-green-400'
+                : 'text-red-400'
             }`}
           >
             {coin.market_data.price_change_percentage_1h_in_currency.usd}%

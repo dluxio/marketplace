@@ -16,7 +16,7 @@ const Settings = () => {
   return (
     <div className="mx-10 my-4 text-white font-medium">
       <h1 className="text-3xl">Listings</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-7 gap-8 my-5">
+      <div className="grid grid-cols-1 sm:grid-cols-6 gap-8 my-5">
         {listings &&
           listings.map((nft: any) => <NftCard key={nft.uid} nft={nft} />)}
       </div>
