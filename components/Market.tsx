@@ -49,7 +49,7 @@ export const Market = () => {
           },
         }
       );
-      setCoins([hiveData, hbdData, ethData]);
+      setCoins([hiveData, ethData, hbdData]);
     };
 
     if (!coins.length) {

@@ -29,7 +29,9 @@ export const NavBar = () => {
           Market
         </p>
         <p
-          className={`${url === 'inventory' && 'selected'} link`}
+          className={`${
+            (url === 'inventory' || url === 'create-nft') && 'selected'
+          } link`}
           onClick={() => router.push('/inventory')}
         >
           Inventory
