@@ -47,10 +47,8 @@ const CrtateNFT = () => {
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                console.log(values);
-                setSubmitting(false);
-              }, 400);
+              console.log(values);
+              setSubmitting(false);
             }}
           >
             {({
@@ -120,6 +118,12 @@ const CrtateNFT = () => {
                     />
                   </div>
                 </div>
+                <button
+                  type="submit"
+                  className="rounded-lg m-3 border border-white py-2 px-5 bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-700"
+                >
+                  Submit
+                </button>
               </form>
             )}
           </Formik>
