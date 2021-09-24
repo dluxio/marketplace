@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Formik } from 'formik';
 import { FormInput } from '../components/FormInput';
 
+import {
+  keychain as hive_keychain,
+  isKeychainInstalled,
+  hasKeychainBeenUsed,
+} from '@hiveio/keychain';
+
 const CrtateNFT = () => {
+  const [form, setForm] = useState({
+    name: '',
+    type: 1 || 2,
+    script: '',
+    permlink: '',
+    start: '',
+    end: '',
+    royalty: '',
+    handling: 'svg',
+    max_fee: 1,
+    bond: 1,
+  });
+
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
+
   return (
     <div className="overflow-hidden">
       <div className="flex flex-grow flex-1 justify-center items-center mt-20">
@@ -23,14 +46,8 @@ const CrtateNFT = () => {
               bond: 1,
             }}
             validate={({ name, script, permlink, start, end, royalty }) => {
-              const errors = {
-                name: '',
-                script: '',
-                permlink: '',
-                start: '',
-                end: '',
-                royalty: '',
-              };
+              const errors: any = {};
+
               if (!name) {
                 errors.name = 'Required';
               } else if (!script) {
@@ -44,10 +61,12 @@ const CrtateNFT = () => {
               } else if (!royalty) {
                 errors.royalty = 'Required';
               }
-              return errors;
+
+              if (errors) return errors;
+              return {};
             }}
             onSubmit={(values, { setSubmitting }) => {
-              console.log(values);
+              setForm(values);
               setSubmitting(false);
             }}
           >
@@ -58,6 +77,7 @@ const CrtateNFT = () => {
               handleChange,
               handleBlur,
               handleSubmit,
+              isSubmitting,
             }) => (
               <form onSubmit={handleSubmit}>
                 <div className="w-full my-6">
@@ -147,6 +167,7 @@ const CrtateNFT = () => {
                   </div>
                 </div>
                 <button
+                  disabled={isSubmitting}
                   type="submit"
                   className="rounded-lg m-3 border border-white py-2 px-5 bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-700"
                 >
