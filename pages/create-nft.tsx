@@ -116,6 +116,34 @@ const CrtateNFT = () => {
                       handleChange={handleChange}
                       touched={touched.royalty}
                     />
+                    <FormInput
+                      name="handling"
+                      value={values.handling}
+                      errors={errors.handling}
+                      handleBlur={handleBlur}
+                      handleChange={handleChange}
+                      touched={touched.royalty}
+                    />
+                  </div>
+                  <div className="flex gap-5 mx-10 my-2">
+                    <FormInput
+                      name="max_fee"
+                      type="number"
+                      value={values.max_fee}
+                      errors={errors.max_fee}
+                      handleBlur={handleBlur}
+                      handleChange={handleChange}
+                      touched={touched.max_fee}
+                    />
+                    <FormInput
+                      name="bond"
+                      type="number"
+                      value={values.bond}
+                      errors={errors.bond}
+                      handleBlur={handleBlur}
+                      handleChange={handleChange}
+                      touched={touched.bond}
+                    />
                   </div>
                 </div>
                 <button
