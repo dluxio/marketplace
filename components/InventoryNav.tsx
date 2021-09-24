@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useRecoilState } from 'recoil';
 import { FaBitcoin } from 'react-icons/fa';
+import { GiToken } from 'react-icons/gi';
 import { MdStars } from 'react-icons/md';
 import { inventoryNavState } from '../atoms';
 
@@ -27,6 +28,15 @@ export const InventoryNav = () => {
       >
         <MdStars size={25} color="#fff" />
         <p className="text-md mt-1">NFTs</p>
+      </div>
+      <div
+        onClick={() => setMarketNavSelected('mint')}
+        className={`flex flex-col items-center cursor-pointer ${
+          marketNavSelected === 'mint' && 'border-b-2 border-blue-500'
+        }`}
+      >
+        <GiToken size={25} color="#fff" />
+        <p className="text-md mt-1">Mint</p>
       </div>
     </div>
   );

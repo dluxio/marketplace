@@ -1,10 +1,5 @@
 import { atom } from 'recoil';
 
-export const currentScreenState = atom({
-  key: 'currentScreenState',
-  default: 'market',
-});
-
 export const userState = atom({
   key: 'userState',
   default: null,

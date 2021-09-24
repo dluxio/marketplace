@@ -1,31 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { currentScreenState, userState } from '../atoms';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../atoms';
 
 import { Login } from './Login';
 
 import { useRouter } from 'next/router';
 
 export const NavBar = () => {
-  const [selectedPage, setSelectedPage] = useRecoilState(currentScreenState);
   const [signing, setSigning] = useState(false);
   const user: any = useRecoilValue(userState);
   const router = useRouter();
-
-  const handleNavClick = (pageName: string) => {
-    if (pageName !== '') {
-      setSelectedPage(pageName);
-    } else {
-      setSelectedPage('market');
-    }
-    router.push('/' + pageName);
-  };
-
-  const handleSignIn = () => {
-    // TODO: Check hive accounts, select found account
-    setSigning(true);
-  };
+  const url = router.pathname.split('/')[1];
 
   useEffect(() => {
     if (user) {
@@ -37,26 +23,26 @@ export const NavBar = () => {
     <div className="bg-black text-white px-5 font-normal py-3 pb-0 flex justify-between">
       <div className="flex gap-10 flex-grow justify-center">
         <p
-          className={`${selectedPage === 'market' && 'selected'} link`}
-          onClick={() => handleNavClick('')}
+          className={`${url === '' && 'selected'} link`}
+          onClick={() => router.push('/')}
         >
           Market
         </p>
         <p
-          className={`${selectedPage === 'inventory' && 'selected'} link`}
-          onClick={() => handleNavClick('inventory')}
+          className={`${url === 'inventory' && 'selected'} link`}
+          onClick={() => router.push('/inventory')}
         >
           Inventory
         </p>
         <p
-          className={`${selectedPage === 'auction' && 'selected'} link`}
-          onClick={() => handleNavClick('auction')}
+          className={`${url === 'auction' && 'selected'} link`}
+          onClick={() => router.push('/auction')}
         >
           Auction house
         </p>
         <p
-          className={`${selectedPage === 'listings' && 'selected'} link`}
-          onClick={() => handleNavClick('listings')}
+          className={`${url === 'listings' && 'selected'} link`}
+          onClick={() => router.push('/listings')}
         >
           Listings
         </p>
@@ -67,7 +53,7 @@ export const NavBar = () => {
         </div>
       )}
       {!user && (
-        <div onClick={handleSignIn} className="flex mr-5 link">
+        <div onClick={() => setSigning(true)} className="flex mr-5 link">
           <h1>Login</h1>
         </div>
       )}

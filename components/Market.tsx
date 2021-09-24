@@ -80,9 +80,10 @@ export const Market = () => {
           </Link>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mx-10 my-3">
             {forListingNFT &&
-              forListingNFT.map((nft: any) => (
-                <NftCard key={`${nft.set}_${nft.uid}`} nft={nft} />
-              ))}
+              forListingNFT.map(
+                (nft: any, i) =>
+                  i <= 4 && <NftCard key={`${nft.set}_${nft.uid}`} nft={nft} />
+              )}
           </div>
         </>
       )}
