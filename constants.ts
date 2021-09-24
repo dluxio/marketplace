@@ -5,6 +5,6 @@ export const setColors: any = {
 
 export const tokenColors: any = {
   hive: '#B11800',
-  bitcoin: '#F7931A',
+  hive_dollar: '#cc1f04',
   ethereum: 'gray',
 };

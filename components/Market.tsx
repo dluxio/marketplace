@@ -33,8 +33,8 @@ export const Market = () => {
           },
         }
       );
-      const { data: bitcoinData } = await axios.get(
-        'https://api.coingecko.com/api/v3/coins/bitcoin',
+      const { data: hbdData } = await axios.get(
+        'https://api.coingecko.com/api/v3/coins/hive_dollar',
         {
           headers: {
             accept: 'application/json',
@@ -49,7 +49,7 @@ export const Market = () => {
           },
         }
       );
-      setCoins([hiveData, bitcoinData, ethData]);
+      setCoins([hiveData, hbdData, ethData]);
     };
 
     if (!coins.length) {
@@ -74,7 +74,7 @@ export const Market = () => {
               coins.map((coin: any) => <CoinCard key={coin.id} coin={coin} />)}
           </div>
           <Link href="/listings" passHref={true}>
-            <h1 className="cursor-pointer text-3xl mx-10 mb-4 mt-10 text-white font-medium">
+            <h1 className="cursor-pointer text-3xl ml-10 mb-4 w-1/5 mt-10 text-white font-medium">
               NFT
             </h1>
           </Link>
