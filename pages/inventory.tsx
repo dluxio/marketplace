@@ -29,7 +29,6 @@ const Inventory = () => {
         await axios
           .get(`https://token.dlux.io/api/nfts/${name}`)
           .then((response) => {
-            console.log(response.data.result);
             setInventoryNFTs(response.data.result);
           });
       }

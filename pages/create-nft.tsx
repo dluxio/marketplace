@@ -9,8 +9,9 @@ import { userState } from '../atoms';
 import {
   keychain as hive_keychain,
   isKeychainInstalled,
-  hasKeychainBeenUsed,
 } from '@hiveio/keychain';
+
+const token_prefix = 'dlux_';
 
 const CrtateNFT = () => {
   const user: any = useRecoilValue(userState);
@@ -33,24 +34,37 @@ const CrtateNFT = () => {
         [
           'custom_json',
           {
-            required_auths: user.name,
+            required_auths: [user.name],
             required_posting_auths: [],
-            id: `asfnft_define`,
+            id: `${token_prefix}nft_define`,
             json: JSON.stringify(form),
           },
         ],
       ];
-      await hive_keychain.requestBroadcast(
-        user.name,
-        operations,
-        'active',
-        (response: any) => {
-          console.log(response);
+      const { success, msg, cancel, notInstalled, notActive } =
+        await hive_keychain(
+          window,
+          'requestBroadcast',
+          user.name,
+          operations,
+          'posting',
+          (response: any) => console.log(response)
+        );
+
+      if (success) {
+        console.log('Yay');
+      } else if (!cancel) {
+        if (notActive) {
+          // alert('Please allow Keychain to access this website')
+        } else if (notInstalled) {
+          // alert('Please install Keychain')
+        } else {
+          throw new Error(msg);
         }
-      );
+      }
     };
 
-    if (user) {
+    if (user && form.name !== '') {
       createNFT();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

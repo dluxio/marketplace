@@ -8,7 +8,6 @@ export const MintTokenScreen = () => {
     fetch('https://token.dlux.io/api/mintauctions')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setMintTokens(data.result);
       });
   }, []);

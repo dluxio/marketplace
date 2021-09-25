@@ -13,10 +13,6 @@ const Tools = () => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log(auctionHouseNFT);
-  }, [auctionHouseNFT]);
-
   return (
     <div className="mx-2 sm:mx-10">
       <h1 className="text-white mt-10 mb-5 text-3xl font-bold">

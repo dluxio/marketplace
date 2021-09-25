@@ -8,7 +8,6 @@ type CoinCardProps = {
   coin: any;
 };
 export const CoinCard = ({ coin }: CoinCardProps) => {
-  console.log(coin);
   return (
     <div
       className="border shadow-xl h-auto border-transparent rounded-xl px-2 py-3 text-white"
