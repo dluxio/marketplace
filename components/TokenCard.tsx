@@ -4,6 +4,7 @@ import { setColors } from '../constants';
 import { ImArrowRight2, ImCross } from 'react-icons/im';
 
 import { toBase64 } from '../utils/base64';
+import { TransferFormComp } from '.';
 
 type TokenCardProps = {
   token?: any;
@@ -12,6 +13,7 @@ type TokenCardProps = {
 };
 
 export const TokenCard = ({ token, set, script }: TokenCardProps) => {
+  const [isTransfering, setIsTransfering] = useState(false);
   const id = '_' + Math.random().toString(36).substr(2, 9);
   const [randomUID, setRandomUID] = useState('AA');
   const [isFlipped, setIsFlipped] = useState(false);
@@ -21,6 +23,8 @@ export const TokenCard = ({ token, set, script }: TokenCardProps) => {
     const UID = toBase64(num);
     setRandomUID(UID);
   };
+
+  const handleOpen = () => {};
 
   useEffect(() => {
     fetch(`https://token.dlux.io/api/set/${set}`)
@@ -72,7 +76,16 @@ export const TokenCard = ({ token, set, script }: TokenCardProps) => {
       {isFlipped && (
         <div className="absolute top-0 left-0 h-full w-full bg-gray-700 bg-opacity-50 rounded-xl flex justify-center items-center translate-y-1/2">
           <div className="grid grid-cols-1 gap-5">
-            <button className="bg-gray-700 px-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700">
+            <button
+              onClick={handleOpen}
+              className="bg-gray-700 px-2 rounded-lg border-2 text-purple-500 bg-transparent border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-700"
+            >
+              Open
+            </button>
+            <button
+              onClick={() => setIsTransfering(true)}
+              className="bg-gray-700 px-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700"
+            >
               Transfer
             </button>
             <button className="bg-gray-700 px-2 rounded-lg border-2 text-yellow-500 bg-transparent border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-700">
@@ -92,6 +105,12 @@ export const TokenCard = ({ token, set, script }: TokenCardProps) => {
             <ImCross color="#fff" />
           </button>
         </div>
+      )}
+      {isTransfering && (
+        <TransferFormComp
+          set={set}
+          handleClose={() => setIsTransfering(false)}
+        />
       )}
     </div>
   );

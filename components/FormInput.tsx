@@ -19,10 +19,11 @@ export const FormInput = ({
   name,
   type = 'text',
 }: FormInputProps) => {
+  const formattedName = name.replace('_', ' ');
   return (
     <div className="flex flex-col w-full">
       <label className="text-left mb-1 text-md" htmlFor="start">
-        {name.charAt(0).toUpperCase() + name.slice(1)}
+        {formattedName.charAt(0).toUpperCase() + formattedName.slice(1)}
       </label>
       <input
         className="px-3 py-1 rounded-lg border bg-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"

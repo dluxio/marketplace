@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { nftState } from '../atoms';
 
-import { NftCard } from '../components';
+import { NftCard, FilterNav } from '../components';
 
 const Settings = () => {
   const [listings, setListings] = useState([]);
@@ -15,6 +15,7 @@ const Settings = () => {
 
   return (
     <div className="mx-10 my-4 text-white font-medium">
+      <FilterNav nfts={listings} />
       <h1 className="text-3xl">Listings</h1>
       <div className="grid grid-cols-1 sm:grid-cols-6 gap-8 my-5">
         {listings &&

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import hive from '@hiveio/hive-js';
+import { TransferNFTFormComp } from './';
 
 type NftDetailProps = {
   nft: any;
@@ -12,6 +13,7 @@ interface details {
 }
 
 export const NftDetails = ({ nft }: NftDetailProps) => {
+  const [isTransfering, setIsTransfering] = useState(false);
   const [nftDetails, setNFTdetails] = useState<details>();
 
   const fetchDetails = () => {
@@ -78,15 +80,25 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
       </p>
       <div className="m-5 flex flex-col justify-center gap-5 sm:mx-48">
         <button className="px-4 py-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700">
-          Open
+          Reserve
         </button>
-        <button className="px-4 py-2 rounded-lg border-2 text-blue-500 bg-transparent border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700">
-          Sell
-        </button>
-        <button className="px-4 py-2 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700">
+        <button
+          onClick={() => setIsTransfering(true)}
+          className="px-4 py-2 rounded-lg border-2 text-blue-500 bg-transparent border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700"
+        >
           Transfer
         </button>
+        <button className="px-4 py-2 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700">
+          Sell
+        </button>
       </div>
+      {isTransfering && (
+        <TransferNFTFormComp
+          uid={nft.uid}
+          handleClose={() => setIsTransfering(false)}
+          set={nft.set}
+        />
+      )}
     </div>
   );
 };

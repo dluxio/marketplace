@@ -6,12 +6,14 @@ import Countdown from 'react-countdown';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import { ImCross } from 'react-icons/im';
 import { AuctionDetail } from './AuctionDetail';
+import { BidForm } from './Forms/BidForm';
 
 type AuctionCardProps = {
   nft: any;
 };
 
 export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
+  const [isBidding, setIsBidding] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
@@ -63,6 +65,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
             </h1>
           </div>
           <button
+            onClick={() => setIsBidding(true)}
             className="px-6 py-2 rounded-xl flex items-center gap-2"
             style={{ backgroundColor: setColors[nft.set] }}
           >
@@ -71,11 +74,16 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
           </button>
         </div>
       </div>
-      <>
-        {showInfo && (
-          <AuctionDetail onExit={() => setShowInfo(false)} nft={nft} />
-        )}
-      </>
+      {showInfo && (
+        <AuctionDetail onExit={() => setShowInfo(false)} nft={nft} />
+      )}
+      {isBidding && (
+        <BidForm
+          set={nft.set}
+          uid={nft.uid}
+          handleClose={() => setIsBidding(false)}
+        />
+      )}
     </>
   );
 };

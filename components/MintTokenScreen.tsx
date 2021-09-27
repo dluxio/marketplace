@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { TransferFormComp } from '.';
 
 import { TokenCard } from './TokenCard';
 

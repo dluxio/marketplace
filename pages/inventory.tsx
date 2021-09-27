@@ -23,18 +23,12 @@ const Inventory = () => {
   };
 
   useEffect(() => {
-    const fetchNFTs = async () => {
-      if (isLogged) {
-        const name = user.name;
-        await axios
-          .get(`https://token.dlux.io/api/nfts/${name}`)
-          .then((response) => {
-            setInventoryNFTs(response.data.result);
-          });
-      }
-    };
-
-    fetchNFTs();
+    if (isLogged) {
+      const name = user.name;
+      axios.get(`https://token.dlux.io/api/nfts/${name}`).then((response) => {
+        setInventoryNFTs(response.data.result);
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

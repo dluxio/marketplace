@@ -3,7 +3,7 @@ const _Rixits =
 
 export const toBase64 = (number: number) => {
   if (
-    number !== number ||
+    number !== number || // NaN !== NaN, equal true
     number === null ||
     number === Number.POSITIVE_INFINITY
   )
