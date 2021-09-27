@@ -24,7 +24,7 @@ export const Airdrop = ({
         <ImCross size={25} color="#fff" opacity={100} onClick={handleClose} />
       </button>
       <div className="p-8 bg-gray-700 rounded-xl border-4 border-gray-800">
-        <h1 className="text-center text-white text-2xl">Transfer NFT</h1>
+        <h1 className="text-center text-white text-2xl">Airdrop NFT</h1>
         <Formik
           initialValues={{ to: '' }}
           validate={({ to }: { to: string }) => {
@@ -57,6 +57,7 @@ export const Airdrop = ({
                   touched={touched.to}
                   value={values.to}
                 />
+                <p>example - &quot;name another_name&quot;</p>
                 <button
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
