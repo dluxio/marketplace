@@ -5,6 +5,8 @@ import { ImArrowRight2, ImCross } from 'react-icons/im';
 
 import { toBase64 } from '../utils/base64';
 import { TransferFormComp } from '.';
+import { Airdrop } from './Forms/AirdropForm';
+import { AuctionFTForm } from './Forms/AuctionFTForm';
 
 type TokenCardProps = {
   token?: any;
@@ -12,7 +14,9 @@ type TokenCardProps = {
   script: string;
 };
 
-export const TokenCard = ({ token, set, script }: TokenCardProps) => {
+export const TokenCard = ({ set, script }: TokenCardProps) => {
+  const [auction, setAuction] = useState(false);
+  const [airdrop, setAirdrop] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
   const id = '_' + Math.random().toString(36).substr(2, 9);
   const [randomUID, setRandomUID] = useState('AA');
@@ -91,10 +95,16 @@ export const TokenCard = ({ token, set, script }: TokenCardProps) => {
             <button className="bg-gray-700 px-2 rounded-lg border-2 text-yellow-500 bg-transparent border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-700">
               List for sale
             </button>
-            <button className="bg-gray-700 rounded-lg border-2 text-blue-500 bg-transparent border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700">
+            <button
+              onClick={() => setAuction(true)}
+              className="bg-gray-700 rounded-lg border-2 text-blue-500 bg-transparent border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700"
+            >
               Auction
             </button>
-            <button className="bg-gray-700 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700">
+            <button
+              onClick={() => setAirdrop(true)}
+              className="bg-gray-700 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700"
+            >
               Airdrop
             </button>
           </div>
@@ -111,6 +121,10 @@ export const TokenCard = ({ token, set, script }: TokenCardProps) => {
           set={set}
           handleClose={() => setIsTransfering(false)}
         />
+      )}
+      {airdrop && <Airdrop set={set} handleClose={() => setAirdrop(false)} />}
+      {auction && (
+        <AuctionFTForm set={set} handleClose={() => setAuction(false)} />
       )}
     </div>
   );
