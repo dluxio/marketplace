@@ -8,13 +8,13 @@ import { CoinCard } from '.';
 import Link from 'next/link';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { marketNavState, nftState } from '../atoms';
+import { marketNavState, nftState, coinState } from '../atoms';
 
 export const Market = () => {
   const [nfts, setNfts] = useRecoilState(nftState);
 
   const selectedMarket = useRecoilValue(marketNavState);
-  const [coins, setCoins] = useState<any>([]);
+  const [coins, setCoins] = useRecoilState<any>(coinState);
 
   useEffect(() => {
     const fetchNfts = async () => {

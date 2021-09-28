@@ -27,7 +27,7 @@ export const Airdrop = ({
         <h1 className="text-center text-white text-2xl">Airdrop NFT</h1>
         <Formik
           initialValues={{ to: '' }}
-          validate={({ to }: { to: string }) => {
+          validate={({ to }) => {
             const errors: any = {};
             if (!to) {
               errors.to = 'Required';

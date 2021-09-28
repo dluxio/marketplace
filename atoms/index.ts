@@ -19,3 +19,8 @@ export const nftState = atom({
   key: 'nftListingState',
   default: [],
 });
+
+export const coinState = atom({
+  key: 'coinState',
+  default: [],
+});

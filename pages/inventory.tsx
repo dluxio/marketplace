@@ -8,6 +8,7 @@ import { InventoryItemCard, InventoryNav, NftDetails } from '../components';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { MintTokenScreen } from '../components/MintTokenScreen';
+import { CryptoScreen } from '../components/CryptoScreen';
 
 const Inventory = () => {
   const router = useRouter();
@@ -65,11 +66,7 @@ const Inventory = () => {
               </div>
             </div>
           )}
-          {inventoryPage === 'tokens' && (
-            <div>
-              <h1>To be done</h1>
-            </div>
-          )}
+          {inventoryPage === 'tokens' && <CryptoScreen />}
         </div>
       ) : (
         <div className="flex justify-center items-center h-80 w-full text-white text-2xl">
