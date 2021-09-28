@@ -10,7 +10,6 @@ export const tokenColors: any = {
 };
 
 export const chartOptions: any = {
-  // height: 500,
   lineHeightAnnotation: {
     always: true,
     hover: false,
@@ -19,7 +18,7 @@ export const chartOptions: any = {
   animation: {
     duration: 2000,
   },
-  maintainAspectRatio: false,
+  maintainAspectRatio: true,
   responsive: true,
   scales: {
     xAxes: [
