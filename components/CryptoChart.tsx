@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { timeLabels } from '../constants';
 import { formatData, getColor, options } from '../utils';
 
 type CryptoChartProps = {
@@ -18,28 +19,7 @@ export const CryptoChart = ({ selectedCoin: { id } }: CryptoChartProps) => {
         .then((data) => {
           console.log(formatData(data.prices));
           setChartData({
-            labels: [
-              '00:00',
-              '01:15',
-              '02:00',
-              '03:20',
-              '04:00',
-              '05:00',
-              '06:00',
-              '07:00',
-              '08:00',
-              '09:00',
-              '10:00',
-              '11:00',
-              '12:00',
-              '13:00',
-              '14:00',
-              '15:00',
-              '16:00',
-              '17:00',
-              '18:00',
-              '23:59',
-            ],
+            labels: timeLabels,
             datasets: [
               {
                 label: id,
