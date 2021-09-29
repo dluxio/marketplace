@@ -55,10 +55,20 @@ export const options: any = {
   scaleFontColor: '#FFF',
   fontColor: '#FFF',
   scales: {
-    x: [
+    xAxes: [
       {
         type: 'time',
-        distribution: 'linear',
+        time: {
+          format: 'HH:mm',
+          unit: 'hour',
+          unitStepSize: 1,
+          displayFormats: {
+            minute: 'HH:mm',
+            hour: 'HH:mm',
+            min: '00:00',
+            max: '23:59',
+          },
+        },
       },
     ],
   },
