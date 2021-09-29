@@ -26,7 +26,6 @@ export const CryptoChart = ({ selectedCoin: { id } }: CryptoChartProps) => {
       duration: 2000,
     },
     maintainAspectRatio: true,
-    responsive: true,
     scales: {
       xAxes: [
         {
@@ -64,7 +63,7 @@ export const CryptoChart = ({ selectedCoin: { id } }: CryptoChartProps) => {
   }, [id]);
 
   return (
-    <div className="mx-10 m-2 px-5 py-1 bg-gray-600 rounded-xl">
+    <div className="sm:mx-10 sm:m-2 px-5 py-1 bg-gray-600 rounded-xl">
       <Line data={chartData} options={options} />
     </div>
   );

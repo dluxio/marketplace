@@ -1,13 +1,27 @@
-import React, { MouseEventHandler } from 'react';
+import React, { useEffect } from 'react';
 
-type TokenSelectionProps = {
-  onClick: MouseEventHandler;
-};
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { CoinCard } from '.';
+import { coinState, selectedCoinState } from '../atoms';
 
-export const TokenSelection = ({ onClick }: TokenSelectionProps) => {
+export const TokenSelection = () => {
+  const coins = useRecoilValue(coinState);
+  const [selectedCoin, setSelectedCoin] = useRecoilState(selectedCoinState);
+
+  useEffect(() => {
+    setSelectedCoin(coins[0]);
+    console.log(selectedCoin);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [coins, selectedCoin]);
+
   return (
-    <div>
-      <h1>Select token</h1>
+    <div className="sm:mx-10 my-5">
+      <h1 className="text-white text-xl mb-5">Crypto markets</h1>
+      <div className="flex flex-col gap-5">
+        {coins.map((coin: any) => (
+          <CoinCard key={coin.id} coin={coin} />
+        ))}
+      </div>
     </div>
   );
 };

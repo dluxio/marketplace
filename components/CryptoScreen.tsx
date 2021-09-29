@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useRecoilValue } from 'recoil';
-import { coinState } from '../atoms';
+import { selectedCoinState } from '../atoms';
+
 import { CryptoChart } from './CryptoChart';
 import { TokenSelection } from './TokenSelection';
 
 export const CryptoScreen = ({}) => {
-  const [selectedCoin, setSelectedCoin] = useState({});
+  const selectedCoin = useRecoilValue(selectedCoinState);
 
   return (
     <div>
@@ -14,7 +15,7 @@ export const CryptoScreen = ({}) => {
         Crypto change in the past 24hrs
       </h1>
       <CryptoChart selectedCoin={selectedCoin} />
-      <TokenSelection onClick={() => console.log('Select coin')} />
+      <TokenSelection />
     </div>
   );
 };
