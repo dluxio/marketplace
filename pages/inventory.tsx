@@ -8,6 +8,7 @@ import { InventoryItemCard, InventoryNav, NftDetails } from '../components';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { MintTokenScreen } from '../components/MintTokenScreen';
+import { CryptoScreen } from '../components/CryptoScreen';
 
 const Inventory = () => {
   const router = useRouter();
@@ -23,19 +24,12 @@ const Inventory = () => {
   };
 
   useEffect(() => {
-    const fetchNFTs = async () => {
-      if (isLogged) {
-        const name = user.name;
-        await axios
-          .get(`https://token.dlux.io/api/nfts/${name}`)
-          .then((response) => {
-            console.log(response.data.result);
-            setInventoryNFTs(response.data.result);
-          });
-      }
-    };
-
-    fetchNFTs();
+    if (isLogged) {
+      const name = user.name;
+      axios.get(`https://token.dlux.io/api/nfts/${name}`).then((response) => {
+        setInventoryNFTs(response.data.result);
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -72,11 +66,7 @@ const Inventory = () => {
               </div>
             </div>
           )}
-          {inventoryPage === 'tokens' && (
-            <div>
-              <h1>To be done</h1>
-            </div>
-          )}
+          {inventoryPage === 'tokens' && <CryptoScreen />}
         </div>
       ) : (
         <div className="flex justify-center items-center h-80 w-full text-white text-2xl">

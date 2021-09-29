@@ -8,18 +8,18 @@ import { CoinCard } from '.';
 import Link from 'next/link';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { marketNavState, nftState } from '../atoms';
+import { marketNavState, nftState, coinState } from '../atoms';
 
 export const Market = () => {
   const [nfts, setNfts] = useRecoilState(nftState);
-  const [forListingNFT, setForListingNFT] = useState([]);
 
   const selectedMarket = useRecoilValue(marketNavState);
-  const [coins, setCoins] = useState<any>([]);
+  const [coins, setCoins] = useRecoilState<any>(coinState);
 
   useEffect(() => {
     const fetchNfts = async () => {
-      await axios.get('https://token.dlux.io/api/set/dlux').then((response) => {
+      await axios.get('https://token.dlux.io/api/sales').then((response) => {
+        console.log(response);
         setNfts(response.data.result);
       });
     };
@@ -49,19 +49,15 @@ export const Market = () => {
           },
         }
       );
-      setCoins([hiveData, hbdData, ethData]);
+      setCoins([hiveData, ethData, hbdData]);
     };
 
     if (!coins.length) {
       fetchCoins();
-      fetchNfts();
     }
+    fetchNfts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    setForListingNFT(nfts.filter((nft: any) => nft.owner === 'ls'));
-  }, [nfts]);
 
   return (
     <div className="w-full h-full">
@@ -79,8 +75,8 @@ export const Market = () => {
             </h1>
           </Link>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mx-10 my-3">
-            {forListingNFT &&
-              forListingNFT.map(
+            {nfts &&
+              nfts.map(
                 (nft: any, i) =>
                   i <= 4 && <NftCard key={`${nft.set}_${nft.uid}`} nft={nft} />
               )}

@@ -39,7 +39,16 @@ export const NftCard = ({ nft }: NftCardProp) => {
           className="w-1/2 flex justify-center mx-auto"
         ></div>
       </div>
-      <div className="px-2 py-4 w-full flex justify-center">
+      <div className="px-5 py-4 w-full flex justify-between items-center">
+        <h1>
+          Price:{' '}
+          <strong>
+            {parseFloat(
+              (nft.price.amount / Math.pow(10, nft.price.precision)).toString()
+            ).toFixed(nft.price.precision)}{' '}
+            {nft.price.token}
+          </strong>
+        </h1>
         <button
           className="px-6 py-2 rounded-xl flex items-center gap-2"
           style={{ backgroundColor: setColors[nft.set] }}

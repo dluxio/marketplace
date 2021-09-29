@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import hive from '@hiveio/hive-js';
+import { TransferNFTFormComp } from './';
+import { AuctionNFTForm } from './Forms/AuctionNFTForm';
+import { ReserveNFTForm } from './Forms/ReserveNFTForm';
 
 type NftDetailProps = {
   nft: any;
@@ -12,6 +15,9 @@ interface details {
 }
 
 export const NftDetails = ({ nft }: NftDetailProps) => {
+  const [reserve, setReserve] = useState(false);
+  const [isTransfering, setIsTransfering] = useState(false);
+  const [auction, setAuction] = useState(false);
   const [nftDetails, setNFTdetails] = useState<details>();
 
   const fetchDetails = () => {
@@ -77,16 +83,49 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
         </a>
       </p>
       <div className="m-5 flex flex-col justify-center gap-5 sm:mx-48">
-        <button className="px-4 py-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700">
-          Open
+        <button
+          onClick={() => setReserve(true)}
+          className="px-4 py-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700"
+        >
+          Reserve
         </button>
-        <button className="px-4 py-2 rounded-lg border-2 text-blue-500 bg-transparent border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700">
-          Sell
-        </button>
-        <button className="px-4 py-2 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700">
+        <button
+          onClick={() => setIsTransfering(true)}
+          className="px-4 py-2 rounded-lg border-2 text-blue-500 bg-transparent border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700"
+        >
           Transfer
         </button>
+        <button
+          onClick={() => setAuction(true)}
+          className="px-4 py-2 rounded-lg border-2 text-yellow-500 bg-transparent border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-700"
+        >
+          Auction
+        </button>
+        <button className="px-4 py-2 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700">
+          Sell
+        </button>
       </div>
+      {isTransfering && (
+        <TransferNFTFormComp
+          uid={nft.uid}
+          handleClose={() => setIsTransfering(false)}
+          set={nft.set}
+        />
+      )}
+      {auction && (
+        <AuctionNFTForm
+          set={nft.set}
+          uid={nft.uid}
+          handleClose={() => setAuction(false)}
+        />
+      )}
+      {reserve && (
+        <ReserveNFTForm
+          set={nft.set}
+          uid={nft.uid}
+          handleClose={() => setReserve(false)}
+        />
+      )}
     </div>
   );
 };
