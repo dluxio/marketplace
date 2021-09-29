@@ -26,6 +26,7 @@ export const CryptoChart = ({ selectedCoin: { id } }: CryptoChartProps) => {
       duration: 2000,
     },
     maintainAspectRatio: true,
+    responsive: true,
     scales: {
       xAxes: [
         {
@@ -50,8 +51,18 @@ export const CryptoChart = ({ selectedCoin: { id } }: CryptoChartProps) => {
                 label: id,
                 data: formatData(data.prices),
                 fill: true,
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor:
+                  id === 'hive'
+                    ? 'rgba(255, 99, 132, 0.5)'
+                    : id === 'ethereum'
+                    ? 'rgba(211, 211, 211, 0.5)'
+                    : 'rgba(123, 239, 178, 0.5)',
+                borderColor:
+                  id === 'hive'
+                    ? 'rgba(255, 99, 132)'
+                    : id === 'ethereum'
+                    ? 'rgba(211, 211, 211)'
+                    : 'rgba(123, 239, 178)',
                 pointRadius: 5,
               },
             ],
@@ -63,8 +74,10 @@ export const CryptoChart = ({ selectedCoin: { id } }: CryptoChartProps) => {
   }, [id]);
 
   return (
-    <div className="sm:mx-10 sm:m-2 px-5 py-1 bg-gray-600 rounded-xl">
-      <Line data={chartData} options={options} />
+    <div className="w-full flex justify-center">
+      <div className="sm:mx-10 w-full sm:m-2 px-5 py-1 bg-gray-600 rounded-xl">
+        <Line data={chartData} options={options} />
+      </div>
     </div>
   );
 };
