@@ -3,7 +3,7 @@ import { setColors } from '../constants';
 
 import { ImArrowRight2, ImCross } from 'react-icons/im';
 
-import { toBase64 } from '../utils/base64';
+import { toBase64 } from '../utils';
 import { TransferFormComp } from '.';
 import { Airdrop } from './Forms/AirdropForm';
 import { AuctionFTForm } from './Forms/AuctionFTForm';

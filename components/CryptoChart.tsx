@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { formatData, getColor, options } from '../utils';
 
 type CryptoChartProps = {
   selectedCoin: any;
@@ -7,35 +8,6 @@ type CryptoChartProps = {
 
 export const CryptoChart = ({ selectedCoin: { id } }: CryptoChartProps) => {
   const [chartData, setChartData] = useState<any>({});
-  const formatData = (data: any) => {
-    return data.map((el: any) => {
-      return {
-        x: el[0],
-        y: el[1],
-      };
-    });
-  };
-
-  const options: any = {
-    lineHeightAnnotation: {
-      always: true,
-      hover: false,
-      lineHeight: 1.5,
-    },
-    animation: {
-      duration: 2000,
-    },
-    maintainAspectRatio: true,
-    responsive: true,
-    scales: {
-      xAxes: [
-        {
-          type: 'time',
-          distribution: 'linear',
-        },
-      ],
-    },
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,18 +23,8 @@ export const CryptoChart = ({ selectedCoin: { id } }: CryptoChartProps) => {
                 label: id,
                 data: formatData(data.prices),
                 fill: true,
-                backgroundColor:
-                  id === 'hive'
-                    ? 'rgba(255, 99, 132, 0.5)'
-                    : id === 'ethereum'
-                    ? 'rgba(211, 211, 211, 0.5)'
-                    : 'rgba(123, 239, 178, 0.5)',
-                borderColor:
-                  id === 'hive'
-                    ? 'rgba(255, 99, 132)'
-                    : id === 'ethereum'
-                    ? 'rgba(211, 211, 211)'
-                    : 'rgba(123, 239, 178)',
+                backgroundColor: getColor(id)[1],
+                borderColor: getColor(id)[0],
                 pointRadius: 5,
               },
             ],
