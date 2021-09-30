@@ -1,6 +1,15 @@
 const _Rixits =
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=';
 
+export const toNumber = (Base64: string) => {
+  var result = 0;
+  var base64 = Base64.split('');
+  for (var e = 0; e < base64.length; e++) {
+    result = result * 64 + _Rixits.indexOf(base64[e]);
+  }
+  return result;
+};
+
 export const toBase64 = (number: number) => {
   if (
     number !== number || // NaN !== NaN, equal true
