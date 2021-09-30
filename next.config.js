@@ -4,4 +4,7 @@ module.exports = {
   images: {
     domains: ['assets.coingecko.com', 'ipfs.io'],
   },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    return config;
+  },
 };
