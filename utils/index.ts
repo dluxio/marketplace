@@ -82,3 +82,30 @@ export const options: any = {
     ],
   },
 };
+
+type NftData = {
+  set: string;
+  uid: string;
+  price: number;
+  time: number;
+};
+
+export const NFTAuction = (username: string, nftData: NftData) => {
+  const operations = [
+    'custom_json',
+    {
+      required_auths: [username],
+      required_posting_auths: [],
+      id: 'dlux_nft_auction',
+      json: JSON.stringify(nftData),
+    },
+  ];
+
+  if (window.hive_keychain) {
+    window.hive_keychain.requestBroadcast(
+      [operations],
+      'active',
+      (response: any) => console.log(response)
+    );
+  }
+};

@@ -4,19 +4,25 @@ import { Formik } from 'formik';
 import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
 
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../atoms';
+
+import { NFTAuction } from '../../utils';
+
 export const AuctionNFTForm: React.FC<{
   set: string;
   uid: string;
   handleClose: MouseEventHandler;
 }> = ({ set, handleClose, uid }) => {
-  const [auctionData, setAuctionData] = useState({
-    set: '',
-    uid: '',
-    price: 1000,
-    time: 1,
-  });
+  const user: any = useRecoilValue(userState);
+  const [auctionData, setAuctionData] = useState<any>({});
 
-  useEffect(() => console.log(auctionData), [auctionData]);
+  useEffect(() => {
+    if (auctionData !== {}) {
+      NFTAuction(user.name, auctionData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auctionData]);
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-full w-full bg-gray-700 bg-opacity-50 z-50">
