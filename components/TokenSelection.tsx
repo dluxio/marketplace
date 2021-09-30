@@ -16,7 +16,6 @@ export const TokenSelection = () => {
 
   return (
     <div className="sm:mx-10 my-5">
-      <h1 className="text-white text-xl mb-5">Crypto markets</h1>
       <div className="flex flex-col gap-5">
         {coins.map((coin: any) => (
           <div

@@ -15,6 +15,7 @@ export const CryptoScreen = ({}) => {
         Crypto change in the past 24hrs
       </h1>
       <CryptoChart selectedCoin={selectedCoin} />
+      <h1 className="text-white text-xl my-2 mx-10">Crypto markets</h1>
       <TokenSelection />
     </div>
   );

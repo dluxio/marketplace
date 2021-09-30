@@ -34,7 +34,9 @@ export const CryptoChart = ({ selectedCoin: { id } }: CryptoChartProps) => {
         });
     };
 
-    fetchData();
+    if (id) {
+      fetchData();
+    }
   }, [id]);
 
   return (
