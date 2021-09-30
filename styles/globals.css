@@ -26,7 +26,7 @@ a {
 }
 
 .link {
-  @apply text-gray-300 cursor-pointer hover:text-gray-400 pb-3;
+  @apply text-gray-300 cursor-pointer hover:text-gray-400 py-2;
 }
 
 .card {

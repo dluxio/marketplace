@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userState } from '../atoms';
 
 import { Login } from './Login';
@@ -8,10 +8,14 @@ import { Login } from './Login';
 import { useRouter } from 'next/router';
 
 export const NavBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const [signing, setSigning] = useState(false);
-  const user: any = useRecoilValue(userState);
+  const [user, setUser] = useRecoilState<any>(userState);
   const router = useRouter();
   const url = router.pathname.split('/')[1];
+
+  const handleLogout = () => setUser(null);
 
   useEffect(() => {
     if (user) {
@@ -51,7 +55,22 @@ export const NavBar = () => {
       </div>
       {user && (
         <div className="flex">
-          <h1>{user.name}</h1>
+          <h1
+            className="link"
+            onClick={() => setIsOpen((prevState) => !prevState)}
+          >
+            {user.name}
+          </h1>
+          <div
+            className={`${
+              isOpen ? 'visible' : 'hidden'
+            } fixed bg-white top-14 right-2 p-5 rounded-xl flex flex-col`}
+          >
+            <a className="text-black text-sm link">Settings</a>
+            <a className="text-black text-sm link" onClick={handleLogout}>
+              Logout
+            </a>
+          </div>
         </div>
       )}
       {!user && (
