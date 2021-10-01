@@ -35,8 +35,12 @@ export const NavBar = () => {
         <p
           className={`${
             (url === 'inventory' || url === 'create-nft') && 'selected'
-          } link`}
-          onClick={() => router.push('/inventory')}
+          } ${user ? 'link' : 'text-gray-600 py-2 cursor-not-allowed'}`}
+          onClick={() => {
+            if (user) {
+              router.push('/inventory');
+            }
+          }}
         >
           Inventory
         </p>
