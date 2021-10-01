@@ -15,6 +15,7 @@ const Tools = () => {
 
   return (
     <div className="mx-2 sm:mx-10">
+      <title>Auction house</title>
       <h1 className="text-white mt-10 mb-5 text-3xl font-bold">
         Auction house
       </h1>

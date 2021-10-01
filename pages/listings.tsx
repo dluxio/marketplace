@@ -10,6 +10,7 @@ const Listings = () => {
 
   return (
     <div className="mx-10 my-4 text-white font-medium">
+      <title>Listings</title>
       <FilterNav nfts={nfts} />
       <h1 className="text-3xl">Listings</h1>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 my-5">

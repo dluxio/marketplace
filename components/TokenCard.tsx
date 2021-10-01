@@ -73,7 +73,7 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
           <div id={`image-${set}-${id}`} className="w-1/2 mx-auto"></div>
         </div>
       </div>
-      <div className="px-2 py-4 w-full flex justify-evenly items-center z-50">
+      <div className="px-5 py-4 w-full flex justify-between items-center z-50">
         <p>
           Qty: <strong>{token.items.length}</strong>
         </p>
