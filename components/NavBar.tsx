@@ -30,7 +30,7 @@ export const NavBar = () => {
           className={`${url === '' && 'selected'} link`}
           onClick={() => router.push('/')}
         >
-          Market
+          Home
         </p>
         <p
           className={`${

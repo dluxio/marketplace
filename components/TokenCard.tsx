@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { setColors } from '../constants';
 
 import { ImArrowRight2, ImCross } from 'react-icons/im';
+import { FaQuestion } from 'react-icons/fa';
 
 import { toBase64 } from '../utils';
 import { TransferFormComp } from '.';
 import { Airdrop } from './Forms/AirdropForm';
 import { AuctionFTForm } from './Forms/AuctionFTForm';
+import axios from 'axios';
 
 type TokenCardProps = {
   token?: any;
@@ -14,7 +16,7 @@ type TokenCardProps = {
   script: string;
 };
 
-export const TokenCard = ({ set, script }: TokenCardProps) => {
+export const TokenCard = ({ set, script, token }: TokenCardProps) => {
   const [auction, setAuction] = useState(false);
   const [airdrop, setAirdrop] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
@@ -31,13 +33,11 @@ export const TokenCard = ({ set, script }: TokenCardProps) => {
   const handleOpen = () => {};
 
   useEffect(() => {
-    fetch(`https://token.dlux.io/api/set/${set}`)
-      .then((response) => response.json())
-      .then((data) =>
-        setInterval(() => {
-          randomUIDGen(data.set);
-        }, 1000)
-      );
+    axios.get(`https://token.dlux.io/api/set/${set}`).then(({ data }) => {
+      setInterval(() => {
+        randomUIDGen(data.set);
+      }, 1000);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -66,9 +66,17 @@ export const TokenCard = ({ set, script }: TokenCardProps) => {
         {set}
       </h1>
       <div className="py-5">
-        <div id={`image-${set}-${id}`} className="w-1/2 mx-auto"></div>
+        <div className="relative">
+          <div className="bg-gray-700 absolute top-0 w-full h-full bg-opacity-70 flex justify-center items-center">
+            <FaQuestion size={60} color="#fff" />
+          </div>
+          <div id={`image-${set}-${id}`} className="w-1/2 mx-auto"></div>
+        </div>
       </div>
-      <div className="px-2 py-4 w-full flex justify-center">
+      <div className="px-2 py-4 w-full flex justify-evenly items-center z-50">
+        <p>
+          Qty: <strong>{token.items.length}</strong>
+        </p>
         <button
           className="px-6 py-2 rounded-xl flex items-center gap-2"
           style={{ backgroundColor: setColors[set] }}
