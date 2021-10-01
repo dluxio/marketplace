@@ -70,8 +70,9 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
     <div className="w-full text-center bg-gray-600 py-10 rounded-xl border-4 border-gray-700">
       <div id={`${nft.set}-${nft.uid}-details`} className="w-1/3 mx-auto"></div>
       <h1 className="text-white text-xl font-bold mt-5">{nft.uid}</h1>
-      <h2 className="text-white text-md font-semibold">{nftDetails?.title}</h2>
       <p className="text-white text-md font-semibold mt-5">
+        {nftDetails?.title}
+        <br />
         For more info, visit:{'    '}
         <a
           target="_blank"
@@ -82,18 +83,18 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
           this link
         </a>
       </p>
-      <div className="m-5 flex flex-col justify-center gap-5 sm:mx-48">
+      <div className="m-5 flex gap-5 justify-center">
         <button
           onClick={() => setReserve(true)}
           className="px-4 py-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700"
         >
-          Reserve
+          Trade
         </button>
         <button
           onClick={() => setIsTransfering(true)}
           className="px-4 py-2 rounded-lg border-2 text-blue-500 bg-transparent border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700"
         >
-          Transfer
+          Give
         </button>
         <button
           onClick={() => setAuction(true)}
@@ -103,6 +104,9 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
         </button>
         <button className="px-4 py-2 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700">
           Sell
+        </button>
+        <button className="px-4 py-2 rounded-lg border-2 text-red-600 bg-transparent border-red-600 focus:outline-none focus:ring-2 focus:ring-red-800">
+          Melt
         </button>
       </div>
       {isTransfering && (
