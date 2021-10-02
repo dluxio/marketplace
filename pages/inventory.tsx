@@ -42,7 +42,7 @@ const Inventory = () => {
 
   return (
     <div>
-      <title>{user ? user.name : 'Inventory'}</title>
+      <title>{user ? `Inv-${user.name}` : 'Inventory'}</title>
       <InventoryNav />
       {isLogged ? (
         <div className="p-10 sm:p-0">
