@@ -4,18 +4,26 @@ import { Formik } from 'formik';
 import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
 
+const init = {
+  set: '',
+  bid_amount: '',
+  uid: '',
+};
+
 export const BidForm: React.FC<{
   set: string;
   uid: string;
   handleClose: MouseEventHandler;
 }> = ({ set, handleClose, uid }) => {
-  const [transferData, setTransferData] = useState({
-    set: '',
-    bid_amount: '',
-    uid: '',
-  });
+  const [bidData, setBidData] = useState(init);
 
-  useEffect(() => console.log(transferData), [transferData]);
+  useEffect(() => {
+    if (bidData !== init) {
+      console.log('BID');
+      console.log(bidData);
+    } else {
+    }
+  }, [bidData]);
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-full w-full bg-gray-700 bg-opacity-50 z-50">
@@ -34,7 +42,7 @@ export const BidForm: React.FC<{
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setTransferData({ bid_amount: values.bid_amount, set, uid });
+            setBidData({ bid_amount: values.bid_amount, set, uid });
             setSubmitting(false);
           }}
         >

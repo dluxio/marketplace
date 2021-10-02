@@ -18,7 +18,7 @@ export const TransferFTFormComp: React.FC<{
         <ImCross size={25} color="#fff" opacity={100} onClick={handleClose} />
       </button>
       <div className="p-8 bg-gray-700 rounded-xl border-4 border-gray-800">
-        <h1 className="text-center text-2xl">Transfer FT</h1>
+        <h1 className="text-center text-2xl">Give FT</h1>
         <Formik
           initialValues={{ to: '' }}
           validate={({ to }) => {

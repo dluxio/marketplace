@@ -29,6 +29,8 @@ const Inventory = () => {
       axios.get(`https://token.dlux.io/api/nfts/${name}`).then((response) => {
         setInventoryNFTs(response.data.result);
       });
+    } else {
+      router.push('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

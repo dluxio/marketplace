@@ -23,7 +23,7 @@ export const TransferNFTFormComp: React.FC<{
         <ImCross size={25} color="#fff" opacity={100} onClick={handleClose} />
       </button>
       <div className="p-8 bg-gray-700 rounded-xl border-4 border-gray-800">
-        <h1 className="text-center text-white text-2xl">Transfer NFT</h1>
+        <h1 className="text-center text-white text-2xl">Give NFT</h1>
         <Formik
           initialValues={{ to: '' }}
           validate={({ to }) => {
