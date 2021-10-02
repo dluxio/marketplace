@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  # Allows you to run this workflow manually from the Actions tab.
+  workflow_dispatch:
+
+  pull_request:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Get Current Pull Request
+        uses: 8BitJonny/gh-get-current-pr@1.0.1
+        id: pr
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          filterOutClosed: true
+
+      - id: file_changes
+        name: File Changes
+        uses: trilom/file-changes-action@v1.2.3
+
+      - name: Run frontend build
+        working-directory: ./
+        run: |
+          docker build . -t pspc/marketplace
