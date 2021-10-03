@@ -29,6 +29,10 @@ a {
   @apply text-gray-300 cursor-pointer hover:text-gray-400 py-2;
 }
 
+.navLink {
+  @apply text-gray-300 cursor-pointer hover:text-gray-400 pb-2;
+}
+
 .card {
   width: 100%;
   height: 100%;

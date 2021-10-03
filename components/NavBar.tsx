@@ -27,7 +27,7 @@ export const NavBar = () => {
     <div className="bg-black text-white px-5 font-normal py-3 pb-0 flex justify-between">
       <div className="flex gap-10 flex-grow justify-center">
         <p
-          className={`${url === '' && 'selected'} link`}
+          className={`${url === '' && 'selected'} navLink`}
           onClick={() => router.push('/')}
         >
           Home
@@ -35,7 +35,7 @@ export const NavBar = () => {
         <p
           className={`${
             (url === 'inventory' || url === 'create-nft') && 'selected'
-          } ${user ? 'link' : 'text-gray-600 py-2 cursor-not-allowed'}`}
+          } ${user ? 'navLink' : 'text-gray-600 pb-2 cursor-not-allowed'}`}
           onClick={() => {
             if (user) {
               router.push('/inventory');
@@ -45,13 +45,13 @@ export const NavBar = () => {
           Inventory
         </p>
         <p
-          className={`${url === 'auction' && 'selected'} link`}
+          className={`${url === 'auction' && 'selected'} navLink`}
           onClick={() => router.push('/auction')}
         >
           Auction house
         </p>
         <p
-          className={`${url === 'listings' && 'selected'} link`}
+          className={`${url === 'listings' && 'selected'} navLink`}
           onClick={() => router.push('/listings')}
         >
           Listings
@@ -78,7 +78,7 @@ export const NavBar = () => {
         </div>
       )}
       {!user && (
-        <div onClick={() => setSigning(true)} className="flex mr-5 link">
+        <div onClick={() => setSigning(true)} className="flex mr-5 navLink">
           <h1>Login</h1>
         </div>
       )}
