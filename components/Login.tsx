@@ -1,4 +1,9 @@
-import React, { MouseEventHandler, MutableRefObject, useRef } from 'react';
+import React, {
+  MouseEventHandler,
+  MutableRefObject,
+  useRef,
+  useState,
+} from 'react';
 
 import { useRecoilState } from 'recoil';
 import { userState } from '../atoms';
@@ -13,6 +18,7 @@ type LoginProps = {
 
 export const Login = ({ handleClose }: LoginProps) => {
   const usernameRef: MutableRefObject<any> = useRef(null);
+  const [errors, setErrors] = useState({ user: '' });
 
   hive.api.setOptions({ url: 'https://api.deathwing.me/' });
   hive.config.set('address_prefix', 'STM');
@@ -27,7 +33,7 @@ export const Login = ({ handleClose }: LoginProps) => {
     'https://api.hive.blog/',
   ]);
 
-  const [user, setUser] = useRecoilState(userState);
+  const [_user, setUser] = useRecoilState(userState);
 
   const handleSubmit = (e: any) => {
     if (e.key === 'Enter') {
@@ -39,7 +45,7 @@ export const Login = ({ handleClose }: LoginProps) => {
             setUser(result[0]);
             console.log(result[0]);
           } else {
-            alert('User not found');
+            setErrors({ user: 'hello' });
           }
         }
       );
@@ -61,6 +67,7 @@ export const Login = ({ handleClose }: LoginProps) => {
             className="px-4 py-2 rounded-lg border bg-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
             onKeyDown={handleSubmit}
           />
+          {errors.user && <h1 className="text-red">User not found</h1>}
         </div>
       </div>
     </div>

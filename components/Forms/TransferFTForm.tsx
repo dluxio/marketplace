@@ -8,9 +8,14 @@ export const TransferFTFormComp: React.FC<{
   set: string;
   handleClose: Function;
 }> = ({ set, handleClose }) => {
-  const [transferData, setTransferData] = useState({ set: '', to: '' });
+  const [transferData, setTransferData] =
+    useState<{ set: string; to: string }>();
 
-  useEffect(() => console.log(transferData), [transferData]);
+  useEffect(() => {
+    if (transferData) {
+      console.log(transferData);
+    }
+  }, [transferData]);
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">

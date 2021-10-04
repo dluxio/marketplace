@@ -60,7 +60,7 @@ export const NavBar = () => {
       {user && (
         <div className="flex">
           <h1
-            className="link"
+            className="navLink"
             onClick={() => setIsOpen((prevState) => !prevState)}
           >
             {user.name}
