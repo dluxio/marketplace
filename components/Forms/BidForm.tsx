@@ -13,7 +13,7 @@ const init = {
 export const BidForm: React.FC<{
   set: string;
   uid: string;
-  handleClose: MouseEventHandler;
+  handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
   const [bidData, setBidData] = useState(init);
 
@@ -26,9 +26,14 @@ export const BidForm: React.FC<{
   }, [bidData]);
 
   return (
-    <div className="fixed top-0 left-0 flex justify-center items-center h-full w-full bg-gray-700 bg-opacity-50 z-50">
+    <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
       <button className="m-5 absolute top-0 left-0">
-        <ImCross size={25} color="#fff" opacity={100} onClick={handleClose} />
+        <ImCross
+          size={25}
+          color="#fff"
+          opacity={100}
+          onClick={handleClose as MouseEventHandler}
+        />
       </button>
       <div className="p-8 bg-gray-700 rounded-xl border-4 border-gray-800">
         <h1 className="text-center text-white text-2xl mb-3">Bid</h1>
@@ -44,6 +49,7 @@ export const BidForm: React.FC<{
           onSubmit={(values, { setSubmitting }) => {
             setBidData({ bid_amount: values.bid_amount, set, uid });
             setSubmitting(false);
+            handleClose();
           }}
         >
           {({

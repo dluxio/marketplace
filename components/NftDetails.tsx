@@ -4,6 +4,8 @@ import hive from '@hiveio/hive-js';
 import { TransferNFTFormComp } from './';
 import { AuctionNFTForm } from './Forms/AuctionNFTForm';
 import { ReserveNFTForm } from './Forms/ReserveNFTForm';
+import { SellForm } from './Forms/SellForm';
+import { Confirmation } from './Confirmation';
 
 type NftDetailProps = {
   nft: any;
@@ -15,10 +17,17 @@ interface details {
 }
 
 export const NftDetails = ({ nft }: NftDetailProps) => {
+  const [confirm, setConfirm] = useState(false);
+  const [selling, setSelling] = useState(false);
   const [reserve, setReserve] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
   const [auction, setAuction] = useState(false);
   const [nftDetails, setNFTdetails] = useState<details>();
+
+  const handleMelt = () => {
+    setConfirm(false);
+    console.log(`MELT: ${nft.set}-${nft.uid}`);
+  };
 
   const fetchDetails = () => {
     fetch(`https://token.dlux.io/api/nft/${nft.uid}`)
@@ -102,10 +111,16 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
         >
           Auction
         </button>
-        <button className="px-4 py-2 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700">
+        <button
+          onClick={() => setSelling(true)}
+          className="px-4 py-2 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700"
+        >
           Sell
         </button>
-        <button className="px-4 py-2 rounded-lg border-2 text-red-600 bg-transparent border-red-600 focus:outline-none focus:ring-2 focus:ring-red-800">
+        <button
+          onClick={() => setConfirm(true)}
+          className="px-4 py-2 rounded-lg border-2 text-red-600 bg-transparent border-red-600 focus:outline-none focus:ring-2 focus:ring-red-800"
+        >
           Melt
         </button>
       </div>
@@ -128,6 +143,19 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
           set={nft.set}
           uid={nft.uid}
           handleClose={() => setReserve(false)}
+        />
+      )}
+      {selling && (
+        <SellForm
+          set={nft.set}
+          uid={nft.uid}
+          handleClose={() => setSelling(false)}
+        />
+      )}
+      {confirm && (
+        <Confirmation
+          handleClose={() => setConfirm(false)}
+          handleContinue={handleMelt}
         />
       )}
     </div>

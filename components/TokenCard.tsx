@@ -98,7 +98,7 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
               onClick={() => setIsTransfering(true)}
               className="bg-gray-700 px-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700"
             >
-              Transfer
+              Give
             </button>
             <button className="bg-gray-700 px-2 rounded-lg border-2 text-yellow-500 bg-transparent border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-700">
               List for sale
