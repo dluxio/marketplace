@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { auctionState } from '../atoms';
+
+import { useRouter } from 'next/router';
 
 import { AuctionNFTcard } from '../components';
 
 const Tools = () => {
-  const [auctionHouseNFT, setAuctionHouseNFT] = useState<any>([]);
+  const router = useRouter();
+  const auctionHouseNFT = useRecoilValue(auctionState);
 
   useEffect(() => {
-    fetch('https://token.dlux.io/api/auctions')
-      .then((response) => response.json())
-      .then((data) => {
-        setAuctionHouseNFT(data.result);
-      });
-  }, []);
+    if (auctionHouseNFT === []) {
+      router.push('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auctionHouseNFT]);
 
   return (
     <div className="mx-2 sm:mx-10">
@@ -20,7 +24,7 @@ const Tools = () => {
         Auction house
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-5">
-        {auctionHouseNFT.length &&
+        {auctionHouseNFT &&
           auctionHouseNFT.map((nft: any) => (
             <AuctionNFTcard key={nft.uid} nft={nft} />
           ))}

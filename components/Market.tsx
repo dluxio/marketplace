@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import { MarketNav, NftCard } from '.';
+import { AuctionNFTcard, MarketNav, NftCard } from '.';
 import { CoinCard } from '.';
 
 import Link from 'next/link';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { marketNavState, nftState, coinState } from '../atoms';
+import { marketNavState, nftState, coinState, auctionState } from '../atoms';
 
 export const Market = () => {
   const [nfts, setNfts] = useRecoilState(nftState);
+  const [auction, setAuction] = useRecoilState(auctionState);
 
   const selectedMarket = useRecoilValue(marketNavState);
   const [coins, setCoins] = useRecoilState<any>(coinState);
@@ -22,6 +23,12 @@ export const Market = () => {
         console.log(response);
         setNfts(response.data.result);
       });
+    };
+
+    const fetchAuction = async () => {
+      await axios
+        .get('https://token.dlux.io/api/auctions')
+        .then((response) => setAuction(response.data.result));
     };
 
     const fetchCoins = async () => {
@@ -56,6 +63,7 @@ export const Market = () => {
       fetchCoins();
     }
     fetchNfts();
+    fetchAuction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -79,6 +87,20 @@ export const Market = () => {
               nfts.map(
                 (nft: any, i) =>
                   i <= 4 && <NftCard key={`${nft.set}_${nft.uid}`} nft={nft} />
+              )}
+          </div>
+          <Link href="/auction" passHref={true}>
+            <h1 className="cursor-pointer text-3xl ml-10 mb-4 w-1/5 mt-10 text-white font-medium">
+              AUCTION HOUSE
+            </h1>
+          </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mx-10 my-3">
+            {auction &&
+              auction.map(
+                (nft: any, i) =>
+                  i <= 4 && (
+                    <AuctionNFTcard key={`${nft.set}_${nft.uid}`} nft={nft} />
+                  )
               )}
           </div>
         </>
