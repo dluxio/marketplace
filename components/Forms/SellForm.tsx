@@ -24,15 +24,15 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
-      <button className="m-5 absolute top-0 left-0">
-        <ImCross
-          size={25}
-          color="#fff"
-          opacity={100}
-          onClick={handleClose as MouseEventHandler}
-        />
-      </button>
-      <div className="p-8 bg-gray-700 rounded-xl border-4 border-gray-800">
+      <div className="p-8 bg-gray-700 rounded-xl border-4 border-gray-800 relative">
+        <button className="m-2 absolute top-0 right-0">
+          <ImCross
+            size={15}
+            color="#fff"
+            opacity={100}
+            onClick={handleClose as MouseEventHandler}
+          />
+        </button>
         <h1 className="text-center text-white text-2xl mb-3">Sell</h1>
         <Formik
           initialValues={{ price: 1 }}
