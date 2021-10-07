@@ -10,12 +10,13 @@ export const Airdrop = ({
   handleClose: Function;
   set: string;
 }) => {
-  const [airdropData, setAirdropData] = useState<{ to: string[]; set: string }>(
-    { to: [], set: '' }
-  );
+  const [airdropData, setAirdropData] =
+    useState<{ to: string[]; set: string }>();
 
   useEffect(() => {
-    console.log(airdropData);
+    if (airdropData) {
+      console.log('AIRDROP: ', airdropData);
+    }
   }, [airdropData]);
 
   return (

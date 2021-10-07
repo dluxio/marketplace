@@ -7,8 +7,8 @@ import { FaQuestion } from 'react-icons/fa';
 import { toBase64 } from '../utils';
 import { TransferFormComp } from '.';
 import { Airdrop } from './Forms/AirdropForm';
-import { AuctionFTForm } from './Forms/AuctionFTForm';
 import axios from 'axios';
+import { AuctionNFTForm } from './Forms/AuctionNFTForm';
 
 type TokenCardProps = {
   token?: any;
@@ -132,7 +132,7 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
       )}
       {airdrop && <Airdrop set={set} handleClose={() => setAirdrop(false)} />}
       {auction && (
-        <AuctionFTForm set={set} handleClose={() => setAuction(false)} />
+        <AuctionNFTForm set={set} handleClose={() => setAuction(false)} />
       )}
     </div>
   );

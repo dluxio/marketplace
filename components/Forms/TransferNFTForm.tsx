@@ -9,13 +9,17 @@ export const TransferNFTFormComp: React.FC<{
   uid: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
-  const [transferData, setTransferData] = useState({
-    set: '',
-    to: '',
-    uid: '',
-  });
+  const [transferData, setTransferData] = useState<{
+    set: string;
+    to: string;
+    uid: string;
+  }>();
 
-  useEffect(() => console.log(transferData), [transferData]);
+  useEffect(() => {
+    if (transferData) {
+      console.log(transferData);
+    }
+  }, [transferData]);
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">

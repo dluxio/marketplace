@@ -11,15 +11,22 @@ import { NFTAuction } from '../../utils';
 
 export const AuctionNFTForm: React.FC<{
   set: string;
-  uid: string;
+  uid?: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
   const user: any = useRecoilValue(userState);
-  const [auctionData, setAuctionData] = useState<any>({});
+  const [auctionData, setAuctionData] =
+    useState<{ set: string; uid?: string; time: number; price: number }>();
 
   useEffect(() => {
-    if (auctionData !== {}) {
-      NFTAuction(user.name, auctionData);
+    if (auctionData && auctionData.uid) {
+      console.log('NFT auction: ', auctionData);
+      NFTAuction(
+        user.name,
+        auctionData as { set: string; uid: string; time: number; price: number }
+      );
+    } else if (auctionData && !auctionData.uid) {
+      console.log('FT auction: ', auctionData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auctionData]);
@@ -48,12 +55,20 @@ export const AuctionNFTForm: React.FC<{
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setAuctionData({
-              price: values.price,
-              time: values.time,
-              set,
-              uid,
-            });
+            if (uid) {
+              setAuctionData({
+                price: values.price,
+                time: values.time,
+                set,
+                uid,
+              });
+            } else {
+              setAuctionData({
+                price: values.price,
+                time: values.time,
+                set,
+              });
+            }
             setSubmitting(false);
             handleClose();
           }}

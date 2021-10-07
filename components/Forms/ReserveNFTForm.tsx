@@ -9,15 +9,19 @@ export const ReserveNFTForm: React.FC<{
   uid: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
-  const [auctionData, setAuctionData] = useState({
-    set: '',
-    uid: '',
-    to: '',
-    price: 1000,
-    time: 1,
-  });
+  const [auctionData, setAuctionData] = useState<{
+    set: string;
+    uid: string;
+    to: string;
+    price: number;
+    time: number;
+  }>();
 
-  useEffect(() => console.log(auctionData), [auctionData]);
+  useEffect(() => {
+    if (auctionData) {
+      console.log(auctionData);
+    }
+  }, [auctionData]);
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
