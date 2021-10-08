@@ -6,19 +6,21 @@ import { FormInput } from '../FormInput';
 type SellFormProps = {
   handleClose: Function;
   set: string;
-  uid: string;
+  uid?: string;
 };
 
 export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
   const [sellData, setSellData] = useState<{
     price: number;
     set: string;
-    uid: string;
+    uid?: string;
   }>();
 
   useEffect(() => {
-    if (sellData) {
-      console.log(sellData);
+    if (sellData && sellData.uid) {
+      console.log('NFT sell: ', sellData);
+    } else if (sellData) {
+      console.log('FT sell: ', sellData);
     }
   }, [sellData]);
 
@@ -44,7 +46,11 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setSellData({ price: values.price, set, uid });
+            setSellData({
+              price: values.price,
+              set,
+              uid: uid ? uid : undefined,
+            });
             setSubmitting(false);
             handleClose();
           }}
