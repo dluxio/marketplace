@@ -1,7 +1,7 @@
 const _Rixits =
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=';
 
-export const toNumber = (Base64: string) => {
+export const toNumber = (Base64) => {
   var result = 0;
   var base64 = Base64.split('');
   for (var e = 0; e < base64.length; e++) {
@@ -10,7 +10,7 @@ export const toNumber = (Base64: string) => {
   return result;
 };
 
-export const toBase64 = (number: number) => {
+export const toBase64 = (number) => {
   if (
     number !== number || // NaN !== NaN, equal true
     number === null ||
@@ -30,8 +30,8 @@ export const toBase64 = (number: number) => {
   return result;
 };
 
-export const formatData = (data: any) => {
-  return data.map((el: any) => {
+export const formatData = (data) => {
+  return data.map((el) => {
     return {
       x: el[0],
       y: el[1],
@@ -39,7 +39,7 @@ export const formatData = (data: any) => {
   });
 };
 
-export const getColor = (id: string) => {
+export const getColor = (id) => {
   switch (id) {
     case 'hive':
       return ['rgba(255, 99, 132)', 'rgba(255, 99, 132, 0.5)'];
@@ -50,7 +50,7 @@ export const getColor = (id: string) => {
   }
 };
 
-export const options: any = {
+export const options = {
   lineHeightAnnotation: {
     always: true,
     hover: false,
@@ -83,14 +83,7 @@ export const options: any = {
   },
 };
 
-type NftData = {
-  set: string;
-  uid: string;
-  price: number;
-  time: number;
-};
-
-export const NFTAuction = (username: string, nftData: NftData) => {
+export const NFTAuction = (username, nftData) => {
   const operations = [
     'custom_json',
     {
@@ -102,10 +95,44 @@ export const NFTAuction = (username: string, nftData: NftData) => {
   ];
 
   if (window.hive_keychain) {
-    window.hive_keychain.requestBroadcast(
-      [operations],
-      'active',
-      (response: any) => console.log(response)
+    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
+      console.log(response)
+    );
+  }
+};
+
+export const FTAuction = (username, ftData) => {
+  const operations = [
+    'custom_json',
+    {
+      required_auths: [username],
+      required_posting_auths: [],
+      id: 'dlux_ft_auction',
+      json: JSON.stringify(ftData),
+    },
+  ];
+
+  if (window.hive_keychain) {
+    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
+      console.log(response)
+    );
+  }
+};
+
+export const FTOpen = (username, set) => {
+  const operations = [
+    'custom_json',
+    {
+      required_auths: [username],
+      required_posting_auths: [],
+      id: 'dlux_ft_mint',
+      json: JSON.stringify(set),
+    },
+  ];
+
+  if (window.hive_keychain) {
+    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
+      console.log(response)
     );
   }
 };
