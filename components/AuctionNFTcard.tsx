@@ -24,7 +24,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         const SVG = eval(code);
         document.getElementById(
           `image-${nft.set}-${nft.uid}-auction`
-        )!.innerHTML = SVG;
+        )!.innerHTML = SVG.HTML;
       });
   }, [nft]);
 

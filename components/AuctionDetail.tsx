@@ -31,7 +31,7 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
         document.getElementById(`${nft.set}-${nft.uid}-details`)!.innerHTML =
-          SVG;
+          SVG.HTML;
       });
   };
 

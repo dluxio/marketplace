@@ -50,7 +50,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
         document.getElementById(`${nft.set}-${nft.uid}-details`)!.innerHTML =
-          SVG;
+          SVG.HTML;
       });
   };
 
