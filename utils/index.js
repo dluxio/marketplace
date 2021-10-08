@@ -119,6 +119,7 @@ export const FTAuction = (username, ftData) => {
   }
 };
 
+// TODO: finish
 export const FTOpen = (username, set) => {
   const operations = [
     'custom_json',
@@ -127,6 +128,25 @@ export const FTOpen = (username, set) => {
       required_posting_auths: [],
       id: 'dlux_ft_mint',
       json: JSON.stringify(set),
+    },
+  ];
+
+  if (window.hive_keychain) {
+    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
+      console.log(response)
+    );
+  }
+};
+
+//TODO: finish
+export const FTAirdrop = (username, usernames) => {
+  const operations = [
+    'custom_json',
+    {
+      required_auths: [username],
+      required_posting_auths: [],
+      id: 'dlux_ft_airdrop',
+      json: usernames,
     },
   ];
 
