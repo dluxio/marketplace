@@ -1,3 +1,5 @@
+import hive from '@hiveio/hive-js';
+
 const _Rixits =
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=';
 
@@ -121,39 +123,65 @@ export const FTOpen = (username, set) => {
   }
 };
 
-export const FTAirdrop = (username, usernames) => {
-  const operations = [
-    'custom_json',
-    {
-      required_auths: [username],
-      required_posting_auths: [],
-      id: 'dlux_ft_airdrop',
-      json: usernames,
-    },
-  ];
+export const FTAirdrop = (username, ftData) => {
+  let user;
+  hive.api.getAccounts([...ftData.to], (err, result) => {
+    if (err) throw new Error(err);
+    if (result.length === ftData.to.length) {
+      user = result[0];
+    } else {
+      console.log("One or more users don't exist");
+    }
+  });
+  if (user) {
+    const operations = [
+      'custom_json',
+      {
+        required_auths: [username],
+        required_posting_auths: [],
+        id: 'dlux_ft_airdrop',
+        json: JSON.stringify(ftData),
+      },
+    ];
 
-  if (window.hive_keychain) {
-    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
-      console.log(response)
-    );
+    if (window.hive_keychain) {
+      window.hive_keychain.requestBroadcast(
+        [operations],
+        'active',
+        (response) => console.log(response)
+      );
+    }
   }
 };
 
-export const FTGive = (username, giveData) => {
-  const operations = [
-    'custom_json',
-    {
-      required_auths: [username],
-      required_posting_auths: [],
-      id: 'dlux_ft_transfer',
-      json: JSON.stringify(giveData),
-    },
-  ];
+export const Give = (username, giveData) => {
+  let user;
+  hive.api.getAccounts([giveData.to], (err, result) => {
+    if (err) throw new Error(err);
+    if (result !== []) {
+      user = result[0];
+    } else {
+      console.log('No user to send to');
+    }
+  });
+  if (user) {
+    const operations = [
+      'custom_json',
+      {
+        required_auths: [username],
+        required_posting_auths: [],
+        id: giveData.uid ? 'dlux_nft_transfer' : 'dlux_ft_transfer',
+        json: JSON.stringify(giveData),
+      },
+    ];
 
-  if (window.hive_keychain) {
-    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
-      console.log(response)
-    );
+    if (window.hive_keychain) {
+      window.hive_keychain.requestBroadcast(
+        [operations],
+        'active',
+        (response) => console.log(response)
+      );
+    }
   }
 };
 

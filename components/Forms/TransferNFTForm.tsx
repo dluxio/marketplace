@@ -6,18 +6,20 @@ import { ImCross } from 'react-icons/im';
 
 export const TransferNFTFormComp: React.FC<{
   set: string;
-  uid: string;
+  uid?: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
   const [transferData, setTransferData] = useState<{
     set: string;
     to: string;
-    uid: string;
+    uid?: string;
   }>();
 
   useEffect(() => {
-    if (transferData) {
-      console.log(transferData);
+    if (transferData && transferData.uid) {
+      console.log('NFT transfer: ', transferData);
+    } else if (transferData) {
+      console.log('FT transfer', transferData);
     }
   }, [transferData]);
 
@@ -43,7 +45,7 @@ export const TransferNFTFormComp: React.FC<{
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setTransferData({ to: values.to, set, uid });
+            setTransferData({ to: values.to, set, uid: uid ? uid : undefined });
             setSubmitting(false);
             handleClose();
           }}
