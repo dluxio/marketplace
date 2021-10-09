@@ -20,7 +20,7 @@ const Tools = () => {
   return (
     <div className="mx-2 sm:mx-10">
       <title>Auction house</title>
-      <h1 className="text-white mt-10 mb-5 text-3xl font-bold">
+      <h1 className="text-white mt-10 mb-5 text-3xl font-semibold">
         Auction house
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-5">

@@ -19,7 +19,9 @@ export const NftCard = ({ nft }: NftCardProp) => {
       .then((data) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
-        document.getElementById(`image-${nft.set}-${nft.uid}`)!.innerHTML = SVG;
+        console.log(SVG);
+        document.getElementById(`image-${nft.set}-${nft.uid}`)!.innerHTML =
+          SVG.HTML;
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

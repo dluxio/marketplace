@@ -49,7 +49,7 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
         const SVG = eval(code);
 
         if (document.getElementById(`image-${set}-${id}`)) {
-          document.getElementById(`image-${set}-${id}`)!.innerHTML = SVG;
+          document.getElementById(`image-${set}-${id}`)!.innerHTML = SVG.HTML;
         }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
