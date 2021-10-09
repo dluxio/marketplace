@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import hive from '@hiveio/hive-js';
 import { TransferNFTFormComp } from './';
-import { AuctionNFTForm } from './Forms/AuctionNFTForm';
+import { AuctionNFTForm } from './Forms/AuctionForm';
 import { ReserveNFTForm } from './Forms/ReserveNFTForm';
 import { SellForm } from './Forms/SellForm';
 import { Confirmation } from './Confirmation';

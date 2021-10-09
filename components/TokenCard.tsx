@@ -8,7 +8,7 @@ import { toBase64 } from '../utils';
 import { TransferFormComp } from '.';
 import { Airdrop } from './Forms/AirdropForm';
 import axios from 'axios';
-import { AuctionNFTForm } from './Forms/AuctionNFTForm';
+import { AuctionNFTForm } from './Forms/AuctionForm';
 
 type TokenCardProps = {
   token?: any;
