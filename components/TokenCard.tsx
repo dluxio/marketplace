@@ -56,9 +56,7 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
   }, [randomUID]);
 
   return (
-    <div
-      className={`border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white relative`}
-    >
+    <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white relative">
       <h1
         className="text-center w-full rounded-t-xl font-black py-2 text-xl"
         style={{ backgroundColor: setColors[set] }}

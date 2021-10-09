@@ -147,37 +147,33 @@ type AirdropData = {
 };
 
 export const FTAirdrop = (username: string, ftData: AirdropData) => {
-  let user;
   hive.api.getAccounts([...ftData.to], (err: any, result: any) => {
     if (err) throw new Error(err);
     if (result.length === ftData.to.length) {
-      user = result[0];
+      const operations = [
+        'custom_json',
+        {
+          required_auths: [username],
+          required_posting_auths: [],
+          id: 'dlux_ft_airdrop',
+          json: JSON.stringify(ftData),
+        },
+      ];
+
+      //@ts-ignore
+      if (window.hive_keychain) {
+        //@ts-ignore
+        window.hive_keychain.requestBroadcast(
+          username,
+          [operations],
+          'active',
+          (response: any) => console.log(response)
+        );
+      }
     } else {
       console.log("One or more users don't exist");
     }
   });
-  if (user) {
-    const operations = [
-      'custom_json',
-      {
-        required_auths: [username],
-        required_posting_auths: [],
-        id: 'dlux_ft_airdrop',
-        json: JSON.stringify(ftData),
-      },
-    ];
-
-    //@ts-ignore
-    if (window.hive_keychain) {
-      //@ts-ignore
-      window.hive_keychain.requestBroadcast(
-        username,
-        [operations],
-        'active',
-        (response: any) => console.log(response)
-      );
-    }
-  }
 };
 
 type GiveData = {
