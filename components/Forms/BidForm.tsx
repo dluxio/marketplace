@@ -3,22 +3,23 @@ import React, { useState, useEffect, MouseEventHandler } from 'react';
 import { Formik } from 'formik';
 import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
+import { userState } from '../../atoms';
+import { useRecoilValue } from 'recoil';
+
+import { NFTBid } from '../../utils';
 
 export const BidForm: React.FC<{
   set: string;
   uid: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
+  const user: any = useRecoilValue(userState);
   const [bidData, setBidData] =
     useState<{ set: string; bid_amount: number; uid: string }>();
 
   useEffect(() => {
-    if (bidData) {
-      console.log('BID');
-      console.log(bidData);
-    } else {
-    }
-  }, [bidData]);
+    bidData && user && NFTBid(user.name, bidData);
+  }, [bidData, user]);
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">

@@ -4,15 +4,18 @@ import { setColors } from '../constants';
 import Countdown from 'react-countdown';
 
 import { GiTakeMyMoney } from 'react-icons/gi';
-import { ImCross } from 'react-icons/im';
 import { AuctionDetail } from './AuctionDetail';
 import { BidForm } from './Forms/BidForm';
+
+import { useRecoilValue } from 'recoil';
+import { userState } from '../atoms';
 
 type AuctionCardProps = {
   nft: any;
 };
 
 export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
+  const user: any = useRecoilValue(userState);
   const [isBidding, setIsBidding] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
@@ -63,9 +66,12 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
             </h1>
           </div>
           <button
-            onClick={() => setIsBidding(true)}
-            className="px-6 py-2 rounded-xl flex items-center gap-2"
-            style={{ backgroundColor: setColors[nft.set] }}
+            disabled={!user ? true : false}
+            onClick={() => user && setIsBidding(true)}
+            className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
+              !user && 'cursor-not-allowed'
+            }`}
+            style={{ backgroundColor: user ? setColors[nft.set] : 'gray' }}
           >
             Bid
             <GiTakeMyMoney />

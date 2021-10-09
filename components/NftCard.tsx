@@ -5,14 +5,20 @@ import objectSupport from 'dayjs/plugin/objectSupport';
 dayjs.extend(objectSupport);
 
 import { FaMoneyBillAlt } from 'react-icons/fa';
-
 import { setColors } from '../constants';
+
+import { useRecoilValue } from 'recoil';
+import { userState } from '../atoms';
+
+import { NFTBuy } from '../utils';
 
 type NftCardProp = {
   nft: any;
 };
 
 export const NftCard = ({ nft }: NftCardProp) => {
+  const user: any = useRecoilValue(userState);
+
   useEffect(() => {
     fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then((response) => response.text())
@@ -26,6 +32,10 @@ export const NftCard = ({ nft }: NftCardProp) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleBuy = () => {
+    NFTBuy(user.name, { uid: nft.uid, set: nft.set });
+  };
 
   return (
     <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white flex flex-col">
@@ -52,8 +62,11 @@ export const NftCard = ({ nft }: NftCardProp) => {
           </strong>
         </h1>
         <button
-          className="px-6 py-2 rounded-xl flex items-center gap-2"
-          style={{ backgroundColor: setColors[nft.set] }}
+          onClick={() => user && handleBuy()}
+          className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
+            !user && 'cursor-not-allowed'
+          }`}
+          style={{ backgroundColor: user ? setColors[nft.set] : 'gray' }}
         >
           Buy
           <FaMoneyBillAlt />

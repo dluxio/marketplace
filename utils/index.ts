@@ -280,7 +280,7 @@ export const NFTBuy = (username: string, nftData: BuyData) => {
     'custom_json',
     {
       required_auths: [username],
-      required_posting_auths: [],
+      required_posting_auths: 0,
       id: 'dlux_nft_buy',
       json: JSON.stringify(nftData),
     },
@@ -298,7 +298,13 @@ export const NFTBuy = (username: string, nftData: BuyData) => {
   }
 };
 
-export const NFTBid = (username: String, nftData: BuyData) => {
+type BidData = {
+  set: string;
+  uid?: string;
+  bid_amount: number;
+};
+
+export const NFTBid = (username: String, nftData: BidData) => {
   const operations = [
     'custom_json',
     {
