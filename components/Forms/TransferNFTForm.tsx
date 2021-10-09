@@ -4,11 +4,16 @@ import { Formik } from 'formik';
 import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
 
+import { Give } from '../../utils';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../atoms';
+
 export const TransferNFTFormComp: React.FC<{
   set: string;
   uid?: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
+  const user: any = useRecoilValue(userState);
   const [transferData, setTransferData] = useState<{
     set: string;
     to: string;
@@ -16,12 +21,10 @@ export const TransferNFTFormComp: React.FC<{
   }>();
 
   useEffect(() => {
-    if (transferData && transferData.uid) {
-      console.log('NFT transfer: ', transferData);
-    } else if (transferData) {
-      console.log('FT transfer', transferData);
+    if (transferData) {
+      Give(user.name, transferData);
     }
-  }, [transferData]);
+  }, [transferData, user]);
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
@@ -45,7 +48,7 @@ export const TransferNFTFormComp: React.FC<{
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setTransferData({ to: values.to, set, uid: uid ? uid : undefined });
+            setTransferData({ to: values.to, set, uid: uid && uid });
             setSubmitting(false);
             handleClose();
           }}

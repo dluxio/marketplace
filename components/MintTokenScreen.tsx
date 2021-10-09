@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { TransferFormComp } from '.';
 
 import { TokenCard } from './TokenCard';
 
@@ -15,7 +14,7 @@ export const MintTokenScreen = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-5 gap-5 px-10">
+      <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-6 gap-5 px-10">
         {mintTokens.map((token: any) => (
           <div key={token.set}>
             <TokenCard

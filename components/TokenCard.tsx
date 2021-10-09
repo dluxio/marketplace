@@ -5,10 +5,10 @@ import { ImArrowRight2, ImCross } from 'react-icons/im';
 import { FaQuestion } from 'react-icons/fa';
 
 import { toBase64 } from '../utils';
-import { TransferFormComp } from '.';
 import { Airdrop } from './Forms/AirdropForm';
 import axios from 'axios';
 import { AuctionNFTForm } from './Forms/AuctionForm';
+import { TransferNFTFormComp } from '.';
 
 type TokenCardProps = {
   token?: any;
@@ -125,7 +125,7 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
         </div>
       )}
       {isTransfering && (
-        <TransferFormComp
+        <TransferNFTFormComp
           set={set}
           handleClose={() => setIsTransfering(false)}
         />

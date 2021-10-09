@@ -3,6 +3,11 @@ import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { ImCross } from 'react-icons/im';
 import { FormInput } from '../FormInput';
 
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../atoms';
+
+import { FTAirdrop } from '../../utils';
+
 export const Airdrop = ({
   handleClose,
   set,
@@ -10,13 +15,16 @@ export const Airdrop = ({
   handleClose: Function;
   set: string;
 }) => {
+  const user: any = useRecoilValue(userState);
   const [airdropData, setAirdropData] =
     useState<{ to: string[]; set: string }>();
 
   useEffect(() => {
     if (airdropData) {
       console.log('AIRDROP: ', airdropData);
+      FTAirdrop(user.name, airdropData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [airdropData]);
 
   return (

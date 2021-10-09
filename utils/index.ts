@@ -183,41 +183,38 @@ export const FTAirdrop = (username: string, ftData: AirdropData) => {
 type GiveData = {
   to: string;
   set: string;
-  uid: string;
+  uid?: string;
 };
 
-export const Give = (username: string, giveData: GiveData) => {
-  let user;
-  hive.api.getAccounts([giveData.to], (err: any, result: any) => {
+export const Give = async (username: string, giveData: GiveData) => {
+  await hive.api.getAccounts([giveData.to], (err: any, result: any) => {
+    console.log(result);
     if (err) throw new Error(err);
     if (result !== []) {
-      user = result[0];
+      const operations = [
+        'custom_json',
+        {
+          required_auths: [username],
+          required_posting_auths: [],
+          id: giveData.uid ? 'dlux_nft_transfer' : 'dlux_ft_transfer',
+          json: JSON.stringify(giveData),
+        },
+      ];
+
+      //@ts-ignore
+      if (window.hive_keychain) {
+        //@ts-ignore
+        window.hive_keychain.requestBroadcast(
+          username,
+          [operations],
+          'active',
+          (response: any) => console.log(response)
+        );
+      }
     } else {
       console.log('No user to send to');
     }
   });
-  if (user) {
-    const operations = [
-      'custom_json',
-      {
-        required_auths: [username],
-        required_posting_auths: [],
-        id: giveData.uid ? 'dlux_nft_transfer' : 'dlux_ft_transfer',
-        json: JSON.stringify(giveData),
-      },
-    ];
-
-    //@ts-ignore
-    if (window.hive_keychain) {
-      //@ts-ignore
-      window.hive_keychain.requestBroadcast(
-        username,
-        [operations],
-        'active',
-        (response: any) => console.log(response)
-      );
-    }
-  }
 };
 
 type SellData = {
