@@ -3,7 +3,7 @@ import hive from '@hiveio/hive-js';
 const _Rixits =
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=';
 
-export const toNumber = (Base64) => {
+export const toNumber = (Base64: string) => {
   var result = 0;
   var base64 = Base64.split('');
   for (var e = 0; e < base64.length; e++) {
@@ -12,7 +12,7 @@ export const toNumber = (Base64) => {
   return result;
 };
 
-export const toBase64 = (number) => {
+export const toBase64 = (number: number) => {
   if (
     number !== number || // NaN !== NaN, equal true
     number === null ||
@@ -32,8 +32,8 @@ export const toBase64 = (number) => {
   return result;
 };
 
-export const formatData = (data) => {
-  return data.map((el) => {
+export const formatData = (data: any) => {
+  return data.map((el: any) => {
     return {
       x: el[0],
       y: el[1],
@@ -41,7 +41,7 @@ export const formatData = (data) => {
   });
 };
 
-export const getColor = (id) => {
+export const getColor = (id: string) => {
   switch (id) {
     case 'hive':
       return ['rgba(255, 99, 132)', 'rgba(255, 99, 132, 0.5)'];
@@ -85,7 +85,14 @@ export const options = {
   },
 };
 
-export const Auction = (username, nftData) => {
+type AuctionData = {
+  set: string;
+  uid?: string;
+  price: number;
+  time: number;
+};
+
+export const Auction = (username: string, nftData: AuctionData) => {
   console.log(username);
   const operations = [
     'custom_json',
@@ -97,17 +104,19 @@ export const Auction = (username, nftData) => {
     },
   ];
 
+  // @ts-ignore
   if (window.hive_keychain) {
+    // @ts-ignore
     window.hive_keychain.requestBroadcast(
       '_' + Math.random().toString(36).substr(2, 9),
       [operations],
       'active',
-      (response) => console.log(response)
+      (response: any) => console.log(response)
     );
   }
 };
 
-export const FTOpen = (username, set) => {
+export const FTOpen = (username: string, set: string) => {
   const operations = [
     'custom_json',
     {
@@ -120,16 +129,23 @@ export const FTOpen = (username, set) => {
     },
   ];
 
+  // @ts-ignore
   if (window.hive_keychain) {
+    // @ts-ignore
     window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
       console.log(response)
     );
   }
 };
 
-export const FTAirdrop = (username, ftData) => {
+type AirdropData = {
+  to: string[];
+  set: string;
+};
+
+export const FTAirdrop = (username: string, ftData: AirdropData) => {
   let user;
-  hive.api.getAccounts([...ftData.to], (err, result) => {
+  hive.api.getAccounts([...ftData.to], (err: any, result: any) => {
     if (err) throw new Error(err);
     if (result.length === ftData.to.length) {
       user = result[0];
@@ -148,19 +164,27 @@ export const FTAirdrop = (username, ftData) => {
       },
     ];
 
+    //@ts-ignore
     if (window.hive_keychain) {
+      //@ts-ignore
       window.hive_keychain.requestBroadcast(
         [operations],
         'active',
-        (response) => console.log(response)
+        (response: any) => console.log(response)
       );
     }
   }
 };
 
-export const Give = (username, giveData) => {
+type GiveData = {
+  to: string;
+  set: string;
+  uid: string;
+};
+
+export const Give = (username: string, giveData: GiveData) => {
   let user;
-  hive.api.getAccounts([giveData.to], (err, result) => {
+  hive.api.getAccounts([giveData.to], (err: any, result: any) => {
     if (err) throw new Error(err);
     if (result !== []) {
       user = result[0];
@@ -179,17 +203,25 @@ export const Give = (username, giveData) => {
       },
     ];
 
+    //@ts-ignore
     if (window.hive_keychain) {
+      //@ts-ignore
       window.hive_keychain.requestBroadcast(
         [operations],
         'active',
-        (response) => console.log(response)
+        (response: any) => console.log(response)
       );
     }
   }
 };
 
-export const Sell = (username, sellData) => {
+type SellData = {
+  price: number;
+  set: string;
+  uid?: string;
+};
+
+export const Sell = (username: string, sellData: SellData) => {
   const operations = [
     'custom_json',
     {
@@ -200,14 +232,21 @@ export const Sell = (username, sellData) => {
     },
   ];
 
+  // @ts-ignore
   if (window.hive_keychain) {
+    // @ts-ignore
     window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
       console.log(response)
     );
   }
 };
 
-export const NFTMelt = (username, nftData) => {
+type MeltData = {
+  set: string;
+  uid: string;
+};
+
+export const NFTMelt = (username: string, nftData: MeltData) => {
   const operations = [
     'custom_json',
     {
@@ -218,14 +257,21 @@ export const NFTMelt = (username, nftData) => {
     },
   ];
 
+  // @ts-ignore
   if (window.hive_keychain) {
+    // @ts-ignore
     window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
       console.log(response)
     );
   }
 };
 
-export const NFTBuy = (username, nftData) => {
+type BuyData = {
+  set: string;
+  uid: string;
+};
+
+export const NFTBuy = (username: string, nftData: BuyData) => {
   const operations = [
     'custom_json',
     {
@@ -236,14 +282,16 @@ export const NFTBuy = (username, nftData) => {
     },
   ];
 
+  // @ts-ignore
   if (window.hive_keychain) {
+    // @ts-ignore
     window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
       console.log(response)
     );
   }
 };
 
-export const NFTBid = (username, nftData) => {
+export const NFTBid = (username: String, nftData: BuyData) => {
   const operations = [
     'custom_json',
     {
@@ -254,7 +302,9 @@ export const NFTBid = (username, nftData) => {
     },
   ];
 
+  // @ts-ignore
   if (window.hive_keychain) {
+    // @ts-ignore
     window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
       console.log(response)
     );
