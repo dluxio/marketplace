@@ -13,7 +13,7 @@ const Listings = () => {
       <title>Listings</title>
       <FilterNav nfts={nfts} />
       <h1 className="text-3xl">Listings</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 my-5">
+      <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-8 my-5">
         {nfts && nfts.map((nft: any) => <NftCard key={nft.uid} nft={nft} />)}
       </div>
     </div>

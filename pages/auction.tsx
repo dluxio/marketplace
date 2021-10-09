@@ -23,7 +23,7 @@ const Tools = () => {
       <h1 className="text-white mt-10 mb-5 text-3xl font-semibold">
         Auction house
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-5">
         {auctionHouseNFT &&
           auctionHouseNFT.map((nft: any) => (
             <AuctionNFTcard key={nft.uid} nft={nft} />
