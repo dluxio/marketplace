@@ -108,7 +108,7 @@ export const Auction = (username: string, nftData: AuctionData) => {
   if (window.hive_keychain) {
     // @ts-ignore
     window.hive_keychain.requestBroadcast(
-      '_' + Math.random().toString(36).substr(2, 9),
+      username,
       [operations],
       'active',
       (response: any) => console.log(response)
@@ -132,8 +132,11 @@ export const FTOpen = (username: string, set: string) => {
   // @ts-ignore
   if (window.hive_keychain) {
     // @ts-ignore
-    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
-      console.log(response)
+    window.hive_keychain.requestBroadcast(
+      username,
+      [operations],
+      'active',
+      (response: any) => console.log(response)
     );
   }
 };
@@ -168,6 +171,7 @@ export const FTAirdrop = (username: string, ftData: AirdropData) => {
     if (window.hive_keychain) {
       //@ts-ignore
       window.hive_keychain.requestBroadcast(
+        username,
         [operations],
         'active',
         (response: any) => console.log(response)
@@ -207,6 +211,7 @@ export const Give = (username: string, giveData: GiveData) => {
     if (window.hive_keychain) {
       //@ts-ignore
       window.hive_keychain.requestBroadcast(
+        username,
         [operations],
         'active',
         (response: any) => console.log(response)
@@ -235,8 +240,11 @@ export const Sell = (username: string, sellData: SellData) => {
   // @ts-ignore
   if (window.hive_keychain) {
     // @ts-ignore
-    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
-      console.log(response)
+    window.hive_keychain.requestBroadcast(
+      username,
+      [operations],
+      'active',
+      (response: any) => console.log(response)
     );
   }
 };
@@ -260,8 +268,11 @@ export const NFTMelt = (username: string, nftData: MeltData) => {
   // @ts-ignore
   if (window.hive_keychain) {
     // @ts-ignore
-    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
-      console.log(response)
+    window.hive_keychain.requestBroadcast(
+      username,
+      [operations],
+      'active',
+      (response: any) => console.log(response)
     );
   }
 };
@@ -285,8 +296,11 @@ export const NFTBuy = (username: string, nftData: BuyData) => {
   // @ts-ignore
   if (window.hive_keychain) {
     // @ts-ignore
-    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
-      console.log(response)
+    window.hive_keychain.requestBroadcast(
+      username,
+      [operations],
+      'active',
+      (response: any) => console.log(response)
     );
   }
 };
@@ -305,8 +319,11 @@ export const NFTBid = (username: String, nftData: BuyData) => {
   // @ts-ignore
   if (window.hive_keychain) {
     // @ts-ignore
-    window.hive_keychain.requestBroadcast([operations], 'active', (response) =>
-      console.log(response)
+    window.hive_keychain.requestBroadcast(
+      username,
+      [operations],
+      'active',
+      (response: any) => console.log(response)
     );
   }
 };

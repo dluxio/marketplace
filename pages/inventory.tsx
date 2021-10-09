@@ -44,9 +44,9 @@ const Inventory = () => {
 
   return (
     <div>
+      <title>{user ? `Inv-${user.name}` : 'Inventory'}</title>
       {isLogged && (
         <>
-          <title>{user ? `Inv-${user.name}` : 'Inventory'}</title>
           <InventoryNav />
           <div className="p-10 sm:p-0">
             {inventoryPage === 'mint' && <MintTokenScreen />}
