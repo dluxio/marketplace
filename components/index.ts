@@ -8,4 +8,4 @@ export { InventoryItemCard } from './InventoryItemCard';
 export { NftDetails } from './NftDetails';
 export { AuctionNFTcard } from './AuctionNFTcard';
 export { FilterNav } from './FilterNav';
-export { TransferNFTFormComp } from './Forms/TransferNFTForm';
+export { TransferNFTFormComp } from './Forms/TransferForm';

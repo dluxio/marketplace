@@ -6,7 +6,7 @@ import { ImCross } from 'react-icons/im';
 
 import { Give } from '../../utils';
 import { useRecoilValue } from 'recoil';
-import { userState } from '../../atoms';
+import { prefixState, userState } from '../../atoms';
 
 export const TransferNFTFormComp: React.FC<{
   set: string;
@@ -14,6 +14,7 @@ export const TransferNFTFormComp: React.FC<{
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
   const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
   const [transferData, setTransferData] = useState<{
     set: string;
     to: string;
@@ -22,8 +23,9 @@ export const TransferNFTFormComp: React.FC<{
 
   useEffect(() => {
     if (transferData) {
-      Give(user.name, transferData);
+      Give(user.name, transferData, prefix);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transferData, user]);
 
   return (

@@ -4,7 +4,7 @@ import { ImCross } from 'react-icons/im';
 import { FormInput } from '../FormInput';
 
 import { useRecoilValue } from 'recoil';
-import { userState } from '../../atoms';
+import { prefixState, userState } from '../../atoms';
 
 import { FTAirdrop } from '../../utils';
 
@@ -15,13 +15,14 @@ export const Airdrop = ({
   handleClose: Function;
   set: string;
 }) => {
+  const prefix: string = useRecoilValue(prefixState);
   const user: any = useRecoilValue(userState);
   const [airdropData, setAirdropData] =
     useState<{ to: string[]; set: string }>();
 
   useEffect(() => {
     if (airdropData) {
-      FTAirdrop(user.name, airdropData);
+      FTAirdrop(user.name, airdropData, prefix);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [airdropData]);

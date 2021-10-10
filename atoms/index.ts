@@ -29,3 +29,8 @@ export const coinState = atom({
   key: 'coinState',
   default: [],
 });
+
+export const prefixState = atom({
+  key: 'prefixState',
+  default: 'dlux_',
+});

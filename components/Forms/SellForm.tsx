@@ -3,6 +3,11 @@ import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { ImCross } from 'react-icons/im';
 import { FormInput } from '../FormInput';
 
+import { useRecoilValue } from 'recoil';
+import { userState, prefixState } from '../../atoms';
+
+import { Sell } from '../../utils';
+
 type SellFormProps = {
   handleClose: Function;
   set: string;
@@ -10,6 +15,8 @@ type SellFormProps = {
 };
 
 export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
+  const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
   const [sellData, setSellData] = useState<{
     price: number;
     set: string;
@@ -17,11 +24,10 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
   }>();
 
   useEffect(() => {
-    if (sellData && sellData.uid) {
-      console.log('NFT sell: ', sellData);
-    } else if (sellData) {
-      console.log('FT sell: ', sellData);
+    if (sellData) {
+      Sell(user.name, sellData, prefix);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sellData]);
 
   return (

@@ -8,11 +8,18 @@ import { CoinCard } from '.';
 import Link from 'next/link';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { marketNavState, nftState, coinState, auctionState } from '../atoms';
+import {
+  marketNavState,
+  nftState,
+  coinState,
+  auctionState,
+  prefixState,
+} from '../atoms';
 
 export const Market = () => {
   const [nfts, setNfts] = useRecoilState(nftState);
   const [auction, setAuction] = useRecoilState(auctionState);
+  const [prefix, setPrefix] = useRecoilState(prefixState);
 
   const selectedMarket = useRecoilValue(marketNavState);
   const [coins, setCoins] = useRecoilState<any>(coinState);
@@ -20,7 +27,6 @@ export const Market = () => {
   useEffect(() => {
     const fetchNfts = async () => {
       await axios.get('https://token.dlux.io/api/sales').then((response) => {
-        console.log(response);
         setNfts(response.data.result);
       });
     };
@@ -82,7 +88,7 @@ export const Market = () => {
               NFT
             </h1>
           </Link>
-          <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-8 mx-10 my-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-5 gap-8 mx-10 my-3">
             {nfts &&
               nfts.map(
                 (nft: any, i) =>
@@ -94,7 +100,7 @@ export const Market = () => {
               AUCTION HOUSE
             </h1>
           </Link>
-          <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-8 mx-10 my-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-5 gap-8 mx-10 my-3">
             {auction &&
               auction.map(
                 (nft: any, i) =>

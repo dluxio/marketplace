@@ -5,7 +5,7 @@ import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
 
 import { useRecoilValue } from 'recoil';
-import { userState } from '../../atoms';
+import { userState, prefixState } from '../../atoms';
 
 import { Auction } from '../../utils';
 
@@ -15,22 +15,13 @@ export const AuctionNFTForm: React.FC<{
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
   const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
   const [auctionData, setAuctionData] =
     useState<{ set: string; uid?: string; time: number; price: number }>();
 
   useEffect(() => {
-    if (auctionData && auctionData.uid) {
-      console.log('NFT auction: ', auctionData);
-      Auction(
-        user.name,
-        auctionData as { set: string; uid: string; time: number; price: number }
-      );
-    } else if (auctionData && !auctionData.uid) {
-      console.log('FT auction: ', auctionData);
-      Auction(
-        user.name,
-        auctionData as { set: string; time: number; price: number }
-      );
+    if (auctionData) {
+      Auction(user.name, auctionData, prefix);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auctionData]);

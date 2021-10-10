@@ -7,6 +7,10 @@ import { ReserveNFTForm } from './Forms/ReserveNFTForm';
 import { SellForm } from './Forms/SellForm';
 import { Confirmation } from './Confirmation';
 
+import { NFTMelt } from '../utils';
+import { prefixState, userState } from '../atoms';
+import { useRecoilValue } from 'recoil';
+
 type NftDetailProps = {
   nft: any;
 };
@@ -24,9 +28,12 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
   const [auction, setAuction] = useState(false);
   const [nftDetails, setNFTdetails] = useState<details>();
 
+  const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
+
   const handleMelt = () => {
     setConfirm(false);
-    console.log(`MELT: ${nft.set}-${nft.uid}`);
+    NFTMelt(user.name, { set: nft.set, uid: nft.uid }, prefix);
   };
 
   const fetchDetails = () => {

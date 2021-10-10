@@ -3,7 +3,7 @@ import React, { useState, useEffect, MouseEventHandler } from 'react';
 import { Formik } from 'formik';
 import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
-import { userState } from '../../atoms';
+import { prefixState, userState } from '../../atoms';
 import { useRecoilValue } from 'recoil';
 
 import { NFTBid } from '../../utils';
@@ -14,11 +14,13 @@ export const BidForm: React.FC<{
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
   const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
   const [bidData, setBidData] =
     useState<{ set: string; bid_amount: number; uid: string }>();
 
   useEffect(() => {
-    bidData && user && NFTBid(user.name, bidData);
+    bidData && user && NFTBid(user.name, bidData, prefix);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bidData, user]);
 
   return (

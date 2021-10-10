@@ -92,14 +92,18 @@ type AuctionData = {
   time: number;
 };
 
-export const Auction = (username: string, nftData: AuctionData) => {
-  console.log(username);
+export const Auction = (
+  username: string,
+  nftData: AuctionData,
+  prefix: string = 'dlux_'
+) => {
+  const id = `${prefix}${nftData.uid ? 'nft_auction' : 'ft_auction'}`;
   const operations = [
     'custom_json',
     {
       required_auths: [username],
       required_posting_auths: 0,
-      id: nftData.uid ? 'dlux_nft_auction' : 'dlux_ft_auction',
+      id,
       json: JSON.stringify(nftData),
     },
   ];
@@ -116,13 +120,18 @@ export const Auction = (username: string, nftData: AuctionData) => {
   }
 };
 
-export const FTOpen = (username: string, set: string) => {
+export const FTOpen = (
+  username: string,
+  set: string,
+  prefix: string = 'dlux_'
+) => {
+  const id = `${prefix}ft-mint`;
   const operations = [
     'custom_json',
     {
       required_auths: [username],
       required_posting_auths: [],
-      id: 'dlux_ft_mint',
+      id,
       json: JSON.stringify({
         set,
       }),
@@ -146,7 +155,12 @@ type AirdropData = {
   set: string;
 };
 
-export const FTAirdrop = (username: string, ftData: AirdropData) => {
+export const FTAirdrop = (
+  username: string,
+  ftData: AirdropData,
+  prefix: string = 'dlux_'
+) => {
+  const id = `${prefix}ft_airdrop`;
   hive.api.getAccounts([...ftData.to], (err: any, result: any) => {
     if (err) throw new Error(err);
     if (result.length === ftData.to.length) {
@@ -155,7 +169,7 @@ export const FTAirdrop = (username: string, ftData: AirdropData) => {
         {
           required_auths: [username],
           required_posting_auths: [],
-          id: 'dlux_ft_airdrop',
+          id,
           json: JSON.stringify(ftData),
         },
       ];
@@ -182,7 +196,12 @@ type GiveData = {
   uid?: string;
 };
 
-export const Give = async (username: string, giveData: GiveData) => {
+export const Give = async (
+  username: string,
+  giveData: GiveData,
+  prefix: string = 'dlux_'
+) => {
+  const id = `${prefix}${giveData.uid ? 'nft_transfer' : 'ft_transfer'}`;
   await hive.api.getAccounts([giveData.to], (err: any, result: any) => {
     console.log(result);
     if (err) throw new Error(err);
@@ -192,7 +211,7 @@ export const Give = async (username: string, giveData: GiveData) => {
         {
           required_auths: [username],
           required_posting_auths: [],
-          id: giveData.uid ? 'dlux_nft_transfer' : 'dlux_ft_transfer',
+          id,
           json: JSON.stringify(giveData),
         },
       ];
@@ -219,13 +238,18 @@ type SellData = {
   uid?: string;
 };
 
-export const Sell = (username: string, sellData: SellData) => {
+export const Sell = (
+  username: string,
+  sellData: SellData,
+  prefix: string = 'dlux_'
+) => {
+  const id = `${prefix}${sellData.uid ? 'nft_sell' : 'ft_sell'}`;
   const operations = [
     'custom_json',
     {
       required_auths: [username],
       required_posting_auths: [],
-      id: sellData.uid ? 'dlux_nft_sell' : 'dlux_ft_sell',
+      id,
       json: JSON.stringify(sellData),
     },
   ];
@@ -247,13 +271,18 @@ type MeltData = {
   uid: string;
 };
 
-export const NFTMelt = (username: string, nftData: MeltData) => {
+export const NFTMelt = (
+  username: string,
+  nftData: MeltData,
+  prefix: string = 'dlux_'
+) => {
+  const id = `${prefix}nft_melt`;
   const operations = [
     'custom_json',
     {
       required_auths: [username],
       required_posting_auths: [],
-      id: 'dlux_nft_melt',
+      id,
       json: JSON.stringify(nftData),
     },
   ];
@@ -275,13 +304,18 @@ type BuyData = {
   uid: string;
 };
 
-export const NFTBuy = (username: string, nftData: BuyData) => {
+export const NFTBuy = (
+  username: string,
+  nftData: BuyData,
+  prefix: string = 'dlux_'
+) => {
+  const id = `${prefix}nft_buy`;
   const operations = [
     'custom_json',
     {
       required_auths: [username],
       required_posting_auths: 0,
-      id: 'dlux_nft_buy',
+      id,
       json: JSON.stringify(nftData),
     },
   ];
@@ -304,13 +338,18 @@ type BidData = {
   bid_amount: number;
 };
 
-export const NFTBid = (username: String, nftData: BidData) => {
+export const NFTBid = (
+  username: string,
+  nftData: BidData,
+  prefix: string = 'dlux_'
+) => {
+  const id = `${prefix}nft_bid`;
   const operations = [
     'custom_json',
     {
       required_auths: [username],
       required_posting_auths: [],
-      id: 'dlux_nft_bid',
+      id,
       json: JSON.stringify(nftData),
     },
   ];

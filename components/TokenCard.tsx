@@ -8,6 +8,7 @@ import { toBase64 } from '../utils';
 import { Airdrop } from './Forms/AirdropForm';
 import axios from 'axios';
 import { AuctionNFTForm } from './Forms/AuctionForm';
+import { SellForm } from './Forms/SellForm';
 import { TransferNFTFormComp } from '.';
 
 type TokenCardProps = {
@@ -17,6 +18,7 @@ type TokenCardProps = {
 };
 
 export const TokenCard = ({ set, script, token }: TokenCardProps) => {
+  const [isSelling, setIsSelling] = useState(false);
   const [auction, setAuction] = useState(false);
   const [airdrop, setAirdrop] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
@@ -98,7 +100,10 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
             >
               Give
             </button>
-            <button className="bg-gray-700 px-2 rounded-lg border-2 text-yellow-500 bg-transparent border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-700">
+            <button
+              onClick={() => setIsSelling(true)}
+              className="bg-gray-700 px-2 rounded-lg border-2 text-yellow-500 bg-transparent border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-700"
+            >
               List for sale
             </button>
             <button
@@ -131,6 +136,9 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
       {airdrop && <Airdrop set={set} handleClose={() => setAirdrop(false)} />}
       {auction && (
         <AuctionNFTForm set={set} handleClose={() => setAuction(false)} />
+      )}
+      {isSelling && (
+        <SellForm set={set} handleClose={() => setIsSelling(false)} />
       )}
     </div>
   );
