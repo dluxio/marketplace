@@ -4,12 +4,14 @@ import { setColors } from '../constants';
 import { ImArrowRight2, ImCross } from 'react-icons/im';
 import { FaQuestion } from 'react-icons/fa';
 
-import { toBase64 } from '../utils';
+import { toBase64, FTOpen } from '../utils';
 import { Airdrop } from './Forms/AirdropForm';
 import axios from 'axios';
 import { AuctionNFTForm } from './Forms/AuctionForm';
 import { SellForm } from './Forms/SellForm';
 import { TransferNFTFormComp } from '.';
+import { useRecoilValue } from 'recoil';
+import { prefixState, userState } from '../atoms';
 
 type TokenCardProps = {
   token?: any;
@@ -25,6 +27,8 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
   const id = '_' + Math.random().toString(36).substr(2, 9);
   const [randomUID, setRandomUID] = useState('AA');
   const [isFlipped, setIsFlipped] = useState(false);
+  const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
 
   const randomUIDGen = (setData: any) => {
     const num = Math.round(Math.random() * (setData.max - (setData.min || 0)));
@@ -32,7 +36,9 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
     setRandomUID(UID);
   };
 
-  const handleOpen = () => {};
+  const handleOpen = () => {
+    FTOpen(user.name, set, prefix);
+  };
 
   useEffect(() => {
     axios.get(`https://token.dlux.io/api/set/${set}`).then(({ data }) => {
@@ -143,3 +149,6 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
     </div>
   );
 };
+function prefixData(prefixData: any): string {
+  throw new Error('Function not implemented.');
+}

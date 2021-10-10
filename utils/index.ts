@@ -130,7 +130,7 @@ export const FTOpen = (
     'custom_json',
     {
       required_auths: [username],
-      required_posting_auths: [],
+      required_posting_auths: 0,
       id,
       json: JSON.stringify({
         set,
