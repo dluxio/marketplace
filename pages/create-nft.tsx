@@ -4,68 +4,29 @@ import { Formik } from 'formik';
 import { FormInput } from '../components/FormInput';
 
 import { useRecoilValue } from 'recoil';
-import { userState } from '../atoms';
+import { userState, prefixState } from '../atoms';
 
-import {
-  keychain as hive_keychain,
-  isKeychainInstalled,
-} from '@hiveio/keychain';
-
-const token_prefix = 'dlux_';
+import { NFTCreate } from '../utils';
 
 const CrtateNFT = () => {
   const user: any = useRecoilValue(userState);
-  const [form, setForm] = useState({
-    name: '',
-    type: 1 || 2,
-    script: '',
-    permlink: '',
-    start: '',
-    end: '',
-    royalty: '',
-    handling: 'svg',
-    max_fee: 1,
-    bond: 1,
-  });
+  const prefix: string = useRecoilValue(prefixState);
+  const [form, setForm] = useState<{
+    name: string;
+    type: number;
+    script: string;
+    permlink: string;
+    start: string;
+    end: string;
+    royalty: string;
+    handling: string;
+    max_fee: number;
+    bond: number;
+  }>();
 
   useEffect(() => {
-    const createNFT = async () => {
-      const operations = [
-        [
-          'custom_json',
-          {
-            required_auths: [user.name],
-            required_posting_auths: [],
-            id: `${token_prefix}nft_define`,
-            json: JSON.stringify(form),
-          },
-        ],
-      ];
-      const { success, msg, cancel, notInstalled, notActive } =
-        await hive_keychain(
-          window,
-          'requestBroadcast',
-          user.name,
-          operations,
-          'posting',
-          (response: any) => console.log(response)
-        );
-
-      if (success) {
-        console.log('Yay');
-      } else if (!cancel) {
-        if (notActive) {
-          // alert('Please allow Keychain to access this website')
-        } else if (notInstalled) {
-          // alert('Please install Keychain')
-        } else {
-          throw new Error(msg);
-        }
-      }
-    };
-
-    if (user && form.name !== '') {
-      createNFT();
+    if (form) {
+      NFTCreate(user.name, prefix, form);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form]);

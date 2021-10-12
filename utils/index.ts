@@ -365,3 +365,45 @@ export const NFTBid = (
     );
   }
 };
+
+type NFTCreateData = {
+  name: string;
+  type: number;
+  script: string;
+  permlink: string;
+  start: string;
+  end: string;
+  royalty: string;
+  handling: string;
+  max_fee: number;
+  bond: number;
+};
+
+export const NFTCreate = async (
+  username: string,
+  prefix: string,
+  formData: NFTCreateData
+) => {
+  const operations = [
+    [
+      'custom_json',
+      {
+        required_auths: [username],
+        required_posting_auths: 0,
+        id: `${prefix}nft_define`,
+        json: JSON.stringify(formData),
+      },
+    ],
+  ];
+
+  // @ts-ignore
+  if (window.hive_keychain) {
+    // @ts-ignore
+    window.hive_keychain.requestBroadcast(
+      username,
+      [operations],
+      'active',
+      (response: any) => console.log(response)
+    );
+  }
+};

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import axios from 'axios';
 
@@ -27,14 +27,16 @@ export const Market = () => {
   useEffect(() => {
     const fetchNfts = async () => {
       await axios.get('https://token.dlux.io/api/sales').then((response) => {
+        console.log(response.data);
         setNfts(response.data.result);
       });
     };
 
     const fetchAuction = async () => {
-      await axios
-        .get('https://token.dlux.io/api/auctions')
-        .then((response) => setAuction(response.data.result));
+      await axios.get('https://token.dlux.io/api/auctions').then((response) => {
+        console.log(response.data);
+        setAuction(response.data.result);
+      });
     };
 
     const fetchCoins = async () => {
@@ -65,9 +67,16 @@ export const Market = () => {
       setCoins([hiveData, ethData, hbdData]);
     };
 
+    const fetchPrefix = () => {
+      axios.get('https://token.dlux.io/api/protocol').then((response) => {
+        setPrefix(response.data.prefix);
+      });
+    };
+
     if (!coins.length) {
       fetchCoins();
     }
+    fetchPrefix();
     fetchNfts();
     fetchAuction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
