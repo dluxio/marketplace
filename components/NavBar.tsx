@@ -6,6 +6,7 @@ import { userState } from '../atoms';
 import { Login } from './Login';
 
 import { useRouter } from 'next/router';
+import { Spinner } from './Spinner';
 
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,6 +84,11 @@ export const NavBar = () => {
         </div>
       )}
       {signing && <Login handleClose={() => setSigning(false)} />}
+      <div className={'absolute top-11 right-2 grid-cols-1'}>
+        <Spinner time={10} />
+        <Spinner time={15} />
+        <Spinner time={20} />
+      </div>
     </div>
   );
 };

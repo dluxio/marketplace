@@ -52,39 +52,6 @@ export const getColor = (id: string) => {
   }
 };
 
-export const options = {
-  lineHeightAnnotation: {
-    always: true,
-    hover: false,
-    lineHeight: 1.5,
-  },
-  animation: {
-    duration: 2000,
-  },
-  maintainAspectRatio: true,
-  responsive: true,
-  scaleFontColor: '#FFF',
-  fontColor: '#FFF',
-  scales: {
-    xAxes: [
-      {
-        type: 'time',
-        time: {
-          format: 'HH:mm',
-          unit: 'hour',
-          unitStepSize: 1,
-          displayFormats: {
-            minute: 'HH:mm',
-            hour: 'HH:mm',
-            min: '00:00',
-            max: '23:59',
-          },
-        },
-      },
-    ],
-  },
-};
-
 type AuctionData = {
   set: string;
   uid?: string;
@@ -115,7 +82,7 @@ export const Auction = (
       username,
       [operations],
       'active',
-      (response: any) => console.log(response)
+      (response: any) => response
     );
   }
 };
@@ -145,7 +112,7 @@ export const FTOpen = (
       username,
       [operations],
       'active',
-      (response: any) => console.log(response)
+      (response: any) => response
     );
   }
 };
@@ -181,7 +148,7 @@ export const FTAirdrop = (
           username,
           [operations],
           'active',
-          (response: any) => console.log(response)
+          (response: any) => response
         );
       }
     } else {
@@ -223,7 +190,7 @@ export const Give = async (
           username,
           [operations],
           'active',
-          (response: any) => console.log(response)
+          (response: any) => response
         );
       }
     } else {
@@ -261,7 +228,7 @@ export const Sell = (
       username,
       [operations],
       'active',
-      (response: any) => console.log(response)
+      (response: any) => response
     );
   }
 };
@@ -294,7 +261,7 @@ export const NFTMelt = (
       username,
       [operations],
       'active',
-      (response: any) => console.log(response)
+      (response: any) => response
     );
   }
 };
@@ -327,7 +294,7 @@ export const NFTBuy = (
       username,
       [operations],
       'active',
-      (response: any) => console.log(response)
+      (response: any) => response
     );
   }
 };
@@ -361,7 +328,7 @@ export const NFTBid = (
       username,
       [operations],
       'active',
-      (response: any) => console.log(response)
+      (response: any) => response
     );
   }
 };
@@ -403,7 +370,7 @@ export const NFTCreate = async (
       username,
       [operations],
       'active',
-      (response: any) => console.log(response)
+      (response: any) => response
     );
   }
 };

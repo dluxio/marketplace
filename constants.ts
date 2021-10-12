@@ -8,3 +8,9 @@ export const tokenColors: any = {
   hive_dollar: 'green',
   ethereum: 'gray',
 };
+
+export const spinnerColors: any = [
+  ['#004777', 0.33],
+  ['#FFFF00', 0.33],
+  ['#B11800', 0.33],
+];
