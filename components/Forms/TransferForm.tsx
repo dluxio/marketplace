@@ -23,7 +23,8 @@ export const TransferNFTFormComp: React.FC<{
 
   useEffect(() => {
     if (transferData) {
-      Give(user.name, transferData, prefix);
+      const response = Give(user.name, transferData, prefix);
+      console.log(response);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transferData, user]);

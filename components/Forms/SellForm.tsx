@@ -25,7 +25,8 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
 
   useEffect(() => {
     if (sellData) {
-      Sell(user.name, sellData, prefix);
+      const response = Sell(user.name, sellData, prefix);
+      console.log(response);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sellData]);

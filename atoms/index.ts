@@ -34,3 +34,8 @@ export const prefixState = atom({
   key: 'prefixState',
   default: 'dlux_',
 });
+
+export const broadcastState = atom({
+  key: 'broadcastState',
+  default: [],
+});

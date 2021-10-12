@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { useRecoilState } from 'recoil';
-import { userState } from '../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { userState, broadcastState } from '../atoms';
 
 import { Login } from './Login';
 
@@ -15,6 +15,7 @@ export const NavBar = () => {
   const [user, setUser] = useRecoilState<any>(userState);
   const router = useRouter();
   const url = router.pathname.split('/')[1];
+  const broadcasts: any = useRecoilValue(broadcastState);
 
   const handleLogout = () => setUser(null);
 
@@ -85,9 +86,9 @@ export const NavBar = () => {
       )}
       {signing && <Login handleClose={() => setSigning(false)} />}
       <div className={'absolute top-11 right-2 grid-cols-1'}>
-        <Spinner time={10} />
-        <Spinner time={15} />
-        <Spinner time={20} />
+        {broadcasts.map((broadcast: any) => (
+          <Spinner key={broadcast.id} broadcast={broadcast} time={63} />
+        ))}
       </div>
     </div>
   );

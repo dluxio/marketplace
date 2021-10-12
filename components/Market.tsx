@@ -92,11 +92,13 @@ export const Market = () => {
             {coins &&
               coins.map((coin: any) => <CoinCard key={coin.id} coin={coin} />)}
           </div>
-          <Link href="/listings" passHref={true}>
-            <h1 className="cursor-pointer text-3xl ml-10 mb-4 w-1/5 mt-10 text-white font-medium">
-              NFT
-            </h1>
-          </Link>
+          {nfts.length !== 0 && (
+            <Link href="/listings" passHref={true}>
+              <h1 className="cursor-pointer text-3xl ml-10 mb-4 w-1/5 mt-10 text-white font-medium">
+                NFT
+              </h1>
+            </Link>
+          )}
           <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-5 gap-8 mx-10 my-3">
             {nfts &&
               nfts.map(
@@ -104,11 +106,13 @@ export const Market = () => {
                   i <= 4 && <NftCard key={`${nft.set}_${nft.uid}`} nft={nft} />
               )}
           </div>
-          <Link href="/auction" passHref={true}>
-            <h1 className="cursor-pointer text-3xl ml-10 mb-4 w-1/5 mt-10 text-white font-medium">
-              AUCTION HOUSE
-            </h1>
-          </Link>
+          {auction.length !== 0 && (
+            <Link href="/auction" passHref={true}>
+              <h1 className="cursor-pointer text-3xl ml-10 mb-4 w-1/5 mt-10 text-white font-medium">
+                AUCTION HOUSE
+              </h1>
+            </Link>
+          )}
           <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-5 gap-8 mx-10 my-3">
             {auction &&
               auction.map(

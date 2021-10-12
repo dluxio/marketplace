@@ -19,7 +19,10 @@ export const BidForm: React.FC<{
     useState<{ set: string; bid_amount: number; uid: string }>();
 
   useEffect(() => {
-    bidData && user && NFTBid(user.name, bidData, prefix);
+    if (bidData && user) {
+      const response = NFTBid(user.name, bidData, prefix);
+      console.log(response);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bidData, user]);
 

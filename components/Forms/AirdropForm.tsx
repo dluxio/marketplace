@@ -22,7 +22,8 @@ export const Airdrop = ({
 
   useEffect(() => {
     if (airdropData) {
-      FTAirdrop(user.name, airdropData, prefix);
+      const response = FTAirdrop(user.name, airdropData, prefix);
+      console.log(response);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [airdropData]);

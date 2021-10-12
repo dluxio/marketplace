@@ -21,7 +21,8 @@ export const AuctionNFTForm: React.FC<{
 
   useEffect(() => {
     if (auctionData) {
-      Auction(user.name, auctionData, prefix);
+      const response = Auction(user.name, auctionData, prefix);
+      console.log(response);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auctionData]);
