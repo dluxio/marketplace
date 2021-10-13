@@ -3,8 +3,8 @@ import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { ImCross } from 'react-icons/im';
 import { FormInput } from '../FormInput';
 
-import { useRecoilValue } from 'recoil';
-import { prefixState, userState } from '../../atoms';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { prefixState, userState, broadcastState } from '../../atoms';
 
 import { FTAirdrop } from '../../utils';
 
@@ -17,12 +17,15 @@ export const Airdrop = ({
 }) => {
   const prefix: string = useRecoilValue(prefixState);
   const user: any = useRecoilValue(userState);
+  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const [airdropData, setAirdropData] =
     useState<{ to: string[]; set: string }>();
 
   useEffect(() => {
     if (airdropData) {
-      const response = FTAirdrop(user.name, airdropData, prefix);
+      const response: any = FTAirdrop(user.name, airdropData, prefix);
+      response.success &&
+        setBroadcasts((prevState: any) => [...prevState, response]);
       console.log(response);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -5,14 +5,15 @@ import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
 
 import { Give } from '../../utils';
-import { useRecoilValue } from 'recoil';
-import { prefixState, userState } from '../../atoms';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { prefixState, userState, broadcastState } from '../../atoms';
 
 export const TransferNFTFormComp: React.FC<{
   set: string;
   uid?: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
+  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const [transferData, setTransferData] = useState<{
@@ -23,8 +24,9 @@ export const TransferNFTFormComp: React.FC<{
 
   useEffect(() => {
     if (transferData) {
-      const response = Give(user.name, transferData, prefix);
-      console.log(response);
+      const response: any = Give(user.name, transferData, prefix);
+      response.success &&
+        setBroadcasts((prevState: any) => [...prevState, response]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transferData, user]);

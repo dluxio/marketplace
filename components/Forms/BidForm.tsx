@@ -3,8 +3,8 @@ import React, { useState, useEffect, MouseEventHandler } from 'react';
 import { Formik } from 'formik';
 import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
-import { prefixState, userState } from '../../atoms';
-import { useRecoilValue } from 'recoil';
+import { broadcastState, prefixState, userState } from '../../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { NFTBid } from '../../utils';
 
@@ -13,6 +13,7 @@ export const BidForm: React.FC<{
   uid: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
+  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const [bidData, setBidData] =
@@ -20,7 +21,9 @@ export const BidForm: React.FC<{
 
   useEffect(() => {
     if (bidData && user) {
-      const response = NFTBid(user.name, bidData, prefix);
+      const response: any = NFTBid(user.name, bidData, prefix);
+      response.success &&
+        setBroadcasts((prevState: any) => [...prevState, response]);
       console.log(response);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

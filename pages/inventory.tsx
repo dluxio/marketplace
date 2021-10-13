@@ -65,9 +65,11 @@ const Inventory = () => {
                     ))}
                   </div>
                 </div>
-                <div id="details" className="w-full mx-auto sm:mx-10">
-                  <NftDetails nft={nftDetail} />
-                </div>
+                {nftDetail && (
+                  <div id="details" className="w-full mx-auto sm:mx-10">
+                    <NftDetails nft={nftDetail} />
+                  </div>
+                )}
               </div>
             )}
             {inventoryPage === 'tokens' && <CryptoScreen />}

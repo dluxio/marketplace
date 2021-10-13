@@ -3,8 +3,8 @@ import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { ImCross } from 'react-icons/im';
 import { FormInput } from '../FormInput';
 
-import { useRecoilValue } from 'recoil';
-import { userState, prefixState } from '../../atoms';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { userState, prefixState, broadcastState } from '../../atoms';
 
 import { Sell } from '../../utils';
 
@@ -15,6 +15,7 @@ type SellFormProps = {
 };
 
 export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
+  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const [sellData, setSellData] = useState<{
@@ -25,8 +26,9 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
 
   useEffect(() => {
     if (sellData) {
-      const response = Sell(user.name, sellData, prefix);
-      console.log(response);
+      const response: any = Sell(user.name, sellData, prefix);
+      response.success &&
+        setBroadcasts((prevState: any) => [...prevState, response]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sellData]);

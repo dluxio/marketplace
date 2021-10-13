@@ -4,8 +4,8 @@ import { Formik } from 'formik';
 import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
 
-import { useRecoilValue } from 'recoil';
-import { userState, prefixState } from '../../atoms';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { userState, prefixState, broadcastState } from '../../atoms';
 
 import { Auction } from '../../utils';
 
@@ -14,6 +14,7 @@ export const AuctionNFTForm: React.FC<{
   uid?: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
+  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const [auctionData, setAuctionData] =
@@ -21,8 +22,9 @@ export const AuctionNFTForm: React.FC<{
 
   useEffect(() => {
     if (auctionData) {
-      const response = Auction(user.name, auctionData, prefix);
-      console.log(response);
+      const response: any = Auction(user.name, auctionData, prefix);
+      response.success &&
+        setBroadcasts((prevState: any) => [...prevState, response]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auctionData]);
