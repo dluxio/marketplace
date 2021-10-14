@@ -27,6 +27,7 @@ const Inventory = () => {
     if (isLogged) {
       const name = user.name;
       axios.get(`https://token.dlux.io/api/nfts/${name}`).then((response) => {
+        console.log(response);
         setInventoryNFTs(response.data.result);
       });
     } else {

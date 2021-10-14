@@ -1,15 +1,27 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../atoms';
+
+import { useRouter } from 'next/router';
 
 import { TokenCard } from './TokenCard';
 
 export const MintTokenScreen = () => {
   const [mintTokens, setMintTokens] = useState([]);
+  const user: any = useRecoilValue(userState);
+  const router = useRouter();
+
   useEffect(() => {
-    axios.get('https://token.dlux.io/api/mintauctions').then(({ data }) => {
-      console.log(data);
-      setMintTokens(data.result);
-    });
+    if (user) {
+      const name = user.name;
+      axios.get(`https://token.dlux.io/api/nfts/${name}`).then((response) => {
+        console.log(response);
+        setMintTokens(response.data.mint_tokens);
+      });
+    } else {
+      router.push('/');
+    }
   }, []);
 
   return (
@@ -20,8 +32,6 @@ export const MintTokenScreen = () => {
             <TokenCard
               key={'_' + Math.random().toString(36).substr(2, 9)}
               token={token}
-              set={token.set}
-              script={token.script}
             />
           </div>
         ))}

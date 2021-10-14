@@ -10,16 +10,15 @@ import axios from 'axios';
 import { AuctionNFTForm } from './Forms/AuctionForm';
 import { SellForm } from './Forms/SellForm';
 import { TransferNFTFormComp } from '.';
-import { useRecoilValue } from 'recoil';
-import { prefixState, userState } from '../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { broadcastState, prefixState, userState } from '../atoms';
 
 type TokenCardProps = {
   token?: any;
-  set: string;
-  script: string;
 };
 
-export const TokenCard = ({ set, script, token }: TokenCardProps) => {
+export const TokenCard = ({ token }: TokenCardProps) => {
+  const { set, script } = token;
   const [isSelling, setIsSelling] = useState(false);
   const [auction, setAuction] = useState(false);
   const [airdrop, setAirdrop] = useState(false);
@@ -27,6 +26,7 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
   const id = '_' + Math.random().toString(36).substr(2, 9);
   const [randomUID, setRandomUID] = useState('AA');
   const [isFlipped, setIsFlipped] = useState(false);
+  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
 
@@ -37,7 +37,10 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
   };
 
   const handleOpen = () => {
-    FTOpen(user.name, set, prefix);
+    const response: any = FTOpen(user.name, set, prefix);
+    response &&
+      response.success &&
+      setBroadcasts((prevState: any) => [...prevState, response]);
   };
 
   useEffect(() => {
@@ -81,7 +84,7 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
       </div>
       <div className="px-5 py-4 w-full flex justify-between items-center z-50">
         <p>
-          Qty: <strong>{token.items.length}</strong>
+          Qty: <strong>{token.qty}</strong>
         </p>
         <button
           className="px-6 py-2 rounded-xl flex items-center gap-2"
@@ -149,6 +152,3 @@ export const TokenCard = ({ set, script, token }: TokenCardProps) => {
     </div>
   );
 };
-function prefixData(prefixData: any): string {
-  throw new Error('Function not implemented.');
-}
