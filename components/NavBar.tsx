@@ -25,6 +25,20 @@ export const NavBar = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    const getUser = async () => {
+      const userStor = await localStorage.getItem('user');
+      if (userStor) {
+        setUser(JSON.parse(userStor));
+      }
+    };
+
+    if (!user) {
+      getUser();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="bg-black text-white px-5 font-normal py-3 pb-0 flex justify-between">
       <div className="flex gap-10 flex-grow justify-center">

@@ -43,6 +43,7 @@ export const Login = ({ handleClose }: LoginProps) => {
           if (err) throw new Error(err);
           if (result !== []) {
             setUser(result[0]);
+            localStorage.setItem('user', JSON.stringify(result[0]));
             console.log(result[0]);
           } else {
             setErrors({ user: 'hello' });
