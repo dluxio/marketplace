@@ -368,7 +368,7 @@ export const NFTCreate = async (
     // @ts-ignore
     window.hive_keychain.requestBroadcast(
       username,
-      [operations],
+      operations,
       'active',
       (response: any) => response
     );
