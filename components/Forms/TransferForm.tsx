@@ -13,7 +13,7 @@ export const TransferNFTFormComp: React.FC<{
   uid?: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
-  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const [transferData, setTransferData] = useState<{

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { spinnerColors } from '../constants';
 
+import axios from 'axios';
+
 export const Spinner = ({
   time,
   broadcast,
@@ -11,12 +13,28 @@ export const Spinner = ({
   broadcast: any;
 }) => {
   const [remaining, setRemaining] = useState(time);
-  const [status, setStatus] = useState<{ success: boolean }>();
+  const [status, setStatus] = useState<any>();
 
   useEffect(() => {
-    console.log(remaining, broadcast);
+    if (remaining === 0) {
+      axios
+        .get(`https://token.dlux.io/api/status/${broadcast.id}`)
+        .then((response) => {
+          console.log(response.data);
+          setStatus(response.data.status && response.data.status);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remaining]);
+
+  useEffect(() => {
+    if (status) {
+      switch (status) {
+        default:
+          console.log('Refetch, something');
+      }
+    }
+  }, [status]);
 
   return (
     <div
