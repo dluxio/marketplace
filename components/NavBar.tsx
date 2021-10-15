@@ -19,6 +19,10 @@ export const NavBar = () => {
 
   const handleLogout = () => setUser(null);
 
+  const handleTrades = () => {
+    router.push('/trades');
+  };
+
   useEffect(() => {
     if (user) {
       setSigning(false);
@@ -86,7 +90,9 @@ export const NavBar = () => {
               isOpen ? '' : 'hidden'
             } fixed bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col`}
           >
-            <a className="btn">Settings</a>
+            <a onClick={handleTrades} className="btn">
+              pending trades
+            </a>
             <a className="btn" onClick={handleLogout}>
               Logout
             </a>
