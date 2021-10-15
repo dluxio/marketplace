@@ -21,10 +21,13 @@ export const BidForm: React.FC<{
 
   useEffect(() => {
     if (bidData && user) {
-      const response: any = NFTBid(user.name, bidData, prefix);
-      response.success &&
-        setBroadcasts((prevState: any) => [...prevState, response]);
-      console.log(response);
+      NFTBid(user.name, bidData, prefix).then((response: any) => {
+        if (response) {
+          if (response.success) {
+            setBroadcasts((prevState: any) => [...prevState, response]);
+          }
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bidData, user]);

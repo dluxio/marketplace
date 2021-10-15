@@ -23,10 +23,13 @@ export const Airdrop = ({
 
   useEffect(() => {
     if (airdropData) {
-      const response: any = FTAirdrop(user.name, airdropData, prefix);
-      response.success &&
-        setBroadcasts((prevState: any) => [...prevState, response]);
-      console.log(response);
+      FTAirdrop(user.name, airdropData, prefix).then((response: any) => {
+        if (response) {
+          if (response.success) {
+            setBroadcasts((prevState: any) => [...prevState, response]);
+          }
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [airdropData]);

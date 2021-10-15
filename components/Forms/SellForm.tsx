@@ -26,11 +26,13 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
 
   useEffect(() => {
     if (sellData) {
-      const response: any = Sell(user.name, sellData, prefix);
-      console.log(response);
-      response &&
-        response.success &&
-        setBroadcasts((prevState: any) => [...prevState, response]);
+      Sell(user.name, sellData, prefix).then((response: any) => {
+        if (response) {
+          if (response.success) {
+            setBroadcasts((prevState: any) => [...prevState, response]);
+          }
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sellData]);

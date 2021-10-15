@@ -24,9 +24,13 @@ export const TransferNFTFormComp: React.FC<{
 
   useEffect(() => {
     if (transferData) {
-      const response: any = Give(user.name, transferData, prefix);
-      response.success &&
-        setBroadcasts((prevState: any) => [...prevState, response]);
+      Give(user.name, transferData, prefix).then((response: any) => {
+        if (response) {
+          if (response.success) {
+            setBroadcasts((prevState: any) => [...prevState, response]);
+          }
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transferData, user]);

@@ -34,7 +34,7 @@ export const NftCard = ({ nft }: NftCardProp) => {
   }, []);
 
   const handleBuy = async () => {
-    const response = await NFTBuy(user.name, { uid: nft.uid, set: nft.set });
+    await NFTBuy(user.name, { uid: nft.uid, set: nft.set });
   };
 
   return (

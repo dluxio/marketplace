@@ -22,9 +22,13 @@ export const AuctionNFTForm: React.FC<{
 
   useEffect(() => {
     if (auctionData) {
-      const response: any = Auction(user.name, auctionData, prefix);
-      response.success &&
-        setBroadcasts((prevState: any) => [...prevState, response]);
+      Auction(user.name, auctionData, prefix).then((response: any) => {
+        if (response) {
+          if (response.success) {
+            setBroadcasts((prevState: any) => [...prevState, response]);
+          }
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auctionData]);

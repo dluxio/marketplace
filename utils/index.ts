@@ -52,6 +52,26 @@ export const getColor = (id: string) => {
   }
 };
 
+const handleBroadcastRequest = async (operations: any, username: string) => {
+  return new Promise((res, rej) => {
+    // @ts-ignore
+    if (window.hive_keychain) {
+      // @ts-ignore
+      window.hive_keychain.requestBroadcast(
+        username,
+        [operations],
+        'active',
+        (response: any) => {
+          console.log('INSIDE FUNCTION: ', response);
+          res(response);
+        }
+      );
+    } else {
+      rej("Didn't return response");
+    }
+  });
+};
+
 type AuctionData = {
   set: string;
   uid?: string;
@@ -59,7 +79,7 @@ type AuctionData = {
   time: number;
 };
 
-export const Auction = (
+export const Auction = async (
   username: string,
   nftData: AuctionData,
   prefix: string = 'dlux_'
@@ -75,16 +95,7 @@ export const Auction = (
     },
   ];
 
-  // @ts-ignore
-  if (window.hive_keychain) {
-    // @ts-ignore
-    window.hive_keychain.requestBroadcast(
-      username,
-      [operations],
-      'active',
-      (response: any) => response
-    );
-  }
+  return await handleBroadcastRequest(operations, username);
 };
 
 export const FTOpen = async (
@@ -105,21 +116,7 @@ export const FTOpen = async (
     },
   ];
 
-  // @ts-ignore
-  if (window.hive_keychain) {
-    // @ts-ignore
-    await window.hive_keychain.requestBroadcast(
-      username,
-      [operations],
-      'active',
-      (response: any) => {
-        console.log('INSIDE FUNCTION: ', response);
-        return response;
-      }
-    );
-  } else {
-    return 'NO work';
-  }
+  return await handleBroadcastRequest(operations, username);
 };
 
 type AirdropData = {
@@ -127,13 +124,13 @@ type AirdropData = {
   set: string;
 };
 
-export const FTAirdrop = (
+export const FTAirdrop = async (
   username: string,
   ftData: AirdropData,
   prefix: string = 'dlux_'
 ) => {
   const id = `${prefix}ft_airdrop`;
-  hive.api.getAccounts([...ftData.to], (err: any, result: any) => {
+  hive.api.getAccounts([...ftData.to], async (err: any, result: any) => {
     if (err) throw new Error(err);
     if (result.length === ftData.to.length) {
       const operations = [
@@ -146,16 +143,7 @@ export const FTAirdrop = (
         },
       ];
 
-      //@ts-ignore
-      if (window.hive_keychain) {
-        //@ts-ignore
-        window.hive_keychain.requestBroadcast(
-          username,
-          [operations],
-          'active',
-          (response: any) => response
-        );
-      }
+      return await handleBroadcastRequest(operations, username);
     } else {
       console.log("One or more users don't exist");
     }
@@ -174,7 +162,7 @@ export const Give = async (
   prefix: string = 'dlux_'
 ) => {
   const id = `${prefix}${giveData.uid ? 'nft_transfer' : 'ft_transfer'}`;
-  await hive.api.getAccounts([giveData.to], (err: any, result: any) => {
+  await hive.api.getAccounts([giveData.to], async (err: any, result: any) => {
     console.log(result);
     if (err) throw new Error(err);
     if (result !== []) {
@@ -188,16 +176,7 @@ export const Give = async (
         },
       ];
 
-      //@ts-ignore
-      if (window.hive_keychain) {
-        //@ts-ignore
-        window.hive_keychain.requestBroadcast(
-          username,
-          [operations],
-          'active',
-          (response: any) => response
-        );
-      }
+      return await handleBroadcastRequest(operations, username);
     } else {
       console.log('No user to send to');
     }
@@ -210,7 +189,7 @@ type SellData = {
   uid?: string;
 };
 
-export const Sell = (
+export const Sell = async (
   username: string,
   sellData: SellData,
   prefix: string = 'dlux_'
@@ -226,16 +205,7 @@ export const Sell = (
     },
   ];
 
-  // @ts-ignore
-  if (window.hive_keychain) {
-    // @ts-ignore
-    window.hive_keychain.requestBroadcast(
-      username,
-      [operations],
-      'active',
-      (response: any) => response
-    );
-  }
+  return await handleBroadcastRequest(operations, username);
 };
 
 type MeltData = {
@@ -243,7 +213,7 @@ type MeltData = {
   uid: string;
 };
 
-export const NFTMelt = (
+export const NFTMelt = async (
   username: string,
   nftData: MeltData,
   prefix: string = 'dlux_'
@@ -259,16 +229,7 @@ export const NFTMelt = (
     },
   ];
 
-  // @ts-ignore
-  if (window.hive_keychain) {
-    // @ts-ignore
-    window.hive_keychain.requestBroadcast(
-      username,
-      [operations],
-      'active',
-      (response: any) => response
-    );
-  }
+  return await handleBroadcastRequest(operations, username);
 };
 
 type BuyData = {
@@ -281,7 +242,6 @@ export const NFTBuy = async (
   nftData: BuyData,
   prefix: string = 'dlux_'
 ) => {
-  let response1;
   const id = `${prefix}nft_buy`;
   const operations = [
     'custom_json',
@@ -293,22 +253,7 @@ export const NFTBuy = async (
     },
   ];
 
-  // @ts-ignore
-  if (window.hive_keychain) {
-    // @ts-ignore
-    await window.hive_keychain.requestBroadcast(
-      username,
-      [operations],
-      'active',
-      (response: any) => {
-        response1 = response;
-      }
-    );
-  }
-
-  if (response1) {
-    console.log(response1);
-  }
+  return await handleBroadcastRequest(operations, username);
 };
 
 type BidData = {
@@ -317,7 +262,7 @@ type BidData = {
   bid_amount: number;
 };
 
-export const NFTBid = (
+export const NFTBid = async (
   username: string,
   nftData: BidData,
   prefix: string = 'dlux_'
@@ -333,16 +278,7 @@ export const NFTBid = (
     },
   ];
 
-  // @ts-ignore
-  if (window.hive_keychain) {
-    // @ts-ignore
-    window.hive_keychain.requestBroadcast(
-      username,
-      [operations],
-      'active',
-      (response: any) => response
-    );
-  }
+  return await handleBroadcastRequest(operations, username);
 };
 
 type NFTCreateData = {
@@ -375,14 +311,5 @@ export const NFTCreate = async (
     ],
   ];
 
-  // @ts-ignore
-  if (window.hive_keychain) {
-    // @ts-ignore
-    window.hive_keychain.requestBroadcast(
-      username,
-      operations,
-      'active',
-      (response: any) => response
-    );
-  }
+  return await handleBroadcastRequest(operations, username);
 };
