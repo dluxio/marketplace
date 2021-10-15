@@ -26,8 +26,8 @@ export const NavBar = () => {
   }, [user]);
 
   useEffect(() => {
-    const getUser = async () => {
-      const userStor = await localStorage.getItem('user');
+    const getUser = () => {
+      const userStor = localStorage.getItem('user');
       if (userStor) {
         setUser(JSON.parse(userStor));
       }
@@ -83,11 +83,11 @@ export const NavBar = () => {
           </h1>
           <div
             className={`${
-              isOpen ? 'visible' : 'hidden'
-            } fixed bg-white top-14 right-2 p-5 rounded-xl flex flex-col`}
+              isOpen ? '' : 'hidden'
+            } fixed bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col`}
           >
-            <a className="text-black text-sm link">Settings</a>
-            <a className="text-black text-sm link" onClick={handleLogout}>
+            <a className="btn">Settings</a>
+            <a className="btn" onClick={handleLogout}>
               Logout
             </a>
           </div>

@@ -28,6 +28,13 @@ export const MintTokenScreen = () => {
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-6 gap-5 px-10">
+        {mintTokens.length === 0 && (
+          <div className="w-full flex justify-center items-center">
+            <h1 className="text-white text-xl">
+              You don&apos;t have any unminted tokens
+            </h1>
+          </div>
+        )}
         {mintTokens.map((token: any) => (
           <div key={token.set}>
             <TokenCard
