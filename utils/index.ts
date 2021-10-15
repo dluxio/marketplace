@@ -92,7 +92,7 @@ export const FTOpen = (
   set: string,
   prefix: string = 'dlux_'
 ) => {
-  const id = `${prefix}ft_mint`;
+  const id = `${prefix}nft_mint`;
   const operations = [
     'custom_json',
     {
