@@ -57,9 +57,9 @@ export const TokenCard = ({ token }: TokenCardProps) => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://ipfs.io/ipfs/${script}?${randomUID}`)
-      .then((response) => response.text())
-      .then((data) => {
+    axios
+      .get(`https://ipfs.io/ipfs/${script}?${randomUID}`)
+      .then(({ data }) => {
         const code = `(//${data}\n)("${randomUID}")`;
         const SVG = eval(code);
 
@@ -67,6 +67,7 @@ export const TokenCard = ({ token }: TokenCardProps) => {
           document.getElementById(`image-${set}-${id}`)!.innerHTML = SVG.HTML;
         }
       });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [randomUID]);
 

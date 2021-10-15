@@ -3,6 +3,8 @@ import { setColors } from '../constants';
 
 import Countdown from 'react-countdown';
 
+import axios from 'axios';
+
 import { GiTakeMyMoney } from 'react-icons/gi';
 import { AuctionDetail } from './AuctionDetail';
 import { BidForm } from './Forms/BidForm';
@@ -20,9 +22,9 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
   const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
-    fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
-      .then((response) => response.text())
-      .then((data) => {
+    axios
+      .get(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
+      .then(({ data }) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
         document.getElementById(

@@ -10,6 +10,8 @@ import { setColors } from '../constants';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../atoms';
 
+import axios from 'axios';
+
 import { NFTBuy } from '../utils';
 
 type NftCardProp = {
@@ -20,9 +22,9 @@ export const NftCard = ({ nft }: NftCardProp) => {
   const user: any = useRecoilValue(userState);
 
   useEffect(() => {
-    fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
-      .then((response) => response.text())
-      .then((data) => {
+    axios
+      .get(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
+      .then(({ data }) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
         console.log(SVG);

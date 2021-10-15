@@ -99,7 +99,7 @@ export const NavBar = () => {
         </div>
       )}
       {signing && <Login handleClose={() => setSigning(false)} />}
-      <div className={'fixed top-11 right-2 grid-cols-1'}>
+      <div className={'fixed bottom-5 right-5 grid-cols-1'}>
         {broadcasts.map((broadcast: any) => (
           <Spinner key={broadcast.id} broadcast={broadcast} time={63} />
         ))}
