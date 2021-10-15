@@ -58,9 +58,9 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
   return (
     <div className="fixed top-0 left-0 h-screen w-screen overflow-hidden bg-gray-700 bg-opacity-50 z-0">
       <div className="w-full flex flex-col justify-center items-center h-full">
-        <div className="bg-gray-600 p-10 rounded-xl text-center border-4 border-gray-700">
-          <button className="m-5 absolute top-0 left-0 z-50">
-            <ImCross size={25} color="white" onClick={onExit} />
+        <div className="bg-gray-600 relative p-10 rounded-xl text-center border-4 border-gray-700">
+          <button className="m-2 absolute top-0 right-0 z-50">
+            <ImCross size={15} color="white" onClick={onExit} />
           </button>
           <div
             id={`${nft.set}-${nft.uid}-details`}

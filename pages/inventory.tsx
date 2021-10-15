@@ -14,7 +14,7 @@ const Inventory = () => {
   const router = useRouter();
   const user: any = useRecoilValue(userState);
   const inventoryPage = useRecoilValue(inventoryNavState);
-  const [nftDetail, setNftDetail] = useState({});
+  const [nftDetail, setNftDetail] = useState<any>();
   const [inventoryNFTs, setInventoryNFTs] = useState([]);
   const isLogged = user === null ? false : true;
 
