@@ -87,7 +87,7 @@ export const Auction = (
   }
 };
 
-export const FTOpen = (
+export const FTOpen = async (
   username: string,
   set: string,
   prefix: string = 'dlux_'
@@ -108,12 +108,17 @@ export const FTOpen = (
   // @ts-ignore
   if (window.hive_keychain) {
     // @ts-ignore
-    window.hive_keychain.requestBroadcast(
+    await window.hive_keychain.requestBroadcast(
       username,
       [operations],
       'active',
-      (response: any) => response
+      (response: any) => {
+        console.log('INSIDE FUNCTION: ', response);
+        return response;
+      }
     );
+  } else {
+    return 'NO work';
   }
 };
 
@@ -271,11 +276,12 @@ type BuyData = {
   uid: string;
 };
 
-export const NFTBuy = (
+export const NFTBuy = async (
   username: string,
   nftData: BuyData,
   prefix: string = 'dlux_'
 ) => {
+  let response1;
   const id = `${prefix}nft_buy`;
   const operations = [
     'custom_json',
@@ -290,12 +296,18 @@ export const NFTBuy = (
   // @ts-ignore
   if (window.hive_keychain) {
     // @ts-ignore
-    window.hive_keychain.requestBroadcast(
+    await window.hive_keychain.requestBroadcast(
       username,
       [operations],
       'active',
-      (response: any) => response
+      (response: any) => {
+        response1 = response;
+      }
     );
+  }
+
+  if (response1) {
+    console.log(response1);
   }
 };
 

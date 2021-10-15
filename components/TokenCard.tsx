@@ -36,11 +36,15 @@ export const TokenCard = ({ token }: TokenCardProps) => {
     setRandomUID(UID);
   };
 
-  const handleOpen = () => {
-    const response: any = FTOpen(user.name, set, prefix);
-    response &&
-      response.success &&
-      setBroadcasts((prevState: any) => [...prevState, response]);
+  const handleOpen = async () => {
+    FTOpen(user.name, set, prefix).then((response: any) => {
+      console.log('INSIDE TSX: ', response);
+      if (response) {
+        if (response.success) {
+          setBroadcasts((prevState: any) => [...prevState, response]);
+        }
+      }
+    });
   };
 
   useEffect(() => {

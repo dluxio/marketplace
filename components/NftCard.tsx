@@ -33,8 +33,8 @@ export const NftCard = ({ nft }: NftCardProp) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleBuy = () => {
-    NFTBuy(user.name, { uid: nft.uid, set: nft.set });
+  const handleBuy = async () => {
+    const response = await NFTBuy(user.name, { uid: nft.uid, set: nft.set });
   };
 
   return (
