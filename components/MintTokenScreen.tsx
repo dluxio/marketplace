@@ -22,6 +22,7 @@ export const MintTokenScreen = () => {
     } else {
       router.push('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
