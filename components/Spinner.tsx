@@ -18,10 +18,10 @@ export const Spinner = ({
   useEffect(() => {
     if (remaining === 0) {
       axios
-        .get(`https://token.dlux.io/api/status/${broadcast.id}`)
+        .get(`https://token.dlux.io/api/status/${broadcast.result.id}`)
         .then((response) => {
           console.log(response.data);
-          setStatus(response.data.status && response.data.status);
+          setStatus(response.data);
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,10 +29,11 @@ export const Spinner = ({
 
   useEffect(() => {
     if (status) {
-      switch (status) {
-        default:
-          console.log('Refetch, something');
-      }
+      // switch (status) {
+      //   default:
+      //     console.log('Refetch, something');
+      // }
+      console.log(status);
     }
   }, [status]);
 

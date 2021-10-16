@@ -17,15 +17,21 @@ export const NavBar = () => {
   const url = router.pathname.split('/')[1];
   const broadcasts: any = useRecoilValue(broadcastState);
 
-  const handleLogout = () => setUser(null);
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    setIsOpen(false);
+  };
 
   const handleTrades = () => {
     router.push('/trades');
+    setIsOpen(false);
   };
 
   useEffect(() => {
     if (user) {
       setSigning(false);
+      setIsOpen(false);
     }
   }, [user]);
 
@@ -44,7 +50,7 @@ export const NavBar = () => {
   }, []);
 
   return (
-    <div className="bg-black text-white px-5 font-normal py-3 pb-0 flex justify-between">
+    <div className="bg-black text-white px-5 font-normal py-3 pb-0 flex justify-between z-50">
       <div className="flex gap-10 flex-grow justify-center">
         <p
           className={`${url === '' && 'selected'} navLink`}
@@ -54,7 +60,8 @@ export const NavBar = () => {
         </p>
         <p
           className={`${
-            (url === 'inventory' || url === 'create-nft') && 'selected'
+            (url === 'inventory' || url === 'create-nft' || url === 'trades') &&
+            'selected'
           } ${user ? 'navLink' : 'text-gray-600 pb-2 cursor-not-allowed'}`}
           onClick={() => {
             if (user) {
