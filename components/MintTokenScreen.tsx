@@ -16,7 +16,6 @@ export const MintTokenScreen = () => {
     if (user) {
       const name = user.name;
       axios.get(`https://token.dlux.io/api/nfts/${name}`).then((response) => {
-        console.log(response);
         setMintTokens(response.data.mint_tokens);
       });
     } else {

@@ -24,7 +24,7 @@ export const TokenCard = ({ token }: TokenCardProps) => {
   const [airdrop, setAirdrop] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
   const id = '_' + Math.random().toString(36).substr(2, 9);
-  const [randomUID, setRandomUID] = useState('AA');
+  const [randomUID, setRandomUID] = useState('==');
   const [isFlipped, setIsFlipped] = useState(false);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);

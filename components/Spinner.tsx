@@ -29,11 +29,7 @@ export const Spinner = ({
 
   useEffect(() => {
     if (status) {
-      // switch (status) {
-      //   default:
-      //     console.log('Refetch, something');
-      // }
-      console.log(status);
+      console.log(status.status);
     }
   }, [status]);
 

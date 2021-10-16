@@ -9,75 +9,21 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { MintTokenScreen } from '../components/MintTokenScreen';
 import { CryptoScreen } from '../components/CryptoScreen';
+import { NFTScreen } from '../components/NFTScreen';
 
 const Inventory = () => {
-  const router = useRouter();
   const user: any = useRecoilValue(userState);
   const inventoryPage = useRecoilValue(inventoryNavState);
-  const [nftDetail, setNftDetail] = useState<any>();
-  const [inventoryNFTs, setInventoryNFTs] = useState([]);
-  const isLogged = user === null ? false : true;
-
-  const handleNftClick = (nft: any) => {
-    router.push('#details');
-    setNftDetail(nft);
-  };
-
-  useEffect(() => {
-    if (isLogged) {
-      const name = user.name;
-      axios.get(`https://token.dlux.io/api/nfts/${name}`).then((response) => {
-        console.log(response);
-        setInventoryNFTs(response.data.result);
-      });
-    } else {
-      router.push('/');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (inventoryNFTs.length) {
-      setNftDetail(inventoryNFTs[0]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inventoryNFTs]);
 
   return (
     <div>
       <title>{user ? `Inv-${user.name}` : 'Inventory'}</title>
-      {isLogged && (
+      {user && (
         <>
           <InventoryNav />
           <div className="p-10 sm:p-0">
             {inventoryPage === 'mint' && <MintTokenScreen />}
-            {inventoryPage === 'nft' && (
-              <div className="flex h-auto flex-col gap-8 sm:flex-row">
-                <div className="w-full">
-                  <div className="grid grid-cols-1 grid-row-auto sm:grid-cols-2 xl:grid-cols-4 w-3/4 gap-4 mx-10">
-                    {inventoryNFTs.length === 0 && (
-                      <h1 className="text-white text-xl">
-                        You don&apos;t have any NFTs
-                      </h1>
-                    )}
-                    {inventoryNFTs.map((nft: any) => (
-                      <InventoryItemCard
-                        key={`${nft.set}_${nft.uid}`}
-                        nft={nft}
-                        onClick={() => {
-                          handleNftClick(nft);
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-                {nftDetail && (
-                  <div id="details" className="w-full mx-auto sm:mx-10">
-                    <NftDetails nft={nftDetail} />
-                  </div>
-                )}
-              </div>
-            )}
+            {inventoryPage === 'nft' && <NFTScreen />}
             {inventoryPage === 'tokens' && <CryptoScreen />}
           </div>
         </>

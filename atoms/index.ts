@@ -39,3 +39,8 @@ export const broadcastState = atom({
   key: 'broadcastState',
   default: [],
 });
+
+export const inventoryNFTState = atom({
+  key: 'InventoryNFTState',
+  default: [],
+});
