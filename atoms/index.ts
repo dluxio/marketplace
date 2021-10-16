@@ -7,7 +7,7 @@ export const userState = atom({
 
 export const inventoryNavState = atom({
   key: 'inventoryNavState',
-  default: 'tokens',
+  default: 'nft',
 });
 
 export const marketNavState = atom({

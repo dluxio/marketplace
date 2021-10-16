@@ -16,15 +16,6 @@ export const InventoryNav = () => {
     <div className="flex items-center justify-between">
       <div className="flex mx-10 my-10 text-white gap-8 text-xl">
         <div
-          onClick={() => setMarketNavSelected('tokens')}
-          className={`flex flex-col items-center cursor-pointer ${
-            marketNavSelected === 'tokens' && 'border-b-2 border-blue-500'
-          }`}
-        >
-          <FaBitcoin size={25} color="#fff" />
-          <p className="text-md mt-1">Tokens</p>
-        </div>
-        <div
           onClick={() => setMarketNavSelected('nft')}
           className={`flex flex-col items-center cursor-pointer ${
             marketNavSelected === 'nft' && 'border-b-2 border-blue-500'
@@ -41,6 +32,15 @@ export const InventoryNav = () => {
         >
           <GiToken size={25} color="#fff" />
           <p className="text-md mt-1">Mint</p>
+        </div>
+        <div
+          onClick={() => setMarketNavSelected('tokens')}
+          className={`flex flex-col items-center cursor-pointer ${
+            marketNavSelected === 'tokens' && 'border-b-2 border-blue-500'
+          }`}
+        >
+          <FaBitcoin size={25} color="#fff" />
+          <p className="text-md mt-1">Tokens</p>
         </div>
       </div>
       <div className="flex items-center mr-10 text-white">
