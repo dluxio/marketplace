@@ -40,7 +40,7 @@ export const NFTScreen = () => {
   return (
     <div className="flex h-auto flex-col gap-8 sm:flex-row">
       <div className="w-full">
-        <div className="grid grid-cols-1 grid-row-auto sm:grid-cols-2 xl:grid-cols-4 w-4/5 gap-4 mx-10">
+        <div className="grid grid-cols-1 grid-row-auto sm:grid-cols-2 xl:grid-cols-4 w-4/5 gap-4 mx-auto sm:mx-10">
           {inventoryNFTs.length === 0 && (
             <h1 className="text-white text-xl">You don&apos;t have any NFTs</h1>
           )}
