@@ -30,7 +30,7 @@ a {
 }
 
 .navLink {
-  @apply text-gray-300 cursor-pointer hover:text-gray-400 pb-2;
+  @apply text-gray-300 cursor-pointer hover:text-gray-400;
 }
 
 .btn {

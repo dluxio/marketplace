@@ -313,3 +313,17 @@ export const NFTCreate = async (
 
   return await handleBroadcastRequest(operations, username);
 };
+
+export const redoProfilePicture = (nft: { script: string; uid: string }) => {
+  fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
+    .then((response) => response.text())
+    .then((data) => {
+      const code = `(//${data}\n)("${nft.uid}")`;
+      const SVG = eval(code);
+      localStorage.setItem(
+        'pfp',
+        JSON.stringify({ script: nft.script, uid: nft.uid })
+      );
+      document.getElementById(`profile-picture`)!.innerHTML = SVG.HTML;
+    });
+};

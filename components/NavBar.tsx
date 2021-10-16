@@ -8,6 +8,11 @@ import { Login } from './Login';
 import { useRouter } from 'next/router';
 import { Spinner } from './Spinner';
 
+import { placeHolder } from '../constants';
+
+import Image from 'next/image';
+import { redoProfilePicture } from '../utils';
+
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -38,6 +43,12 @@ export const NavBar = () => {
   useEffect(() => {
     const getUser = () => {
       const userStor = localStorage.getItem('user');
+      const userPFP = localStorage.getItem('pfp');
+
+      if (userPFP) {
+        redoProfilePicture(JSON.parse(userPFP));
+      }
+
       if (userStor) {
         setUser(JSON.parse(userStor));
       }
@@ -50,8 +61,8 @@ export const NavBar = () => {
   }, []);
 
   return (
-    <div className="bg-black text-white px-5 font-normal py-3 pb-0 flex justify-between z-50">
-      <div className="flex gap-10 flex-grow justify-center">
+    <div className="bg-black text-white px-5 font-normal py-3 pb-2 flex justify-between z-50">
+      <div className="flex gap-10 flex-grow justify-center items-center">
         <p
           className={`${url === '' && 'selected'} navLink`}
           onClick={() => router.push('/')}
@@ -84,14 +95,23 @@ export const NavBar = () => {
           Listings
         </p>
       </div>
+
       {user && (
         <div className="flex">
-          <h1
-            className="navLink"
-            onClick={() => setIsOpen((prevState) => !prevState)}
-          >
-            {user.name}
-          </h1>
+          <div className="flex items-center gap-5">
+            <h1
+              className="navLink"
+              onClick={() => setIsOpen((prevState) => !prevState)}
+            >
+              {user.name}
+            </h1>
+            <div className="flex items-center w-full ">
+              <div id="profile-picture" className="w-9">
+                <Image height={30} width={30} src={placeHolder} alt="profile" />
+              </div>
+            </div>
+          </div>
+
           <div
             className={`${
               isOpen ? '' : 'hidden'
@@ -106,6 +126,7 @@ export const NavBar = () => {
           </div>
         </div>
       )}
+
       {!user && (
         <div onClick={() => setSigning(true)} className="flex mr-5 navLink">
           <h1>Login</h1>
