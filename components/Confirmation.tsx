@@ -10,10 +10,10 @@ export const Confirmation = ({
 }) => {
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
-      <button className="m-5 absolute top-0 left-0">
-        <ImCross size={25} color="#fff" opacity={100} onClick={handleClose} />
-      </button>
-      <div className="p-5 bg-gray-700 rounded-xl border-4 border-gray-800">
+      <div className="relative p-5 bg-gray-700 rounded-xl border-4 border-gray-800">
+        <button className="m-2 absolute top-0 right-0">
+          <ImCross size={15} color="#fff" onClick={handleClose} />
+        </button>
         <div className="m-8">
           <h1 className="text-center text-white text-2xl mb-3">
             Are you sure?
