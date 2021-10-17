@@ -10,11 +10,16 @@ import { Spinner } from './Spinner';
 
 import { placeHolder } from '../constants';
 
+import { FaBars } from 'react-icons/fa';
+
 import Image from 'next/image';
 import { redoProfilePicture } from '../utils';
 
+import { isMobile } from 'react-device-detect';
+
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
 
   const [signing, setSigning] = useState(false);
   const [user, setUser] = useRecoilState<any>(userState);
@@ -61,40 +66,52 @@ export const NavBar = () => {
   }, []);
 
   return (
-    <div className="bg-black text-white px-5 font-normal py-3 pb-2 flex justify-between z-50">
-      <div className="flex gap-10 flex-grow justify-center items-center">
-        <p
-          className={`${url === '' && 'selected'} navLink`}
-          onClick={() => router.push('/')}
-        >
-          Home
-        </p>
-        <p
-          className={`${
-            (url === 'inventory' || url === 'create-nft' || url === 'trades') &&
-            'selected'
-          } ${user ? 'navLink' : 'text-gray-600 pb-2 cursor-not-allowed'}`}
-          onClick={() => {
-            if (user) {
-              router.push('/inventory');
-            }
-          }}
-        >
-          Inventory
-        </p>
-        <p
-          className={`${url === 'auction' && 'selected'} navLink`}
-          onClick={() => router.push('/auction')}
-        >
-          Auction house
-        </p>
-        <p
-          className={`${url === 'listings' && 'selected'} navLink`}
-          onClick={() => router.push('/listings')}
-        >
-          Listings
-        </p>
-      </div>
+    <div className="bg-black text-white px-5 font-normal py-3 pb-2 flex justify-between items-center z-50">
+      {!isMobile ? (
+        <div className="flex gap-10 flex-grow justify-center items-center">
+          <p
+            className={`${url === '' && 'selected'} navLink`}
+            onClick={() => router.push('/')}
+          >
+            Home
+          </p>
+          <p
+            className={`${
+              (url === 'inventory' ||
+                url === 'create-nft' ||
+                url === 'trades') &&
+              'selected'
+            } ${user ? 'navLink' : 'text-gray-600 pb-2 cursor-not-allowed'}`}
+            onClick={() => {
+              if (user) {
+                router.push('/inventory');
+              }
+            }}
+          >
+            Inventory
+          </p>
+          <p
+            className={`${url === 'auction' && 'selected'} navLink`}
+            onClick={() => router.push('/auction')}
+          >
+            Auction house
+          </p>
+          <p
+            className={`${url === 'listings' && 'selected'} navLink`}
+            onClick={() => router.push('/listings')}
+          >
+            Listings
+          </p>
+        </div>
+      ) : (
+        <div className="flex-grow-0">
+          <FaBars
+            color={'#FFF'}
+            size={25}
+            onClick={() => setDropdown((prevState) => !prevState)}
+          />
+        </div>
+      )}
 
       {user && (
         <div className="flex">
@@ -126,13 +143,59 @@ export const NavBar = () => {
           </div>
         </div>
       )}
-
       {!user && (
         <div onClick={() => setSigning(true)} className="flex mr-5 navLink">
           <h1>Login</h1>
         </div>
       )}
       {signing && <Login handleClose={() => setSigning(false)} />}
+      {dropdown && (
+        <div className="absolute top-14 p-2 bg-white rounded-xl text-center">
+          <p
+            className={`${
+              url === '' && 'selected'
+            } navLink text-black hover:text-gray-800`}
+            onClick={() => router.push('/')}
+          >
+            Home
+          </p>
+          <p
+            className={`${
+              (url === 'inventory' ||
+                url === 'create-nft' ||
+                url === 'trades') &&
+              'selected'
+            } ${
+              user
+                ? 'navLink text-black hover:text-gray-800'
+                : 'text-gray-600 pb-2 cursor-not-allowed'
+            }`}
+            onClick={() => {
+              if (user) {
+                router.push('/inventory');
+              }
+            }}
+          >
+            Inventory
+          </p>
+          <p
+            className={`${
+              url === 'auction' && 'selected'
+            } navLink text-black hover:text-gray-800`}
+            onClick={() => router.push('/auction')}
+          >
+            Auction house
+          </p>
+          <p
+            className={`${
+              url === 'listings' && 'selected'
+            } navLink text-black hover:text-gray-800`}
+            onClick={() => router.push('/listings')}
+          >
+            Listings
+          </p>
+        </div>
+      )}
       <div className={'fixed bottom-5 right-5 grid-cols-1'}>
         {broadcasts.map((broadcast: any) => (
           <Spinner key={broadcast.id} broadcast={broadcast} time={63} />

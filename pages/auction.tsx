@@ -18,7 +18,7 @@ const Tools = () => {
   }, [auctionHouseNFT]);
 
   return (
-    <div className="mx-2 sm:mx-10">
+    <div className="mx-10 my-4">
       <title>Auction house</title>
       <h1 className="text-white mt-10 mb-5 text-3xl font-semibold">
         Auction house
