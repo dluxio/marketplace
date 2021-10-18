@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { auctionState } from '../atoms';
+import { auctionState, ftAuctionState } from '../atoms';
 
 import { useRouter } from 'next/router';
 
@@ -9,9 +9,12 @@ import { AuctionNFTcard } from '../components';
 const Tools = () => {
   const router = useRouter();
   const auctionHouseNFT = useRecoilValue(auctionState);
+  const auctionHouseFT = useRecoilValue(ftAuctionState);
 
   useEffect(() => {
     if (auctionHouseNFT === []) {
+      router.push('/');
+    } else if (auctionHouseFT === []) {
       router.push('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

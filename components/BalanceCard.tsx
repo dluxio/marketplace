@@ -30,7 +30,9 @@ export const BalanceCard = ({
         )}
         <h1 className="text-xl mr-3">{currency}</h1>
       </div>
-      <h1 className="w-full text-center font-bold">{balance}</h1>
+      <h1 className="w-full text-center font-bold">
+        {currency === 'HIVE' ? balance : (balance / 1000).toFixed(3)}
+      </h1>
     </div>
   );
 };

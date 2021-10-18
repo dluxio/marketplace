@@ -14,28 +14,39 @@ import {
   coinState,
   auctionState,
   prefixState,
+  ftState,
+  ftAuctionState,
 } from '../atoms';
 
 export const Market = () => {
   const [nfts, setNfts] = useRecoilState(nftState);
+  const [_fts, setFts] = useRecoilState(ftState);
   const [auction, setAuction] = useRecoilState(auctionState);
-  const [prefix, setPrefix] = useRecoilState(prefixState);
+  const [ftAuction, setFtAuction] = useRecoilState(ftAuctionState);
+  const [_prefix, setPrefix] = useRecoilState(prefixState);
 
   const selectedMarket = useRecoilValue(marketNavState);
   const [coins, setCoins] = useRecoilState<any>(coinState);
 
   useEffect(() => {
     const fetchNfts = async () => {
-      await axios.get('https://token.dlux.io/api/sales').then((response) => {
-        console.log(response.data);
+      axios.get('https://token.dlux.io/api/sales').then((response) => {
         setNfts(response.data.result);
+      });
+
+      axios.get('https://token.dlux.io/api/mintsales').then(({ data }) => {
+        console.log(data);
+        setFts(data);
       });
     };
 
-    const fetchAuction = async () => {
-      await axios.get('https://token.dlux.io/api/auctions').then((response) => {
-        console.log(response.data);
+    const fetchAuction = () => {
+      axios.get('https://token.dlux.io/api/auctions').then((response) => {
         setAuction(response.data.result);
+      });
+
+      axios.get('https://token.dlux.io/api/mintauctions').then(({ data }) => {
+        console.log(data);
       });
     };
 

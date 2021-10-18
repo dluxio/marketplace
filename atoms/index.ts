@@ -22,8 +22,18 @@ export const nftState = atom({
   default: [],
 });
 
+export const ftState = atom({
+  key: 'ftListingState',
+  default: [],
+});
+
 export const auctionState = atom({
   key: 'auctionState',
+  default: [],
+});
+
+export const ftAuctionState = atom({
+  key: 'ftAuctionState',
   default: [],
 });
 

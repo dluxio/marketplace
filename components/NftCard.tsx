@@ -7,8 +7,8 @@ dayjs.extend(objectSupport);
 import { FaMoneyBillAlt } from 'react-icons/fa';
 import { setColors } from '../constants';
 
-import { useRecoilValue } from 'recoil';
-import { userState } from '../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { userState, broadcastState } from '../atoms';
 
 import axios from 'axios';
 
@@ -20,6 +20,7 @@ type NftCardProp = {
 
 export const NftCard = ({ nft }: NftCardProp) => {
   const user: any = useRecoilValue(userState);
+  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
   useEffect(() => {
     axios
@@ -35,7 +36,15 @@ export const NftCard = ({ nft }: NftCardProp) => {
   }, []);
 
   const handleBuy = async () => {
-    await NFTBuy(user.name, { uid: nft.uid, set: nft.set });
+    const response: any = await NFTBuy(user.name, {
+      uid: nft.uid,
+      set: nft.set,
+    });
+    if (response) {
+      if (response.success) {
+        setBroadcasts((prevState: any) => [...prevState, response]);
+      }
+    }
   };
 
   return (
