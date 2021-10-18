@@ -18,7 +18,7 @@ import { redoProfilePicture } from '../utils';
 import { isMobile } from 'react-device-detect';
 
 export const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [profDropdown, setProfDropdown] = useState(false);
   const [dropdown, setDropdown] = useState(false);
 
   const [signing, setSigning] = useState(false);
@@ -30,18 +30,18 @@ export const NavBar = () => {
   const handleLogout = () => {
     localStorage.removeItem('user');
     setUser(null);
-    setIsOpen(false);
+    setProfDropdown(false);
   };
 
   const handleTrades = () => {
     router.push('/trades');
-    setIsOpen(false);
+    setProfDropdown(false);
   };
 
   useEffect(() => {
     if (user) {
       setSigning(false);
-      setIsOpen(false);
+      setProfDropdown(false);
     }
   }, [user]);
 
@@ -118,7 +118,7 @@ export const NavBar = () => {
           <div className="flex items-center gap-5">
             <h1
               className="navLink"
-              onClick={() => setIsOpen((prevState) => !prevState)}
+              onClick={() => setProfDropdown((prevState) => !prevState)}
             >
               {user.name}
             </h1>
@@ -131,7 +131,7 @@ export const NavBar = () => {
 
           <div
             className={`${
-              isOpen ? '' : 'hidden'
+              profDropdown ? '' : 'hidden'
             } fixed bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col`}
           >
             <a onClick={handleTrades} className="btn">
