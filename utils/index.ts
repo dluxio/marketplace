@@ -340,6 +340,43 @@ export const SetPFP = async (
   return await handleBroadcastRequest(operations, username, 'posting');
 };
 
+type ReserveData = {
+  price: number;
+  to: string;
+  set: string;
+  uid: string;
+};
+
+export const ReserveTrade = async (
+  username: string,
+  prefix: string,
+  reserveData: ReserveData
+) => {
+  await hive.api.getAccounts(
+    [reserveData.to],
+    async (err: any, result: any) => {
+      console.log(result);
+      if (err) throw new Error(err);
+      if (result !== []) {
+        const id = `${prefix}nft_reserve`;
+        const operations = [
+          'custom_json',
+          {
+            required_auths: [username],
+            required_posting_auths: [],
+            id,
+            json: JSON.stringify(reserveData),
+          },
+        ];
+
+        return await handleBroadcastRequest(operations, username);
+      } else {
+        console.log('No user to send to');
+      }
+    }
+  );
+};
+
 export const redoProfilePicture = (nft: { script: string; uid: string }) => {
   fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
     .then((response) => response.text())

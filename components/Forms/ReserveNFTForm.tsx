@@ -3,25 +3,35 @@ import React, { useState, useEffect, MouseEventHandler } from 'react';
 import { Formik } from 'formik';
 import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
+import { ReserveTrade } from '../../utils';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { broadcastState, prefixState, userState } from '../../atoms';
 
 export const ReserveNFTForm: React.FC<{
   set: string;
   uid: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
-  const [auctionData, setAuctionData] = useState<{
+  const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
+  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+  const [reserveData, setReserveData] = useState<{
     set: string;
     uid: string;
     to: string;
     price: number;
-    time: number;
   }>();
 
   useEffect(() => {
-    if (auctionData) {
-      console.log(auctionData);
+    if (reserveData) {
+      ReserveTrade(user.name, prefix, reserveData).then((response: any) => {
+        response &&
+          response.success &&
+          setBroadcasts((prevState: any) => [...prevState, response]);
+      });
     }
-  }, [auctionData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reserveData]);
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
@@ -38,22 +48,19 @@ export const ReserveNFTForm: React.FC<{
           Reserve transfer
         </h1>
         <Formik
-          initialValues={{ price: 1000, time: 1, to: '' }}
-          validate={({ price, time, to }) => {
+          initialValues={{ price: 1000, to: '' }}
+          validate={({ price, to }) => {
             const errors: any = {};
             if (!price) {
               errors.price = 'Required';
-            } else if (!time) {
-              errors.time = 'Required';
             } else if (!to) {
               errors.to = 'Required';
             }
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setAuctionData({
+            setReserveData({
               price: values.price,
-              time: values.time,
               to: values.to,
               set,
               uid,
@@ -92,18 +99,6 @@ export const ReserveNFTForm: React.FC<{
                       value={values.price}
                     />
                     <p>Percision: 3, in DLUX</p>
-                  </div>
-                  <div className="text-white">
-                    <FormInput
-                      type="number"
-                      name="time"
-                      errors={errors.time}
-                      handleBlur={handleBlur}
-                      handleChange={handleChange}
-                      touched={touched.time}
-                      value={values.time}
-                    />
-                    <p>Integer days</p>
                   </div>
                 </div>
 
