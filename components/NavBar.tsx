@@ -16,13 +16,14 @@ import Image from 'next/image';
 import { redoProfilePicture } from '../utils';
 
 import { isMobile } from 'react-device-detect';
+import axios from 'axios';
 
 export const NavBar = () => {
   const [profDropdown, setProfDropdown] = useState(false);
   const [dropdown, setDropdown] = useState(false);
-
   const [signing, setSigning] = useState(false);
   const [user, setUser] = useRecoilState<any>(userState);
+  const [pfpData, setPfp] = useState<any>(placeHolder);
   const router = useRouter();
   const url = router.pathname.split('/')[1];
   const broadcasts: any = useRecoilValue(broadcastState);
@@ -42,17 +43,30 @@ export const NavBar = () => {
     if (user) {
       setSigning(false);
       setProfDropdown(false);
+      axios
+        .get(`https://token.dlux.io/api/pfp/${user.name}`)
+        .then(({ data }) => {
+          setPfp(data.result[0]);
+        });
     }
   }, [user]);
 
   useEffect(() => {
+    if (pfpData) {
+      const uid = pfpData.pfp?.split(':');
+      const script = pfpData.set?.s;
+
+      if (pfpData.pfp !== placeHolder) {
+        if (uid && script) {
+          redoProfilePicture({ script, uid });
+        }
+      }
+    }
+  }, [pfpData]);
+
+  useEffect(() => {
     const getUser = () => {
       const userStor = localStorage.getItem('user');
-      const userPFP = localStorage.getItem('pfp');
-
-      if (userPFP) {
-        redoProfilePicture(JSON.parse(userPFP));
-      }
 
       if (userStor) {
         setUser(JSON.parse(userStor));
@@ -62,6 +76,7 @@ export const NavBar = () => {
     if (!user) {
       getUser();
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -117,7 +132,7 @@ export const NavBar = () => {
         <div className="flex">
           <div className="flex items-center gap-5">
             <h1
-              className="navLink"
+              className="navLink w-full"
               onClick={() => setProfDropdown((prevState) => !prevState)}
             >
               {user.name}

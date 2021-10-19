@@ -1,7 +1,5 @@
 import { atom } from 'recoil';
 
-import { placeHolder } from '../constants';
-
 export const userState = atom({
   key: 'userState',
   default: null,

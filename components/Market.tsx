@@ -30,24 +30,31 @@ export const Market = () => {
 
   useEffect(() => {
     const fetchNfts = async () => {
-      axios.get('https://token.dlux.io/api/sales').then((response) => {
-        setNfts(response.data.result);
-      });
+      axios
+        .get('https://token.dlux.io/api/sales')
+        .then(({ data: { result } }) => {
+          setNfts(result);
+        });
 
-      axios.get('https://token.dlux.io/api/mintsales').then(({ data }) => {
-        console.log(data);
-        setFts(data);
-      });
+      axios
+        .get('https://token.dlux.io/api/mintsales')
+        .then(({ data: { result } }) => {
+          setFts(result);
+        });
     };
 
     const fetchAuction = () => {
-      axios.get('https://token.dlux.io/api/auctions').then((response) => {
-        setAuction(response.data.result);
-      });
+      axios
+        .get('https://token.dlux.io/api/auctions')
+        .then(({ data: { result } }) => {
+          setAuction(result);
+        });
 
-      axios.get('https://token.dlux.io/api/mintauctions').then(({ data }) => {
-        console.log(data);
-      });
+      axios
+        .get('https://token.dlux.io/api/mintauctions')
+        .then(({ data: { result } }) => {
+          setFtAuction(result);
+        });
     };
 
     const fetchCoins = async () => {

@@ -52,7 +52,11 @@ export const getColor = (id: string) => {
   }
 };
 
-const handleBroadcastRequest = async (operations: any, username: string) => {
+const handleBroadcastRequest = async (
+  operations: any,
+  username: string,
+  post: string = 'active'
+) => {
   return new Promise((res, rej) => {
     // @ts-ignore
     if (window.hive_keychain) {
@@ -60,7 +64,7 @@ const handleBroadcastRequest = async (operations: any, username: string) => {
       window.hive_keychain.requestBroadcast(
         username,
         [operations],
-        'active',
+        post,
         (response: any) => {
           console.log('INSIDE FUNCTION: ', response);
           res(response);
@@ -314,16 +318,37 @@ export const NFTCreate = async (
   return await handleBroadcastRequest(operations, username);
 };
 
+type PFPData = {
+  set: string;
+  uid: string;
+};
+
+export const SetPFP = async (
+  username: string,
+  prefix: string,
+  pfpData: PFPData
+) => {
+  const operations = [
+    [
+      'custom_json',
+      {
+        required_auths: [username],
+        required_posting_auths: 0,
+        id: `${prefix}nft_pfp`,
+        json: JSON.stringify(pfpData),
+      },
+    ],
+  ];
+
+  return await handleBroadcastRequest(operations, username);
+};
+
 export const redoProfilePicture = (nft: { script: string; uid: string }) => {
   fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
     .then((response) => response.text())
     .then((data) => {
       const code = `(//${data}\n)("${nft.uid}")`;
       const SVG = eval(code);
-      localStorage.setItem(
-        'pfp',
-        JSON.stringify({ script: nft.script, uid: nft.uid })
-      );
       document.getElementById(`profile-picture`)!.innerHTML = SVG.HTML;
     });
 };

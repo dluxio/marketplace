@@ -7,7 +7,7 @@ import { ReserveNFTForm } from './Forms/ReserveNFTForm';
 import { SellForm } from './Forms/SellForm';
 import { Confirmation } from './Confirmation';
 
-import { NFTMelt, redoProfilePicture } from '../utils';
+import { NFTMelt, redoProfilePicture, SetPFP } from '../utils';
 import { prefixState, userState } from '../atoms';
 import { useRecoilValue } from 'recoil';
 
@@ -101,7 +101,9 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
       </p>
       <div className="m-5 flex gap-5 justify-center">
         <button
-          onClick={() => redoProfilePicture(nft)}
+          onClick={() =>
+            SetPFP(user.name, prefix, { set: nft.set, uid: nft.uid })
+          }
           className="px-4 py-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700"
         >
           PFP
