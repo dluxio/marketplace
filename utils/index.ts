@@ -329,18 +329,15 @@ export const SetPFP = async (
   pfpData: PFPData
 ) => {
   const operations = [
-    [
-      'custom_json',
-      {
-        required_auths: [username],
-        required_posting_auths: 0,
-        id: `${prefix}nft_pfp`,
-        json: JSON.stringify(pfpData),
-      },
-    ],
+    'custom_json',
+    {
+      required_auths: 0,
+      required_posting_auths: [username],
+      id: `${prefix}nft_pfp`,
+      json: JSON.stringify(pfpData),
+    },
   ];
-
-  return await handleBroadcastRequest(operations, username);
+  return await handleBroadcastRequest(operations, username, 'posting');
 };
 
 export const redoProfilePicture = (nft: { script: string; uid: string }) => {
