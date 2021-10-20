@@ -99,7 +99,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
           this link
         </a>
       </p>
-      <div className="m-5 flex gap-5 justify-center">
+      <div className="m-5 flex flex-col sm:flex-row gap-5 justify-center">
         <button
           onClick={() =>
             SetPFP(user.name, prefix, { set: nft.set, uid: nft.uid })

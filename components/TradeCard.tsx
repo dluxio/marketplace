@@ -1,6 +1,10 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { broadcastState, prefixState, userState } from '../atoms';
+import { ReserveRespond } from '../utils';
+
 type TradeCardProps = {
   trade: {
     from: string;
@@ -15,6 +19,10 @@ type TradeCardProps = {
 };
 
 export const TradeCard = ({ trade }: TradeCardProps) => {
+  const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
+  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+
   useEffect(() => {
     axios
       .get(`https://ipfs.io/ipfs/${trade.script}?${trade.uid}`)
@@ -28,6 +36,40 @@ export const TradeCard = ({ trade }: TradeCardProps) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleAccept = async () => {
+    ReserveRespond(
+      user.name,
+      prefix,
+      {
+        set: trade.set,
+        uid: trade.uid,
+        price: trade.price,
+      },
+      'complete'
+    ).then((response: any) => {
+      response &&
+        response.success &&
+        setBroadcasts((prevState: any) => [...prevState, response]);
+    });
+  };
+
+  const handleDecline = async () => {
+    ReserveRespond(
+      user.name,
+      prefix,
+      {
+        set: trade.set,
+        uid: trade.uid,
+        price: trade.price,
+      },
+      'cancel'
+    ).then((response: any) => {
+      response &&
+        response.success &&
+        setBroadcasts((prevState: any) => [...prevState, response]);
+    });
+  };
 
   return (
     <div className="rounded-xl border shadow-xl h-auto border-transparent bg-gray-700 text-white flex flex-col">
@@ -44,11 +86,17 @@ export const TradeCard = ({ trade }: TradeCardProps) => {
       <div className="text-center text-md">
         Price: {(trade.price / 1000).toFixed(3)} DLUX
       </div>
-      <div className="flex sm:justify-evenly pt-2 pb-4">
-        <button className="px-3 py-1 rounded-lg border-2 text-white bg-green-500 border-green-600 focus:outline-none focus:ring-2 focus:ring-green-700">
+      <div className="flex sm:justify-center pt-2 pb-4 gap-3">
+        <button
+          onClick={handleAccept}
+          className="px-3 py-1 rounded-lg border-2 text-white bg-green-500 border-green-600 focus:outline-none focus:ring-2 focus:ring-green-700"
+        >
           Accept
         </button>
-        <button className="px-3 py-1 rounded-lg border-2 text-white bg-red-500 border-red-600 focus:outline-none focus:ring-2 focus:ring-red-700">
+        <button
+          onClick={handleDecline}
+          className="px-3 py-1 rounded-lg border-2 text-white bg-red-500 border-red-600 focus:outline-none focus:ring-2 focus:ring-red-700"
+        >
           Decline
         </button>
       </div>

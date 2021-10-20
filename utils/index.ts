@@ -377,6 +377,29 @@ export const ReserveTrade = async (
   );
 };
 
+export const ReserveRespond = async (
+  username: string,
+  prefix: string,
+  reserveData: { set: string; uid: string; price: number },
+  response: 'cancel' | 'complete'
+) => {
+  const id =
+    response === 'complete'
+      ? `${prefix}nft_reserve_${response}`
+      : `${prefix}nft_transfer_${response}`;
+  const operations = [
+    'custom_json',
+    {
+      required_auths: [username],
+      required_posting_auths: 0,
+      id,
+      json: JSON.stringify(reserveData),
+    },
+  ];
+
+  return await handleBroadcastRequest(operations, username);
+};
+
 export const redoProfilePicture = (nft: { script: string; uid: string }) => {
   fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
     .then((response) => response.text())
