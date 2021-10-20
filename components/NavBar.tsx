@@ -96,7 +96,7 @@ export const NavBar = () => {
                 url === 'create-nft' ||
                 url === 'trades') &&
               'selected'
-            } ${user ? 'navLink' : 'text-gray-600 pb-2 cursor-not-allowed'}`}
+            } ${user ? 'navLink' : 'text-gray-600 cursor-not-allowed'}`}
             onClick={() => {
               if (user) {
                 router.push('/inventory');
