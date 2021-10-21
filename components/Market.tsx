@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
@@ -10,19 +10,17 @@ import Link from 'next/link';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   marketNavState,
-  nftState,
   coinState,
   auctionState,
   prefixState,
-  ftState,
   ftAuctionState,
 } from '../atoms';
 
 export const Market = () => {
-  const [nfts, setNfts] = useRecoilState(nftState);
-  const [_fts, setFts] = useRecoilState(ftState);
-  const [auction, setAuction] = useRecoilState(auctionState);
-  const [ftAuction, setFtAuction] = useRecoilState(ftAuctionState);
+  const [nfts, setNfts] = useState([]);
+  const [_fts, setFts] = useState([]);
+  const [auction, setAuction] = useState([]);
+  const [_ftAuction, setFtAuction] = useState([]);
   const [_prefix, setPrefix] = useRecoilState(prefixState);
 
   const selectedMarket = useRecoilValue(marketNavState);

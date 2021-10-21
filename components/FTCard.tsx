@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NFTBuy, toBase64 } from '../utils';
 import { setColors } from '../constants';
-import { FaMoneyBillAlt } from 'react-icons/fa';
+import { FaMoneyBillAlt, FaQuestion } from 'react-icons/fa';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { broadcastState, userState } from '../atoms';
 
@@ -11,14 +11,13 @@ type FTCardProps = {
   ft: {
     set: string;
     script: string;
-    price_amount: number;
-    price: { precision: number };
+    price: { precision: number; amount: number };
   };
 };
 
 export const FTCard = ({ ft }: FTCardProps) => {
   const { set, script } = ft;
-  const [randomUID, setRandomUID] = useState('');
+  const [randomUID, setRandomUID] = useState('==');
   const [_braodcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
 
@@ -74,18 +73,20 @@ export const FTCard = ({ ft }: FTCardProps) => {
         {set}
       </h1>
       <div className="py-5">
-        <div
-          id={`image-${set}-${id}`}
-          className="w-1/2 flex justify-center mx-auto"
-        ></div>
+        <div className="relative">
+          <div className="bg-gray-700 absolute top-0 w-full h-full bg-opacity-70 flex justify-center items-center">
+            <FaQuestion size={60} color="#fff" />
+          </div>
+          <div id={`image-${set}-${id}`} className="w-1/2 mx-auto"></div>
+        </div>
       </div>
       <div className="px-5 py-4 w-full flex justify-between items-center">
         <h1>
           Price:{' '}
           <strong>
             {parseFloat(
-              (ft.price_amount / Math.pow(10, ft.price.precision)).toString()
-            ).toFixed(ft.price.precision)}{' '}
+              (ft.price.amount / Math.pow(10, ft.price.precision)).toString()
+            ).toFixed(ft.price.precision)}
           </strong>
         </h1>
         <button
