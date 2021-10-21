@@ -15,16 +15,6 @@ export const marketNavState = atom({
   default: 'exchange',
 });
 
-export const auctionState = atom({
-  key: 'auctionState',
-  default: [],
-});
-
-export const ftAuctionState = atom({
-  key: 'ftAuctionState',
-  default: [],
-});
-
 export const coinState = atom({
   key: 'coinState',
   default: [],
