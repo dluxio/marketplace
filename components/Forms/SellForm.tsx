@@ -50,7 +50,7 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
         </button>
         <h1 className="text-center text-white text-2xl mb-3">Sell</h1>
         <Formik
-          initialValues={{ price: 1 }}
+          initialValues={{ price: (10).toFixed(3) }}
           validate={({ price }) => {
             const errors: any = {};
             if (!price) {
@@ -60,7 +60,7 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
           }}
           onSubmit={(values, { setSubmitting }) => {
             setSellData({
-              price: values.price,
+              price: +values.price * 1000,
               set,
               uid: uid ? uid : undefined,
             });
@@ -79,6 +79,7 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col justify-center gap-5 text-white">
                 <FormInput
+                  type="number"
                   name="price"
                   errors={errors.price}
                   handleBlur={handleBlur}

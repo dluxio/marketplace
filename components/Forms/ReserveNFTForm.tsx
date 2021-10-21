@@ -25,9 +25,7 @@ export const ReserveNFTForm: React.FC<{
   useEffect(() => {
     if (reserveData) {
       ReserveTrade(user.name, prefix, reserveData).then((response: any) => {
-        response &&
-          response.success &&
-          setBroadcasts((prevState: any) => [...prevState, response]);
+        response && setBroadcasts((prevState: any) => [...prevState, response]);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +46,7 @@ export const ReserveNFTForm: React.FC<{
           Reserve transfer
         </h1>
         <Formik
-          initialValues={{ price: 1000, to: '' }}
+          initialValues={{ price: (10).toFixed(3), to: '' }}
           validate={({ price, to }) => {
             const errors: any = {};
             if (!price) {
@@ -60,7 +58,7 @@ export const ReserveNFTForm: React.FC<{
           }}
           onSubmit={(values, { setSubmitting }) => {
             setReserveData({
-              price: values.price,
+              price: +values.price * 1000,
               to: values.to,
               set,
               uid,
@@ -98,7 +96,6 @@ export const ReserveNFTForm: React.FC<{
                       touched={touched.price}
                       value={values.price}
                     />
-                    <p>Percision: 3, in DLUX</p>
                   </div>
                 </div>
 

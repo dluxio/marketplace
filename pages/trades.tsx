@@ -4,7 +4,8 @@ import { userState } from '../atoms';
 
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { TradeCard } from '../components/TradeCard';
+import { NFTTradeCard } from '../components/NFTTradeCard';
+import { NFTManage } from '../components/NFTManage';
 
 const Trades = () => {
   const [tradesToRespond, setTradesToRespond] = useState<[]>();
@@ -57,11 +58,11 @@ const Trades = () => {
         {respond
           ? tradesToRespond &&
             tradesToRespond.map((trade: any) => (
-              <TradeCard key={trade.item} trade={trade} />
+              <NFTTradeCard key={trade.item} trade={trade} />
             ))
           : tradesToManage &&
             tradesToManage.map((trade: any) => (
-              <h1 key={trade.item}>{trade.to}</h1>
+              <NFTManage key={trade.item} trade={trade} />
             ))}
       </div>
     </div>
