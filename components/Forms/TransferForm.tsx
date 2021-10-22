@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { FormInput } from '../FormInput';
 import { ImCross } from 'react-icons/im';
 
-import { Give } from '../../utils';
+import { Give, ReserveTrade } from '../../utils';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { prefixState, userState, broadcastState } from '../../atoms';
 
@@ -20,17 +20,30 @@ export const TransferNFTFormComp: React.FC<{
     set: string;
     to: string;
     uid?: string;
+    price?: number;
   }>();
 
   useEffect(() => {
     if (transferData) {
-      Give(user.name, transferData, prefix).then((response: any) => {
-        if (response) {
-          if (response.success) {
-            setBroadcasts((prevState: any) => [...prevState, response]);
+      if (!transferData.price) {
+        console.log('Give: ', transferData);
+        Give(user.name, transferData, prefix).then((response: any) => {
+          if (response) {
+            if (response.success) {
+              setBroadcasts((prevState: any) => [...prevState, response]);
+            }
           }
-        }
-      });
+        });
+      } else {
+        console.log('Reserve', transferData);
+        ReserveTrade(user.name, prefix, transferData).then((response: any) => {
+          if (response) {
+            if (response.success) {
+              setBroadcasts((prevState: any) => [...prevState, response]);
+            }
+          }
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transferData, user]);
@@ -46,9 +59,11 @@ export const TransferNFTFormComp: React.FC<{
             onClick={handleClose as MouseEventHandler}
           />
         </button>
-        <h1 className="text-center text-white text-2xl">Give NFT</h1>
+        <h1 className="text-center text-white text-2xl">
+          Give {uid ? 'NFT' : 'FT'}
+        </h1>
         <Formik
-          initialValues={{ to: '' }}
+          initialValues={{ to: '', price: (0).toFixed(3) }}
           validate={({ to }) => {
             const errors: any = {};
             if (!to) {
@@ -57,7 +72,20 @@ export const TransferNFTFormComp: React.FC<{
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setTransferData({ to: values.to, set, uid: uid && uid });
+            if (+values.price * 1000 === 0) {
+              setTransferData({
+                to: values.to,
+                set,
+                uid: uid && uid,
+              });
+            } else {
+              setTransferData({
+                to: values.to,
+                set,
+                uid: uid && uid,
+                price: +values.price * 1000,
+              });
+            }
             setSubmitting(false);
             handleClose();
           }}
@@ -80,6 +108,18 @@ export const TransferNFTFormComp: React.FC<{
                   touched={touched.to}
                   value={values.to}
                 />
+                <FormInput
+                  type="number"
+                  name="price"
+                  errors={errors.price}
+                  handleBlur={handleBlur}
+                  handleChange={handleChange}
+                  touched={touched.price}
+                  value={values.price}
+                />
+                <h1 className="text-md">
+                  If the price is 0, it will be a give request
+                </h1>
                 <button
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"

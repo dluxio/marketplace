@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { AuctionNFTcard } from '../components';
 import axios from 'axios';
+import { AuctionFTcard } from '../components/AuctionFTCard';
 
 const Tools = () => {
   const router = useRouter();
@@ -18,6 +19,10 @@ const Tools = () => {
       router.push('/');
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auctionHouseNFT]);
+
+  useEffect(() => {
     const fetchAuction = () => {
       axios
         .get('https://token.dlux.io/api/auctions')
@@ -28,13 +33,13 @@ const Tools = () => {
       axios
         .get('https://token.dlux.io/api/mintauctions')
         .then(({ data: { result } }) => {
+          console.log(result);
           setAictonHouseFT(result);
         });
     };
 
     fetchAuction();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auctionHouseNFT]);
+  }, []);
 
   return (
     <div className="mx-10 my-4">
@@ -67,7 +72,9 @@ const Tools = () => {
               <AuctionNFTcard key={nft.uid} nft={nft} />
             ))
           : auctionHouseFT &&
-            auctionHouseFT.map((ft: any) => <h1 key={ft.uid}>{ft.uid}</h1>)}
+            auctionHouseFT.map((ft: any) => (
+              <AuctionFTcard key={ft.uid} ft={ft} />
+            ))}
       </div>
     </div>
   );

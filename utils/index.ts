@@ -341,10 +341,10 @@ export const SetPFP = async (
 };
 
 type ReserveData = {
-  price: number;
+  price?: number;
   to: string;
   set: string;
-  uid: string;
+  uid?: string;
 };
 
 export const ReserveTrade = async (
@@ -358,7 +358,9 @@ export const ReserveTrade = async (
       console.log(result);
       if (err) throw new Error(err);
       if (result !== []) {
-        const id = `${prefix}nft_reserve_transfer`;
+        const id = reserveData.uid
+          ? `${prefix}nft_reserve_transfer`
+          : `${prefix}ft_escrow`;
         const operations = [
           'custom_json',
           {

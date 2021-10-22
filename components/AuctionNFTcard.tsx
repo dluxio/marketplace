@@ -42,7 +42,6 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         >
           <Countdown date={Date.parse(nft.time)} />
         </h1>
-        {/* {svg && <Image src={svg} alt="image" width={35} height={35} />} */}
         <div onClick={() => setShowInfo(true)} className="py-5 text-center">
           <div
             id={`image-${nft.set}-${nft.uid}-auction`}

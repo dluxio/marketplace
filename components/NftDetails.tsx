@@ -3,11 +3,10 @@ import React, { useState, useEffect } from 'react';
 import hive from '@hiveio/hive-js';
 import { TransferNFTFormComp } from './';
 import { AuctionNFTForm } from './Forms/AuctionForm';
-import { ReserveNFTForm } from './Forms/ReserveNFTForm';
 import { SellForm } from './Forms/SellForm';
 import { Confirmation } from './Confirmation';
 
-import { NFTMelt, redoProfilePicture, SetPFP } from '../utils';
+import { NFTMelt, SetPFP } from '../utils';
 import { prefixState, userState } from '../atoms';
 import { useRecoilValue } from 'recoil';
 
@@ -23,7 +22,6 @@ interface details {
 export const NftDetails = ({ nft }: NftDetailProps) => {
   const [confirm, setConfirm] = useState(false);
   const [selling, setSelling] = useState(false);
-  const [reserve, setReserve] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
   const [auction, setAuction] = useState(false);
   const [nftDetails, setNFTdetails] = useState<details>();
@@ -109,12 +107,6 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
           PFP
         </button>
         <button
-          onClick={() => setReserve(true)}
-          className="px-4 py-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700"
-        >
-          Trade
-        </button>
-        <button
           onClick={() => setIsTransfering(true)}
           className="px-4 py-2 rounded-lg border-2 text-blue-500 bg-transparent border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700"
         >
@@ -151,13 +143,6 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
           set={nft.set}
           uid={nft.uid}
           handleClose={() => setAuction(false)}
-        />
-      )}
-      {reserve && (
-        <ReserveNFTForm
-          set={nft.set}
-          uid={nft.uid}
-          handleClose={() => setReserve(false)}
         />
       )}
       {selling && (
