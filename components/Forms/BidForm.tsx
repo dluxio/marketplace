@@ -45,7 +45,7 @@ export const BidForm: React.FC<{
         </button>
         <h1 className="text-center text-white text-2xl mb-3">Bid</h1>
         <Formik
-          initialValues={{ bid_amount: '' }}
+          initialValues={{ bid_amount: (10).toFixed(3) }}
           validate={({ bid_amount }) => {
             const errors: any = {};
             if (!bid_amount) {
@@ -54,7 +54,7 @@ export const BidForm: React.FC<{
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setBidData({ bid_amount: +values.bid_amount, set, uid });
+            setBidData({ bid_amount: +values.bid_amount * 1000, set, uid });
             setSubmitting(false);
             handleClose();
           }}

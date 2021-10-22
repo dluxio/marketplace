@@ -24,6 +24,7 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
   useEffect(() => {
+    console.log(trade);
     axios
       .get(`https://ipfs.io/ipfs/${trade.script}?${trade.uid}`)
       .then(({ data }) => {

@@ -117,9 +117,6 @@ export const TransferNFTFormComp: React.FC<{
                   touched={touched.price}
                   value={values.price}
                 />
-                <h1 className="text-md">
-                  If the price is 0, it will be a give request
-                </h1>
                 <button
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"

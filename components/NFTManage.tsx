@@ -23,8 +23,11 @@ export const NFTManage = ({ trade }: TradeCardProps) => {
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
   useEffect(() => {
+    console.log(trade);
     axios
-      .get(`https://ipfs.io/ipfs/${trade.script}?${trade.uid}`)
+      .get(
+        `https://ipfs.io/ipfs/${trade.script}?${trade.uid ? trade.uid : '=='}`
+      )
       .then(({ data }) => {
         const code = `(//${data}\n)("${trade.uid}")`;
         const SVG = eval(code);
