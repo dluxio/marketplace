@@ -382,13 +382,14 @@ export const ReserveTrade = async (
 export const ReserveRespond = async (
   username: string,
   prefix: string,
-  reserveData: { set: string; uid: string; price: number },
+  reserveData: { set: string; uid?: string; price: number },
   response: 'cancel' | 'complete'
 ) => {
-  const id =
-    response === 'complete'
-      ? `${prefix}nft_reserve_${response}`
-      : `${prefix}nft_transfer_${response}`;
+  const id = reserveData.uid
+    ? `${prefix}ft_escrow_${response}`
+    : response === 'complete'
+    ? `${prefix}nft_reserve_${response}`
+    : `${prefix}nft_transfer_${response}`;
   const operations = [
     'custom_json',
     {

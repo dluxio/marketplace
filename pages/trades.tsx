@@ -4,8 +4,8 @@ import { userState } from '../atoms';
 
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { NFTTradeCard } from '../components/NFTTradeCard';
-import { NFTManage } from '../components/NFTManage';
+import { NFTTradeCard as RespondCard } from '../components/ResponseCard';
+import { NFTManage as ManageCard } from '../components/ManageCard';
 
 const Trades = () => {
   const [nft, setNFT] = useState(true);
@@ -18,8 +18,6 @@ const Trades = () => {
   const user: any = useRecoilValue(userState);
 
   useEffect(() => {
-    !user && router.replace('/');
-
     user &&
       axios
         .get(`https://token.dlux.io/api/trades/nfts/${user.name}`)
@@ -34,17 +32,22 @@ const Trades = () => {
     user &&
       axios
         .get(`https://token.dlux.io/api/trades/fts/${user.name}`)
-        .then(({ data }) => {
+        .then(({ data: { result } }) => {
           setFTTradesToRespond(
-            data.result.filter((trade: any) => trade.from !== user.name)
+            result.filter((trade: any) => trade.from !== user.name)
           );
           setFTTradesToManage(
-            data.result.filter((trade: any) => trade.from === user.name)
+            result.filter((trade: any) => trade.from === user.name)
           );
         });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
+
+  useEffect(() => {
+    console.log('Respond: ', FTtradesToRespond);
+    console.log('Manage: ', FTtradesToManage);
+  }, [FTtradesToRespond, FTtradesToManage]);
 
   return (
     <div className="mx-10 my-4 text-white font-medium">
@@ -93,20 +96,20 @@ const Trades = () => {
           ? respond
             ? NFTtradesToRespond &&
               NFTtradesToRespond.map((trade: any) => (
-                <NFTTradeCard key={trade.item} trade={trade} />
+                <RespondCard key={trade.item} trade={trade} />
               ))
             : NFTtradesToManage &&
               NFTtradesToManage.map((trade: any) => (
-                <NFTManage key={trade.item} trade={trade} />
+                <ManageCard key={trade.item} trade={trade} />
               ))
           : respond
           ? FTtradesToRespond &&
-            NFTtradesToRespond?.map((trade: any) => (
-              <h1 key={trade.item}>{trade.to}</h1>
+            FTtradesToRespond.map((trade: any) => (
+              <RespondCard key={trade.item} trade={trade} />
             ))
           : FTtradesToManage &&
             FTtradesToManage.map((trade: any) => (
-              <h1 key={trade.item}>{trade.to}</h1>
+              <ManageCard key={trade.item} trade={trade} />
             ))}
       </div>
     </div>

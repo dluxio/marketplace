@@ -31,10 +31,9 @@ const Tools = () => {
         });
 
       axios
-        .get('https://token.dlux.io/api/mintauctions')
+        .get('https://token.dlux.io/api/mintsupply')
         .then(({ data: { result } }) => {
           console.log(result);
-          setAictonHouseFT(result);
         });
     };
 
