@@ -32,11 +32,15 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
   };
 
   useEffect(() => {
-    axios.get(`https://token.dlux.io/api/set/${trade.set}`).then(({ data }) => {
-      setInterval(() => {
-        randomUIDGen(data.set);
-      }, 1000);
-    });
+    if (trade.kind === 'fts') {
+      axios
+        .get(`https://token.dlux.io/api/set/${trade.set}`)
+        .then(({ data }) => {
+          setInterval(() => {
+            randomUIDGen(data.set);
+          }, 1000);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
