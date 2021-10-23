@@ -15,7 +15,7 @@ const Listings = () => {
   if (nfts === []) router.push('/');
 
   useEffect(() => {
-    const fetchNfts = async () => {
+    const fetchListings = async () => {
       axios
         .get('https://token.dlux.io/api/sales')
         .then(({ data: { result } }) => {
@@ -23,14 +23,14 @@ const Listings = () => {
         });
 
       axios
-        .get('https://token.dlux.io/api/mintsales')
+        .get('https://token.dlux.io/api/mintsupply')
         .then(({ data: { result } }) => {
           console.log(result);
           setFts(result);
         });
     };
 
-    fetchNfts();
+    fetchListings();
   }, []);
 
   return (
@@ -55,11 +55,25 @@ const Listings = () => {
         </button>
       </div>
       <h1 className="text-3xl">Listings</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-8 my-5 w-full">
-        {showNFTs
-          ? nfts && nfts.map((nft: any) => <NftCard key={nft.uid} nft={nft} />)
-          : fts && fts.map((ft: any) => <FTCard key={ft.uid} ft={ft} />)}
-      </div>
+      {showNFTs
+        ? nfts && (
+            <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-8 my-5 w-full">
+              {nfts.map((nft: any) => (
+                <NftCard key={nft.uid} nft={nft} />
+              ))}
+            </div>
+          )
+        : fts &&
+          fts.map((set: any) => (
+            <div className="text-white mx-4" mx-5 key={set.set}>
+              <h1 className="text-2xl font-semibold my-5">{set.set}</h1>
+              <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-5">
+                {set.sales.map((auction: any) => (
+                  <FTCard key={`${auction.uid}-${auction.time}`} ft={auction} />
+                ))}
+              </div>
+            </div>
+          ))}
     </div>
   );
 };
