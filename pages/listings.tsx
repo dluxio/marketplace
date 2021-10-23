@@ -11,7 +11,6 @@ const Listings = () => {
   const [nfts, setNfts] = useState([]);
   const [fts, setFts] = useState([]);
   const router = useRouter();
-  const id = '_' + Math.random().toString(36).substr(2, 9);
 
   if (nfts === []) router.push('/');
 

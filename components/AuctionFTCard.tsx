@@ -72,6 +72,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
             ></div>
           </div>
         </div>
+        <h1 className="text-xl font-semibold text-center">{ft.set}</h1>
         <div className="px-2 sm:px-4 py-4 w-full flex justify-between items-center gap-3">
           <div>
             <h1>

@@ -385,7 +385,8 @@ export const ReserveRespond = async (
   reserveData: { set: string; uid?: string; price: number },
   response: 'cancel' | 'complete'
 ) => {
-  const id = reserveData.uid
+  console.log(reserveData.uid);
+  const id = !reserveData.uid
     ? `${prefix}ft_escrow_${response}`
     : response === 'complete'
     ? `${prefix}nft_reserve_${response}`

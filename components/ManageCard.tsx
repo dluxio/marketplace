@@ -85,7 +85,7 @@ export const NFTManage = ({ trade }: TradeCardProps) => {
       prefix,
       {
         set: trade.set,
-        uid: trade.uid,
+        uid: trade.kind === 'fts' ? undefined : trade.uid,
         price: trade.price,
       },
       'cancel'
