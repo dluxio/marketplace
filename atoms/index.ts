@@ -34,3 +34,8 @@ export const inventoryNFTState = atom({
   key: 'InventoryNFTState',
   default: [],
 });
+
+export const refreshState = atom({
+  key: 'refreshState',
+  default: '',
+});

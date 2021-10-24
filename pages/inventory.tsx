@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { useRecoilValue } from 'recoil';
 import { userState, inventoryNavState } from '../atoms';
 
-import { InventoryItemCard, InventoryNav, NftDetails } from '../components';
+import { InventoryNav } from '../components';
 
-import axios from 'axios';
-import { useRouter } from 'next/router';
 import { MintTokenScreen } from '../components/MintTokenScreen';
 import { CryptoScreen } from '../components/CryptoScreen';
 import { NFTScreen } from '../components/NFTScreen';

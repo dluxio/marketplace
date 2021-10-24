@@ -57,7 +57,7 @@ const Listings = () => {
       <h1 className="text-3xl">Listings</h1>
       {showNFTs
         ? nfts && (
-            <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-8 my-5 w-full">
+            <div className="grid-comp">
               {nfts.map((nft: any) => (
                 <NftCard key={nft.uid} nft={nft} />
               ))}
@@ -67,7 +67,7 @@ const Listings = () => {
           fts.map((set: any) => (
             <div className="text-white mx-4" mx-5 key={set.set}>
               <h1 className="text-2xl font-semibold my-5">{set.set}</h1>
-              <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-5">
+              <div className="grid-comp">
                 {set.sales.map((auction: any) => (
                   <FTCard key={`${auction.uid}-${auction.time}`} ft={auction} />
                 ))}

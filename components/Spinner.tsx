@@ -4,6 +4,8 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { spinnerColors } from '../constants';
 
 import axios from 'axios';
+import { refreshState } from '../atoms';
+import { useRecoilState } from 'recoil';
 
 export const Spinner = ({
   time,
@@ -14,6 +16,7 @@ export const Spinner = ({
 }) => {
   const [remaining, setRemaining] = useState(time);
   const [status, setStatus] = useState<any>();
+  const [_refresh, setRefresh] = useRecoilState(refreshState);
 
   useEffect(() => {
     if (remaining === 0) {
@@ -28,9 +31,22 @@ export const Spinner = ({
   }, [remaining]);
 
   useEffect(() => {
+    console.log(status);
     if (status) {
-      console.log(status.status);
+      switch (status) {
+        case status.includes("can't afford to buy"):
+          break;
+        case status.includes('pfp'):
+          setRefresh('pfp');
+          break;
+        case status.includes('Redeemed a dlux Mint Token'):
+          setRefresh('inventory');
+          break;
+        default:
+          break;
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (

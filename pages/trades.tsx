@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { userState } from '../atoms';
+import { refreshState, userState } from '../atoms';
 
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import { NFTTradeCard as RespondCard } from '../components/ResponseCard';
 import { NFTManage as ManageCard } from '../components/ManageCard';
@@ -14,8 +13,8 @@ const Trades = () => {
   const [NFTtradesToManage, setNFTTradesToManage] = useState<[]>();
   const [FTtradesToManage, setFTTradesToManage] = useState<[]>();
   const [respond, setRespond] = useState(true);
-  const router = useRouter();
   const user: any = useRecoilValue(userState);
+  const refresh: string = useRecoilValue(refreshState);
 
   useEffect(() => {
     user &&
@@ -42,7 +41,7 @@ const Trades = () => {
         });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, refresh]);
 
   useEffect(() => {
     console.log('Respond: ', FTtradesToRespond);

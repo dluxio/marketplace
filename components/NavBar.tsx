@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { userState, broadcastState } from '../atoms';
+import { userState, broadcastState, refreshState } from '../atoms';
 
 import { Login } from './Login';
 
@@ -27,6 +27,7 @@ export const NavBar = () => {
   const router = useRouter();
   const url = router.pathname.split('/')[1];
   const broadcasts: any = useRecoilValue(broadcastState);
+  const refresh: string = useRecoilValue(refreshState);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -40,16 +41,18 @@ export const NavBar = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      setSigning(false);
-      setProfDropdown(false);
-      axios
-        .get(`https://token.dlux.io/api/pfp/${user.name}`)
-        .then(({ data }) => {
-          setPfp(data.result[0]);
-        });
+    if (refresh === 'pfp' || refresh === '') {
+      if (user) {
+        setSigning(false);
+        setProfDropdown(false);
+        axios
+          .get(`https://token.dlux.io/api/pfp/${user.name}`)
+          .then(({ data }) => {
+            setPfp(data.result[0]);
+          });
+      }
     }
-  }, [user]);
+  }, [user, refresh]);
 
   useEffect(() => {
     if (pfpData) {
