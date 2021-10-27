@@ -80,9 +80,9 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
               <strong>
                 {parseFloat(
                   (
-                    ft.price.amount / Math.pow(10, ft.price.precision)
+                    ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)
                   ).toString()
-                ).toFixed(ft.price.precision)}{' '}
+                ).toFixed(ft.pricenai.precision)}{' '}
               </strong>
             </h1>
             <h1>
