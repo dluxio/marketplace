@@ -23,7 +23,6 @@ export const Spinner = ({
       axios
         .get(`https://token.dlux.io/api/status/${broadcast.result.id}`)
         .then((response) => {
-          console.log(response.data);
           setStatus(response.data);
         });
     }
@@ -31,20 +30,10 @@ export const Spinner = ({
   }, [remaining]);
 
   useEffect(() => {
-    console.log(status);
-    if (status) {
-      switch (status) {
-        case status.includes("can't afford to buy"):
-          break;
-        case status.includes('pfp'):
-          setRefresh('pfp');
-          break;
-        case status.includes('Redeemed a dlux Mint Token'):
-          setRefresh('inventory');
-          break;
-        default:
-          break;
-      }
+    if (status.status.includes('pfp')) {
+      setRefresh('pfp');
+    } else {
+      setRefresh('inventory');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);

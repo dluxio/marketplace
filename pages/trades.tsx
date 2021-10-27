@@ -43,11 +43,6 @@ const Trades = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, refresh]);
 
-  useEffect(() => {
-    console.log('Respond: ', FTtradesToRespond);
-    console.log('Manage: ', FTtradesToManage);
-  }, [FTtradesToRespond, FTtradesToManage]);
-
   return (
     <div className="mx-10 my-4 text-white font-medium">
       <title>Trades</title>

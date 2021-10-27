@@ -7,8 +7,8 @@ import { SellForm } from './Forms/SellForm';
 import { Confirmation } from './Confirmation';
 
 import { NFTMelt, SetPFP } from '../utils';
-import { prefixState, userState } from '../atoms';
-import { useRecoilValue } from 'recoil';
+import { broadcastState, prefixState, userState } from '../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 type NftDetailProps = {
   nft: any;
@@ -25,13 +25,22 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
   const [isTransfering, setIsTransfering] = useState(false);
   const [auction, setAuction] = useState(false);
   const [nftDetails, setNFTdetails] = useState<details>();
+  const [_braodcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
 
   const handleMelt = () => {
     setConfirm(false);
-    NFTMelt(user.name, { set: nft.set, uid: nft.uid }, prefix);
+    NFTMelt(user.name, { set: nft.set, uid: nft.uid }, prefix).then(
+      (response: any) => {
+        if (response) {
+          if (response.success) {
+            setBroadcasts((prevState: any) => [...prevState, response]);
+          }
+        }
+      }
+    );
   };
 
   const fetchDetails = () => {
@@ -46,6 +55,18 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
           setNFTdetails(result);
         });
       });
+  };
+
+  const handleSetPfp = () => {
+    SetPFP(user.name, prefix, { set: nft.set, uid: nft.uid }).then(
+      (response: any) => {
+        if (response) {
+          if (response.success) {
+            setBroadcasts((prevState: any) => [...prevState, response]);
+          }
+        }
+      }
+    );
   };
 
   const fetchImage = () => {
@@ -99,9 +120,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
       </p>
       <div className="m-5 flex flex-col sm:flex-row gap-5 justify-center">
         <button
-          onClick={() =>
-            SetPFP(user.name, prefix, { set: nft.set, uid: nft.uid })
-          }
+          onClick={handleSetPfp}
           className="px-4 py-2 rounded-lg border-2 text-green-500 bg-transparent border-green-500 focus:outline-none focus:ring-2 focus:ring-green-700"
         >
           PFP

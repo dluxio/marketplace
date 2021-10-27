@@ -38,7 +38,6 @@ export const TokenCard = ({ token }: TokenCardProps) => {
 
   const handleOpen = async () => {
     FTOpen(user.name, set, prefix).then((response: any) => {
-      console.log('INSIDE TSX: ', response);
       if (response) {
         if (response.success) {
           setBroadcasts((prevState: any) => [...prevState, response]);

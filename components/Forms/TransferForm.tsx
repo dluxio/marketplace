@@ -26,8 +26,8 @@ export const TransferNFTFormComp: React.FC<{
   useEffect(() => {
     if (transferData) {
       if (!transferData.price) {
-        console.log('Give: ', transferData);
         Give(user.name, transferData, prefix).then((response: any) => {
+          console.log(response);
           if (response) {
             if (response.success) {
               setBroadcasts((prevState: any) => [...prevState, response]);
@@ -35,8 +35,8 @@ export const TransferNFTFormComp: React.FC<{
           }
         });
       } else {
-        console.log('Reserve', transferData);
         ReserveTrade(user.name, prefix, transferData).then((response: any) => {
+          console.log(response);
           if (response) {
             if (response.success) {
               setBroadcasts((prevState: any) => [...prevState, response]);

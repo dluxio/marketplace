@@ -337,6 +337,7 @@ export const SetPFP = async (
       json: JSON.stringify(pfpData),
     },
   ];
+
   return await handleBroadcastRequest(operations, username, 'posting');
 };
 
@@ -355,9 +356,8 @@ export const ReserveTrade = async (
   await hive.api.getAccounts(
     [reserveData.to],
     async (err: any, result: any) => {
-      console.log(result);
       if (err) throw new Error(err);
-      if (result !== []) {
+      if (result[0]) {
         const id = reserveData.uid
           ? `${prefix}nft_reserve_transfer`
           : `${prefix}ft_escrow`;
@@ -372,8 +372,6 @@ export const ReserveTrade = async (
         ];
 
         return await handleBroadcastRequest(operations, username);
-      } else {
-        console.log('No user to send to');
       }
     }
   );
