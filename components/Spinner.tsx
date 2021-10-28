@@ -30,10 +30,12 @@ export const Spinner = ({
   }, [remaining]);
 
   useEffect(() => {
-    if (status.status.includes('pfp')) {
-      setRefresh('pfp');
-    } else {
-      setRefresh('inventory');
+    if (status) {
+      if (status.status.includes('pfp')) {
+        setRefresh('pfp');
+      } else {
+        setRefresh('inventory');
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);

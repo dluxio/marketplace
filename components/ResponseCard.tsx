@@ -85,7 +85,8 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
       prefix,
       {
         set: trade.set,
-        uid: trade.kind === 'fts' ? undefined : trade.uid,
+        uid: trade.uid,
+        kind: trade.kind,
         price: trade.price,
       },
       'complete'
@@ -102,7 +103,8 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
       prefix,
       {
         set: trade.set,
-        uid: trade.kind === 'fts' ? undefined : trade.uid,
+        uid: trade.uid,
+        kind: trade.kind,
         price: trade.price,
       },
       'cancel'
