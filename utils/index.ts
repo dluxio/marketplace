@@ -389,6 +389,8 @@ export const ReserveRespond = async (
     : response === 'complete'
     ? `${prefix}nft_reserve_${response}`
     : `${prefix}nft_transfer_${response}`;
+
+  console.log(id);
   const operations = [
     'custom_json',
     {
