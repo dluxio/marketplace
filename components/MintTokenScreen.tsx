@@ -28,7 +28,7 @@ export const MintTokenScreen = () => {
   }, [refresh]);
 
   return (
-    <div>
+    <div className="mx-10">
       {mintTokens.length === 0 && (
         <div className="w-full flex justify-center items-center">
           <h1 className="text-white text-xl w-full text-center">
