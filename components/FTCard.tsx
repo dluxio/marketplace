@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
-import { NFTBuy, toBase64 } from '../utils';
+import { handleSellCancel, NFTBuy, toBase64 } from '../utils';
 import { setColors } from '../constants';
 import { FaMoneyBillAlt, FaQuestion } from 'react-icons/fa';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { broadcastState, userState } from '../atoms';
+import { broadcastState, prefixState, userState } from '../atoms';
 
 type FTCardProps = {
   ft: {
     set: string;
     script: string;
     pricenai: { precision: number; amount: number };
+    by: string;
+    uid: string;
   };
 };
 
@@ -20,6 +22,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
   const [randomUID, setRandomUID] = useState('==');
   const [_braodcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
 
   const id = '_' + Math.random().toString(36).substr(2, 9);
 
@@ -39,9 +42,26 @@ export const FTCard = ({ ft }: FTCardProps) => {
   }, []);
 
   const handleBuy = async () => {
-    const response: any = await NFTBuy(user.name, {
-      set,
-    });
+    const response: any = await NFTBuy(
+      user.name,
+      {
+        set,
+      },
+      prefix
+    );
+    if (response) {
+      if (response.success) {
+        setBroadcasts((prevState: any) => [...prevState, response]);
+      }
+    }
+  };
+
+  const handleTakeBack = async () => {
+    const response: any = await handleSellCancel(
+      { set: ft.set, uid: ft.uid, kind: 'ft' },
+      user.name,
+      prefix
+    );
     if (response) {
       if (response.success) {
         setBroadcasts((prevState: any) => [...prevState, response]);
@@ -91,16 +111,28 @@ export const FTCard = ({ ft }: FTCardProps) => {
             ).toFixed(ft.pricenai.precision)}
           </strong>
         </h1>
-        <button
-          onClick={() => user && handleBuy()}
-          className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
-            !user && 'cursor-not-allowed'
-          }`}
-          style={{ backgroundColor: user ? setColors[set] : 'gray' }}
-        >
-          Buy
-          <FaMoneyBillAlt />
-        </button>
+        {ft.by !== user?.name ? (
+          <button
+            onClick={() => user && handleBuy()}
+            className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
+              !user && 'cursor-not-allowed'
+            }`}
+            style={{ backgroundColor: user ? setColors[ft.set] : 'gray' }}
+          >
+            Buy
+            <FaMoneyBillAlt />
+          </button>
+        ) : (
+          <button
+            onClick={handleTakeBack}
+            className={`px-3 py-2 rounded-xl flex items-center gap-2 ${
+              !user && 'cursor-not-allowed'
+            }`}
+            style={{ backgroundColor: 'orange' }}
+          >
+            Take back
+          </button>
+        )}
       </div>
     </div>
   );

@@ -407,6 +407,29 @@ export const ReserveRespond = async (
   return await handleBroadcastRequest(operations, username);
 };
 
+export const handleSellCancel = async (
+  nft: { set: string; uid: string; kind: string },
+  username: string,
+  prefix: string
+) => {
+  const id = `${prefix}${nft.kind}_sell_cancel`;
+
+  const operations = [
+    'custom_json',
+    {
+      required_auths: [username],
+      required_posting_auths: 0,
+      id,
+      json: JSON.stringify({
+        uid: nft.uid,
+        set: nft.set,
+      }),
+    },
+  ];
+
+  return await handleBroadcastRequest(operations, username);
+};
+
 export const redoProfilePicture = (nft: { script: string; uid: string }) => {
   fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
     .then((response) => response.text())

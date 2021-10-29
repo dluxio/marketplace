@@ -8,11 +8,11 @@ import { FaMoneyBillAlt } from 'react-icons/fa';
 import { setColors } from '../constants';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { userState, broadcastState } from '../atoms';
+import { userState, broadcastState, prefixState } from '../atoms';
 
 import axios from 'axios';
 
-import { NFTBuy } from '../utils';
+import { handleSellCancel, NFTBuy } from '../utils';
 
 type NftCardProp = {
   nft: any;
@@ -20,9 +20,11 @@ type NftCardProp = {
 
 export const NftCard = ({ nft }: NftCardProp) => {
   const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
   useEffect(() => {
+    console.log(nft.by);
     axios
       .get(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then(({ data }) => {
@@ -40,6 +42,19 @@ export const NftCard = ({ nft }: NftCardProp) => {
       uid: nft.uid,
       set: nft.set,
     });
+    if (response) {
+      if (response.success) {
+        setBroadcasts((prevState: any) => [...prevState, response]);
+      }
+    }
+  };
+
+  const handleTakeBack = async () => {
+    const response: any = await handleSellCancel(
+      { set: nft.set, uid: nft.uid, kind: 'nft' },
+      user.name,
+      prefix
+    );
     if (response) {
       if (response.success) {
         setBroadcasts((prevState: any) => [...prevState, response]);
@@ -70,16 +85,28 @@ export const NftCard = ({ nft }: NftCardProp) => {
             ).toFixed(nft.price.precision)}{' '}
           </strong>
         </h1>
-        <button
-          onClick={() => user && handleBuy()}
-          className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
-            !user && 'cursor-not-allowed'
-          }`}
-          style={{ backgroundColor: user ? setColors[nft.set] : 'gray' }}
-        >
-          Buy
-          <FaMoneyBillAlt />
-        </button>
+        {nft.by !== user?.name ? (
+          <button
+            onClick={() => user && handleBuy()}
+            className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
+              !user && 'cursor-not-allowed'
+            }`}
+            style={{ backgroundColor: user ? setColors[nft.set] : 'gray' }}
+          >
+            Buy
+            <FaMoneyBillAlt />
+          </button>
+        ) : (
+          <button
+            onClick={handleTakeBack}
+            className={`px-3 py-2 rounded-xl flex items-center gap-2 ${
+              !user && 'cursor-not-allowed'
+            }`}
+            style={{ backgroundColor: 'orange' }}
+          >
+            Take back
+          </button>
+        )}
       </div>
     </div>
   );

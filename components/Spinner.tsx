@@ -48,7 +48,7 @@ export const Spinner = ({
         isPlaying
         duration={time}
         colors={spinnerColors}
-        size={65}
+        size={70}
       >
         {({ remainingTime }) => {
           setRemaining(remainingTime!);
