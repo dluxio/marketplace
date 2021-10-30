@@ -8,7 +8,7 @@ import { userState, prefixState } from '../atoms';
 
 import { NFTCreate } from '../utils';
 
-const CrtateNFT = () => {
+const CreateNFT = () => {
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const [form, setForm] = useState<{
@@ -192,4 +192,4 @@ const CrtateNFT = () => {
   );
 };
 
-export default CrtateNFT;
+export default CreateNFT;

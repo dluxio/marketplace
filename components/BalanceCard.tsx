@@ -1,6 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
-
-import Image from 'next/image';
 
 export const BalanceCard = ({
   currency,
@@ -13,7 +12,7 @@ export const BalanceCard = ({
     <div className="bg-gray-700 px-5 py-3 text-white  rounded-xl border-2 border-gray-800">
       <div className="flex items-center justify-between">
         {currency === 'DLUX' && (
-          <Image
+          <img
             src="https://www.dlux.io/img/dlux-hive-logo-alpha.svg"
             width={45}
             height={45}
@@ -21,7 +20,7 @@ export const BalanceCard = ({
           />
         )}
         {currency === 'HIVE' && (
-          <Image
+          <img
             src="https://cryptologos.cc/logos/hive-blockchain-hive-logo.png"
             width={45}
             height={45}

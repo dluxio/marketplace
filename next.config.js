@@ -2,14 +2,22 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: [
-      'assets.coingecko.com',
-      'ipfs.io',
-      'www.dlux.io',
-      'cryptologos.cc',
-    ],
+    loader: 'imgix',
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     return config;
+  },
+  exportPathMap: async function (
+    defaultPathMap,
+    { dev, dir, outDir, distDir, buildId }
+  ) {
+    return {
+      '/': { page: '/' },
+      '/inventory': { page: '/inventory' },
+      '/auction': { page: '/auction' },
+      '/create-nft': { page: '/create-nft' },
+      '/listings': { page: '/listings' },
+      '/trades': { page: '/trades' },
+    };
   },
 };

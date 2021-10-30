@@ -1,6 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
-
-import Image from 'next/image';
 
 import { tokenColors } from '../constants';
 
@@ -15,7 +14,7 @@ export const CoinCard = ({ coin }: CoinCardProps) => {
     >
       <div className="flex justify-between items-center mr-4">
         <div className="flex items-center gap-8 ml-4">
-          <Image
+          <img
             src={coin.image.large}
             alt="coin-image"
             width={50}
