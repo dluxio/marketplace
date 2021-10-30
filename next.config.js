@@ -18,6 +18,7 @@ module.exports = {
       '/create-nft': { page: '/create-nft' },
       '/listings': { page: '/listings' },
       '/trades': { page: '/trades' },
+      '/404': { page: '/404' },
     };
   },
 };
