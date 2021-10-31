@@ -20,7 +20,7 @@ export const NewsScreen = () => {
           return (
             <div
               key={key}
-              className="bg-gray-600 p-2 rounded-xl border-2 border-gray-800 flex"
+              className="bg-gray-600 p-2 rounded-xl border-2 border-gray-800 flex overflow-hidden"
             >
               <div>
                 <a
