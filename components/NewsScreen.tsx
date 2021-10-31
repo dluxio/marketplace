@@ -4,8 +4,6 @@ import axios from 'axios';
 
 export const NewsScreen = () => {
   const [feed, setFeed] = useState<any>(null);
-  const [wantedPFP, setWantedPFP] = useState('');
-  const [pfp, setPfp] = useState(null);
 
   useEffect(() => {
     axios.get('https://token.dlux.io/feed').then(({ data }) => {
