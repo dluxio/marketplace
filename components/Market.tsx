@@ -9,6 +9,7 @@ import Link from 'next/link';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { marketNavState, coinState, prefixState } from '../atoms';
+import { NewsScreen } from './NewsScreen';
 
 export const Market = () => {
   const [nfts, setNfts] = useState([]);
@@ -135,7 +136,7 @@ export const Market = () => {
         </>
       )}
       {selectedMarket === 'apps' && <h1>Apps screen</h1>}
-      {selectedMarket === 'news' && <h1>News screen</h1>}
+      {selectedMarket === 'news' && <NewsScreen />}
     </div>
   );
 };
