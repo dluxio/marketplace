@@ -85,7 +85,7 @@ export const AuctionNFTForm: React.FC<{
           }) => (
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col justify-center gap-5 text-white">
-                <div className="flex gap-5">
+                <div className="flex flex-col sm:flex-row gap-5">
                   <div className="text-white">
                     <FormInput
                       type="number"

@@ -123,11 +123,13 @@ export const NavBar = () => {
         </div>
       ) : (
         <div className="flex-grow-0">
-          <FaBars
-            color={'#FFF'}
-            size={25}
-            onClick={() => setDropdown((prevState) => !prevState)}
-          />
+          <div className="absolute left-4 top-4">
+            <FaBars
+              color={'#FFF'}
+              size={25}
+              onClick={() => setDropdown((prevState) => !prevState)}
+            />
+          </div>
         </div>
       )}
 
