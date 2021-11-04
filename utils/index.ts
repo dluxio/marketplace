@@ -269,9 +269,10 @@ type BidData = {
 export const NFTBid = async (
   username: string,
   nftData: BidData,
-  prefix: string = 'dlux_'
+  prefix: string = 'dlux_',
+  kind: 'ft' | 'nft'
 ) => {
-  const id = `${prefix}nft_bid`;
+  const id = `${prefix}${kind}_bid`;
   const operations = [
     'custom_json',
     {

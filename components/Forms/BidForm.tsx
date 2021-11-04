@@ -11,8 +11,9 @@ import { NFTBid } from '../../utils';
 export const BidForm: React.FC<{
   set: string;
   uid: string;
+  kind: 'ft' | 'nft';
   handleClose: Function;
-}> = ({ set, handleClose, uid }) => {
+}> = ({ set, handleClose, uid, kind }) => {
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
@@ -21,7 +22,8 @@ export const BidForm: React.FC<{
 
   useEffect(() => {
     if (bidData && user) {
-      NFTBid(user.name, bidData, prefix).then((response: any) => {
+      console.log(uid);
+      NFTBid(user.name, bidData, prefix, kind).then((response: any) => {
         if (response) {
           if (response.success) {
             setBroadcasts((prevState: any) => [...prevState, response]);

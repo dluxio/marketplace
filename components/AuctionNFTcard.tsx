@@ -84,6 +84,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
       {isBidding && (
         <BidForm
           set={nft.set}
+          kind="nft"
           uid={nft.uid}
           handleClose={() => setIsBidding(false)}
         />

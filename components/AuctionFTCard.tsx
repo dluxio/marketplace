@@ -104,6 +104,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
       </div>
       {isBidding && (
         <BidForm
+          kind={'ft'}
           set={ft.set}
           uid={ft.uid}
           handleClose={() => setIsBidding(false)}
