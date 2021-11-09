@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import hive from '@hiveio/hive-js';
-import { TransferNFTFormComp } from './';
-import { AuctionNFTForm } from './Forms/AuctionForm';
-import { SellForm } from './Forms/SellForm';
-import { Confirmation } from './Confirmation';
+import hive from "@hiveio/hive-js";
+import { TransferNFTFormComp } from "./";
+import { AuctionNFTForm } from "./Forms/AuctionForm";
+import { SellForm } from "./Forms/SellForm";
+import { Confirmation } from "./Confirmation";
 
-import { NFTMelt, SetPFP } from '../utils';
-import { broadcastState, prefixState, userState } from '../atoms';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { NFTMelt, SetPFP } from "../utils";
+import { broadcastState, prefixState, userState } from "../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 type NftDetailProps = {
   nft: any;
@@ -20,6 +20,8 @@ interface details {
 }
 
 export const NftDetails = ({ nft }: NftDetailProps) => {
+  const [description, setDescription] = useState("");
+  const [attributes, setAttributes] = useState({});
   const [confirm, setConfirm] = useState(false);
   const [selling, setSelling] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
@@ -75,23 +77,27 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
       .then((data) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
+        setDescription(SVG.set.Description);
+        SVG.attributes.forEach((attr: any) => {
+          setAttributes({ ...attributes, ...attr });
+        });
         document.getElementById(`${nft.set}-${nft.uid}-details`)!.innerHTML =
           SVG.HTML;
       });
   };
 
   useEffect(() => {
-    hive.api.setOptions({ url: 'https://api.deathwing.me/' });
-    hive.config.set('address_prefix', 'STM');
+    hive.api.setOptions({ url: "https://api.deathwing.me/" });
+    hive.config.set("address_prefix", "STM");
     hive.config.set(
-      'chain_id',
-      'beeab0de00000000000000000000000000000000000000000000000000000000'
+      "chain_id",
+      "beeab0de00000000000000000000000000000000000000000000000000000000"
     );
-    hive.config.set('alternative_api_endpoints', [
-      'https://rpc.ecency.com/',
-      'https://hived.emre.sh/',
-      'https://rpc.ausbit.dev/',
-      'https://api.hive.blog/',
+    hive.config.set("alternative_api_endpoints", [
+      "https://rpc.ecency.com/",
+      "https://hived.emre.sh/",
+      "https://rpc.ausbit.dev/",
+      "https://api.hive.blog/",
     ]);
 
     if (nft.set !== undefined && nft.uid !== undefined) {
@@ -107,17 +113,11 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
       <h1 className="text-white text-xl font-bold mt-5">{nft.uid}</h1>
       <p className="text-white text-md font-semibold mt-5">
         {nftDetails?.title}
-        <br />
-        For more info, visit:{'    '}
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={'https://peakd.com' + nftDetails?.url}
-          className="text-gray-400 text-md font-semibold hover:text-gray-500"
-        >
-          this link
-        </a>
       </p>
+      <p className="text-white text-center">{description}</p>
+      {Object.keys(attributes).map((attr) => (
+        <h1 className={"text-white text-left mx-20 px-3 py-2"}>{attr}</h1>
+      ))}
       <div className="m-5 flex flex-col sm:flex-row gap-5 justify-center">
         <button
           onClick={handleSetPfp}
