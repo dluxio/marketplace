@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { setColors } from '../constants';
+import React, { useEffect, useState } from "react";
+import { setColors } from "../constants";
 
-import Countdown from 'react-countdown';
+import Countdown from "react-countdown";
 
-import axios from 'axios';
+import axios from "axios";
 
-import { GiTakeMyMoney } from 'react-icons/gi';
-import { AuctionDetail } from './AuctionDetail';
-import { BidForm } from './Forms/BidForm';
+import { GiTakeMyMoney } from "react-icons/gi";
+import { AuctionDetail } from "./AuctionDetail";
+import { BidForm } from "./Forms/BidForm";
 
-import { useRecoilValue } from 'recoil';
-import { userState } from '../atoms';
+import { useRecoilValue } from "recoil";
+import { userState } from "../atoms";
 
 type AuctionCardProps = {
   nft: any;
@@ -27,6 +27,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
       .then(({ data }) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
+        console.log(SVG.HTML);
         document.getElementById(
           `image-${nft.set}-${nft.uid}-auction`
         )!.innerHTML = SVG.HTML;
@@ -52,13 +53,13 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         <div className="px-2 sm:px-4 py-4 w-full flex justify-between items-center gap-3">
           <div>
             <h1>
-              Price:{' '}
+              Price:{" "}
               <strong>
                 {parseFloat(
                   (
                     nft.price.amount / Math.pow(10, nft.price.precision)
                   ).toString()
-                ).toFixed(nft.price.precision)}{' '}
+                ).toFixed(nft.price.precision)}{" "}
               </strong>
             </h1>
             <h1>
@@ -69,9 +70,9 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
             disabled={!user ? true : false}
             onClick={() => user && setIsBidding(true)}
             className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
-              !user && 'cursor-not-allowed'
+              !user && "cursor-not-allowed"
             }`}
-            style={{ backgroundColor: user ? setColors[nft.set] : 'gray' }}
+            style={{ backgroundColor: user ? setColors[nft.set] : "gray" }}
           >
             Bid
             <GiTakeMyMoney />
