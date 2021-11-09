@@ -27,7 +27,6 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
       .then(({ data }) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
-        console.log(SVG.HTML);
         document.getElementById(
           `image-${nft.set}-${nft.uid}-auction`
         )!.innerHTML = SVG.HTML;
