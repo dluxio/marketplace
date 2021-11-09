@@ -78,6 +78,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
       .then((data) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
+        console.log(SVG);
         setDescription(SVG.set.Description);
         let attributeObj = {};
         SVG.attributes.forEach((attr: any) => {
@@ -118,7 +119,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
       <p className="text-white text-md font-semibold mt-5">
         {nftDetails?.title}
       </p>
-      <p className="text-white text-center">{description}</p>
+      <p className="text-white text-center mx-10">{description}</p>
       <div className="my-3">
         {Object.keys(attributes).map((attr: any) => (
           <div className="mx-20 flex my-2 items-center gap-5">

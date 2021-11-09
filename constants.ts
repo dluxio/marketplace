@@ -1,8 +1,3 @@
-export const setColors: any = {
-  dlux: '#4169e1',
-  bz: '#F6BE00',
-};
-
 export const tokenColors: any = {
   hive: '#B11800',
   hive_dollar: 'green',
@@ -22,5 +17,8 @@ export const attributeColors: any = {
   Eyes: '#06403B ',
   EyeWear: '#3329B0',
   'Eye Brows': '#04AF85',
-  Body: '#5C3377'
+  Body: '#5C3377',
+  'Color 1': '#BDFA4C',
+  'Color 2': '#D35223',
+  'Color 3': '#32C8D0'
 }

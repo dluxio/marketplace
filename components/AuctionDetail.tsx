@@ -1,7 +1,7 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react';
-import { ImCross } from 'react-icons/im';
+import React, { MouseEventHandler, useEffect, useState } from "react";
+import { ImCross } from "react-icons/im";
 
-import hive from '@hiveio/hive-js';
+import hive from "@hiveio/hive-js";
 
 type AuctionDetailProps = {
   onExit: MouseEventHandler;
@@ -36,17 +36,17 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
   };
 
   useEffect(() => {
-    hive.api.setOptions({ url: 'https://api.deathwing.me/' });
-    hive.config.set('address_prefix', 'STM');
+    hive.api.setOptions({ url: "https://api.deathwing.me/" });
+    hive.config.set("address_prefix", "STM");
     hive.config.set(
-      'chain_id',
-      'beeab0de00000000000000000000000000000000000000000000000000000000'
+      "chain_id",
+      "beeab0de00000000000000000000000000000000000000000000000000000000"
     );
-    hive.config.set('alternative_api_endpoints', [
-      'https://rpc.ecency.com/',
-      'https://hived.emre.sh/',
-      'https://rpc.ausbit.dev/',
-      'https://api.hive.blog/',
+    hive.config.set("alternative_api_endpoints", [
+      "https://rpc.ecency.com/",
+      "https://hived.emre.sh/",
+      "https://rpc.ausbit.dev/",
+      "https://api.hive.blog/",
     ]);
 
     if (nft.set !== undefined && nft.uid !== undefined) {
@@ -71,11 +71,11 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
           </h1>
           <h2 className="text-white text-md font-semibold">{details?.title}</h2>
           <p className="text-white text-md font-semibold mt-5">
-            For more info, visit:{'    '}
+            For more info, visit:{"    "}
             <a
               target="_blank"
               rel="noreferrer"
-              href={'https://peakd.com' + details?.url}
+              href={"https://peakd.com" + details?.url}
               className="text-gray-400 text-md font-semibold hover:text-gray-500"
             >
               this link

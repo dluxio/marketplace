@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { setColors } from '../constants';
+import React, { useEffect, useState } from "react";
 
-import { ImArrowRight2, ImCross } from 'react-icons/im';
-import { FaQuestion } from 'react-icons/fa';
+import { ImArrowRight2, ImCross } from "react-icons/im";
+import { FaQuestion } from "react-icons/fa";
 
-import { toBase64, FTOpen } from '../utils';
-import { Airdrop } from './Forms/AirdropForm';
-import axios from 'axios';
-import { AuctionNFTForm } from './Forms/AuctionForm';
-import { SellForm } from './Forms/SellForm';
-import { TransferNFTFormComp } from '.';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { broadcastState, prefixState, userState } from '../atoms';
+import { toBase64, FTOpen } from "../utils";
+import { Airdrop } from "./Forms/AirdropForm";
+import axios from "axios";
+import { AuctionNFTForm } from "./Forms/AuctionForm";
+import { SellForm } from "./Forms/SellForm";
+import { TransferNFTFormComp } from ".";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { broadcastState, prefixState, userState } from "../atoms";
 
 type TokenCardProps = {
   token?: any;
@@ -19,12 +18,13 @@ type TokenCardProps = {
 
 export const TokenCard = ({ token }: TokenCardProps) => {
   const { set, script } = token;
+  const [colors, setColors] = useState<any>([]);
   const [isSelling, setIsSelling] = useState(false);
   const [auction, setAuction] = useState(false);
   const [airdrop, setAirdrop] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
-  const id = '_' + Math.random().toString(36).substr(2, 9);
-  const [randomUID, setRandomUID] = useState('==');
+  const id = "_" + Math.random().toString(36).substr(2, 9);
+  const [randomUID, setRandomUID] = useState("==");
   const [isFlipped, setIsFlipped] = useState(false);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
@@ -70,11 +70,23 @@ export const TokenCard = ({ token }: TokenCardProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [randomUID]);
 
+  useEffect(() => {
+    axios
+      .get(`https://ipfs.io/ipfs/${script}?${randomUID}`)
+      .then(({ data }) => {
+        const code = `(//${data}\n)("${randomUID}")`;
+        const SVG = eval(code);
+        setColors([SVG.set.Color1, SVG.set.Color2]);
+      });
+  }, []);
+
   return (
     <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white relative">
       <h1
         className="text-center w-full rounded-t-xl font-black py-2 text-xl"
-        style={{ backgroundColor: setColors[set] }}
+        style={{
+          background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
+        }}
       >
         {set}
       </h1>
@@ -92,7 +104,7 @@ export const TokenCard = ({ token }: TokenCardProps) => {
         </p>
         <button
           className="px-6 py-2 rounded-xl flex items-center gap-2"
-          style={{ backgroundColor: setColors[set] }}
+          style={{ backgroundColor: colors[1] }}
           onClick={() => setIsFlipped(true)}
         >
           <ImArrowRight2 size={20} color="#fff" />

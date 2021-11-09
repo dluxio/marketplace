@@ -1,24 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 
-import dayjs from 'dayjs';
-import objectSupport from 'dayjs/plugin/objectSupport';
+import dayjs from "dayjs";
+import objectSupport from "dayjs/plugin/objectSupport";
 dayjs.extend(objectSupport);
 
-import { FaMoneyBillAlt } from 'react-icons/fa';
-import { setColors } from '../constants';
+import { FaMoneyBillAlt } from "react-icons/fa";
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { userState, broadcastState, prefixState } from '../atoms';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userState, broadcastState, prefixState } from "../atoms";
 
-import axios from 'axios';
+import axios from "axios";
 
-import { handleSellCancel, NFTBuy } from '../utils';
+import { handleSellCancel, NFTBuy } from "../utils";
 
 type NftCardProp = {
   nft: any;
 };
 
 export const NftCard = ({ nft }: NftCardProp) => {
+  const [colors, setColors] = useState<any>([]);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
@@ -37,6 +37,16 @@ export const NftCard = ({ nft }: NftCardProp) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
+      .then(({ data }) => {
+        const code = `(//${data}\n)("${nft.uid}")`;
+        const SVG = eval(code);
+        setColors([SVG.set.Color1, SVG.set.Color2]);
+      });
+  }, []);
+
   const handleBuy = async () => {
     const response: any = await NFTBuy(user.name, {
       uid: nft.uid,
@@ -51,7 +61,7 @@ export const NftCard = ({ nft }: NftCardProp) => {
 
   const handleTakeBack = async () => {
     const response: any = await handleSellCancel(
-      { set: nft.set, uid: nft.uid, kind: 'nft' },
+      { set: nft.set, uid: nft.uid, kind: "nft" },
       user.name,
       prefix
     );
@@ -66,7 +76,9 @@ export const NftCard = ({ nft }: NftCardProp) => {
     <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white flex flex-col">
       <h1
         className="text-center w-full rounded-t-xl font-black py-2 text-xl"
-        style={{ backgroundColor: setColors[nft.set] }}
+        style={{
+          background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
+        }}
       >
         {nft.uid}
       </h1>
@@ -78,20 +90,20 @@ export const NftCard = ({ nft }: NftCardProp) => {
       </div>
       <div className="px-5 py-4 w-full flex justify-between items-center">
         <h1>
-          Price:{' '}
+          Price:{" "}
           <strong>
             {parseFloat(
               (nft.price.amount / Math.pow(10, nft.price.precision)).toString()
-            ).toFixed(nft.price.precision)}{' '}
+            ).toFixed(nft.price.precision)}{" "}
           </strong>
         </h1>
         {nft.by !== user?.name ? (
           <button
             onClick={() => user && handleBuy()}
             className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
-              !user && 'cursor-not-allowed'
+              !user && "cursor-not-allowed"
             }`}
-            style={{ backgroundColor: user ? setColors[nft.set] : 'gray' }}
+            style={{ backgroundColor: user ? colors[1] : "gray" }}
           >
             Buy
             <FaMoneyBillAlt />
@@ -100,9 +112,9 @@ export const NftCard = ({ nft }: NftCardProp) => {
           <button
             onClick={handleTakeBack}
             className={`px-3 py-2 rounded-xl flex items-center gap-2 ${
-              !user && 'cursor-not-allowed'
+              !user && "cursor-not-allowed"
             }`}
-            style={{ backgroundColor: 'orange' }}
+            style={{ backgroundColor: "orange" }}
           >
             Take back
           </button>
