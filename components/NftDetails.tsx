@@ -9,6 +9,7 @@ import { Confirmation } from "./Confirmation";
 import { NFTMelt, SetPFP } from "../utils";
 import { broadcastState, prefixState, userState } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { attributeColors } from "../constants";
 
 type NftDetailProps = {
   nft: any;
@@ -21,7 +22,7 @@ interface details {
 
 export const NftDetails = ({ nft }: NftDetailProps) => {
   const [description, setDescription] = useState("");
-  const [attributes, setAttributes] = useState({});
+  const [attributes, setAttributes] = useState<any>({});
   const [confirm, setConfirm] = useState(false);
   const [selling, setSelling] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
@@ -78,9 +79,12 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
         setDescription(SVG.set.Description);
+        let attributeObj = {};
         SVG.attributes.forEach((attr: any) => {
-          setAttributes({ ...attributes, ...attr });
+          attributeObj = { ...attributeObj, ...attr };
         });
+        setAttributes(attributeObj);
+
         document.getElementById(`${nft.set}-${nft.uid}-details`)!.innerHTML =
           SVG.HTML;
       });
@@ -108,16 +112,26 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
   }, [nft]);
 
   return (
-    <div className="w-full text-center bg-gray-600 py-10 rounded-xl border-4 border-gray-700">
+    <div className="w-full text-center bg-gray-600 py-10 rounded-xl border-4 border-gray-700 my-5">
       <div id={`${nft.set}-${nft.uid}-details`} className="w-1/3 mx-auto"></div>
       <h1 className="text-white text-xl font-bold mt-5">{nft.uid}</h1>
       <p className="text-white text-md font-semibold mt-5">
         {nftDetails?.title}
       </p>
       <p className="text-white text-center">{description}</p>
-      {Object.keys(attributes).map((attr) => (
-        <h1 className={"text-white text-left mx-20 px-3 py-2"}>{attr}</h1>
-      ))}
+      <div className="my-3">
+        {Object.keys(attributes).map((attr: any) => (
+          <div className="mx-20 flex my-2 items-center gap-5">
+            <h1
+              className={"text-white text-left px-2 py-1 w-auto rounded-xl"}
+              style={{ backgroundColor: attributeColors[attr] }}
+            >
+              {attr}
+            </h1>
+            <h1 className="text-white text-center">{attributes[attr]}</h1>
+          </div>
+        ))}
+      </div>
       <div className="m-5 flex flex-col sm:flex-row gap-5 justify-center">
         <button
           onClick={handleSetPfp}
