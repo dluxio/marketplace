@@ -1,6 +1,6 @@
 export const setColors: any = {
   dlux: '#4169e1',
-  BZ: '#F6BE00',
+  bz: '#F6BE00',
 };
 
 export const tokenColors: any = {
