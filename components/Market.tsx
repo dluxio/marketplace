@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 
-import { AuctionNFTcard, MarketNav, NftCard } from '.';
-import { CoinCard } from '.';
+import { AuctionNFTcard, MarketNav, NftCard } from ".";
+import { CoinCard } from ".";
 
-import Link from 'next/link';
+import Link from "next/link";
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { marketNavState, coinState, prefixState } from '../atoms';
-import { NewsScreen } from './NewsScreen';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { marketNavState, coinState, prefixState } from "../atoms";
+import { NewsScreen } from "./NewsScreen";
+import { AppScreen } from "./AppScreen";
 
 export const Market = () => {
   const [nfts, setNfts] = useState([]);
@@ -24,13 +25,13 @@ export const Market = () => {
   useEffect(() => {
     const fetchNfts = async () => {
       axios
-        .get('https://token.dlux.io/api/sales')
+        .get("https://token.dlux.io/api/sales")
         .then(({ data: { result } }) => {
           setNfts(result);
         });
 
       axios
-        .get('https://token.dlux.io/api/mintsales')
+        .get("https://token.dlux.io/api/mintsales")
         .then(({ data: { result } }) => {
           setFts(result);
         });
@@ -38,13 +39,13 @@ export const Market = () => {
 
     const fetchAuction = () => {
       axios
-        .get('https://token.dlux.io/api/auctions')
+        .get("https://token.dlux.io/api/auctions")
         .then(({ data: { result } }) => {
           setAuction(result);
         });
 
       axios
-        .get('https://token.dlux.io/api/mintauctions')
+        .get("https://token.dlux.io/api/mintauctions")
         .then(({ data: { result } }) => {
           setFtAuction(result);
         });
@@ -52,26 +53,26 @@ export const Market = () => {
 
     const fetchCoins = async () => {
       const { data: hiveData } = await axios.get(
-        'https://api.coingecko.com/api/v3/coins/hive',
+        "https://api.coingecko.com/api/v3/coins/hive",
         {
           headers: {
-            accept: 'application/json',
+            accept: "application/json",
           },
         }
       );
       const { data: hbdData } = await axios.get(
-        'https://api.coingecko.com/api/v3/coins/hive_dollar',
+        "https://api.coingecko.com/api/v3/coins/hive_dollar",
         {
           headers: {
-            accept: 'application/json',
+            accept: "application/json",
           },
         }
       );
       const { data: ethData } = await axios.get(
-        'https://api.coingecko.com/api/v3/coins/ethereum',
+        "https://api.coingecko.com/api/v3/coins/ethereum",
         {
           headers: {
-            accept: 'application/json',
+            accept: "application/json",
           },
         }
       );
@@ -79,7 +80,7 @@ export const Market = () => {
     };
 
     const fetchPrefix = () => {
-      axios.get('https://token.dlux.io/api/protocol').then((response) => {
+      axios.get("https://token.dlux.io/api/protocol").then((response) => {
         setPrefix(response.data.prefix);
       });
     };
@@ -96,7 +97,7 @@ export const Market = () => {
   return (
     <div className="w-full h-full">
       <MarketNav />
-      {selectedMarket === 'exchange' && (
+      {selectedMarket === "exchange" && (
         <>
           <h1 className="text-3xl mx-10 my-4 text-white font-medium">TOKENS</h1>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-10">
@@ -135,8 +136,8 @@ export const Market = () => {
           </div>
         </>
       )}
-      {selectedMarket === 'apps' && <h1>Apps screen</h1>}
-      {selectedMarket === 'news' && <NewsScreen />}
+      {selectedMarket === "apps" && <AppScreen />}
+      {selectedMarket === "news" && <NewsScreen />}
     </div>
   );
 };
