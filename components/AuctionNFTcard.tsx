@@ -34,6 +34,8 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
   }, [nft]);
 
   useEffect(() => {
+    console.log(nft);
+
     axios
       .get(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then(({ data }) => {
@@ -63,6 +65,9 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         </div>
         <div className="px-2 sm:px-4 py-4 w-full flex justify-between items-center gap-3">
           <div>
+            <h1>
+              Bidder: <strong>{nft.bidder}</strong>
+            </h1>
             <h1>
               Price:{" "}
               <strong>

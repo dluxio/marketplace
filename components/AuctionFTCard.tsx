@@ -89,6 +89,9 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
         <div className="px-2 sm:px-4 py-4 w-full flex justify-between items-center gap-3">
           <div>
             <h1>
+              Bidder: <strong>{ft.bidder}</strong>
+            </h1>
+            <h1>
               Price:{" "}
               <strong>
                 {parseFloat(
