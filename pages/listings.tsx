@@ -25,7 +25,6 @@ const Listings = () => {
       axios
         .get('https://token.dlux.io/api/mintsupply')
         .then(({ data: { result } }) => {
-          console.log(result);
           setFts(result);
         });
     };

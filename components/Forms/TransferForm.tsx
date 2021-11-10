@@ -1,12 +1,12 @@
-import React, { useState, useEffect, MouseEventHandler } from 'react';
+import React, { useState, useEffect, MouseEventHandler } from "react";
 
-import { Formik } from 'formik';
-import { FormInput } from '../FormInput';
-import { ImCross } from 'react-icons/im';
+import { Formik } from "formik";
+import { FormInput } from "../FormInput";
+import { ImCross } from "react-icons/im";
 
-import { Give, ReserveTrade } from '../../utils';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { prefixState, userState, broadcastState } from '../../atoms';
+import { Give, ReserveTrade } from "../../utils";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { prefixState, userState, broadcastState } from "../../atoms";
 
 export const TransferNFTFormComp: React.FC<{
   set: string;
@@ -27,7 +27,6 @@ export const TransferNFTFormComp: React.FC<{
     if (transferData) {
       if (!transferData.price) {
         Give(user.name, transferData, prefix).then((response: any) => {
-          console.log(response);
           if (response) {
             if (response.success) {
               setBroadcasts((prevState: any) => [...prevState, response]);
@@ -36,7 +35,6 @@ export const TransferNFTFormComp: React.FC<{
         });
       } else {
         ReserveTrade(user.name, prefix, transferData).then((response: any) => {
-          console.log(response);
           if (response) {
             if (response.success) {
               setBroadcasts((prevState: any) => [...prevState, response]);
@@ -60,14 +58,14 @@ export const TransferNFTFormComp: React.FC<{
           />
         </button>
         <h1 className="text-center text-white text-2xl">
-          Give {uid ? 'NFT' : 'FT'}
+          Give {uid ? "NFT" : "FT"}
         </h1>
         <Formik
-          initialValues={{ to: '', price: (0).toFixed(3) }}
+          initialValues={{ to: "", price: (0).toFixed(3) }}
           validate={({ to }) => {
             const errors: any = {};
             if (!to) {
-              errors.to = 'Required';
+              errors.to = "Required";
             }
             return errors;
           }}

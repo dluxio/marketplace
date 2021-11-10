@@ -41,7 +41,6 @@ export const Market = () => {
       axios
         .get("https://token.dlux.io/api/auctions")
         .then(({ data: { result } }) => {
-          console.log(result);
           setAuction(result);
         });
 

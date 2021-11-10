@@ -1,17 +1,17 @@
-import React, { useState, useEffect, MouseEventHandler } from 'react';
+import React, { useState, useEffect, MouseEventHandler } from "react";
 
-import { Formik } from 'formik';
-import { FormInput } from '../FormInput';
-import { ImCross } from 'react-icons/im';
-import { broadcastState, prefixState, userState } from '../../atoms';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { Formik } from "formik";
+import { FormInput } from "../FormInput";
+import { ImCross } from "react-icons/im";
+import { broadcastState, prefixState, userState } from "../../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 
-import { NFTBid } from '../../utils';
+import { NFTBid } from "../../utils";
 
 export const BidForm: React.FC<{
   set: string;
   uid: string;
-  kind: 'ft' | 'nft';
+  kind: "ft" | "nft";
   handleClose: Function;
 }> = ({ set, handleClose, uid, kind }) => {
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
@@ -22,7 +22,6 @@ export const BidForm: React.FC<{
 
   useEffect(() => {
     if (bidData && user) {
-      console.log(uid);
       NFTBid(user.name, bidData, prefix, kind).then((response: any) => {
         if (response) {
           if (response.success) {
@@ -51,7 +50,7 @@ export const BidForm: React.FC<{
           validate={({ bid_amount }) => {
             const errors: any = {};
             if (!bid_amount) {
-              errors.bid_amount = 'Required';
+              errors.bid_amount = "Required";
             }
             return errors;
           }}

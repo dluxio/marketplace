@@ -3,14 +3,14 @@ import React, {
   MutableRefObject,
   useRef,
   useState,
-} from 'react';
+} from "react";
 
-import { useRecoilState } from 'recoil';
-import { userState } from '../atoms';
+import { useRecoilState } from "recoil";
+import { userState } from "../atoms";
 
-import { ImCross } from 'react-icons/im';
+import { ImCross } from "react-icons/im";
 
-import hive from '@hiveio/hive-js';
+import hive from "@hiveio/hive-js";
 
 type LoginProps = {
   handleClose: MouseEventHandler;
@@ -18,35 +18,34 @@ type LoginProps = {
 
 export const Login = ({ handleClose }: LoginProps) => {
   const usernameRef: MutableRefObject<any> = useRef(null);
-  const [errors, setErrors] = useState({ user: '' });
+  const [errors, setErrors] = useState({ user: "" });
 
-  hive.api.setOptions({ url: 'https://api.deathwing.me/' });
-  hive.config.set('address_prefix', 'STM');
+  hive.api.setOptions({ url: "https://api.deathwing.me/" });
+  hive.config.set("address_prefix", "STM");
   hive.config.set(
-    'chain_id',
-    'beeab0de00000000000000000000000000000000000000000000000000000000'
+    "chain_id",
+    "beeab0de00000000000000000000000000000000000000000000000000000000"
   );
-  hive.config.set('alternative_api_endpoints', [
-    'https://rpc.ecency.com/',
-    'https://hived.emre.sh/',
-    'https://rpc.ausbit.dev/',
-    'https://api.hive.blog/',
+  hive.config.set("alternative_api_endpoints", [
+    "https://rpc.ecency.com/",
+    "https://hived.emre.sh/",
+    "https://rpc.ausbit.dev/",
+    "https://api.hive.blog/",
   ]);
 
   const [_user, setUser] = useRecoilState(userState);
 
   const handleSubmit = (e: any) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       hive.api.getAccounts(
         [usernameRef.current.value],
         (err: any, result: any) => {
           if (err) throw new Error(err);
           if (result !== []) {
             setUser(result[0]);
-            localStorage.setItem('user', JSON.stringify(result[0]));
-            console.log(result[0]);
+            localStorage.setItem("user", JSON.stringify(result[0]));
           } else {
-            setErrors({ user: 'hello' });
+            setErrors({ user: "hello" });
           }
         }
       );

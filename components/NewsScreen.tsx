@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 
 export const NewsScreen = () => {
   const [feed, setFeed] = useState<any>(null);
 
   useEffect(() => {
-    axios.get('https://token.dlux.io/feed').then(({ data }) => {
+    axios.get("https://token.dlux.io/feed").then(({ data }) => {
       setFeed(data.feed);
     });
   }, []);
 
   return (
-    <div className="mx-10 text-white grid grid-cols-1 sm:grid-cols-4 gap-4">
+    <div className="mx-10 mb-5 text-white grid grid-cols-1 sm:grid-cols-4 gap-4">
       {feed &&
         Object.keys(feed).map((key: string) => {
-          const name = feed[key].split(' ')[0].split('|')[0];
-          const restOfFeed = feed[key].substr(feed[key].indexOf(' ') + 1);
+          const name = feed[key].split(" ")[0].split("|")[0];
+          const restOfFeed = feed[key].substr(feed[key].indexOf(" ") + 1);
           return (
             <div
               key={key}

@@ -78,7 +78,6 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
       .then((data) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
-        console.log(SVG);
         setDescription(SVG.set.Description);
         let attributeObj = {};
         SVG.attributes.forEach((attr: any) => {

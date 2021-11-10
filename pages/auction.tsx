@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
-import { AuctionNFTcard } from '../components';
-import axios from 'axios';
-import { AuctionFTcard } from '../components/AuctionFTCard';
+import { AuctionNFTcard } from "../components";
+import axios from "axios";
+import { AuctionFTcard } from "../components/AuctionFTCard";
 
 const Tools = () => {
   const router = useRouter();
@@ -14,9 +14,9 @@ const Tools = () => {
 
   useEffect(() => {
     if (auctionHouseNFT === []) {
-      router.push('/');
+      router.push("/");
     } else if (auctionHouseFT === []) {
-      router.push('/');
+      router.push("/");
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,15 +25,14 @@ const Tools = () => {
   useEffect(() => {
     const fetchAuction = () => {
       axios
-        .get('https://token.dlux.io/api/auctions')
+        .get("https://token.dlux.io/api/auctions")
         .then(({ data: { result } }) => {
           setAuctionHouseNFT(result);
         });
 
       axios
-        .get('https://token.dlux.io/api/mintsupply')
+        .get("https://token.dlux.io/api/mintsupply")
         .then(({ data: { result } }) => {
-          console.log(result);
           setAuctionHouseFT(result);
         });
     };
@@ -48,7 +47,7 @@ const Tools = () => {
         <button
           onClick={() => setShowAuctionNFT(true)}
           className={`p-2 ${
-            showAuctionNFT && 'bg-gray-800'
+            showAuctionNFT && "bg-gray-800"
           } rounded-l-full bg-gray-700 text-white transition-all`}
         >
           NFTs
@@ -56,7 +55,7 @@ const Tools = () => {
         <button
           onClick={() => setShowAuctionNFT(false)}
           className={`p-2 ${
-            !showAuctionNFT && 'bg-gray-800'
+            !showAuctionNFT && "bg-gray-800"
           } rounded-r-full bg-gray-700 text-white transition-all`}
         >
           FTs

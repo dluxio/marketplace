@@ -34,8 +34,6 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
   }, [nft]);
 
   useEffect(() => {
-    console.log(nft);
-
     axios
       .get(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then(({ data }) => {

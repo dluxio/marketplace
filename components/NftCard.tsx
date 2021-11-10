@@ -24,7 +24,6 @@ export const NftCard = ({ nft }: NftCardProp) => {
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
   useEffect(() => {
-    console.log(nft.by);
     axios
       .get(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then(({ data }) => {
