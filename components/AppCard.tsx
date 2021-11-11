@@ -10,28 +10,6 @@ export const AppCard = ({ app }: AppCardProps) => {
   const [image, setImage] = useState<any>("");
   const [contentResult, setContentResult] = useState<any>(null);
 
-  const handleRunApp = () => {
-    document.title = `DLUX | ${contentResult.title}`;
-    var metadata = contentResult.json_metadata;
-    var hashy = JSON.parse(metadata).vrHash;
-    var scrolling = JSON.parse(metadata).scrolling;
-    var vars = location.href.split("?")[1];
-    var iframe = document.createElement("iframe");
-    iframe.id = "theIframe";
-    iframe.setAttribute("scrolling", scrolling || "yes");
-    iframe.width = "100%";
-    iframe.height = "100%";
-    iframe.setAttribute("allowfullscreen", "true");
-    iframe.setAttribute(
-      "allow",
-      "gyroscope; accelerometer; microphone; camera"
-    );
-    iframe.src = `https://anywhere.ipfs.dlux.io/ipfs/${hashy}?${vars}`;
-    if (document.getElementById("iframe-app")) {
-      document.getElementById("iframe-app")!.appendChild(iframe);
-    }
-  };
-
   useEffect(() => {
     const fetchImage = (json: any) => {
       let imagestring;
