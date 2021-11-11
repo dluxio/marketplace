@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import hive from "@hiveio/hive-js";
+import router from "next/router";
 
 type AppCardProps = {
   app: any;
-  setOpenApp: Function;
 };
 
-export const AppCard = ({ app, setOpenApp }: AppCardProps) => {
+export const AppCard = ({ app }: AppCardProps) => {
   const [image, setImage] = useState<any>("");
   const [contentResult, setContentResult] = useState<any>(null);
 
@@ -27,7 +27,6 @@ export const AppCard = ({ app, setOpenApp }: AppCardProps) => {
       "gyroscope; accelerometer; microphone; camera"
     );
     iframe.src = `https://anywhere.ipfs.dlux.io/ipfs/${hashy}?${vars}`;
-    setOpenApp(true);
     if (document.getElementById("iframe-app")) {
       document.getElementById("iframe-app")!.appendChild(iframe);
     }
@@ -65,7 +64,7 @@ export const AppCard = ({ app, setOpenApp }: AppCardProps) => {
         {image && <img src={image} className="w-full h-60" alt="appPhoto" />}
       </div>
       <h1
-        className={`text-center my-2 text-xl ${
+        className={`text-center mb-2 text-xl ${
           app.paid
             ? app.promote > 0
               ? "text-yellow-500"
@@ -82,7 +81,7 @@ export const AppCard = ({ app, setOpenApp }: AppCardProps) => {
         </div>
         <div className="flex justify-center">
           <button
-            onClick={() => handleRunApp()}
+            onClick={() => router.push(`/@${app.author}/${app.permlink}`)}
             className={`${
               app.paid
                 ? app.promote > 0

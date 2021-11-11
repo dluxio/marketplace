@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const Error404 = () => {
   return (
-    <div>
-      <h1>404... Go back</h1>
+    <div className="w-full h-1/2 flex justify-center">
+      <h1 className="text-white text-3xl">404... Go back</h1>
     </div>
   );
 };
