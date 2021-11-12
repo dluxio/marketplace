@@ -2,16 +2,25 @@ import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import hive from "@hiveio/hive-js";
+import { Client } from "@hiveio/dhive";
 import { vote } from "../../utils";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { broadcastState, userState } from "../../atoms";
+import { CommentCard } from "../../components/CommentCard";
 
 const AppDetails = () => {
+  var client = new Client([
+    "https://api.hive.blog",
+    "https://api.hivekings.com",
+    "https://anyx.io",
+    "https://api.openhive.network",
+  ]);
   const [voteWeight, setVoteWeight] = useState(0);
   const [image, setImage] = useState("");
   const [showApp, setShowApp] = useState(true);
   const [username, setUsername] = useState("");
-  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+  const [comments, setComments] = useState([]);
+  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const [contentResult, setContentResult] = useState<any>(null);
   const router = useRouter();
   const user: any = useRecoilValue(userState);
@@ -85,10 +94,16 @@ const AppDetails = () => {
     if (username !== "") {
       hive.api.getContent(username, permlink, (err: any, result: any) => {
         if (err) console.log(err);
-        console.log(result);
         fetchImage(JSON.parse(result.json_metadata));
         setContentResult(result);
       });
+
+      client.database
+        .call("get_content_replies", [username, permlink])
+        .then((result: any) => {
+          console.log(result);
+          setComments(result);
+        });
     }
   }, [username]);
 
@@ -111,31 +126,43 @@ const AppDetails = () => {
       <div className="w-full h-full" id="iframe-app"></div>
     </div>
   ) : (
-    <div className="flex justify-evenly w-full mt-10">
-      <div className="p-5">
-        <img src={image} alt="appPhoto" width={600} />
-      </div>
-      <div className="p-5">
-        <h1 className="text-white text-3xl">{contentResult?.title}</h1>
-        <div className="w-full flex flex-col my-5">
-          <input
-            className="my-2"
-            onChange={(e) => setVoteWeight(+e.target.value)}
-            type="range"
-            min="-10000"
-            max="10000"
-            value="0"
-          />
-          <button
-            onClick={handleVote}
-            className={`${
-              voteWeight < 0 ? "bg-red-500" : "bg-green-500"
-            } focus:ring-2 cursor-pointer rounded-xl px-4 py-2 text-white text-xl hover:${
-              voteWeight < 0 ? "bg-red-700" : "bg-green-700"
-            } focus:${voteWeight < 0 ? "ring-red-600" : "ring-green-600"}`}
-          >
-            {voteWeight < 0 ? "Downvote" : "Upvote"} ({voteWeight})
-          </button>
+    <div className="w-full mx-auto max-w-3xl">
+      <div className="flex justify-evenly flex-col w-full mt-10">
+        <div className="p-5 justify-center flex">
+          <img src={image} alt="appPhoto" width={600} />
+        </div>
+        <div className="p-5">
+          <h1 className="text-white text-3xl">{contentResult?.title}</h1>
+          <div className="w-full flex flex-col my-5">
+            <input
+              className="my-2"
+              onChange={(e) => setVoteWeight(+e.target.value)}
+              type="range"
+              min="-10000"
+              max="10000"
+              value="0"
+            />
+            <button
+              onClick={handleVote}
+              className={`${
+                voteWeight < 0 ? "bg-red-500" : "bg-green-500"
+              } focus:ring-2 cursor-pointer rounded-xl px-4 py-2 text-white text-xl hover:${
+                voteWeight < 0 ? "bg-red-700" : "bg-green-700"
+              } focus:${voteWeight < 0 ? "ring-red-600" : "ring-green-600"}`}
+            >
+              {voteWeight < 0 ? "Downvote" : "Upvote"} ({voteWeight})
+            </button>
+          </div>
+          <div className="my-2">
+            <h1 className="text-white border-b-2 border-white pb-1 text-2xl">
+              Comments
+            </h1>
+            <div className="flex flex-col justify-center gap-3 my-3">
+              {comments.map((comment) => (
+                <CommentCard comment={comment} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
