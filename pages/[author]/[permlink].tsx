@@ -122,9 +122,9 @@ const AppDetails = () => {
             className="my-2"
             onChange={(e) => setVoteWeight(+e.target.value)}
             type="range"
-            min="-1000"
-            max="1000"
-            value="-1000"
+            min="-10000"
+            max="10000"
+            value="0"
           />
           <button
             onClick={handleVote}
