@@ -129,7 +129,9 @@ export const FTCard = ({ ft }: FTCardProps) => {
             className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
               !user && "cursor-not-allowed"
             }`}
-            style={{ backgroundColor: user ? colors[1] : "gray" }}
+            style={{
+              background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
+            }}
           >
             Buy
             <FaMoneyBillAlt />

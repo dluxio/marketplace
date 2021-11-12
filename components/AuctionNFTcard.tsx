@@ -49,7 +49,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         <h1
           className="text-center w-full rounded-t-xl font-black py-2 text-xl"
           style={{
-            background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
+            background: `linear-gradient(${colors[0]} 30%, ${colors[1]})`,
           }}
         >
           <Countdown date={Date.parse(nft.time)} />
@@ -86,7 +86,9 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
             className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
               !user && "cursor-not-allowed"
             }`}
-            style={{ backgroundColor: user ? colors[1] : "gray" }}
+            style={{
+              background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
+            }}
           >
             Bid
             <GiTakeMyMoney />

@@ -440,3 +440,17 @@ export const redoProfilePicture = (nft: { script: string; uid: string }) => {
       document.getElementById(`profile-picture`)!.innerHTML = SVG.HTML;
     });
 };
+
+export const vote = async (voter: string, author: string, permlink: string, weight: number) => {
+  const operations = [
+    "vote",
+    {
+      voter,
+      author,
+      permlink,
+      weight
+    }
+  ]
+
+  return await handleBroadcastRequest(operations, voter);
+}

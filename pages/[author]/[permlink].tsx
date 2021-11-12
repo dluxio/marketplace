@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import hive from "@hiveio/hive-js";
+import { vote } from "../../utils";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { broadcastState, userState } from "../../atoms";
 
 const AppDetails = () => {
+  const [voteWeight, setVoteWeight] = useState(0);
   const [image, setImage] = useState("");
   const [showApp, setShowApp] = useState(true);
   const [username, setUsername] = useState("");
+  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const [contentResult, setContentResult] = useState<any>(null);
   const router = useRouter();
+  const user: any = useRecoilValue(userState);
   const { permlink, author } = router.query;
 
   const handleRunApp = () => {
@@ -31,6 +37,18 @@ const AppDetails = () => {
     if (document.getElementById("iframe-app")) {
       document.getElementById("iframe-app")!.appendChild(iframe);
     }
+  };
+
+  const handleVote = () => {
+    vote(user.name, username, permlink as string, voteWeight).then(
+      (response: any) => {
+        if (response) {
+          if (response.success) {
+            setBroadcasts((prevState: any) => [...prevState, response]);
+          }
+        }
+      }
+    );
   };
 
   useEffect(() => {
@@ -79,7 +97,12 @@ const AppDetails = () => {
       <div className="flex px-10 justify-between w-full bg-blue-500">
         <span
           className="hover:text-gray-500 cursor-pointer"
-          onClick={() => setShowApp(false)}
+          onClick={() => {
+            document
+              .querySelectorAll("iframe")
+              .forEach((iframe) => iframe.remove());
+            setShowApp(false);
+          }}
         >
           DLUX
         </span>
@@ -94,6 +117,26 @@ const AppDetails = () => {
       </div>
       <div className="p-5">
         <h1 className="text-white text-3xl">{contentResult?.title}</h1>
+        <div className="w-full flex flex-col my-5">
+          <input
+            className="my-2"
+            onChange={(e) => setVoteWeight(+e.target.value)}
+            type="range"
+            min="-1000"
+            max="1000"
+            value="-1000"
+          />
+          <button
+            onClick={handleVote}
+            className={`${
+              voteWeight < 0 ? "bg-red-500" : "bg-green-500"
+            } focus:ring-2 cursor-pointer rounded-xl px-4 py-2 text-white text-xl hover:${
+              voteWeight < 0 ? "bg-red-700" : "bg-green-700"
+            } focus:${voteWeight < 0 ? "ring-red-600" : "ring-green-600"}`}
+          >
+            {voteWeight < 0 ? "Downvote" : "Upvote"} ({voteWeight})
+          </button>
+        </div>
       </div>
     </div>
   );
