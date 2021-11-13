@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FaReply } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
+import { useRecoilValue } from "recoil";
+import { userState } from "../atoms";
+import { replyComment } from "../utils";
 
 export const CommentCard = ({ comment }: { comment: any }) => {
+  const user: any = useRecoilValue(userState);
   const [reply, setReply] = useState(false);
   const [replyBody, setReplyBody] = useState("");
   const [color, setColor] = useState("#000");
@@ -14,7 +18,15 @@ export const CommentCard = ({ comment }: { comment: any }) => {
     }
   }, []);
 
-  const handleSendReply = () => {};
+  const handleSendReply = () => {
+    replyComment({
+      author: user.name,
+      body: replyBody,
+      parent_author: comment.author,
+      parent_permlink: comment.permlink,
+      permlink: `re-previous-${comment.author}-${comment.permlink}`,
+    });
+  };
 
   return (
     <div className="text-black">

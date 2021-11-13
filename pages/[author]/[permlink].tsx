@@ -82,14 +82,15 @@ const AppDetails = () => {
   }, [contentResult]);
 
   const handleSendComment = () => {
-    comment(
-      user.name,
-      "",
-      commentBody,
-      username,
-      permlink as string,
-      "something"
-    );
+    comment({
+      author: user.name,
+      title: "",
+      body: commentBody,
+      parent_author: username,
+      parent_permlink: permlink as string,
+      permlink: `re-previous-${username}-${permlink}`,
+      json_metadata: JSON.stringify({ tags: ["hiveio"] }),
+    });
     setCommentBody("");
   };
 
