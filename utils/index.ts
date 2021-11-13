@@ -66,7 +66,6 @@ const handleBroadcastRequest = async (
         [operations],
         post,
         (response: any) => {
-          console.log('INSIDE FUNCTION: ', response);
           res(response);
         }
       );
@@ -453,4 +452,21 @@ export const vote = async (voter: string, author: string, permlink: string, weig
   ]
 
   return await handleBroadcastRequest(operations, voter);
+}
+
+export const comment = async (author: string, title: string = '', body: string, parent_author: string, parent_permlink: string, permlink: string, json_metadata: string = ''  ) => {
+  const operations = [
+    'comment',
+    {
+      author,
+      title,
+      body,
+      parent_author,
+      parent_permlink,
+      permlink,
+      json_metadata
+    }
+  ]
+
+  return await handleBroadcastRequest(operations, author);
 }

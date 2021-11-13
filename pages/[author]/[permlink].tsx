@@ -3,10 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import hive from "@hiveio/hive-js";
 import { Client } from "@hiveio/dhive";
-import { vote } from "../../utils";
+import { comment, vote } from "../../utils";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { broadcastState, userState } from "../../atoms";
 import { CommentCard } from "../../components/CommentCard";
+
+import { FaHeart, FaHeartBroken } from "react-icons/fa";
+import { IoSend } from "react-icons/io5";
 
 const AppDetails = () => {
   var client = new Client([
@@ -16,6 +19,10 @@ const AppDetails = () => {
     "https://api.openhive.network",
   ]);
   const [voteWeight, setVoteWeight] = useState(0);
+  const [commentBody, setCommentBody] = useState("");
+  const [color, setColor] = useState("#000");
+  const [upVote, setUpVote] = useState(false);
+  const [downVote, setDownVote] = useState(false);
   const [image, setImage] = useState("");
   const [showApp, setShowApp] = useState(true);
   const [username, setUsername] = useState("");
@@ -43,6 +50,7 @@ const AppDetails = () => {
       "gyroscope; accelerometer; microphone; camera"
     );
     iframe.src = `https://anywhere.ipfs.dlux.io/ipfs/${hashy}?${vars}`;
+    setShowApp(true);
     if (document.getElementById("iframe-app")) {
       document.getElementById("iframe-app")!.appendChild(iframe);
     }
@@ -73,6 +81,17 @@ const AppDetails = () => {
     }
   }, [contentResult]);
 
+  const handleSendComment = () => {
+    comment(
+      user.name,
+      "",
+      commentBody,
+      username,
+      permlink as string,
+      "something"
+    );
+  };
+
   useEffect(() => {
     const fetchImage = (json: any) => {
       let imagestring;
@@ -101,7 +120,6 @@ const AppDetails = () => {
       client.database
         .call("get_content_replies", [username, permlink])
         .then((result: any) => {
-          console.log(result);
           setComments(result);
         });
     }
@@ -128,38 +146,100 @@ const AppDetails = () => {
   ) : (
     <div className="w-full mx-auto max-w-3xl">
       <div className="flex justify-evenly flex-col w-full mt-10">
-        <div className="p-5 justify-center flex">
+        <div className="p-5 mx-auto">
           <img src={image} alt="appPhoto" width={600} />
+          <button
+            onClick={handleRunApp}
+            className={`bg-blue-500 mx-auto my-2 w-full text-white px-7 py-2 rounded-lg  focus:outline-none focus:ring-2 focus:ring-yellow-700`}
+          >
+            Run app
+          </button>
         </div>
         <div className="p-5">
           <h1 className="text-white text-3xl">{contentResult?.title}</h1>
-          <div className="w-full flex flex-col my-5">
-            <input
-              className="my-2"
-              onChange={(e) => setVoteWeight(+e.target.value)}
-              type="range"
-              min="-10000"
-              max="10000"
-              value="0"
-            />
-            <button
-              onClick={handleVote}
-              className={`${
-                voteWeight < 0 ? "bg-red-500" : "bg-green-500"
-              } focus:ring-2 cursor-pointer rounded-xl px-4 py-2 text-white text-xl hover:${
-                voteWeight < 0 ? "bg-red-700" : "bg-green-700"
-              } focus:${voteWeight < 0 ? "ring-red-600" : "ring-green-600"}`}
-            >
-              {voteWeight < 0 ? "Downvote" : "Upvote"} ({voteWeight})
-            </button>
+          <div className="flex w-full my-5 mx-2 gap-2">
+            {upVote ? (
+              <div
+                onClick={handleVote}
+                className="flex text-white mx-1 gap-2 rounded-xl px-2 py-1 bg-green-500 cursor-pointer"
+              >
+                <FaHeart size={25} color="#fff" />
+                {voteWeight / 100}%
+              </div>
+            ) : (
+              <FaHeart
+                size={25}
+                color="#fff"
+                onClick={() => {
+                  setDownVote(false);
+                  setUpVote(true);
+                }}
+              />
+            )}
+            {downVote ? (
+              <div
+                onClick={handleVote}
+                className="flex text-white mx-1 gap-2 rounded-xl px-2 py-1 bg-red-500 cursor-pointer"
+              >
+                <FaHeartBroken size={25} color="#fff" />
+                {voteWeight / 100}%
+              </div>
+            ) : (
+              <FaHeartBroken
+                size={25}
+                color="#fff"
+                onClick={() => {
+                  setUpVote(false);
+                  setDownVote(true);
+                }}
+              />
+            )}
+          </div>
+          <div className="w-full">
+            {upVote && (
+              <input
+                className="my-2 w-full"
+                onChange={(e) => setVoteWeight(+e.target.value)}
+                type="range"
+                min="0"
+                max="10000"
+                value="0"
+              />
+            )}
+            {downVote && (
+              <input
+                className="my-2 w-full"
+                onChange={(e) => setVoteWeight(+e.target.value)}
+                type="range"
+                min="0"
+                max="10000"
+                value="0"
+              />
+            )}
           </div>
           <div className="my-2">
             <h1 className="text-white border-b-2 border-white pb-1 text-2xl">
               Comments
             </h1>
+            <div className="relative flex">
+              <input
+                type="text"
+                className="w-full outline-none p-2 rounded-xl my-2"
+                placeholder="Write a comment"
+                onChange={(e) => setCommentBody(e.target.value)}
+              />
+              <IoSend
+                color={color}
+                size={25}
+                onMouseEnter={() => setColor("#dcdcdc")}
+                onMouseLeave={() => setColor("#000")}
+                onClick={handleSendComment}
+                className="absolute right-4 top-4 cursor-pointer"
+              />
+            </div>
             <div className="flex flex-col justify-center gap-3 my-3">
-              {comments.map((comment) => (
-                <CommentCard comment={comment} />
+              {comments.map((comment: any) => (
+                <CommentCard key={comment.id} comment={comment} />
               ))}
             </div>
           </div>

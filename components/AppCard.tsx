@@ -42,7 +42,7 @@ export const AppCard = ({ app }: AppCardProps) => {
         {image && <img src={image} className="w-full h-60" alt="appPhoto" />}
       </div>
       <h1
-        className={`text-center mb-2 text-xl ${
+        className={`text-center my-2 text-xl ${
           app.paid
             ? app.promote > 0
               ? "text-yellow-500"
