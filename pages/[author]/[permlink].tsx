@@ -90,6 +90,7 @@ const AppDetails = () => {
       permlink as string,
       "something"
     );
+    setCommentBody("");
   };
 
   useEffect(() => {
@@ -168,6 +169,7 @@ const AppDetails = () => {
               </div>
             ) : (
               <FaHeart
+                className="cursor-pointer"
                 size={25}
                 color="#fff"
                 onClick={() => {
@@ -186,6 +188,7 @@ const AppDetails = () => {
               </div>
             ) : (
               <FaHeartBroken
+                className="cursor-pointer"
                 size={25}
                 color="#fff"
                 onClick={() => {
