@@ -20,5 +20,7 @@ export const attributeColors: any = {
   Body: '#5C3377',
   'Color 1': '#BDFA4C',
   'Color 2': '#D35223',
-  'Color 3': '#32C8D0'
+  'Color 3': '#32C8D0',
+  'Facial Hair': '#004777',
+  'Freckle': '#FFCC00'
 }

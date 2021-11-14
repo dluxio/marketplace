@@ -112,7 +112,8 @@ export const FTCard = ({ ft }: FTCardProps) => {
           <div id={`image-${set}-${id}`} className="w-1/2 mx-auto"></div>
         </div>
       </div>
-      <div className="px-5 py-4 w-full flex justify-between items-center">
+      <div className="px-5 py-4 w-full flex flex-col justify-between items-center">
+        <h1>By: {ft.by}</h1>
         <h1>
           Price:{" "}
           <strong>
@@ -126,7 +127,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
         {ft.by !== user?.name ? (
           <button
             onClick={() => user && handleBuy()}
-            className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
+            className={`px-6 py-2 mt-2 rounded-xl flex items-center gap-2 ${
               !user && "cursor-not-allowed"
             }`}
             style={{
@@ -139,7 +140,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
         ) : (
           <button
             onClick={handleTakeBack}
-            className={`px-3 py-2 rounded-xl flex items-center gap-2 ${
+            className={`px-3 py-2 mt-2 rounded-xl flex items-center gap-2 ${
               !user && "cursor-not-allowed"
             }`}
             style={{ backgroundColor: "orange" }}

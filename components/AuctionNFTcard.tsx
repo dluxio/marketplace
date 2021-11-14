@@ -5,7 +5,7 @@ import Countdown from "react-countdown";
 import axios from "axios";
 
 import { GiTakeMyMoney } from "react-icons/gi";
-import { AuctionDetail } from "./AuctionDetail";
+import { AuctionDetail } from "./Detail";
 import { BidForm } from "./Forms/BidForm";
 
 import { useRecoilValue } from "recoil";
@@ -54,14 +54,17 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         >
           <Countdown date={Date.parse(nft.time)} />
         </h1>
-        <div onClick={() => setShowInfo(true)} className="py-5 text-center">
+        <div
+          onClick={() => setShowInfo(true)}
+          className="py-5 text-center cursor-pointer"
+        >
           <div
             id={`image-${nft.set}-${nft.uid}-auction`}
             className="w-1/2 flex justify-center mx-auto"
           ></div>
           <h1 className="pt-2 text-xl">{nft.uid}</h1>
         </div>
-        <div className="px-2 sm:px-4 py-4 w-full flex justify-between items-center gap-3">
+        <div className="px-2 sm:px-4 py-4 w-full flex text-center flex-col justify-between items-center gap-3">
           <div>
             {nft.bidder && (
               <h1>

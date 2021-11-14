@@ -8,6 +8,7 @@ import { FaMoneyBillAlt } from "react-icons/fa";
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userState, broadcastState, prefixState } from "../atoms";
+import { AuctionDetail } from "./Detail";
 
 import axios from "axios";
 
@@ -18,6 +19,7 @@ type NftCardProp = {
 };
 
 export const NftCard = ({ nft }: NftCardProp) => {
+  const [showInfo, setShowInfo] = useState(false);
   const [colors, setColors] = useState<any>([]);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
@@ -72,55 +74,69 @@ export const NftCard = ({ nft }: NftCardProp) => {
   };
 
   return (
-    <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white flex flex-col">
-      <h1
-        className="text-center w-full rounded-t-xl font-black py-2 text-xl"
-        style={{
-          background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
-        }}
-      >
-        {nft.uid}
-      </h1>
-      <div className="py-5">
-        <div
-          id={`image-${nft.set}-${nft.uid}`}
-          className="w-1/2 flex justify-center mx-auto"
-        ></div>
-      </div>
-      <div className="px-5 py-4 w-full flex justify-between items-center">
-        <h1>
-          Price:{" "}
-          <strong>
-            {parseFloat(
-              (nft.price.amount / Math.pow(10, nft.price.precision)).toString()
-            ).toFixed(nft.price.precision)}{" "}
-          </strong>
+    <>
+      <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white flex flex-col">
+        <h1
+          className="text-center w-full rounded-t-xl font-black py-2 text-xl"
+          style={{
+            background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
+          }}
+        >
+          {nft.uid}
         </h1>
-        {nft.by !== user?.name ? (
-          <button
-            onClick={() => user && handleBuy()}
-            className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
-              !user && "cursor-not-allowed"
-            }`}
-            style={{
-              background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
-            }}
+        <div className="py-5">
+          <div
+            onClick={() => setShowInfo(true)}
+            className="py-5 text-center cursor-pointer"
           >
-            Buy
-            <FaMoneyBillAlt />
-          </button>
-        ) : (
-          <button
-            onClick={handleTakeBack}
-            className={`px-3 py-2 rounded-xl flex items-center gap-2 ${
-              !user && "cursor-not-allowed"
-            }`}
-            style={{ backgroundColor: "orange" }}
-          >
-            Take back
-          </button>
-        )}
+            <div
+              id={`image-${nft.set}-${nft.uid}`}
+              className="w-1/2 flex justify-center mx-auto"
+            ></div>
+            <h1 className="pt-2 text-xl">{nft.uid}</h1>
+          </div>
+        </div>
+        <div className="px-5 py-4 w-full flex flex-col justify-between items-center">
+          <h1>By: {nft.by}</h1>
+          <h1>
+            Price:{" "}
+            <strong>
+              {parseFloat(
+                (
+                  nft.price.amount / Math.pow(10, nft.price.precision)
+                ).toString()
+              ).toFixed(nft.price.precision)}{" "}
+            </strong>
+          </h1>
+          {nft.by !== user?.name ? (
+            <button
+              onClick={() => user && handleBuy()}
+              className={`px-6 py-2 rounded-xl flex mt-2 items-center gap-2 ${
+                !user && "cursor-not-allowed"
+              }`}
+              style={{
+                background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
+              }}
+            >
+              Buy
+              <FaMoneyBillAlt />
+            </button>
+          ) : (
+            <button
+              onClick={handleTakeBack}
+              className={`px-3 py-2 rounded-xl mt-2 flex items-center gap-2 ${
+                !user && "cursor-not-allowed"
+              }`}
+              style={{ backgroundColor: "orange" }}
+            >
+              Take back
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+      {showInfo && (
+        <AuctionDetail onExit={() => setShowInfo(false)} nft={nft} />
+      )}
+    </>
   );
 };

@@ -2,6 +2,7 @@ import React, { MouseEventHandler, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 
 import hive from "@hiveio/hive-js";
+import { attributeColors } from "../constants";
 
 type AuctionDetailProps = {
   onExit: MouseEventHandler;
@@ -10,6 +11,8 @@ type AuctionDetailProps = {
 
 export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
   const [details, setDetails] = useState<any>(null);
+  const [attributes, setAttributes] = useState<any>({});
+
   const fetchDetails = () => {
     fetch(`https://token.dlux.io/api/nft/${nft.uid}`)
       .then((response) => response.json())
@@ -30,6 +33,11 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
       .then((data) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
+        let attributeObj = {};
+        SVG.attributes.forEach((attr: any) => {
+          attributeObj = { ...attributeObj, ...attr };
+        });
+        setAttributes(attributeObj);
         document.getElementById(`${nft.set}-${nft.uid}-details`)!.innerHTML =
           SVG.HTML;
       });
@@ -70,17 +78,17 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
             {nft.set} : {nft.uid}
           </h1>
           <h2 className="text-white text-md font-semibold">{details?.title}</h2>
-          <p className="text-white text-md font-semibold mt-5">
-            For more info, visit:{"    "}
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={"https://peakd.com" + details?.url}
-              className="text-gray-400 text-md font-semibold hover:text-gray-500"
-            >
-              this link
-            </a>
-          </p>
+          {Object.keys(attributes).map((attr: any) => (
+            <div className="mx-20 flex my-2 items-center gap-5">
+              <h1
+                className={"text-white text-left px-2 py-1 w-auto rounded-xl"}
+                style={{ backgroundColor: attributeColors[attr] }}
+              >
+                {attr}
+              </h1>
+              <h1 className="text-white text-center">{attributes[attr]}</h1>
+            </div>
+          ))}
         </div>
       </div>
     </div>
