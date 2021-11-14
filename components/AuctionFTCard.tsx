@@ -11,6 +11,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 import { toBase64 } from "../utils";
 import { FaQuestion } from "react-icons/fa";
+import { NftDetails } from ".";
 
 type AuctionCardProps = {
   ft: any;
@@ -88,9 +89,11 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
         <h1 className="text-xl font-semibold text-center">{ft.set}</h1>
         <div className="px-2 sm:px-4 py-4 w-full flex justify-between items-center gap-3">
           <div>
-            <h1>
-              Bidder: <strong>{ft.bidder}</strong>
-            </h1>
+            {ft.bidder && (
+              <h1>
+                Bidder: <strong>{ft.bidder}</strong>
+              </h1>
+            )}
             <h1>
               Price:{" "}
               <strong>

@@ -63,9 +63,11 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         </div>
         <div className="px-2 sm:px-4 py-4 w-full flex justify-between items-center gap-3">
           <div>
-            <h1>
-              Bidder: <strong>{nft.bidder}</strong>
-            </h1>
+            {nft.bidder && (
+              <h1>
+                Bidder: <strong>{nft.bidder}</strong>
+              </h1>
+            )}
             <h1>
               Price:{" "}
               <strong>
