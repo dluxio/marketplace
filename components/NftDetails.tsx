@@ -112,8 +112,11 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
   }, [nft]);
 
   return (
-    <div className="w-full text-center bg-gray-600 py-10 rounded-xl border-4 border-gray-700 my-5">
-      <div id={`${nft.set}-${nft.uid}-details`} className="w-1/3 mx-auto"></div>
+    <div className="w-full text-center bg-gray-600 rounded-xl border-4 border-gray-700 my-5">
+      <div
+        id={`${nft.set}-${nft.uid}-details`}
+        className="w-1/2 my-5 mx-auto"
+      ></div>
       <h1 className="text-white text-xl font-bold mt-5">{nft.uid}</h1>
       <p className="text-white text-md font-semibold mt-5">
         {nftDetails?.title}

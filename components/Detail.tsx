@@ -66,29 +66,33 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
   return (
     <div className="fixed top-0 left-0 h-screen w-screen overflow-hidden bg-gray-700 bg-opacity-50 z-0">
       <div className="w-full flex flex-col justify-center items-center h-full">
-        <div className="bg-gray-600 relative p-10 rounded-xl text-center border-4 border-gray-700">
+        <div className="bg-gray-600 relative p-1 sm:p-10 rounded-xl text-center border-4 border-gray-700">
           <button className="m-2 absolute top-0 right-0 z-50">
             <ImCross size={15} color="white" onClick={onExit} />
           </button>
           <div
             id={`${nft.set}-${nft.uid}-details`}
-            className="w-full mx-auto mb-10"
+            className="w-1/2 mx-auto mb-10"
           ></div>
-          <h1 className="text-white text-xl font-bold mt-5">
-            {nft.set} : {nft.uid}
-          </h1>
-          <h2 className="text-white text-md font-semibold">{details?.title}</h2>
-          {Object.keys(attributes).map((attr: any) => (
-            <div className="mx-20 flex my-2 items-center gap-5">
-              <h1
-                className={"text-white text-left px-2 py-1 w-auto rounded-xl"}
-                style={{ backgroundColor: attributeColors[attr] }}
-              >
-                {attr}
-              </h1>
-              <h1 className="text-white text-center">{attributes[attr]}</h1>
-            </div>
-          ))}
+          <div className="text-white text-md sm:text-xl">
+            <h1 className="text-white text-xl font-bold mt-5">
+              {nft.set} : {nft.uid}
+            </h1>
+            <h2 className="text-white text-sm sm:text-md font-semibold">
+              {details?.title}
+            </h2>
+            {Object.keys(attributes).map((attr: any) => (
+              <div className="mx-20 flex my-2 items-center gap-5">
+                <h1
+                  className={"text-white text-left px-2 py-1 w-auto rounded-xl"}
+                  style={{ backgroundColor: attributeColors[attr] }}
+                >
+                  {attr}
+                </h1>
+                <h1 className="text-white text-center">{attributes[attr]}</h1>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
