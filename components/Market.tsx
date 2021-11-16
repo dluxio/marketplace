@@ -111,7 +111,7 @@ export const Market = () => {
               </h1>
             </Link>
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-5 gap-8 mx-10 my-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5 mx-10 my-3">
             {nfts &&
               nfts.map(
                 (nft: any, i) =>
@@ -125,7 +125,7 @@ export const Market = () => {
               </h1>
             </Link>
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-5 gap-8 mx-10 my-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5 mx-10 my-3">
             {auction &&
               auction.map(
                 (nft: any, i) =>

@@ -1,14 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Urbanist&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Urbanist&display=swap");
 
 html,
 body {
   @apply bg-gray-500;
   padding: 0;
   margin: 0;
-  font-family: 'Urbanist', sans-serif;
+  font-family: "Urbanist", sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -35,10 +35,6 @@ a {
 
 .btn {
   @apply bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-xl mb-2 cursor-pointer;
-}
-
-.grid-comp {
-  @apply grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-8 my-5 w-full;
 }
 
 .card {
