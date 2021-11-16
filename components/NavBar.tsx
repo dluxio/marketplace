@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { userState, broadcastState, refreshState } from "../atoms";
+import {
+  userState,
+  broadcastState,
+  refreshState,
+  apiLinkState,
+} from "../atoms";
 
 import { Login } from "./Login";
 
@@ -25,6 +30,7 @@ export const NavBar = () => {
   const [user, setUser] = useRecoilState<any>(userState);
   const [pfpData, setPfp] = useState<any>(placeHolder);
   const router = useRouter();
+  const apiLink: string = useRecoilValue(apiLinkState);
   const url = router.pathname.split("/")[1];
   const broadcasts: any = useRecoilValue(broadcastState);
   const refresh: string = useRecoilValue(refreshState);
@@ -50,11 +56,9 @@ export const NavBar = () => {
       if (user) {
         setSigning(false);
         setProfDropdown(false);
-        axios
-          .get(`https://token.dlux.io/api/pfp/${user.name}`)
-          .then(({ data }) => {
-            setPfp(data.result[0]);
-          });
+        axios.get(`${apiLink}api/pfp/${user.name}`).then(({ data }) => {
+          setPfp(data.result[0]);
+        });
       }
     }
   }, [user, refresh]);

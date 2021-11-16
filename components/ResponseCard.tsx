@@ -1,10 +1,10 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { FaQuestion } from 'react-icons/fa';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { FaQuestion } from "react-icons/fa";
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { broadcastState, prefixState, userState } from '../atoms';
-import { ReserveRespond, toBase64 } from '../utils';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
+import { ReserveRespond, toBase64 } from "../utils";
 
 type TradeCardProps = {
   trade: {
@@ -21,9 +21,10 @@ type TradeCardProps = {
 
 export const NFTTradeCard = ({ trade }: TradeCardProps) => {
   const user: any = useRecoilValue(userState);
+  const apiLink: string = useRecoilValue(apiLinkState);
   const prefix: string = useRecoilValue(prefixState);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
-  const [randomUID, setRandomUID] = useState('==');
+  const [randomUID, setRandomUID] = useState("==");
 
   const randomUIDGen = (setData: any) => {
     const num = Math.round(Math.random() * (setData.max - (setData.min || 0)));
@@ -32,14 +33,12 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
   };
 
   useEffect(() => {
-    if (trade.kind === 'fts') {
-      axios
-        .get(`https://token.dlux.io/api/set/${trade.set}`)
-        .then(({ data }) => {
-          setInterval(() => {
-            randomUIDGen(data.set);
-          }, 1000);
-        });
+    if (trade.kind === "fts") {
+      axios.get(`${apiLink}api/set/${trade.set}`).then(({ data }) => {
+        setInterval(() => {
+          randomUIDGen(data.set);
+        }, 1000);
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -64,7 +63,7 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
   }, [randomUID]);
 
   useEffect(() => {
-    if (trade.kind !== 'fts') {
+    if (trade.kind !== "fts") {
       axios
         .get(`https://ipfs.io/ipfs/${trade.script}?${trade.uid}`)
         .then(({ data }) => {
@@ -89,7 +88,7 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
         kind: trade.kind,
         price: trade.price,
       },
-      'complete'
+      "complete"
     ).then((response: any) => {
       response &&
         response.success &&
@@ -107,7 +106,7 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
         kind: trade.kind,
         price: trade.price,
       },
-      'cancel'
+      "cancel"
     ).then((response: any) => {
       response &&
         response.success &&
@@ -122,7 +121,7 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
       </div>
       <div className="w-full flex justify-center py-2">
         <div className="relative">
-          {trade.kind === 'fts' && (
+          {trade.kind === "fts" && (
             <div className="bg-gray-700 absolute top-0 w-full h-full bg-opacity-70 flex justify-center items-center">
               <FaQuestion size={60} color="#fff" />
             </div>
@@ -134,7 +133,7 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
         </div>
       </div>
       <div className="text-center text-xl pb-2">
-        {trade.kind !== 'fts' ? trade.item : trade.set}
+        {trade.kind !== "fts" ? trade.item : trade.set}
       </div>
       <div className="text-center text-md">
         Price: {(trade.price / 1000).toFixed(3)} DLUX

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
+import { apiLinkState } from "../atoms";
+import { useRecoilValue } from "recoil";
 
 export const NewsScreen = () => {
   const [feed, setFeed] = useState<any>(null);
+  const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
-    axios.get("https://token.dlux.io/feed").then(({ data }) => {
+    axios.get(`${apiLink}api/feed`).then(({ data }) => {
       setFeed(data.feed);
     });
   }, []);

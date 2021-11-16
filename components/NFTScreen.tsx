@@ -1,28 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { InventoryItemCard, NftDetails } from '.';
-import { inventoryNFTState, refreshState, userState } from '../atoms';
+import React, { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { InventoryItemCard, NftDetails } from ".";
+import {
+  apiLinkState,
+  inventoryNFTState,
+  refreshState,
+  userState,
+} from "../atoms";
 
-import axios from 'axios';
-import { useRouter } from 'next/router';
+import axios from "axios";
+import { useRouter } from "next/router";
 
 export const NFTScreen = () => {
   const router = useRouter();
   const user: any = useRecoilValue(userState);
+  const apiLink: string = useRecoilValue(apiLinkState);
   const [nftDetail, setNftDetail] = useState<any>();
   const refresh: string = useRecoilValue(refreshState);
   const [inventoryNFTs, setInventoryNFTs] =
     useRecoilState<any>(inventoryNFTState);
 
   useEffect(() => {
-    if (refresh === 'inventory' || refresh === '') {
+    if (refresh === "inventory" || refresh === "") {
       if (user) {
         const name = user.name;
-        axios.get(`https://token.dlux.io/api/nfts/${name}`).then((response) => {
+        axios.get(`${apiLink}api/nfts/${name}`).then((response) => {
           setInventoryNFTs(response.data.result);
         });
       } else {
-        router.push('/');
+        router.push("/");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +42,7 @@ export const NFTScreen = () => {
   }, [inventoryNFTs]);
 
   const handleNftClick = (nft: any) => {
-    router.push('#details');
+    router.push("#details");
     setNftDetail(nft);
   };
 

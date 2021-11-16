@@ -4,7 +4,7 @@ import axios from "axios";
 import { handleSellCancel, NFTBuy, toBase64 } from "../utils";
 import { FaMoneyBillAlt, FaQuestion } from "react-icons/fa";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { broadcastState, prefixState, userState } from "../atoms";
+import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
 
 type FTCardProps = {
   ft: {
@@ -22,6 +22,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
   const [randomUID, setRandomUID] = useState("==");
   const [_braodcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
+  const apiLink: string = useRecoilValue(apiLinkState);
   const prefix: string = useRecoilValue(prefixState);
 
   const id = "_" + Math.random().toString(36).substr(2, 9);
@@ -33,7 +34,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
   };
 
   useEffect(() => {
-    axios.get(`https://token.dlux.io/api/set/${set}`).then(({ data }) => {
+    axios.get(`${apiLink}api/set/${set}`).then(({ data }) => {
       setInterval(() => {
         randomUIDGen(data.set);
       }, 1000);

@@ -1,27 +1,28 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { refreshState, userState } from '../atoms';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { apiLinkState, refreshState, userState } from "../atoms";
 
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
-import { TokenCard } from './TokenCard';
+import { TokenCard } from "./TokenCard";
 
 export const MintTokenScreen = () => {
   const [mintTokens, setMintTokens] = useState([]);
   const user: any = useRecoilValue(userState);
+  const apiLink: string = useRecoilValue(apiLinkState);
   const refresh: string = useRecoilValue(refreshState);
   const router = useRouter();
 
   useEffect(() => {
-    if (refresh === 'inventory' || refresh === '') {
+    if (refresh === "inventory" || refresh === "") {
       if (user) {
         const name = user.name;
-        axios.get(`https://token.dlux.io/api/nfts/${name}`).then((response) => {
+        axios.get(`${apiLink}api/nfts/${name}`).then((response) => {
           setMintTokens(response.data.mint_tokens);
         });
       } else {
-        router.push('/');
+        router.push("/");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +41,7 @@ export const MintTokenScreen = () => {
         {mintTokens.map((token: any) => (
           <div key={token.set}>
             <TokenCard
-              key={'_' + Math.random().toString(36).substr(2, 9)}
+              key={"_" + Math.random().toString(36).substr(2, 9)}
               token={token}
             />
           </div>

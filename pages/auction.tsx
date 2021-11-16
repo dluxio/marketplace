@@ -5,9 +5,12 @@ import { useRouter } from "next/router";
 import { AuctionNFTcard } from "../components";
 import axios from "axios";
 import { AuctionFTcard } from "../components/AuctionFTCard";
+import { apiLinkState } from "../atoms";
+import { useRecoilValue } from "recoil";
 
 const Tools = () => {
   const router = useRouter();
+  const apiLink = useRecoilValue(apiLinkState);
   const [showAuctionNFT, setShowAuctionNFT] = useState(true);
   const [auctionHouseNFT, setAuctionHouseNFT] = useState([]);
   const [auctionHouseFT, setAuctionHouseFT] = useState([]);
@@ -24,17 +27,13 @@ const Tools = () => {
 
   useEffect(() => {
     const fetchAuction = () => {
-      axios
-        .get("https://token.dlux.io/api/auctions")
-        .then(({ data: { result } }) => {
-          setAuctionHouseNFT(result);
-        });
+      axios.get(`${apiLink}api/auctions`).then(({ data: { result } }) => {
+        setAuctionHouseNFT(result);
+      });
 
-      axios
-        .get("https://token.dlux.io/api/mintsupply")
-        .then(({ data: { result } }) => {
-          setAuctionHouseFT(result);
-        });
+      axios.get(`${apiLink}api/mintauctions`).then(({ data: { result } }) => {
+        setAuctionHouseFT(result);
+      });
     };
 
     fetchAuction();

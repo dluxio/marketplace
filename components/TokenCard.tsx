@@ -10,7 +10,7 @@ import { AuctionNFTForm } from "./Forms/AuctionForm";
 import { SellForm } from "./Forms/SellForm";
 import { TransferNFTFormComp } from ".";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { broadcastState, prefixState, userState } from "../atoms";
+import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
 
 type TokenCardProps = {
   token?: any;
@@ -29,6 +29,7 @@ export const TokenCard = ({ token }: TokenCardProps) => {
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
+  const apiLink: string = useRecoilValue(apiLinkState);
 
   const randomUIDGen = (setData: any) => {
     const num = Math.round(Math.random() * (setData.max - (setData.min || 0)));
@@ -47,7 +48,7 @@ export const TokenCard = ({ token }: TokenCardProps) => {
   };
 
   useEffect(() => {
-    axios.get(`https://token.dlux.io/api/set/${set}`).then(({ data }) => {
+    axios.get(`${apiLink}api/set/${set}`).then(({ data }) => {
       setInterval(() => {
         randomUIDGen(data.set);
       }, 1000);

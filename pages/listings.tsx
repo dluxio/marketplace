@@ -5,28 +5,27 @@ import { useRouter } from "next/router";
 import { NftCard } from "../components";
 import { FTCard } from "../components/FTCard";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { apiLinkState } from "../atoms";
 
 const Listings = () => {
   const [showNFTs, setShowNFTs] = useState(true);
   const [nfts, setNfts] = useState([]);
   const [fts, setFts] = useState([]);
   const router = useRouter();
+  const apiLink = useRecoilValue(apiLinkState);
 
   if (nfts === []) router.push("/");
 
   useEffect(() => {
     const fetchListings = async () => {
-      axios
-        .get("https://token.dlux.io/api/sales")
-        .then(({ data: { result } }) => {
-          setNfts(result);
-        });
+      axios.get(`${apiLink}api/auctions`).then(({ data: { result } }) => {
+        setNfts(result);
+      });
 
-      axios
-        .get("https://token.dlux.io/api/mintsupply")
-        .then(({ data: { result } }) => {
-          setFts(result);
-        });
+      axios.get(`${apiLink}api/auctions`).then(({ data: { result } }) => {
+        setFts(result);
+      });
     };
 
     fetchListings();

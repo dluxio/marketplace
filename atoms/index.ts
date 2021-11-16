@@ -39,3 +39,8 @@ export const refreshState = atom({
   key: 'refreshState',
   default: '',
 });
+
+export const apiLinkState = atom({
+  key: 'apiLinkState',
+  default: 'https://token.dlux.io/'
+})

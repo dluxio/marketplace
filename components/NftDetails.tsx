@@ -7,7 +7,7 @@ import { SellForm } from "./Forms/SellForm";
 import { Confirmation } from "./Confirmation";
 
 import { NFTMelt, SetPFP } from "../utils";
-import { broadcastState, prefixState, userState } from "../atoms";
+import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { attributeColors } from "../constants";
 
@@ -32,6 +32,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
 
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
+  const apiLink: string = useRecoilValue(apiLinkState);
 
   const handleMelt = () => {
     setConfirm(false);
@@ -47,7 +48,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
   };
 
   const fetchDetails = () => {
-    fetch(`https://token.dlux.io/api/nft/${nft.uid}`)
+    fetch(`${apiLink}api/nft/${nft.uid}`)
       .then((response) => response.json())
       .then((data) => {
         const author = data.set.author;
@@ -112,10 +113,10 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
   }, [nft]);
 
   return (
-    <div className="w-full text-center bg-gray-600 rounded-xl border-4 border-gray-700">
+    <div className="w-full text-center bg-gray-600 rounded-xl border-4 mb-5 border-gray-700">
       <div
         id={`${nft.set}-${nft.uid}-details`}
-        className="w-1/2 my-5 mx-auto"
+        className="w-1/3 my-5 mx-auto"
       ></div>
       <h1 className="text-white text-xl font-bold mt-5">{nft.uid}</h1>
       <p className="text-white text-md font-semibold mt-5">

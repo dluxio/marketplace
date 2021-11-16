@@ -8,7 +8,7 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { BidForm } from "./Forms/BidForm";
 
 import { useRecoilValue } from "recoil";
-import { userState } from "../atoms";
+import { apiLinkState, userState } from "../atoms";
 import { toBase64 } from "../utils";
 import { FaQuestion } from "react-icons/fa";
 import { NftDetails } from ".";
@@ -21,6 +21,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
   const [colors, setColors] = useState<any>([]);
   const id = "_" + Math.random().toString(36).substr(2, 9);
   const user: any = useRecoilValue(userState);
+  const apiLink: string = useRecoilValue(apiLinkState);
   const [isBidding, setIsBidding] = useState(false);
   const [randomUID, setRandomUID] = useState("==");
 
@@ -31,7 +32,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
   };
 
   useEffect(() => {
-    axios.get(`https://token.dlux.io/api/set/${ft.set}`).then(({ data }) => {
+    axios.get(`${apiLink}api/set/${ft.set}`).then(({ data }) => {
       setInterval(() => {
         randomUIDGen(data.set);
       }, 1000);

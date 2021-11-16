@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { refreshState, userState } from '../atoms';
+import React, { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { apiLinkState, refreshState, userState } from "../atoms";
 
-import axios from 'axios';
-import { NFTTradeCard as RespondCard } from '../components/ResponseCard';
-import { NFTManage as ManageCard } from '../components/ManageCard';
+import axios from "axios";
+import { NFTTradeCard as RespondCard } from "../components/ResponseCard";
+import { NFTManage as ManageCard } from "../components/ManageCard";
 
 const Trades = () => {
   const [nft, setNFT] = useState(true);
@@ -15,22 +15,21 @@ const Trades = () => {
   const [respond, setRespond] = useState(true);
   const user: any = useRecoilValue(userState);
   const refresh: string = useRecoilValue(refreshState);
+  const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
     user &&
-      axios
-        .get(`https://token.dlux.io/api/trades/nfts/${user.name}`)
-        .then(({ data }) => {
-          setNFTTradesToRespond(
-            data.result.filter((trade: any) => trade.from !== user.name)
-          );
-          setNFTTradesToManage(
-            data.result.filter((trade: any) => trade.from === user.name)
-          );
-        });
+      axios.get(`${apiLink}api/trades/nfts/${user.name}`).then(({ data }) => {
+        setNFTTradesToRespond(
+          data.result.filter((trade: any) => trade.from !== user.name)
+        );
+        setNFTTradesToManage(
+          data.result.filter((trade: any) => trade.from === user.name)
+        );
+      });
     user &&
       axios
-        .get(`https://token.dlux.io/api/trades/fts/${user.name}`)
+        .get(`${apiLink}api/trades/fts/${user.name}`)
         .then(({ data: { result } }) => {
           setFTTradesToRespond(
             result.filter((trade: any) => trade.from !== user.name)
@@ -51,7 +50,7 @@ const Trades = () => {
           <button
             onClick={() => setRespond(true)}
             className={`p-2 ${
-              respond && 'bg-gray-800'
+              respond && "bg-gray-800"
             } rounded-l-full bg-gray-700 text-white transition-all`}
           >
             Respond
@@ -59,7 +58,7 @@ const Trades = () => {
           <button
             onClick={() => setRespond(false)}
             className={`p-2 ${
-              !respond && 'bg-gray-800'
+              !respond && "bg-gray-800"
             } rounded-r-full bg-gray-700 text-white transition-all`}
           >
             Manage
@@ -69,7 +68,7 @@ const Trades = () => {
           <button
             onClick={() => setNFT(true)}
             className={`p-2 ${
-              nft && 'bg-gray-800'
+              nft && "bg-gray-800"
             } rounded-l-full bg-gray-700 text-white transition-all`}
           >
             NFTs
@@ -77,7 +76,7 @@ const Trades = () => {
           <button
             onClick={() => setNFT(false)}
             className={`p-2 ${
-              !nft && 'bg-gray-800'
+              !nft && "bg-gray-800"
             } rounded-r-full bg-gray-700 text-white transition-all`}
           >
             FTs

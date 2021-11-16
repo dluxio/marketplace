@@ -8,7 +8,7 @@ import { CoinCard } from ".";
 import Link from "next/link";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { marketNavState, coinState, prefixState } from "../atoms";
+import { marketNavState, coinState, prefixState, apiLinkState } from "../atoms";
 import { NewsScreen } from "./NewsScreen";
 import { AppScreen } from "./AppScreen";
 
@@ -20,35 +20,28 @@ export const Market = () => {
   const [_prefix, setPrefix] = useRecoilState(prefixState);
 
   const selectedMarket = useRecoilValue(marketNavState);
+  const apiLink: string = useRecoilValue(apiLinkState);
   const [coins, setCoins] = useRecoilState<any>(coinState);
 
   useEffect(() => {
     const fetchNfts = async () => {
-      axios
-        .get("https://token.dlux.io/api/sales")
-        .then(({ data: { result } }) => {
-          setNfts(result);
-        });
+      axios.get(`${apiLink}api/sales`).then(({ data: { result } }) => {
+        setNfts(result);
+      });
 
-      axios
-        .get("https://token.dlux.io/api/mintsales")
-        .then(({ data: { result } }) => {
-          setFts(result);
-        });
+      axios.get(`${apiLink}api/mintsales`).then(({ data: { result } }) => {
+        setFts(result);
+      });
     };
 
     const fetchAuction = () => {
-      axios
-        .get("https://token.dlux.io/api/auctions")
-        .then(({ data: { result } }) => {
-          setAuction(result);
-        });
+      axios.get(`${apiLink}api/auctions`).then(({ data: { result } }) => {
+        setAuction(result);
+      });
 
-      axios
-        .get("https://token.dlux.io/api/mintauctions")
-        .then(({ data: { result } }) => {
-          setFtAuction(result);
-        });
+      axios.get(`${apiLink}api/mintauctions`).then(({ data: { result } }) => {
+        setFtAuction(result);
+      });
     };
 
     const fetchCoins = async () => {
@@ -80,7 +73,7 @@ export const Market = () => {
     };
 
     const fetchPrefix = () => {
-      axios.get("https://token.dlux.io/api/protocol").then((response) => {
+      axios.get(`${apiLink}api/protocol`).then((response) => {
         setPrefix(response.data.prefix);
       });
     };
@@ -115,7 +108,7 @@ export const Market = () => {
             {nfts &&
               nfts.map(
                 (nft: any, i) =>
-                  i <= 4 && <NftCard key={`${nft.set}_${nft.uid}`} nft={nft} />
+                  i <= 3 && <NftCard key={`${nft.set}_${nft.uid}`} nft={nft} />
               )}
           </div>
           {auction.length !== 0 && (
@@ -129,7 +122,7 @@ export const Market = () => {
             {auction &&
               auction.map(
                 (nft: any, i) =>
-                  i <= 4 && (
+                  i <= 3 && (
                     <AuctionNFTcard key={`${nft.set}_${nft.uid}`} nft={nft} />
                   )
               )}

@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { useRecoilValue } from 'recoil';
-import { userState } from '../atoms';
+import { useRecoilValue } from "recoil";
+import { apiLinkState, userState } from "../atoms";
 
-import axios from 'axios';
-import { BalanceCard } from './BalanceCard';
+import axios from "axios";
+import { BalanceCard } from "./BalanceCard";
 
 export const CryptoScreen = ({}) => {
   const [dluxBal, setDluxBal] = useState(0);
   const [hiveBal, setHiveBal] = useState(0);
   const user: any = useRecoilValue(userState);
+  const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
-    setHiveBal(parseFloat(user.balance.split(' ')[0]));
+    setHiveBal(parseFloat(user.balance.split(" ")[0]));
 
     axios
-      .get(`https://token.dlux.io/@${user.name}`)
+      .get(`${apiLink}@${user.name}`)
       .then(({ data }) => setDluxBal(parseFloat(data.balance)));
   }, [user]);
 

@@ -3,6 +3,9 @@ import { ImCross } from "react-icons/im";
 
 import hive from "@hiveio/hive-js";
 import { attributeColors } from "../constants";
+import axios from "axios";
+import { apiLinkState } from "../atoms";
+import { useRecoilValue } from "recoil";
 
 type AuctionDetailProps = {
   onExit: MouseEventHandler;
@@ -12,19 +15,18 @@ type AuctionDetailProps = {
 export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
   const [details, setDetails] = useState<any>(null);
   const [attributes, setAttributes] = useState<any>({});
+  const apiLink: string = useRecoilValue(apiLinkState);
 
   const fetchDetails = () => {
-    fetch(`https://token.dlux.io/api/nft/${nft.uid}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const author = data.set.author;
-        const link = data.set.link;
+    axios.get(`${apiLink}api/nft/${nft.uid}`).then(({ data }) => {
+      const author = data.set.author;
+      const link = data.set.link;
 
-        hive.api.getContent(author, link, (err: any, result: any) => {
-          if (err) throw new Error(err);
-          setDetails(result);
-        });
+      hive.api.getContent(author, link, (err: any, result: any) => {
+        if (err) throw new Error(err);
+        setDetails(result);
       });
+    });
   };
 
   const fetchImage = () => {
