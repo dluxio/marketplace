@@ -19,7 +19,8 @@ module.exports = {
       '/listings': { page: '/listings' },
       '/trades': { page: '/trades' },
       '/404': { page: '/404' },
-      '/[author]/[permlink]': {page: '/[author]/[permlink]'}
+      '/[author]/[permlink]': {page: '/[author]/[permlink]'},
+      '/settings': {page: '/settings'}
     };
   },
 };

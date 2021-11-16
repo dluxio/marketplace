@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { userState, broadcastState, refreshState } from '../atoms';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userState, broadcastState, refreshState } from "../atoms";
 
-import { Login } from './Login';
+import { Login } from "./Login";
 
-import { useRouter } from 'next/router';
-import { Spinner } from './Spinner';
+import { useRouter } from "next/router";
+import { Spinner } from "./Spinner";
 
-import { placeHolder } from '../constants';
+import { placeHolder } from "../constants";
 
-import { FaBars } from 'react-icons/fa';
+import { FaBars } from "react-icons/fa";
 
-import Image from 'next/image';
-import { redoProfilePicture } from '../utils';
+import Image from "next/image";
+import { redoProfilePicture } from "../utils";
 
-import { isMobile } from 'react-device-detect';
-import axios from 'axios';
+import { isMobile } from "react-device-detect";
+import axios from "axios";
 
 export const NavBar = () => {
   const [profDropdown, setProfDropdown] = useState(false);
@@ -25,23 +25,28 @@ export const NavBar = () => {
   const [user, setUser] = useRecoilState<any>(userState);
   const [pfpData, setPfp] = useState<any>(placeHolder);
   const router = useRouter();
-  const url = router.pathname.split('/')[1];
+  const url = router.pathname.split("/")[1];
   const broadcasts: any = useRecoilValue(broadcastState);
   const refresh: string = useRecoilValue(refreshState);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     setUser(null);
     setProfDropdown(false);
   };
 
   const handleTrades = () => {
-    router.push('/trades');
+    router.push("/trades");
+    setProfDropdown(false);
+  };
+
+  const handleSettings = () => {
+    router.push("/settings");
     setProfDropdown(false);
   };
 
   useEffect(() => {
-    if (refresh === 'pfp' || refresh === '') {
+    if (refresh === "pfp" || refresh === "") {
       if (user) {
         setSigning(false);
         setProfDropdown(false);
@@ -56,7 +61,7 @@ export const NavBar = () => {
 
   useEffect(() => {
     if (pfpData) {
-      const uid = pfpData.pfp?.split(':');
+      const uid = pfpData.pfp?.split(":");
       const script = pfpData.set?.s;
 
       if (pfpData.pfp !== placeHolder) {
@@ -69,7 +74,7 @@ export const NavBar = () => {
 
   useEffect(() => {
     const getUser = () => {
-      const userStor = localStorage.getItem('user');
+      const userStor = localStorage.getItem("user");
 
       if (userStor) {
         setUser(JSON.parse(userStor));
@@ -88,35 +93,35 @@ export const NavBar = () => {
       {!isMobile ? (
         <div className="flex gap-10 flex-grow justify-center items-center">
           <p
-            className={`${url === '' && 'selected'} navLink`}
-            onClick={() => router.push('/')}
+            className={`${url === "" && "selected"} navLink`}
+            onClick={() => router.push("/")}
           >
             Home
           </p>
           <p
             className={`${
-              (url === 'inventory' ||
-                url === 'create-nft' ||
-                url === 'trades') &&
-              'selected'
-            } ${user ? 'navLink' : 'text-gray-600 cursor-not-allowed'}`}
+              (url === "inventory" ||
+                url === "create-nft" ||
+                url === "trades") &&
+              "selected"
+            } ${user ? "navLink" : "text-gray-600 cursor-not-allowed"}`}
             onClick={() => {
               if (user) {
-                router.push('/inventory');
+                router.push("/inventory");
               }
             }}
           >
             Inventory
           </p>
           <p
-            className={`${url === 'auction' && 'selected'} navLink`}
-            onClick={() => router.push('/auction')}
+            className={`${url === "auction" && "selected"} navLink`}
+            onClick={() => router.push("/auction")}
           >
             Auction house
           </p>
           <p
-            className={`${url === 'listings' && 'selected'} navLink`}
-            onClick={() => router.push('/listings')}
+            className={`${url === "listings" && "selected"} navLink`}
+            onClick={() => router.push("/listings")}
           >
             Listings
           </p>
@@ -125,7 +130,7 @@ export const NavBar = () => {
         <div className="flex-grow-0">
           <div className="absolute left-4 top-4">
             <FaBars
-              color={'#FFF'}
+              color={"#FFF"}
               size={25}
               onClick={() => setDropdown((prevState) => !prevState)}
             />
@@ -151,9 +156,12 @@ export const NavBar = () => {
 
           <div
             className={`${
-              profDropdown ? '' : 'hidden'
+              profDropdown ? "" : "hidden"
             } fixed bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col`}
           >
+            <a onClick={handleSettings} className="btn">
+              Settings
+            </a>
             <a onClick={handleTrades} className="btn">
               pending trades
             </a>
@@ -173,26 +181,26 @@ export const NavBar = () => {
         <div className="absolute top-14 p-2 bg-white rounded-xl text-center">
           <p
             className={`${
-              url === '' && 'selected'
+              url === "" && "selected"
             } navLink text-black hover:text-gray-800`}
-            onClick={() => router.push('/')}
+            onClick={() => router.push("/")}
           >
             Home
           </p>
           <p
             className={`${
-              (url === 'inventory' ||
-                url === 'create-nft' ||
-                url === 'trades') &&
-              'selected'
+              (url === "inventory" ||
+                url === "create-nft" ||
+                url === "trades") &&
+              "selected"
             } ${
               user
-                ? 'navLink text-black hover:text-gray-800'
-                : 'text-gray-600 pb-2 cursor-not-allowed'
+                ? "navLink text-black hover:text-gray-800"
+                : "text-gray-600 pb-2 cursor-not-allowed"
             }`}
             onClick={() => {
               if (user) {
-                router.push('/inventory');
+                router.push("/inventory");
               }
             }}
           >
@@ -200,23 +208,23 @@ export const NavBar = () => {
           </p>
           <p
             className={`${
-              url === 'auction' && 'selected'
+              url === "auction" && "selected"
             } navLink text-black hover:text-gray-800`}
-            onClick={() => router.push('/auction')}
+            onClick={() => router.push("/auction")}
           >
             Auction house
           </p>
           <p
             className={`${
-              url === 'listings' && 'selected'
+              url === "listings" && "selected"
             } navLink text-black hover:text-gray-800`}
-            onClick={() => router.push('/listings')}
+            onClick={() => router.push("/listings")}
           >
             Listings
           </p>
         </div>
       )}
-      <div className={'fixed bottom-5 right-5 grid-cols-1'}>
+      <div className={"fixed bottom-5 right-5 grid-cols-1"}>
         {broadcasts.map((broadcast: any) => (
           <Spinner key={broadcast.id} broadcast={broadcast} time={63} />
         ))}
