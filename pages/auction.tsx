@@ -32,6 +32,7 @@ const Tools = () => {
       });
 
       axios.get(`${apiLink}api/mintauctions`).then(({ data: { result } }) => {
+        console.log(result);
         setAuctionHouseFT(result);
       });
     };
@@ -71,20 +72,18 @@ const Tools = () => {
             ))}
         </div>
       ) : (
-        auctionHouseFT &&
-        auctionHouseFT.map((set: any) => (
-          <div className="text-white mx-4" mx-5 key={set.set}>
-            <h1 className="text-2xl font-semibold my-5">{set.set}</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5">
-              {set.auctions.map((auction: any) => (
+        auctionHouseFT && (
+          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5">
+            {auctionHouseFT.map((auction: any) => (
+              <div className="text-white" mx-5 key={auction.uid}>
                 <AuctionFTcard
                   key={`${auction.uid}-${auction.time}`}
                   ft={auction}
                 />
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        ))
+        )
       )}
     </div>
   );

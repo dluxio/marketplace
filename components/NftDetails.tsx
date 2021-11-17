@@ -47,19 +47,20 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
     );
   };
 
-  const fetchDetails = () => {
-    fetch(`${apiLink}api/nft/${nft.uid}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const author = data.set.author;
-        const link = data.set.link;
+  // const fetchDetails = () => {
+  //   fetch(`${apiLink}api/nft/${nft.uid}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       const author = data.set.author;
+  //       const link = data.set.link;
 
-        hive.api.getContent(author, link, (err: any, result: any) => {
-          if (err) throw new Error(err);
-          setNFTdetails(result);
-        });
-      });
-  };
+  //       hive.api.getContent(author, link, (err: any, result: any) => {
+  //         if (err) throw new Error(err);
+  //         setNFTdetails(result);
+  //       });
+  //     });
+  // };
 
   const handleSetPfp = () => {
     SetPFP(user.name, prefix, { set: nft.set, uid: nft.uid }).then(
@@ -106,7 +107,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
     ]);
 
     if (nft.set !== undefined && nft.uid !== undefined) {
-      fetchDetails();
+      // fetchDetails();
       fetchImage();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,10 +120,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
         className="w-1/3 my-5 mx-auto"
       ></div>
       <h1 className="text-white text-xl font-bold mt-5">{nft.uid}</h1>
-      <p className="text-white text-md font-semibold mt-5">
-        {nftDetails?.title}
-      </p>
-      <p className="text-white text-center mx-10">{description}</p>
+      <p className="text-white text-center mx-10 px-6 mt-5">{description}</p>
       <div className="my-3">
         {Object.keys(attributes).map((attr: any) => (
           <div className="mx-20 flex my-2 items-center gap-5">
