@@ -32,7 +32,6 @@ const Tools = () => {
       });
 
       axios.get(`${apiLink}api/mintauctions`).then(({ data: { result } }) => {
-        console.log(result);
         setAuctionHouseFT(result);
       });
     };
