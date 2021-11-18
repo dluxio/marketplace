@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ceramicstudio/multiauth": "^0.2.3",
     "@hiveio/dhive": "^1.1.1",
     "@hiveio/hive-js": "^2.0.4",
     "@hiveio/keychain": "^1.0.4",
