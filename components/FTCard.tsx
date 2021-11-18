@@ -10,7 +10,7 @@ type FTCardProps = {
   ft: {
     set: string;
     script: string;
-    pricenai: { precision: number; amount: number };
+    price: { precision: number; amount: number };
     by: string;
     uid: string;
   };
@@ -119,10 +119,8 @@ export const FTCard = ({ ft }: FTCardProps) => {
           Price:{" "}
           <strong>
             {parseFloat(
-              (
-                +ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)
-              ).toString()
-            ).toFixed(ft.pricenai.precision)}
+              (+ft.price.amount / Math.pow(10, ft.price.precision)).toString()
+            ).toFixed(ft.price.precision)}
           </strong>
         </h1>
         {ft.by !== user?.name ? (

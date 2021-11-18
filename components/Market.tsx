@@ -14,9 +14,7 @@ import { AppScreen } from "./AppScreen";
 
 export const Market = () => {
   const [nfts, setNfts] = useState([]);
-  const [_fts, setFts] = useState([]);
   const [auction, setAuction] = useState([]);
-  const [_ftAuction, setFtAuction] = useState([]);
   const [_prefix, setPrefix] = useRecoilState(prefixState);
 
   const selectedMarket = useRecoilValue(marketNavState);
@@ -28,19 +26,11 @@ export const Market = () => {
       axios.get(`${apiLink}api/sales`).then(({ data: { result } }) => {
         setNfts(result);
       });
-
-      axios.get(`${apiLink}api/mintsales`).then(({ data: { result } }) => {
-        setFts(result);
-      });
     };
 
     const fetchAuction = () => {
       axios.get(`${apiLink}api/auctions`).then(({ data: { result } }) => {
         setAuction(result);
-      });
-
-      axios.get(`${apiLink}api/mintauctions`).then(({ data: { result } }) => {
-        setFtAuction(result);
       });
     };
 

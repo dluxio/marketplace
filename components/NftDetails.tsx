@@ -27,7 +27,6 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
   const [selling, setSelling] = useState(false);
   const [isTransfering, setIsTransfering] = useState(false);
   const [auction, setAuction] = useState(false);
-  const [nftDetails, setNFTdetails] = useState<details>();
   const [_braodcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
   const user: any = useRecoilValue(userState);
@@ -45,20 +44,6 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
         }
       }
     );
-  };
-
-  const fetchDetails = () => {
-    fetch(`${apiLink}api/nft/${nft.uid}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const author = data.set.author;
-        const link = data.set.link;
-
-        hive.api.getContent(author, link, (err: any, result: any) => {
-          if (err) throw new Error(err);
-          setNFTdetails(result);
-        });
-      });
   };
 
   const handleSetPfp = () => {
@@ -106,7 +91,6 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
     ]);
 
     if (nft.set !== undefined && nft.uid !== undefined) {
-      fetchDetails();
       fetchImage();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -118,10 +102,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
         id={`${nft.set}-${nft.uid}-details`}
         className="w-1/3 my-5 mx-auto"
       ></div>
-      <h1 className="text-white text-xl font-bold mt-5">{nft.uid}</h1>
-      <p className="text-white text-md font-semibold mt-5">
-        {nftDetails?.title}
-      </p>
+      <h1 className="text-white text-xl font-bold my-5">{nft.uid}</h1>
       <p className="text-white text-center mx-10">{description}</p>
       <div className="my-3">
         {Object.keys(attributes).map((attr: any) => (

@@ -19,11 +19,11 @@ const Listings = () => {
 
   useEffect(() => {
     const fetchListings = async () => {
-      axios.get(`${apiLink}api/auctions`).then(({ data: { result } }) => {
+      axios.get(`${apiLink}api/sales`).then(({ data: { result } }) => {
         setNfts(result);
       });
 
-      axios.get(`${apiLink}api/auctions`).then(({ data: { result } }) => {
+      axios.get(`${apiLink}api/mintsales`).then(({ data: { result } }) => {
         setFts(result);
       });
     };
@@ -52,26 +52,22 @@ const Listings = () => {
           FTs
         </button>
       </div>
-      <h1 className="text-3xl">Listings</h1>
+      <h1 className="text-white mt-10 mb-5 text-3xl font-semibold">Listings</h1>
       {showNFTs
         ? nfts && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 my-2 gap-5">
               {nfts.map((nft: any) => (
                 <NftCard key={nft.uid} nft={nft} />
               ))}
             </div>
           )
-        : fts &&
-          fts.map((set: any) => (
-            <div className="text-white mx-4" mx-5 key={set.set}>
-              <h1 className="text-2xl font-semibold my-5">{set.set}</h1>
-              <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5">
-                {set.sales.map((auction: any) => (
-                  <FTCard key={`${auction.uid}-${auction.time}`} ft={auction} />
-                ))}
-              </div>
+        : fts && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 my-2 gap-5">
+              {fts.map((ft: any) => (
+                <FTCard key={ft.uid} ft={ft} />
+              ))}
             </div>
-          ))}
+          )}
     </div>
   );
 };

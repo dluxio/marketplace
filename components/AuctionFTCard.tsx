@@ -11,7 +11,6 @@ import { useRecoilValue } from "recoil";
 import { apiLinkState, userState } from "../atoms";
 import { toBase64 } from "../utils";
 import { FaQuestion } from "react-icons/fa";
-import { NftDetails } from ".";
 
 type AuctionCardProps = {
   ft: any;
@@ -100,9 +99,9 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
               <strong>
                 {parseFloat(
                   (
-                    ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)
+                    ft.price.amount / Math.pow(10, ft.price.precision)
                   ).toString()
-                ).toFixed(ft.pricenai.precision)}{" "}
+                ).toFixed(ft.price.precision)}{" "}
               </strong>
             </h1>
             <h1>
