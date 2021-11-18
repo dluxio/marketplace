@@ -44,3 +44,8 @@ export const apiLinkState = atom({
   key: 'apiLinkState',
   default: 'https://token.dlux.io/'
 })
+
+export const ipfsLinkState = atom({
+  key: 'ipfsLinkState',
+  default: 'https://anywhere.ipfs.dlux.io/'
+})

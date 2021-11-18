@@ -5,7 +5,7 @@ import hive from "@hiveio/hive-js";
 import { Client } from "@hiveio/dhive";
 import { comment, vote } from "../../utils";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { broadcastState, userState } from "../../atoms";
+import { broadcastState, ipfsLinkState, userState } from "../../atoms";
 import { CommentCard } from "../../components/CommentCard";
 
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
@@ -29,6 +29,7 @@ const AppDetails = () => {
   const [comments, setComments] = useState([]);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const [contentResult, setContentResult] = useState<any>(null);
+  const [ipfsLink, setIpfsLink] = useRecoilState(ipfsLinkState);
   const router = useRouter();
   const user: any = useRecoilValue(userState);
   const { permlink, author } = router.query;
@@ -49,7 +50,7 @@ const AppDetails = () => {
       "allow",
       "gyroscope; accelerometer; microphone; camera"
     );
-    iframe.src = `https://anywhere.ipfs.dlux.io/ipfs/${hashy}?${vars}`;
+    iframe.src = `${ipfsLink}ipfs/${hashy}?${vars}`;
     setShowApp(true);
     if (document.getElementById("iframe-app")) {
       document.getElementById("iframe-app")!.appendChild(iframe);
@@ -71,6 +72,12 @@ const AppDetails = () => {
   useEffect(() => {
     if (!author) router.push("/");
     if (author && (author! as string).substr(0, 1) === "@") {
+      if (ipfsLink === "https://anywhere.ipfs.dlux.io/") {
+        const subauthor = (author! as string)
+          .substr(1, author!.length)
+          .replace(".", "-");
+        setIpfsLink(`https://${subauthor}.ipfs.dlux.io/`);
+      }
       setUsername((author! as string).substr(1, author!.length));
     }
   }, []);
