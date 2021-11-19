@@ -439,6 +439,16 @@ export const redoProfilePicture = (nft: { script: string; uid: string }) => {
     });
 };
 
+export const redoAccountPicture = (nft: { script: string; uid: string }) => {
+  fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
+    .then((response) => response.text())
+    .then((data) => {
+      const code = `(//${data}\n)("${nft.uid}")`;
+      const SVG = eval(code);
+      document.getElementById(`account-picture`)!.innerHTML = SVG.HTML;
+    });
+};
+
 export const vote = async (voter: string, author: string, permlink: string, weight: number) => {
   const operations = [
     "vote",

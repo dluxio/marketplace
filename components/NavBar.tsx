@@ -152,7 +152,11 @@ export const NavBar = () => {
               {user.name}
             </h1>
             <div className="flex items-center w-full ">
-              <div id="profile-picture" className="w-9">
+              <div
+                id="profile-picture"
+                className="w-9"
+                onClick={() => router.push(`/@${user.name}`)}
+              >
                 <Image height={30} width={30} src={placeHolder} alt="profile" />
               </div>
             </div>

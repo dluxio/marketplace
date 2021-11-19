@@ -1,46 +1,10 @@
-import React, { useEffect, useState } from "react";
-
-import axios from "axios";
-import { apiLinkState } from "../atoms";
-import { useRecoilValue } from "recoil";
+import React from "react";
+import { NewsPost } from "./NewsPost";
 
 export const NewsScreen = () => {
-  const [feed, setFeed] = useState<any>(null);
-  const apiLink: string = useRecoilValue(apiLinkState);
-
-  useEffect(() => {
-    axios.get(`${apiLink}api/feed`).then(({ data }) => {
-      setFeed(data.feed);
-    });
-  }, []);
-
   return (
-    <div className="mx-10 mb-5 text-white grid grid-cols-1 sm:grid-cols-4 gap-4">
-      {feed &&
-        Object.keys(feed).map((key: string) => {
-          const name = feed[key].split(" ")[0].split("|")[0];
-          const restOfFeed = feed[key].substr(feed[key].indexOf(" ") + 1);
-          return (
-            <div
-              key={key}
-              className="bg-gray-600 p-2 rounded-xl border-2 border-gray-800 flex overflow-hidden"
-            >
-              <div>
-                <a
-                  href={`https://dlux.io/${name}`}
-                  className="text-blue-500 cursor-pointer"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {name}
-                </a>
-                <h1 className="cursor-pointer whitespace-normal">
-                  {restOfFeed}
-                </h1>
-              </div>
-            </div>
-          );
-        })}
+    <div className="mx-10 mb-5 text-white grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <NewsPost />
     </div>
   );
 };

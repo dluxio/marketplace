@@ -1249,7 +1249,7 @@ data-uri-to-buffer@3.0.1:
 
 dayjs@^1.10.7:
   version "1.10.7"
-  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.10.7.tgz"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
   integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
 
 debug@2, debug@^2.6.8, debug@^2.6.9:
@@ -3346,6 +3346,13 @@ react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-jw-player@^1.19.1:
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/react-jw-player/-/react-jw-player-1.19.1.tgz#1d4ff99d3a5850ed4a628dbc6c473149c5490e1c"
+  integrity sha512-LC/v3mAjJrH6pUWKevDt1txsga+YWutdtHNChV7nfIcSANddrP8k7akAQAKGDhsI2/2xzkBZrqvaP1qSs7XvPg==
+  dependencies:
+    react-fast-compare "^2.0.1"
 
 react-refresh@0.8.3:
   version "0.8.3"
