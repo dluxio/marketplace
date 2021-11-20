@@ -5,6 +5,7 @@ import { handleSellCancel, NFTBuy, toBase64 } from "../utils";
 import { FaMoneyBillAlt, FaQuestion } from "react-icons/fa";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
+import { useRouter } from "next/router";
 
 type FTCardProps = {
   ft: {
@@ -24,6 +25,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
   const user: any = useRecoilValue(userState);
   const apiLink: string = useRecoilValue(apiLinkState);
   const prefix: string = useRecoilValue(prefixState);
+  const router = useRouter();
 
   const id = "_" + Math.random().toString(36).substr(2, 9);
 
@@ -114,7 +116,12 @@ export const FTCard = ({ ft }: FTCardProps) => {
         </div>
       </div>
       <div className="px-5 py-4 w-full flex flex-col justify-between items-center">
-        <h1>By: {ft.by}</h1>
+        <h1
+          className="hover:text-gray-300 cursor-pointer"
+          onClick={() => router.push(`/@${ft.by}`)}
+        >
+          By: {ft.by}
+        </h1>
         <h1>
           Price:{" "}
           <strong>

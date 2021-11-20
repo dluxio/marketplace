@@ -11,6 +11,7 @@ import { useRecoilValue } from "recoil";
 import { apiLinkState, userState } from "../atoms";
 import { toBase64 } from "../utils";
 import { FaQuestion } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 type AuctionCardProps = {
   ft: any;
@@ -21,6 +22,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
   const id = "_" + Math.random().toString(36).substr(2, 9);
   const user: any = useRecoilValue(userState);
   const apiLink: string = useRecoilValue(apiLinkState);
+  const router = useRouter();
   const [isBidding, setIsBidding] = useState(false);
   const [randomUID, setRandomUID] = useState("==");
 
@@ -90,7 +92,10 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
         <div className="px-2 sm:px-4 py-4 w-full flex flex-col text-center justify-between items-center gap-3">
           <div>
             {ft.bidder && (
-              <h1>
+              <h1
+                className="hover:text-gray-300 cursor-pointer"
+                onClick={() => router.push(`/@${ft.bidder}`)}
+              >
                 Bidder: <strong>{ft.bidder}</strong>
               </h1>
             )}

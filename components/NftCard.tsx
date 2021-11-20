@@ -13,6 +13,7 @@ import { AuctionDetail } from "./Detail";
 import axios from "axios";
 
 import { handleSellCancel, NFTBuy } from "../utils";
+import { useRouter } from "next/router";
 
 type NftCardProp = {
   nft: any;
@@ -23,6 +24,7 @@ export const NftCard = ({ nft }: NftCardProp) => {
   const [colors, setColors] = useState<any>([]);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
+  const router = useRouter();
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
   useEffect(() => {
@@ -97,7 +99,12 @@ export const NftCard = ({ nft }: NftCardProp) => {
           </div>
         </div>
         <div className="px-5 py-4 w-full flex flex-col justify-between items-center">
-          <h1>By: {nft.by}</h1>
+          <h1
+            className="hover:text-gray-300 cursor-pointer"
+            onClick={() => router.push(`/@${nft.by}`)}
+          >
+            By: {nft.by}
+          </h1>
           <h1>
             Price:{" "}
             <strong>

@@ -55,7 +55,7 @@ export const AppCard = ({ app }: AppCardProps) => {
       <div className="flex items-center justify-between">
         <div>
           <h1
-            className="hover:text-gray-300"
+            className="hover:text-gray-300 cursor-pointer"
             onClick={() => router.push(`/@${app.author}`)}
           >
             Author - {app.author}

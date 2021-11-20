@@ -10,6 +10,7 @@ import { BidForm } from "./Forms/BidForm";
 
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
+import { useRouter } from "next/router";
 
 type AuctionCardProps = {
   nft: any;
@@ -18,6 +19,7 @@ type AuctionCardProps = {
 export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
   const [colors, setColors] = useState<any>([]);
   const user: any = useRecoilValue(userState);
+  const router = useRouter();
   const [isBidding, setIsBidding] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
@@ -67,7 +69,10 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         <div className="px-2 sm:px-4 py-4 w-full flex text-center flex-col justify-between items-center gap-3">
           <div>
             {nft.bidder && (
-              <h1>
+              <h1
+                className="hover:text-gray-300 cursor-pointer"
+                onClick={() => router.push(`/@${nft.bidder}`)}
+              >
                 Bidder: <strong>{nft.bidder}</strong>
               </h1>
             )}
