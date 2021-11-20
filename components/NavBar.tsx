@@ -186,7 +186,7 @@ export const NavBar = () => {
       )}
       {signing && <Login handleClose={() => setSigning(false)} />}
       {dropdown && (
-        <div className="absolute top-14 p-2 bg-white rounded-xl text-center">
+        <div className="absolute top-14 p-2 bg-white rounded-xl text-center z-50">
           <p
             className={`${
               url === "" && "selected"

@@ -75,7 +75,7 @@ const User = () => {
         <div
           className={`relative overflow-hidden border-2 text-white p-5 rounded-xl border-gray-800 ${
             userData?.cover_image ? "bg-black" : "bg-gray-600"
-          } flex flex-col items-start w-full`}
+          } flex flex-col items-center sm:items-start w-full`}
         >
           <div className="flex flex-col items-center justify-center z-10">
             <div className="w-52 flex justify-center" id="account-picture">
