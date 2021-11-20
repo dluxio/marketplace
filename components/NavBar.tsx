@@ -165,7 +165,7 @@ export const NavBar = () => {
           <div
             className={`${
               profDropdown ? "" : "hidden"
-            } fixed bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col`}
+            } fixed bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col z-40`}
           >
             <a onClick={handleSettings} className="btn">
               Settings
