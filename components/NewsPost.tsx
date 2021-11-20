@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import ReactJWPlayer from "react-jw-player";
 import hive from "@hiveio/hive-js";
-import { useRecoilValue } from "recoil";
-import { ipfsLinkState } from "../atoms";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
@@ -25,7 +23,6 @@ export const NewsPost = () => {
   useEffect(() => {
     if (contentResult) {
       const contentData = JSON.parse(contentResult.json_metadata);
-      console.log(contentData);
 
       if (contentData.app.includes("3speak")) {
         const file: string =

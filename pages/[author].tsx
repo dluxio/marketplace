@@ -5,9 +5,17 @@ import { useRecoilValue } from "recoil";
 import { apiLinkState } from "../atoms";
 import { placeHolder } from "../constants";
 import { redoAccountPicture } from "../utils";
+import { Client } from "@hiveio/dhive";
 import Image from "next/image";
+import hive from "@hiveio/hive-js";
 
 const User = () => {
+  var client = new Client([
+    "https://api.hive.blog",
+    "https://api.hivekings.com",
+    "https://anyx.io",
+    "https://api.openhive.network",
+  ]);
   const router = useRouter();
   const { author } = router.query;
   const [username, setUsername] = useState("");
@@ -15,6 +23,7 @@ const User = () => {
   const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
+    if (!author) router.push("/");
     if (author && (author! as string).substr(0, 1) === "@") {
       setUsername((author! as string).substr(1, author!.length));
     } else {
@@ -27,6 +36,21 @@ const User = () => {
       axios.get(`${apiLink}api/pfp/${username}`).then(({ data }) => {
         setPfp(data.result[0]);
       });
+
+      const query = [
+        {
+          tag: "disregardfiat",
+          limit: 50,
+          filter_tags: [],
+          select_tags: [],
+          truncate_body: 0,
+        },
+      ];
+      console.log(query);
+
+      client.database
+        .getDiscussions("blog", query)
+        .then((response) => console.log(response));
     }
   }, [username]);
 
