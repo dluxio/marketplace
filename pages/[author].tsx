@@ -72,14 +72,18 @@ const User = () => {
   return (
     <div className="flex flex-col text-white my-10 mx-10">
       <div className="flex flex-col items-center w-full">
-        <div className="relative overflow-hidden border-2 text-white p-5 rounded-xl border-gray-800 bg-black flex flex-col items-start w-full">
+        <div
+          className={`relative overflow-hidden border-2 text-white p-5 rounded-xl border-gray-800 ${
+            userData?.cover_image ? "bg-black" : "bg-gray-600"
+          } flex flex-col items-start w-full`}
+        >
           <div className="flex flex-col items-center justify-center z-10">
             <div className="w-52 flex justify-center" id="account-picture">
               <Image height={120} width={120} src={placeHolder} alt="profile" />
             </div>
             <h1 className="text-2xl mt-2">{author}</h1>
           </div>
-          {userData && (
+          {userData && userData.cover_image && (
             <img
               className="absolute top-0 left-0 z-0 w-full pb-1 opacity-40"
               src={userData.cover_image}
