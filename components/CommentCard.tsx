@@ -1,3 +1,4 @@
+import router from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaReply } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
@@ -30,11 +31,12 @@ export const CommentCard = ({ comment }: { comment: any }) => {
 
   return (
     <div className="text-black">
-      <a target="_blank" href={`https://peakd.com/@${comment.author}`}>
-        <h1 className="text-xl hover:text-blue-200 cursor-pointer">
-          {comment.author}
-        </h1>
-      </a>
+      <h1
+        onClick={() => router.push(`/@${comment.author}`)}
+        className="text-xl hover:text-blue-200 cursor-pointer"
+      >
+        {comment.author}
+      </h1>
       <div className="text-white mx-2">
         <h1 id={`comment-body-${comment.id}`}></h1>
         <div className="w-auto">

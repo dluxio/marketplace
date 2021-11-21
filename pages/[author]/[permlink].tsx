@@ -157,15 +157,12 @@ const AppDetails = () => {
       <div className="flex justify-evenly flex-col w-full mt-10">
         <div className="p-5 mx-auto">
           <img src={image} alt="appPhoto" width={600} />
-          <button
-            onClick={handleRunApp}
-            className={`bg-blue-500 mx-auto my-2 w-full text-white px-7 py-2 rounded-lg  focus:outline-none focus:ring-2 focus:ring-yellow-700`}
-          >
-            Run app
-          </button>
         </div>
         <div className="p-5">
           <h1 className="text-white text-3xl">{contentResult?.title}</h1>
+          <h1 className="text-white text-center text-lg">
+            {JSON.parse(contentResult.json_metadata)?.description}
+          </h1>
           <div className="flex w-full my-5 mx-2 gap-2">
             {upVote ? (
               <div

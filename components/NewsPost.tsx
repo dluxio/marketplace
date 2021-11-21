@@ -5,6 +5,9 @@ import hive from "@hiveio/hive-js";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Discussion } from "@hiveio/dhive";
+import { RiHeartFill } from "react-icons/ri";
+import { MdComment } from "react-icons/md";
+import { useRouter } from "next/router";
 dayjs.extend(relativeTime);
 dayjs().format();
 
@@ -14,6 +17,7 @@ export const NewsPost = ({ post }: { post: Discussion }) => {
   const [contentResult, setContentResult] = useState<any>(null);
   const [contentDataObject, setContentData] = useState<any>(null);
   const [speak, set3speak] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     hive.api.getContent(post.author, post.permlink, (err: any, result: any) => {
@@ -95,6 +99,21 @@ export const NewsPost = ({ post }: { post: Discussion }) => {
         <h1 className="text-center text-xl my-2 max-w-md font-bold">
           {contentResult.root_title}
         </h1>
+        <div className="flex justify-between w-full">
+          <div className="flex items-center gap-1">
+            <RiHeartFill />
+            <h1>({contentResult.active_votes.length})</h1>
+          </div>
+          <div
+            onClick={() =>
+              router.push(`/@${contentResult.author}/${contentResult.permlink}`)
+            }
+            className="flex items-center gap-1 cursor-pointer hover:text-gray-300"
+          >
+            <MdComment />
+            <h1>Comment</h1>
+          </div>
+        </div>
       </div>
     )
   );
