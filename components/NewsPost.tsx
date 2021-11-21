@@ -62,8 +62,10 @@ export const NewsPost = ({ post }: { post: Discussion }) => {
           imagestring = "https://www.dlux.io/img/dlux-sdk.png";
         }
 
-        if (imagestring.substr(0, 5) !== "https") {
-          imagestring = "https://www.dlux.io/img/dlux-sdk.png";
+        if (imagestring) {
+          if (imagestring.substr(0, 5) !== "https") {
+            imagestring = "https://www.dlux.io/img/dlux-sdk.png";
+          }
         }
 
         setImage(imagestring);
@@ -84,7 +86,7 @@ export const NewsPost = ({ post }: { post: Discussion }) => {
             />
           </div>
         ) : (
-          <div className="flex justify-center w-full max-h-72">
+          <div className="flex justify-center w-full">
             <img src={image} className="w-4/5" alt="appPhoto" />
           </div>
         )}

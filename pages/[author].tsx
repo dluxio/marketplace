@@ -8,6 +8,7 @@ import { redoAccountPicture } from "../utils";
 import { Client, Discussion } from "@hiveio/dhive";
 import Image from "next/image";
 import { NewsPost } from "../components/NewsPost";
+import { RiMapPinUserFill, RiUser3Fill, RiLinksFill } from "react-icons/ri";
 
 const User = () => {
   var client = new Client([
@@ -75,7 +76,7 @@ const User = () => {
         <div
           className={`relative overflow-hidden border-2 text-white p-5 rounded-xl border-gray-800 ${
             userData?.cover_image ? "bg-black" : "bg-gray-600"
-          } flex flex-col items-center sm:items-start w-full`}
+          } flex flex-col sm:flex-row items-center h-full sm:items-start gap-3 w-full`}
         >
           <div className="flex flex-col items-center justify-center z-10">
             <div className="w-52 flex justify-center" id="account-picture">
@@ -83,6 +84,26 @@ const User = () => {
             </div>
             <h1 className="text-2xl mt-2">{author}</h1>
           </div>
+          {userData && (
+            <div className="z-40 mx-5 my-auto">
+              <div className="flex items-center gap-2">
+                <RiUser3Fill />
+                <h1>{userData.about}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <RiMapPinUserFill />
+                <h1>{userData.location}</h1>
+              </div>
+              {userData.website && (
+                <a target="_blank" href={userData.website}>
+                  <div className="flex items-center gap-2 hover:text-gray-300">
+                    <RiLinksFill />
+                    <h1>{userData.website}</h1>
+                  </div>
+                </a>
+              )}
+            </div>
+          )}
           {userData && userData.cover_image && (
             <img
               className="absolute top-0 left-0 z-0 w-full pb-1 opacity-40"

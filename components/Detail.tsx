@@ -3,9 +3,6 @@ import { ImCross } from "react-icons/im";
 
 import hive from "@hiveio/hive-js";
 import { attributeColors } from "../constants";
-import axios from "axios";
-import { apiLinkState } from "../atoms";
-import { useRecoilValue } from "recoil";
 
 type AuctionDetailProps = {
   onExit: MouseEventHandler;
@@ -13,21 +10,7 @@ type AuctionDetailProps = {
 };
 
 export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
-  const [details, setDetails] = useState<any>(null);
   const [attributes, setAttributes] = useState<any>({});
-  const apiLink: string = useRecoilValue(apiLinkState);
-
-  const fetchDetails = () => {
-    axios.get(`${apiLink}api/nft/${nft.uid}`).then(({ data }) => {
-      const author = data.set.author;
-      const link = data.set.link;
-
-      hive.api.getContent(author, link, (err: any, result: any) => {
-        if (err) throw new Error(err);
-        setDetails(result);
-      });
-    });
-  };
 
   const fetchImage = () => {
     fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
@@ -60,7 +43,6 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
     ]);
 
     if (nft.set !== undefined && nft.uid !== undefined) {
-      fetchDetails();
       fetchImage();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,9 +62,6 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
             <h1 className="text-white text-xl font-bold mt-5">
               {nft.set} : {nft.uid}
             </h1>
-            <h2 className="text-white text-sm sm:text-md font-semibold">
-              {details?.title}
-            </h2>
             {Object.keys(attributes).map((attr: any) => (
               <div className="mx-20 flex my-2 items-center gap-5">
                 <h1
