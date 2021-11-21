@@ -103,14 +103,7 @@ const User = () => {
                 <h1>{userData.location}</h1>
               </div>
               {userData.website && (
-                <a
-                  target="_blank"
-                  href={
-                    userData.website.substr(0, 12) === "https://www."
-                      ? userData.website
-                      : "https://www." + userData.website
-                  }
-                >
+                <a target="_blank" href={userData.website}>
                   <div className="flex items-center gap-2 hover:text-gray-300">
                     <RiLinksFill />
                     <h1>
