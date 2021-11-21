@@ -9,6 +9,7 @@ import { Client, Discussion } from "@hiveio/dhive";
 import Image from "next/image";
 import { NewsPost } from "../components/NewsPost";
 import { RiMapPinUserFill, RiUser3Fill, RiLinksFill } from "react-icons/ri";
+import { GrFacebook, GrLinkedin, GrGithub, GrInstagram } from "react-icons/gr";
 
 const User = () => {
   var client = new Client([
@@ -71,7 +72,7 @@ const User = () => {
   }, [pfpData]);
 
   return (
-    <div className="flex flex-col text-white my-10 mx-10">
+    <div className="flex flex-col text-white my-10 mx-2 sm:mx-10">
       <div className="flex flex-col items-center w-full">
         <div
           className={`relative overflow-hidden border-2 text-white p-5 rounded-xl border-gray-800 ${
@@ -82,10 +83,11 @@ const User = () => {
             <div className="w-52 flex justify-center" id="account-picture">
               <Image height={120} width={120} src={placeHolder} alt="profile" />
             </div>
-            <h1 className="text-2xl mt-2">{author}</h1>
+            <h1 className="text-xl mb-2">{author}</h1>
           </div>
           {userData && (
             <div className="z-40 mx-5 my-auto">
+              <h1 className="text-2xl mt-2">{userData?.name}</h1>
               <div className="flex items-center gap-2">
                 <RiUser3Fill />
                 <h1>{userData.about}</h1>
@@ -98,8 +100,52 @@ const User = () => {
                 <a target="_blank" href={userData.website}>
                   <div className="flex items-center gap-2 hover:text-gray-300">
                     <RiLinksFill />
-                    <h1>{userData.website}</h1>
+                    <h1>
+                      {userData.website.substr(0, 12) === "https://www."
+                        ? userData.website.substr(12, userData.website.length)
+                        : userData.website}
+                    </h1>
                   </div>
+                </a>
+              )}
+            </div>
+          )}
+          {userData && (
+            <div className="sm:absolute z-20 right-7 bottom-6 flex gap-3">
+              {userData.facebook && (
+                <a
+                  target="_blank"
+                  href={"https://www.facebook.com/" + userData.facebook}
+                  className="hover:text-gray-300"
+                >
+                  <GrFacebook size={25} />
+                </a>
+              )}
+              {userData.instagram && (
+                <a
+                  target="_blank"
+                  className="hover:text-gray-300"
+                  href={"https://www.instagram.com/" + userData.instagram}
+                >
+                  <GrInstagram size={25} />
+                </a>
+              )}
+              {userData.github && (
+                <a
+                  target="_blank"
+                  className="hover:text-gray-300"
+                  href={"https://www.github.com/" + userData.github}
+                >
+                  <GrGithub size={25} />
+                </a>
+              )}
+              {userData.linkedin && (
+                <a
+                  target="_blank"
+                  className="hover:text-gray-300"
+                  href={"https://www.linkedin.com/" + userData.linkedin}
+                >
+                  <GrLinkedin size={25} />
                 </a>
               )}
             </div>
