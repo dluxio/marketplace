@@ -9,7 +9,13 @@ import { Client, Discussion } from "@hiveio/dhive";
 import Image from "next/image";
 import { NewsPost } from "../components/NewsPost";
 import { RiMapPinUserFill, RiUser3Fill, RiLinksFill } from "react-icons/ri";
-import { GrFacebook, GrLinkedin, GrGithub, GrInstagram } from "react-icons/gr";
+import {
+  GrFacebook,
+  GrLinkedin,
+  GrGithub,
+  GrInstagram,
+  GrTwitter,
+} from "react-icons/gr";
 
 const User = () => {
   var client = new Client([
@@ -97,7 +103,14 @@ const User = () => {
                 <h1>{userData.location}</h1>
               </div>
               {userData.website && (
-                <a target="_blank" href={userData.website}>
+                <a
+                  target="_blank"
+                  href={
+                    userData.website.substr(0, 12) === "https://www."
+                      ? userData.website
+                      : "https://www." + userData.website
+                  }
+                >
                   <div className="flex items-center gap-2 hover:text-gray-300">
                     <RiLinksFill />
                     <h1>
@@ -146,6 +159,15 @@ const User = () => {
                   href={"https://www.linkedin.com/" + userData.linkedin}
                 >
                   <GrLinkedin size={25} />
+                </a>
+              )}
+              {userData.twitter && (
+                <a
+                  target="_blank"
+                  className="hover:text-gray-300"
+                  href={"https://www.twitter.com/" + userData.twitter}
+                >
+                  <GrTwitter size={25} />
                 </a>
               )}
             </div>
