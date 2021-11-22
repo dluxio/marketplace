@@ -24,7 +24,7 @@ const AppDetails = () => {
   const [upVote, setUpVote] = useState(false);
   const [downVote, setDownVote] = useState(false);
   const [image, setImage] = useState("");
-  const [showApp, setShowApp] = useState(true);
+  const [showApp, setShowApp] = useState(false);
   const [username, setUsername] = useState("");
   const [comments, setComments] = useState([]);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
@@ -34,28 +34,29 @@ const AppDetails = () => {
   const user: any = useRecoilValue(userState);
   const { permlink, author } = router.query;
 
-  const handleRunApp = () => {
-    document.title = `DLUX | ${contentResult.title}`;
-    var metadata = contentResult.json_metadata;
-    var hashy = JSON.parse(metadata).vrHash;
-    var scrolling = JSON.parse(metadata).scrolling;
-    var vars = location.href.split("?")[1];
-    var iframe = document.createElement("iframe");
-    iframe.id = "theIframe";
-    iframe.setAttribute("scrolling", scrolling || "yes");
-    iframe.width = "100%";
-    iframe.height = "100%";
-    iframe.setAttribute("allowfullscreen", "true");
-    iframe.setAttribute(
-      "allow",
-      "gyroscope; accelerometer; microphone; camera"
-    );
-    iframe.src = `${ipfsLink}ipfs/${hashy}?${vars}`;
-    setShowApp(true);
-    if (document.getElementById("iframe-app")) {
-      document.getElementById("iframe-app")!.appendChild(iframe);
+  useEffect(() => {
+    if (showApp) {
+      document.title = `DLUX | ${contentResult.title}`;
+      let metadata = contentResult.json_metadata;
+      let hashy = JSON.parse(metadata).vrHash;
+      let scrolling = JSON.parse(metadata).scrolling;
+      let vars = location.href.split("?")[1];
+      let iframe = document.createElement("iframe");
+      iframe.id = "theIframe";
+      iframe.setAttribute("scrolling", scrolling || "yes");
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.setAttribute("allowfullscreen", "true");
+      iframe.setAttribute(
+        "allow",
+        "gyroscope; accelerometer; microphone; camera"
+      );
+      iframe.src = `${ipfsLink}ipfs/${hashy}?${vars}`;
+      if (document.getElementById("iframe-app")) {
+        document.getElementById("iframe-app")!.appendChild(iframe);
+      }
     }
-  };
+  }, [showApp]);
 
   const handleVote = () => {
     vote(user.name, username, permlink as string, voteWeight).then(
@@ -81,12 +82,6 @@ const AppDetails = () => {
       setUsername((author! as string).substr(1, author!.length));
     }
   }, []);
-
-  useEffect(() => {
-    if (contentResult) {
-      handleRunApp();
-    }
-  }, [contentResult]);
 
   const handleSendComment = () => {
     comment({
@@ -153,107 +148,128 @@ const AppDetails = () => {
       <div className="w-full h-full" id="iframe-app"></div>
     </div>
   ) : (
-    <div className="w-full mx-auto max-w-3xl">
-      <div className="flex justify-evenly flex-col w-full mt-10">
-        <div className="p-5 mx-auto">
-          <img src={image} alt="appPhoto" width={600} />
-        </div>
-        <div className="p-5">
-          <h1 className="text-white text-3xl">{contentResult?.title}</h1>
-          <h1 className="text-white text-center text-lg">
-            {JSON.parse(contentResult.json_metadata)?.description}
-          </h1>
-          <div className="flex w-full my-5 mx-2 gap-2">
-            {upVote ? (
-              <div
-                onClick={handleVote}
-                className="flex text-white mx-1 gap-2 rounded-xl px-2 py-1 bg-green-500 cursor-pointer"
-              >
-                <FaHeart size={25} color="#fff" />
-                {voteWeight / 100}%
-              </div>
-            ) : (
-              <FaHeart
-                className="cursor-pointer"
-                size={25}
-                color="#fff"
-                onClick={() => {
-                  setDownVote(false);
-                  setUpVote(true);
-                }}
-              />
-            )}
-            {downVote ? (
-              <div
-                onClick={handleVote}
-                className="flex text-white mx-1 gap-2 rounded-xl px-2 py-1 bg-red-500 cursor-pointer"
-              >
-                <FaHeartBroken size={25} color="#fff" />
-                {voteWeight / 100}%
-              </div>
-            ) : (
-              <FaHeartBroken
-                className="cursor-pointer"
-                size={25}
-                color="#fff"
+    contentResult && (
+      <div className="w-full mx-auto max-w-3xl">
+        <div className="flex justify-evenly flex-col w-full mt-10">
+          <div className="p-5 mx-auto">
+            <img src={image} alt="appPhoto" width={600} />
+          </div>
+          {JSON.parse(contentResult.json_metadata).vrHash && (
+            <button
+              className="mx-auto px-4 py-2 rounded-lg border-2 text-white bg-blue-500 border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700"
+              onClick={() => setShowApp(true)}
+            >
+              Run app
+            </button>
+          )}
+          <div className="p-5">
+            <h1 className="text-white text-3xl">{contentResult?.title}</h1>
+            <h1 className="text-white text-center sm:mx-3 sm:text-left text-lg">
+              {JSON.parse(contentResult.json_metadata)?.description}
+            </h1>
+            <div className="flex items-center w-full my-5 mx-2 gap-2">
+              {upVote ? (
+                <div
+                  onClick={handleVote}
+                  className="flex text-white mx-1 gap-2 rounded-xl px-2 py-1 bg-green-500 cursor-pointer"
+                >
+                  <FaHeart size={25} color="#fff" />
+                  {voteWeight / 100}%
+                </div>
+              ) : (
+                <div className="px-2 py-1 cursor-pointer">
+                  <FaHeart
+                    size={25}
+                    color="#fff"
+                    onClick={() => {
+                      setDownVote(false);
+                      setUpVote(true);
+                    }}
+                  />
+                </div>
+              )}
+              {downVote ? (
+                <div
+                  onClick={handleVote}
+                  className="flex text-white mx-1 gap-2 rounded-xl px-2 py-1 bg-red-500 cursor-pointer"
+                >
+                  <FaHeartBroken size={25} color="#fff" />
+                  {voteWeight / 100}%
+                </div>
+              ) : (
+                <div className="px-2 py-1 cursor-pointer">
+                  <FaHeartBroken
+                    size={25}
+                    color="#fff"
+                    onClick={() => {
+                      setUpVote(false);
+                      setDownVote(true);
+                    }}
+                  />
+                </div>
+              )}
+              <h1
+                className="text-white text-xl cursor-pointer"
                 onClick={() => {
                   setUpVote(false);
-                  setDownVote(true);
+                  setDownVote(false);
                 }}
-              />
-            )}
-          </div>
-          <div className="w-full">
-            {upVote && (
-              <input
-                className="my-2 w-full"
-                onChange={(e) => setVoteWeight(+e.target.value)}
-                type="range"
-                min="0"
-                max="10000"
-                value="0"
-              />
-            )}
-            {downVote && (
-              <input
-                className="my-2 w-full"
-                onChange={(e) => setVoteWeight(+e.target.value)}
-                type="range"
-                min="0"
-                max="10000"
-                value="0"
-              />
-            )}
-          </div>
-          <div className="my-2">
-            <h1 className="text-white border-b-2 border-white pb-1 text-2xl">
-              Comments
-            </h1>
-            <div className="relative flex">
-              <input
-                type="text"
-                className="w-full outline-none p-2 rounded-xl my-2"
-                placeholder="Write a comment"
-                onChange={(e) => setCommentBody(e.target.value)}
-              />
-              <IoSend
-                color={color}
-                size={25}
-                onMouseEnter={() => setColor("#dcdcdc")}
-                onMouseLeave={() => setColor("#000")}
-                onClick={handleSendComment}
-                className="absolute right-4 top-4 cursor-pointer"
-              />
+              >
+                ({contentResult.active_votes.length})
+              </h1>
             </div>
-            <div className="flex flex-col justify-center gap-3 my-3">
-              {comments.map((comment: any) => (
-                <CommentCard key={comment.id} comment={comment} />
-              ))}
+            <div className="w-full">
+              {upVote && (
+                <input
+                  className="my-2 w-full"
+                  onChange={(e) => setVoteWeight(+e.target.value)}
+                  type="range"
+                  min="0"
+                  max="10000"
+                  value="0"
+                />
+              )}
+              {downVote && (
+                <input
+                  className="my-2 w-full"
+                  onChange={(e) => setVoteWeight(+e.target.value)}
+                  type="range"
+                  min="0"
+                  max="10000"
+                  value="0"
+                />
+              )}
+            </div>
+            <div className="my-2">
+              <h1 className="text-white border-b-2 border-white pb-1 text-2xl">
+                Comments
+              </h1>
+              <div className="relative flex">
+                <input
+                  type="text"
+                  className="w-full outline-none p-2 rounded-xl my-2"
+                  placeholder="Write a comment"
+                  onChange={(e) => setCommentBody(e.target.value)}
+                />
+                <IoSend
+                  color={color}
+                  size={25}
+                  onMouseEnter={() => setColor("#dcdcdc")}
+                  onMouseLeave={() => setColor("#000")}
+                  onClick={handleSendComment}
+                  className="absolute right-4 top-4 cursor-pointer"
+                />
+              </div>
+              <div className="flex flex-col justify-center gap-3 my-3">
+                {comments.map((comment: any) => (
+                  <CommentCard key={comment.id} comment={comment} />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    )
   );
 };
 

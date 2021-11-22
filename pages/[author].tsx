@@ -64,18 +64,18 @@ const User = () => {
     }
   }, [username]);
 
-  useEffect(() => {
-    if (pfpData) {
-      const uid = pfpData.pfp?.split(":");
-      const script = pfpData.set?.s;
+  // useEffect(() => {
+  //   if (pfpData) {
+  //     const uid = pfpData.pfp?.split(":");
+  //     const script = pfpData.set?.s;
 
-      if (pfpData.pfp !== placeHolder) {
-        if (uid && script) {
-          redoAccountPicture({ script, uid });
-        }
-      }
-    }
-  }, [pfpData]);
+  //     if (pfpData.pfp !== placeHolder) {
+  //       if (uid && script) {
+  //         redoAccountPicture({ script, uid });
+  //       }
+  //     }
+  //   }
+  // }, [pfpData]);
 
   return (
     <div className="flex flex-col text-white my-10 mx-2 sm:mx-10">
@@ -86,9 +86,16 @@ const User = () => {
           } flex flex-col sm:flex-row items-center h-full sm:items-start gap-3 w-full`}
         >
           <div className="flex flex-col items-center justify-center z-10">
-            <div className="w-52 flex justify-center" id="account-picture">
-              <Image height={120} width={120} src={placeHolder} alt="profile" />
-            </div>
+            {userData && (
+              <img
+                height={165}
+                width={165}
+                src={
+                  userData.profile_image ? userData.profile_image : placeHolder
+                }
+                alt="profile"
+              />
+            )}
             <h1 className="text-xl mb-2">{author}</h1>
           </div>
           {userData && (
