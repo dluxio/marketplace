@@ -76,6 +76,12 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
                 Bidder: <strong>{nft.bidder}</strong>
               </h1>
             )}
+            <h1
+              className="hover:text-gray-300 cursor-pointer"
+              onClick={() => router.push(`/@${nft.by}`)}
+            >
+              By: <strong>{nft.by}</strong>
+            </h1>
             <h1>
               Price:{" "}
               <strong>

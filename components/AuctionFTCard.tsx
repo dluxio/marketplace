@@ -99,6 +99,12 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
                 Bidder: <strong>{ft.bidder}</strong>
               </h1>
             )}
+            <h1
+              className="hover:text-gray-300 cursor-pointer"
+              onClick={() => router.push(`/@${ft.by}`)}
+            >
+              By: <strong>{ft.by}</strong>
+            </h1>
             <h1>
               Price:{" "}
               <strong>
