@@ -32,7 +32,9 @@ export const AppCard = ({ app }: AppCardProps) => {
     hive.api.getContent(author, permlink, (err: any, result: any) => {
       if (err) console.log(err);
       setContentResult(result);
-      fetchImage(JSON.parse(result.json_metadata));
+      if (result.json_metadata) {
+        fetchImage(JSON.parse(result.json_metadata));
+      }
     });
   }, []);
 
