@@ -32,14 +32,14 @@ export const CommentCard = ({ comment }: { comment: any }) => {
   };
 
   return (
-    <div className="text-white bg-gray-600 p-2 rounded-xl border-2 border-gray-800">
+    <div className="text-white bg-gray-600 p-4 rounded-xl border-2 border-gray-800">
       <h1
         onClick={() => router.push(`/@${comment.author}`)}
-        className="text-xl font-semibold hover:text-blue-200 cursor-pointer"
+        className="text-xl font-semibold mb-2 hover:text-blue-200 cursor-pointer"
       >
         {comment.author}
       </h1>
-      <div className="text-white mx-2">
+      <div className="text-white mx-1 whitespace-pre-wrap break-words">
         <h1 id={`comment-body-${comment.id}`}></h1>
         <div className="w-auto">
           <div className="flex">
