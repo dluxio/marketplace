@@ -13,6 +13,8 @@ export const CommentCard = ({ comment }: { comment: any }) => {
   const [color, setColor] = useState("#000");
 
   useEffect(() => {
+    console.log(comment);
+
     const commentElem = document.getElementById(`comment-body-${comment.id}`);
     if (commentElem) {
       commentElem!.innerHTML = comment.body;
@@ -30,10 +32,10 @@ export const CommentCard = ({ comment }: { comment: any }) => {
   };
 
   return (
-    <div className="text-black">
+    <div className="text-white bg-gray-600 p-2 rounded-xl border-2 border-gray-800">
       <h1
         onClick={() => router.push(`/@${comment.author}`)}
-        className="text-xl hover:text-blue-200 cursor-pointer"
+        className="text-xl font-semibold hover:text-blue-200 cursor-pointer"
       >
         {comment.author}
       </h1>
@@ -43,7 +45,7 @@ export const CommentCard = ({ comment }: { comment: any }) => {
           <div className="flex">
             <div
               onClick={() => setReply(!reply)}
-              className="hover:bg-gray-600 px-2 py-1 rounded-xl flex items-center gap-2"
+              className="hover:bg-gray-700 px-2 py-1 my-1 rounded-xl cursor-pointer flex items-center gap-2"
             >
               <FaReply size={20} color="#fff" className="my-3" />(
               {comment.replies.length})
@@ -80,7 +82,7 @@ export const CommentCard = ({ comment }: { comment: any }) => {
         return (
           <div className="mx-3">
             <a target="_blank" href={`https://peakd.com/@${replie.author}`}>
-              <h1 className="text-xl hover:text-blue-200 cursor-pointer">
+              <h1 className="text-xl font-semibold text-white hover:text-blue-200 cursor-pointer">
                 {replie.author}
               </h1>
             </a>

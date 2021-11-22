@@ -81,7 +81,7 @@ export const NewsPost = ({ post }: { post: Discussion }) => {
 
   return (
     contentDataObject && (
-      <div className="border-2 text-white py-1 sm:p-3 rounded-xl h-full border-gray-800 bg-gray-600 w-full flex flex-col items-center justify-center">
+      <div className="relative border-2 text-white py-1 sm:p-3 rounded-xl h-full border-gray-800 bg-gray-600 w-full flex flex-col items-center justify-center">
         {speak ? (
           <div className="w-full flex justify-center">
             <ReactJWPlayer
