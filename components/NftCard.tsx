@@ -84,7 +84,7 @@ export const NftCard = ({ nft }: NftCardProp) => {
             background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
           }}
         >
-          {nft.uid}
+          {nft.set}
         </h1>
         <div className="py-5">
           <div
