@@ -64,18 +64,18 @@ const User = () => {
     }
   }, [username]);
 
-  // useEffect(() => {
-  //   if (pfpData) {
-  //     const uid = pfpData.pfp?.split(":");
-  //     const script = pfpData.set?.s;
+  useEffect(() => {
+    if (pfpData) {
+      const uid = pfpData.pfp?.split(":");
+      const script = pfpData.set?.s;
 
-  //     if (pfpData.pfp !== placeHolder) {
-  //       if (uid && script) {
-  //         redoAccountPicture({ script, uid });
-  //       }
-  //     }
-  //   }
-  // }, [pfpData]);
+      if (pfpData.pfp !== placeHolder) {
+        if (uid && script) {
+          redoAccountPicture({ script, uid });
+        }
+      }
+    }
+  }, [pfpData]);
 
   return (
     <div className="flex flex-col text-white my-10 mx-2 sm:mx-10">
@@ -86,7 +86,7 @@ const User = () => {
           } flex flex-col sm:flex-row items-center h-full sm:items-start gap-3 w-full`}
         >
           <div className="flex flex-col items-center justify-center z-10">
-            {userData && (
+            {userData && !userData.profile_image.includes("dlux") ? (
               <img
                 height={165}
                 width={165}
@@ -95,8 +95,10 @@ const User = () => {
                 }
                 alt="profile"
               />
+            ) : (
+              <div className="w-52" id="account-picture"></div>
             )}
-            <h1 className="text-xl mb-2">{author}</h1>
+            <h1 className="text-xl my-2">{author}</h1>
           </div>
           {userData && (
             <div className="z-40 mx-5 my-auto">
