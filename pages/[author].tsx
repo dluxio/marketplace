@@ -186,7 +186,7 @@ const User = () => {
         </div>
       </div>
       <div className="text-center">
-        <h1 className="my-3 font-bold text-xl">BLOG</h1>
+        <h1 className="my-3 font-bold text-xl">Recent posts</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full my-4">
           {posts.map((post) => (
             <NewsPost key={post.permlink} post={post} />

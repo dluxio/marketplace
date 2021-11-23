@@ -7,6 +7,7 @@ import { comment, vote } from "../../utils";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { broadcastState, ipfsLinkState, userState } from "../../atoms";
 import { CommentCard } from "../../components/CommentCard";
+import ReactJWPlayer from "react-jw-player";
 
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
@@ -20,6 +21,9 @@ const AppDetails = () => {
   ]);
   const [voteWeight, setVoteWeight] = useState(0);
   const [commentBody, setCommentBody] = useState("");
+  const [playlist, setPlaylist] = useState<any>([]);
+  const [contentData, setContentData] = useState<any>(null);
+  const [speak, set3speak] = useState(false);
   const [color, setColor] = useState("#000");
   const [upVote, setUpVote] = useState(false);
   const [downVote, setDownVote] = useState(false);
@@ -97,27 +101,10 @@ const AppDetails = () => {
   };
 
   useEffect(() => {
-    const fetchImage = (json: any) => {
-      let imagestring;
-      if (json.image && Array.isArray(json.image)) {
-        imagestring = json.image[0];
-      } else if (typeof json.image == "string") {
-        imagestring = json.image;
-      } else if (json.Hash360 && typeof json.Hash360) {
-        imagestring = `https://ipfs.io/ipfs/${json.Hash360}`;
-      } else {
-        imagestring = "https://www.dlux.io/img/dlux-sdk.png";
-      }
-      if (imagestring.substr(0, 5) !== "https") {
-        imagestring = "https://www.dlux.io/img/dlux-sdk.png";
-      }
-      setImage(imagestring);
-    };
-
     if (username !== "") {
       hive.api.getContent(username, permlink, (err: any, result: any) => {
         if (err) console.log(err);
-        fetchImage(JSON.parse(result.json_metadata));
+        setContentData(JSON.parse(result.json_metadata));
         setContentResult(result);
       });
 
@@ -128,6 +115,48 @@ const AppDetails = () => {
         });
     }
   }, [username]);
+
+  useEffect(() => {
+    if (contentData) {
+      if (contentData.app.includes("3speak")) {
+        set3speak(true);
+        const file: string =
+          `https://ipfs.io/ipfs/` + contentData.video.info.ipfs;
+        const image: string =
+          `https://ipfs.io/ipfs/` + contentData.video.info.ipfsThumbnail;
+
+        if (image && file) {
+          setPlaylist((prevState: any) => [
+            ...prevState,
+            {
+              file,
+              image,
+            },
+          ]);
+        }
+      } else {
+        let imagestring;
+
+        if (contentData.image && Array.isArray(contentData.image)) {
+          imagestring = contentData.image[0];
+        } else if (typeof contentData.image == "string") {
+          imagestring = contentData.image;
+        } else if (contentData.Hash360 && typeof contentData.Hash360) {
+          imagestring = `https://ipfs.io/ipfs/${contentData.Hash360}`;
+        } else {
+          imagestring = "https://www.dlux.io/img/dlux-sdk.png";
+        }
+
+        if (imagestring) {
+          if (imagestring.substr(0, 5) !== "https") {
+            imagestring = "https://www.dlux.io/img/dlux-sdk.png";
+          }
+        }
+
+        setImage(imagestring);
+      }
+    }
+  }, [contentData]);
 
   return showApp ? (
     <div className="w-full h-screen fixed top-0 left-0 bg-black text-white text-2xl font-bold bg-opacity-70">
@@ -151,9 +180,20 @@ const AppDetails = () => {
     contentResult && (
       <div className="w-full mx-auto max-w-3xl">
         <div className="flex justify-evenly flex-col w-full mt-10">
-          <div className="p-5 mx-auto">
-            <img src={image} alt="appPhoto" width={600} />
-          </div>
+          {speak ? (
+            <div className="w-full flex justify-center my-2">
+              <ReactJWPlayer
+                className="rounded-xl w-4/5"
+                playerId="my-unique-id"
+                playerScript="https://cdn.jwplayer.com/libraries/HT7Dts3H.js"
+                playlist={playlist}
+              />
+            </div>
+          ) : (
+            <div className="flex justify-center w-full my-2">
+              <img src={image} className="w-4/5" alt="appPhoto" />
+            </div>
+          )}
           {JSON.parse(contentResult.json_metadata).vrHash && (
             <button
               className="mx-auto px-4 py-2 rounded-lg border-2 text-white bg-blue-500 border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700"
