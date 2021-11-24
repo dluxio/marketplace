@@ -12,6 +12,7 @@ import { apiLinkState, userState } from "../atoms";
 import { toBase64 } from "../utils";
 import { FaQuestion } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-export-i18n";
 
 type AuctionCardProps = {
   ft: any;
@@ -25,6 +26,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
   const router = useRouter();
   const [isBidding, setIsBidding] = useState(false);
   const [randomUID, setRandomUID] = useState("==");
+  const { t } = useTranslation();
 
   const randomUIDGen = (setData: any) => {
     const num = Math.round(Math.random() * (setData.max - (setData.min || 0)));
@@ -96,17 +98,17 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
                 className="hover:text-gray-300 cursor-pointer"
                 onClick={() => router.push(`/@${ft.bidder}`)}
               >
-                Bidder: <strong>{ft.bidder}</strong>
+                {t("bidder")}: <strong>{ft.bidder}</strong>
               </h1>
             )}
             <h1
               className="hover:text-gray-300 cursor-pointer"
               onClick={() => router.push(`/@${ft.by}`)}
             >
-              By: <strong>{ft.by}</strong>
+              {t("by")}: <strong>{ft.by}</strong>
             </h1>
             <h1>
-              Price:{" "}
+              {t("price")}:{" "}
               <strong>
                 {parseFloat(
                   (
@@ -116,7 +118,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
               </strong>
             </h1>
             <h1>
-              Bids: <strong>{ft.bids}</strong>
+              {t("bids")}: <strong>{ft.bids}</strong>
             </h1>
           </div>
           <button
@@ -129,7 +131,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
               background: `linear-gradient(${colors[0]} 30%, ${colors[1]})`,
             }}
           >
-            Bid
+            {t("bid")}
             <GiTakeMyMoney />
           </button>
         </div>

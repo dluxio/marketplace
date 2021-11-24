@@ -7,6 +7,7 @@ import axios from "axios";
 import { AuctionFTcard } from "../components/AuctionFTCard";
 import { apiLinkState } from "../atoms";
 import { useRecoilValue } from "recoil";
+import { useTranslation } from "next-export-i18n";
 
 const Tools = () => {
   const router = useRouter();
@@ -14,6 +15,7 @@ const Tools = () => {
   const [showAuctionNFT, setShowAuctionNFT] = useState(true);
   const [auctionHouseNFT, setAuctionHouseNFT] = useState([]);
   const [auctionHouseFT, setAuctionHouseFT] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (auctionHouseNFT === []) {
@@ -41,7 +43,7 @@ const Tools = () => {
 
   return (
     <div className="mx-10 my-4">
-      <title>Auction house</title>
+      <title>{t("auctionHouse")}</title>
       <div className="flex justify-center">
         <button
           onClick={() => setShowAuctionNFT(true)}
@@ -61,7 +63,7 @@ const Tools = () => {
         </button>
       </div>
       <h1 className="text-white mt-10 mb-5 text-3xl font-semibold">
-        Auction house
+        {t("auctionHouse")}
       </h1>
       {showAuctionNFT ? (
         <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5">

@@ -9,6 +9,7 @@ import { FaMoneyBillAlt } from "react-icons/fa";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userState, broadcastState, prefixState } from "../atoms";
 import { AuctionDetail } from "./Detail";
+import { useTranslation } from "next-export-i18n";
 
 import axios from "axios";
 
@@ -26,6 +27,7 @@ export const NftCard = ({ nft }: NftCardProp) => {
   const prefix: string = useRecoilValue(prefixState);
   const router = useRouter();
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+  const { t } = useTranslation();
 
   useEffect(() => {
     axios
@@ -103,10 +105,10 @@ export const NftCard = ({ nft }: NftCardProp) => {
             className="hover:text-gray-300 cursor-pointer"
             onClick={() => router.push(`/@${nft.by}`)}
           >
-            By: {nft.by}
+            {t("by")}: {nft.by}
           </h1>
           <h1>
-            Price:{" "}
+            {t("price")}:{" "}
             <strong>
               {parseFloat(
                 (
@@ -125,7 +127,7 @@ export const NftCard = ({ nft }: NftCardProp) => {
                 background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
               }}
             >
-              Buy
+              {t("buy")}
               <FaMoneyBillAlt />
             </button>
           ) : (
@@ -136,7 +138,7 @@ export const NftCard = ({ nft }: NftCardProp) => {
               }`}
               style={{ backgroundColor: "orange" }}
             >
-              Take back
+              {t("takeBack")}
             </button>
           )}
         </div>

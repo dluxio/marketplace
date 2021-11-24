@@ -6,6 +6,7 @@ import { FaMoneyBillAlt, FaQuestion } from "react-icons/fa";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-export-i18n";
 
 type FTCardProps = {
   ft: {
@@ -26,6 +27,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
   const apiLink: string = useRecoilValue(apiLinkState);
   const prefix: string = useRecoilValue(prefixState);
   const router = useRouter();
+  const { t } = useTranslation();
 
   const id = "_" + Math.random().toString(36).substr(2, 9);
 
@@ -120,10 +122,10 @@ export const FTCard = ({ ft }: FTCardProps) => {
           className="hover:text-gray-300 cursor-pointer"
           onClick={() => router.push(`/@${ft.by}`)}
         >
-          By: {ft.by}
+          {t("by")}: {ft.by}
         </h1>
         <h1>
-          Price:{" "}
+          {t("price")}:{" "}
           <strong>
             {parseFloat(
               (+ft.price.amount / Math.pow(10, ft.price.precision)).toString()
@@ -140,7 +142,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
               background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
             }}
           >
-            Buy
+            {t("buy")}
             <FaMoneyBillAlt />
           </button>
         ) : (
@@ -151,7 +153,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
             }`}
             style={{ backgroundColor: "orange" }}
           >
-            Take back
+            {t("takeBack")}
           </button>
         )}
       </div>

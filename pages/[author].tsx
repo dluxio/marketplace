@@ -6,7 +6,6 @@ import { apiLinkState } from "../atoms";
 import { placeHolder } from "../constants";
 import { redoAccountPicture } from "../utils";
 import { Client, Discussion } from "@hiveio/dhive";
-import Image from "next/image";
 import { NewsPost } from "../components/NewsPost";
 import { RiMapPinUserFill, RiUser3Fill, RiLinksFill } from "react-icons/ri";
 import {
@@ -16,6 +15,7 @@ import {
   GrInstagram,
   GrTwitter,
 } from "react-icons/gr";
+import { useTranslation } from "next-export-i18n";
 
 const User = () => {
   var client = new Client([
@@ -31,6 +31,7 @@ const User = () => {
   const [userData, setUserData] = useState<any>(null);
   const [pfpData, setPfp] = useState<any>("");
   const apiLink: string = useRecoilValue(apiLinkState);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (author && (author! as string).substr(0, 1) === "@") {
@@ -190,7 +191,7 @@ const User = () => {
         </div>
       </div>
       <div className="text-center">
-        <h1 className="my-3 font-bold text-xl">Recent posts</h1>
+        <h1 className="my-3 font-bold text-xl">{t("recent")}</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full my-4">
           {posts.map((post) => (
             <NewsPost key={post.permlink} post={post} />

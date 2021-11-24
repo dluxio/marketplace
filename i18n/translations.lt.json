@@ -7,7 +7,28 @@
         "login": "Prisijungti",
         "settings": "Nustatymai",
         "pendingTrades": "Numatyti sandoriai",
-        "logout": "Atsijungti"
+        "logout": "Atsijungti",
+        "APIlink": "API nuoroda",
+        "select": "Pasirink...",
+        "market": "Parduotuvė",
+        "apps": "Programos",
+        "news": "Naujienos",
+        "tokens": "Valiutos",
+        "createNFT": "Sukurk NFT",
+        "noFT": "Tu neturi jokių mint žetonų",
+        "noNFT": "Tu neturi jokių NFT",
+        "balances": "Balansai",
+        "price": "Kaina",
+        "by": "Kieno",
+        "bids": "Siūlymai",
+        "bid": "Siūlyk",
+        "buy": "Pirk",
+        "takeBack": "Atsiimk",
+        "bidder": "Aukščiausias siūlymas",
+        "trades": "Sandoriai",
+        "respond": "Atsiliepti",
+        "manage": "Tvarkyti",
+        "recent": "Naujausi postai"
     }
    
 }

@@ -7,6 +7,7 @@ import { FTCard } from "../components/FTCard";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { apiLinkState } from "../atoms";
+import { useTranslation } from "next-export-i18n";
 
 const Listings = () => {
   const [showNFTs, setShowNFTs] = useState(true);
@@ -14,6 +15,7 @@ const Listings = () => {
   const [fts, setFts] = useState([]);
   const router = useRouter();
   const apiLink = useRecoilValue(apiLinkState);
+  const { t } = useTranslation();
 
   if (nfts === []) router.push("/");
 
@@ -52,7 +54,9 @@ const Listings = () => {
           FTs
         </button>
       </div>
-      <h1 className="text-white mt-10 mb-5 text-3xl font-semibold">Listings</h1>
+      <h1 className="text-white mt-10 mb-5 text-3xl font-semibold">
+        {t("listings")}
+      </h1>
       {showNFTs
         ? nfts && (
             <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 my-2 gap-5">

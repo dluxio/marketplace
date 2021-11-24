@@ -191,27 +191,37 @@ export const NavBar = () => {
               {t("logout")}
             </a>
           </div>
-
-          <div
-            className={`${
-              languageSelect ? "" : "hidden"
-            } absolute bg-white top-14 right-32 px-2 pt-2 rounded-xl flex flex-col z-40`}
-          >
-            <LanguageSwitcher lang="en">
-              <a className="btn">English</a>
-            </LanguageSwitcher>
-            <LanguageSwitcher lang="lt">
-              <a className="btn">Lietuvių</a>
-            </LanguageSwitcher>
-          </div>
         </div>
       )}
       {!user && (
-        <div onClick={() => setSigning(true)} className="flex mr-5 navLink">
-          <h1>{t("login")}</h1>
+        <div className="flex gap-7 items-center">
+          <FcGlobe
+            size={30}
+            className="cursor-pointer"
+            onClick={() => setLanguageSelect(!languageSelect)}
+          />
+          <div onClick={() => setSigning(true)} className="flex mr-5 navLink">
+            <h1>{t("login")}</h1>
+          </div>
         </div>
       )}
       {signing && <Login handleClose={() => setSigning(false)} />}
+      {languageSelect && (
+        <div
+          className={`${
+            languageSelect ? "" : "hidden"
+          } absolute bg-white top-14 ${
+            user ? "right-32" : "right-24"
+          } px-2 pt-2 rounded-xl flex flex-col z-40`}
+        >
+          <LanguageSwitcher lang="en">
+            <a className="btn">English</a>
+          </LanguageSwitcher>
+          <LanguageSwitcher lang="lt">
+            <a className="btn">Lietuvių</a>
+          </LanguageSwitcher>
+        </div>
+      )}
       {dropdown && (
         <div className="absolute top-14 p-2 bg-white rounded-xl text-center z-50">
           <p

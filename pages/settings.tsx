@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { apiLinkState } from "../atoms";
 import Ping from "ping.js";
 import Select from "react-select";
+import { useTranslation } from "next-export-i18n";
 
 type optionEl = {
   value: string;
@@ -16,6 +17,7 @@ const Settings = () => {
   const [options, setOptions] = useState<any>();
   const [toShow, setToShow] = useState([]);
   const [apiLink, setApiLink] = useRecoilState(apiLinkState);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setToShow([]);
@@ -58,11 +60,12 @@ const Settings = () => {
   return (
     <div className="text-white text-3xl">
       <div className="mx-10 my-10">
-        <h1 className="my-5">Settings</h1>
+        <h1 className="my-5">{t("settings")}</h1>
         <div className="w-full mx-2 sm:w-1/2">
-          <h1 className="text-2xl">API link</h1>
+          <h1 className="text-2xl">{t("APIlink")}</h1>
           <Select
             className="my-1 text-sm h-3 text-black"
+            placeholder={t("select")}
             options={toShow}
             onChange={(e: any) => {
               setApiLink(e.value);

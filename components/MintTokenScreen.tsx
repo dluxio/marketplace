@@ -6,12 +6,14 @@ import { apiLinkState, refreshState, userState } from "../atoms";
 import { useRouter } from "next/router";
 
 import { TokenCard } from "./TokenCard";
+import { useTranslation } from "next-export-i18n";
 
 export const MintTokenScreen = () => {
   const [mintTokens, setMintTokens] = useState([]);
   const user: any = useRecoilValue(userState);
   const apiLink: string = useRecoilValue(apiLinkState);
   const refresh: string = useRecoilValue(refreshState);
+  const { t } = useTranslation();
   const router = useRouter();
 
   useEffect(() => {
@@ -32,9 +34,7 @@ export const MintTokenScreen = () => {
     <div className="mx-10">
       {mintTokens.length === 0 && (
         <div className="w-full flex justify-center items-center">
-          <h1 className="text-white text-xl w-full text-center">
-            You don&apos;t have any unminted tokens
-          </h1>
+          <h1 className="text-white text-xl w-full text-center">{t("noFT")}</h1>
         </div>
       )}
       <div className="grid grid-cols-1 grid-row-auto sm:grid-cols-2 xl:grid-cols-4 w-4/5 gap-4">

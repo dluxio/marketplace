@@ -11,6 +11,7 @@ import { BidForm } from "./Forms/BidForm";
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-export-i18n";
 
 type AuctionCardProps = {
   nft: any;
@@ -22,6 +23,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
   const router = useRouter();
   const [isBidding, setIsBidding] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     axios
@@ -73,17 +75,17 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
                 className="hover:text-gray-300 cursor-pointer"
                 onClick={() => router.push(`/@${nft.bidder}`)}
               >
-                Bidder: <strong>{nft.bidder}</strong>
+                {t("bidder")}: <strong>{nft.bidder}</strong>
               </h1>
             )}
             <h1
               className="hover:text-gray-300 cursor-pointer"
               onClick={() => router.push(`/@${nft.by}`)}
             >
-              By: <strong>{nft.by}</strong>
+              {t("by")}: <strong>{nft.by}</strong>
             </h1>
             <h1>
-              Price:{" "}
+              {t("price")}:{" "}
               <strong>
                 {parseFloat(
                   (
@@ -93,7 +95,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
               </strong>
             </h1>
             <h1>
-              Bids: <strong>{nft.bids}</strong>
+              {t("bids")}: <strong>{nft.bids}</strong>
             </h1>
           </div>
           <button
@@ -106,7 +108,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
               background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
             }}
           >
-            Bid
+            {t("bid")}
             <GiTakeMyMoney />
           </button>
         </div>

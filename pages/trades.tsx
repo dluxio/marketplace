@@ -5,6 +5,7 @@ import { apiLinkState, refreshState, userState } from "../atoms";
 import axios from "axios";
 import { NFTTradeCard as RespondCard } from "../components/ResponseCard";
 import { NFTManage as ManageCard } from "../components/ManageCard";
+import { useTranslation } from "next-export-i18n";
 
 const Trades = () => {
   const [nft, setNFT] = useState(true);
@@ -13,6 +14,7 @@ const Trades = () => {
   const [NFTtradesToManage, setNFTTradesToManage] = useState<[]>();
   const [FTtradesToManage, setFTTradesToManage] = useState<[]>();
   const [respond, setRespond] = useState(true);
+  const { t } = useTranslation();
   const user: any = useRecoilValue(userState);
   const refresh: string = useRecoilValue(refreshState);
   const apiLink: string = useRecoilValue(apiLinkState);
@@ -44,7 +46,7 @@ const Trades = () => {
 
   return (
     <div className="mx-10 my-4 text-white font-medium">
-      <title>Trades</title>
+      <title>{t("trades")}</title>
       <div className="flex gap-4 justify-center">
         <div className="flex justify-center">
           <button
@@ -53,7 +55,7 @@ const Trades = () => {
               respond && "bg-gray-800"
             } rounded-l-full bg-gray-700 text-white transition-all`}
           >
-            Respond
+            {t("respond")}
           </button>
           <button
             onClick={() => setRespond(false)}
@@ -61,7 +63,7 @@ const Trades = () => {
               !respond && "bg-gray-800"
             } rounded-r-full bg-gray-700 text-white transition-all`}
           >
-            Manage
+            {t("manage")}
           </button>
         </div>
         <div className="flex justify-center">
@@ -83,7 +85,7 @@ const Trades = () => {
           </button>
         </div>
       </div>
-      <h1 className="text-3xl">Trades</h1>
+      <h1 className="text-3xl">{t("trades")}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-4 xl:grid-cols-5 gap-8 my-5">
         {nft
           ? respond

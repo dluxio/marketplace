@@ -11,11 +11,13 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { marketNavState, coinState, prefixState, apiLinkState } from "../atoms";
 import { NewsScreen } from "./NewsScreen";
 import { AppScreen } from "./AppScreen";
+import { useTranslation } from "next-export-i18n";
 
 export const Market = () => {
   const [nfts, setNfts] = useState([]);
   const [auction, setAuction] = useState([]);
   const [_prefix, setPrefix] = useRecoilState(prefixState);
+  const { t } = useTranslation();
 
   const selectedMarket = useRecoilValue(marketNavState);
   const apiLink: string = useRecoilValue(apiLinkState);
@@ -82,7 +84,9 @@ export const Market = () => {
       <MarketNav />
       {selectedMarket === "exchange" && (
         <>
-          <h1 className="text-3xl mx-10 my-4 text-white font-medium">TOKENS</h1>
+          <h1 className="text-3xl mx-10 my-4 text-white font-medium">
+            {t("tokens").toUpperCase()}
+          </h1>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-10">
             {coins &&
               coins.map((coin: any) => <CoinCard key={coin.id} coin={coin} />)}
@@ -90,7 +94,7 @@ export const Market = () => {
           {nfts.length !== 0 && (
             <Link href="/listings" passHref={true}>
               <h1 className="cursor-pointer text-3xl ml-10 mb-4 w-1/5 mt-10 text-white font-medium">
-                NFT
+                {t("listings").toUpperCase()}
               </h1>
             </Link>
           )}
@@ -104,7 +108,7 @@ export const Market = () => {
           {auction.length !== 0 && (
             <Link href="/auction" passHref={true}>
               <h1 className="cursor-pointer text-3xl ml-10 mb-4 w-1/5 mt-10 text-white font-medium">
-                AUCTION HOUSE
+                {t("auctionHouse").toUpperCase()}
               </h1>
             </Link>
           )}
