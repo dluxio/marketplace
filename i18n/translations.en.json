@@ -1,0 +1,13 @@
+{
+    "i18n": {
+        "home": "Home",
+        "inventory": "Inventory",
+        "auctionHouse": "Auction house",
+        "listings": "Listings",
+        "login": "Login",
+        "settings": "Settings",
+        "pendingTrades": "Pending trades",
+        "logout": "Logout"
+    }
+}
+    

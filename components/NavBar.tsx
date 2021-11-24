@@ -22,6 +22,7 @@ import { redoProfilePicture } from "../utils";
 
 import { isMobile } from "react-device-detect";
 import axios from "axios";
+import { useLanguageQuery, useTranslation } from "next-export-i18n";
 
 export const NavBar = () => {
   const [profDropdown, setProfDropdown] = useState(false);
@@ -34,6 +35,8 @@ export const NavBar = () => {
   const url = router.pathname.split("/")[1];
   const broadcasts: any = useRecoilValue(broadcastState);
   const refresh: string = useRecoilValue(refreshState);
+  const { t } = useTranslation();
+  const [query] = useLanguageQuery();
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -98,9 +101,9 @@ export const NavBar = () => {
         <div className="flex gap-10 flex-grow justify-center items-center">
           <p
             className={`${url === "" && "selected"} navLink`}
-            onClick={() => router.push("/")}
+            onClick={() => router.push({ pathname: "/", query })}
           >
-            Home
+            {t("home")}
           </p>
           <p
             className={`${
@@ -111,23 +114,23 @@ export const NavBar = () => {
             } ${user ? "navLink" : "text-gray-600 cursor-not-allowed"}`}
             onClick={() => {
               if (user) {
-                router.push("/inventory");
+                router.push({ pathname: "/inventory", query });
               }
             }}
           >
-            Inventory
+            {t("inventory")}
           </p>
           <p
             className={`${url === "auction" && "selected"} navLink`}
-            onClick={() => router.push("/auction")}
+            onClick={() => router.push({ pathname: "/auction", query })}
           >
-            Auction house
+            {t("auctionHouse")}
           </p>
           <p
             className={`${url === "listings" && "selected"} navLink`}
-            onClick={() => router.push("/listings")}
+            onClick={() => router.push({ pathname: "/listings", query })}
           >
-            Listings
+            {t("listings")}
           </p>
         </div>
       ) : (
@@ -145,6 +148,7 @@ export const NavBar = () => {
       {user && (
         <div className="flex">
           <div className="flex items-center gap-5">
+            <div className="flex gap-5"></div>
             <h1
               className="navLink w-full"
               onClick={() => setProfDropdown((prevState) => !prevState)}
@@ -168,20 +172,20 @@ export const NavBar = () => {
             } fixed bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col z-40`}
           >
             <a onClick={handleSettings} className="btn">
-              Settings
+              {t("settings")}
             </a>
             <a onClick={handleTrades} className="btn">
-              pending trades
+              {t("pendingTrades")}
             </a>
             <a className="btn" onClick={handleLogout}>
-              Logout
+              {t("logout")}
             </a>
           </div>
         </div>
       )}
       {!user && (
         <div onClick={() => setSigning(true)} className="flex mr-5 navLink">
-          <h1>Login</h1>
+          <h1>{t("login")}</h1>
         </div>
       )}
       {signing && <Login handleClose={() => setSigning(false)} />}
@@ -193,7 +197,7 @@ export const NavBar = () => {
             } navLink text-black hover:text-gray-800`}
             onClick={() => router.push("/")}
           >
-            Home
+            {t("home")}
           </p>
           <p
             className={`${
@@ -212,7 +216,7 @@ export const NavBar = () => {
               }
             }}
           >
-            Inventory
+            {t("inventory")}
           </p>
           <p
             className={`${
@@ -220,7 +224,7 @@ export const NavBar = () => {
             } navLink text-black hover:text-gray-800`}
             onClick={() => router.push("/auction")}
           >
-            Auction house
+            {t("auctionHouse")}
           </p>
           <p
             className={`${
@@ -228,7 +232,7 @@ export const NavBar = () => {
             } navLink text-black hover:text-gray-800`}
             onClick={() => router.push("/listings")}
           >
-            Listings
+            {t("listings")}
           </p>
         </div>
       )}

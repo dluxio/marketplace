@@ -1,7 +1,7 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import React from 'react';
-import { Market } from '../components';
+import type { NextPage } from "next";
+import Head from "next/head";
+import React from "react";
+import { Market } from "../components";
 
 const Home: NextPage = () => {
   return (

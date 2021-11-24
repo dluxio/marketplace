@@ -1,0 +1,13 @@
+{
+    "i18n": {
+        "home": "Pagrindinis",
+        "inventory": "Inventorius",
+        "auctionHouse": "Aukcijonai",
+        "listings": "Pardavimai",
+        "login": "Prisijungti",
+        "settings": "Nustatymai",
+        "pendingTrades": "Numatyti sandoriai",
+        "logout": "Atsijungti"
+    }
+   
+}
