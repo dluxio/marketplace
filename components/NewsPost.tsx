@@ -22,7 +22,6 @@ export const NewsPost = ({ post }: { post: Discussion }) => {
   useEffect(() => {
     hive.api.getContent(post.author, post.permlink, (err: any, result: any) => {
       if (err) console.log(err);
-      console.log(result);
       setContentResult(result);
     });
   }, []);
@@ -36,7 +35,6 @@ export const NewsPost = ({ post }: { post: Discussion }) => {
 
   useEffect(() => {
     const contentData = contentDataObject;
-    console.log(contentDataObject);
 
     if (contentData) {
       if (contentData.app.includes("3speak")) {

@@ -103,14 +103,18 @@ const User = () => {
           {userData && (
             <div className="z-40 mx-5 my-auto">
               <h1 className="text-2xl mt-2">{userData?.name}</h1>
-              <div className="flex items-center gap-2">
-                <RiUser3Fill />
-                <h1>{userData.about}</h1>
-              </div>
-              <div className="flex items-center gap-2">
-                <RiMapPinUserFill />
-                <h1>{userData.location}</h1>
-              </div>
+              {userData.about && (
+                <div className="flex items-center gap-2">
+                  <RiUser3Fill />
+                  <h1>{userData.about}</h1>
+                </div>
+              )}
+              {userData.location && (
+                <div className="flex items-center gap-2">
+                  <RiMapPinUserFill />
+                  <h1>{userData.location}</h1>
+                </div>
+              )}
               {userData.website && (
                 <a target="_blank" href={userData.website}>
                   <div className="flex items-center gap-2 hover:text-gray-300">
