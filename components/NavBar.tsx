@@ -16,16 +16,22 @@ import { Spinner } from "./Spinner";
 import { placeHolder } from "../constants";
 
 import { FaBars } from "react-icons/fa";
+import { FcGlobe } from "react-icons/fc";
 
 import Image from "next/image";
 import { redoProfilePicture } from "../utils";
 
 import { isMobile } from "react-device-detect";
 import axios from "axios";
-import { useLanguageQuery, useTranslation } from "next-export-i18n";
+import {
+  useLanguageQuery,
+  useTranslation,
+  LanguageSwitcher,
+} from "next-export-i18n";
 
 export const NavBar = () => {
   const [profDropdown, setProfDropdown] = useState(false);
+  const [languageSelect, setLanguageSelect] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [signing, setSigning] = useState(false);
   const [user, setUser] = useRecoilState<any>(userState);
@@ -45,12 +51,12 @@ export const NavBar = () => {
   };
 
   const handleTrades = () => {
-    router.push("/trades");
+    router.push({ pathname: "/trades", query });
     setProfDropdown(false);
   };
 
   const handleSettings = () => {
-    router.push("/settings");
+    router.push({ pathname: "/settings", query });
     setProfDropdown(false);
   };
 
@@ -146,9 +152,13 @@ export const NavBar = () => {
       )}
 
       {user && (
-        <div className="flex">
+        <div className="flex gap-7 items-center">
+          <FcGlobe
+            size={30}
+            className="cursor-pointer"
+            onClick={() => setLanguageSelect(!languageSelect)}
+          />
           <div className="flex items-center gap-5">
-            <div className="flex gap-5"></div>
             <h1
               className="navLink w-full"
               onClick={() => setProfDropdown((prevState) => !prevState)}
@@ -169,7 +179,7 @@ export const NavBar = () => {
           <div
             className={`${
               profDropdown ? "" : "hidden"
-            } fixed bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col z-40`}
+            } absolute bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col z-40`}
           >
             <a onClick={handleSettings} className="btn">
               {t("settings")}
@@ -180,6 +190,19 @@ export const NavBar = () => {
             <a className="btn" onClick={handleLogout}>
               {t("logout")}
             </a>
+          </div>
+
+          <div
+            className={`${
+              languageSelect ? "" : "hidden"
+            } absolute bg-white top-14 right-32 px-2 pt-2 rounded-xl flex flex-col z-40`}
+          >
+            <LanguageSwitcher lang="en">
+              <a className="btn">English</a>
+            </LanguageSwitcher>
+            <LanguageSwitcher lang="lt">
+              <a className="btn">Lietuvių</a>
+            </LanguageSwitcher>
           </div>
         </div>
       )}
