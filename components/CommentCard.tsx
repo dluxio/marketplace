@@ -13,8 +13,6 @@ export const CommentCard = ({ comment }: { comment: any }) => {
   const [color, setColor] = useState("#000");
 
   useEffect(() => {
-    console.log(comment);
-
     const commentElem = document.getElementById(`comment-body-${comment.id}`);
     if (commentElem) {
       commentElem!.innerHTML = comment.body;
