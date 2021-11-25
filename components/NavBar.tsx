@@ -220,6 +220,9 @@ export const NavBar = () => {
           <LanguageSwitcher lang="lt">
             <a className="btn">Lietuvių</a>
           </LanguageSwitcher>
+          <LanguageSwitcher lang="pt">
+            <a className="btn">Português</a>
+          </LanguageSwitcher>
         </div>
       )}
       {dropdown && (
