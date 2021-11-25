@@ -1,5 +1,6 @@
-import React, { MouseEventHandler } from 'react';
-import { ImCross } from 'react-icons/im';
+import { useTranslation } from "next-export-i18n";
+import React, { MouseEventHandler } from "react";
+import { ImCross } from "react-icons/im";
 
 export const Confirmation = ({
   handleClose,
@@ -8,6 +9,8 @@ export const Confirmation = ({
   handleClose: MouseEventHandler;
   handleContinue: MouseEventHandler;
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
       <div className="relative p-5 bg-gray-700 rounded-xl border-4 border-gray-800">
@@ -16,20 +19,20 @@ export const Confirmation = ({
         </button>
         <div className="m-8">
           <h1 className="text-center text-white text-2xl mb-3">
-            Are you sure?
+            {t("confirmation")}
           </h1>
           <div className="flex justify-between w-full">
             <button
               onClick={handleContinue}
               className="px-4 py-2 mx-2 rounded-lg border-2 text-white bg-transparent border-white focus:outline-none focus:ring-2 focus:ring-gray-700"
             >
-              Continue
+              {t("continue")}
             </button>
             <button
               onClick={handleClose}
               className="px-4 py-2 mx-2 rounded-lg border-2 text-gray-500 bg-transparent border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-700"
             >
-              Cancel
+              {t("cancel")}
             </button>
           </div>
         </div>

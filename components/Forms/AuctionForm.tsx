@@ -1,13 +1,14 @@
-import React, { useState, useEffect, MouseEventHandler } from 'react';
+import React, { useState, useEffect, MouseEventHandler } from "react";
 
-import { Formik } from 'formik';
-import { FormInput } from '../FormInput';
-import { ImCross } from 'react-icons/im';
+import { Formik } from "formik";
+import { FormInput } from "../FormInput";
+import { ImCross } from "react-icons/im";
 
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { userState, prefixState, broadcastState } from '../../atoms';
+import { useRecoilValue, useRecoilState } from "recoil";
+import { userState, prefixState, broadcastState } from "../../atoms";
 
-import { Auction } from '../../utils';
+import { Auction } from "../../utils";
+import { useTranslation } from "next-export-i18n";
 
 export const AuctionNFTForm: React.FC<{
   set: string;
@@ -17,6 +18,7 @@ export const AuctionNFTForm: React.FC<{
   const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
+  const { t } = useTranslation();
   const [auctionData, setAuctionData] =
     useState<{ set: string; uid?: string; time: number; price: number }>();
 
@@ -44,15 +46,15 @@ export const AuctionNFTForm: React.FC<{
             onClick={handleClose as MouseEventHandler}
           />
         </button>
-        <h1 className="text-center text-white text-2xl mb-3">Auction</h1>
+        <h1 className="text-center text-white text-2xl mb-3">{t("auction")}</h1>
         <Formik
           initialValues={{ price: (10).toFixed(3), time: 1 }}
           validate={({ price, time }) => {
             const errors: any = {};
             if (!price) {
-              errors.price = 'Required';
+              errors.price = "Required";
             } else if (!time) {
-              errors.time = 'Required';
+              errors.time = "Required";
             }
             return errors;
           }}
@@ -96,7 +98,6 @@ export const AuctionNFTForm: React.FC<{
                       touched={touched.price}
                       value={values.price}
                     />
-                    <p>Percision: 3, in DLUX</p>
                   </div>
                   <div className="text-white">
                     <FormInput
@@ -108,14 +109,13 @@ export const AuctionNFTForm: React.FC<{
                       touched={touched.time}
                       value={values.time}
                     />
-                    <p>Integer days</p>
                   </div>
                 </div>
                 <button
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
                 >
-                  Auction
+                  {t("auction")}
                 </button>
               </div>
             </form>

@@ -1,12 +1,13 @@
-import { Formik } from 'formik';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
-import { ImCross } from 'react-icons/im';
-import { FormInput } from '../FormInput';
+import { Formik } from "formik";
+import React, { MouseEventHandler, useEffect, useState } from "react";
+import { ImCross } from "react-icons/im";
+import { FormInput } from "../FormInput";
 
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { userState, prefixState, broadcastState } from '../../atoms';
+import { useRecoilValue, useRecoilState } from "recoil";
+import { userState, prefixState, broadcastState } from "../../atoms";
 
-import { Sell } from '../../utils';
+import { Sell } from "../../utils";
+import { useTranslation } from "next-export-i18n";
 
 type SellFormProps = {
   handleClose: Function;
@@ -18,6 +19,7 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
   const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
+  const { t } = useTranslation();
   const [sellData, setSellData] = useState<{
     price: number;
     set: string;
@@ -48,13 +50,13 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
             onClick={handleClose as MouseEventHandler}
           />
         </button>
-        <h1 className="text-center text-white text-2xl mb-3">Sell</h1>
+        <h1 className="text-center text-white text-2xl mb-3">{t("sell")}</h1>
         <Formik
           initialValues={{ price: (10).toFixed(3) }}
           validate={({ price }) => {
             const errors: any = {};
             if (!price) {
-              errors.price = 'Required';
+              errors.price = "Required";
             }
             return errors;
           }}
@@ -91,7 +93,7 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
                 >
-                  Sell
+                  {t("sell")}
                 </button>
               </div>
             </form>

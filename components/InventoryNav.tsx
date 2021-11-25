@@ -6,12 +6,14 @@ import { GiToken } from "react-icons/gi";
 import { MdStars } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { inventoryNavState } from "../atoms";
-import { useTranslation } from "next-export-i18n";
+import { useLanguageQuery, useTranslation } from "next-export-i18n";
 
 import Link from "next/link";
+import router from "next/router";
 
 export const InventoryNav = () => {
   const { t } = useTranslation();
+  const [query] = useLanguageQuery();
   const [marketNavSelected, setMarketNavSelected] =
     useRecoilState(inventoryNavState);
 
@@ -47,12 +49,13 @@ export const InventoryNav = () => {
         </div>
       </div>
       <div className="flex items-center mr-10 text-white">
-        <Link href="/create-nft" passHref={true}>
-          <div className={`flex flex-col items-center cursor-pointer`}>
-            <GoPlus size={25} color="#fff" />
-            <p className="text-md mt-1">{t("createNFT")}</p>
-          </div>
-        </Link>
+        <div
+          onClick={() => router.push({ pathname: "/create-nft", query })}
+          className={`flex flex-col items-center cursor-pointer`}
+        >
+          <GoPlus size={25} color="#fff" />
+          <p className="text-md mt-1">{t("createNFT")}</p>
+        </div>
       </div>
     </div>
   );

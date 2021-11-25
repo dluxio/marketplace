@@ -34,7 +34,16 @@
         "runApp": "Paleiskite programą",
         "writeComment": "Rašyk komentarą...",
         "author": "Autorius",
-        "votes": "Balsai"
+        "votes": "Balsai",
+        "sell": "Parduoti",
+        "give": "Atiduoti",
+        "to": "Kam",
+        "time": "Laikas",
+        "confirmation": "Ar tu tikras tuom?",
+        "auction": "Aukcijonui",
+        "continue": "Taip",
+        "cancel": "Ne",
+        "name": "Pavadinimas"
     }
    
 }

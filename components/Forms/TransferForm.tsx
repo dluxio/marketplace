@@ -7,6 +7,7 @@ import { ImCross } from "react-icons/im";
 import { Give, ReserveTrade } from "../../utils";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { prefixState, userState, broadcastState } from "../../atoms";
+import { useTranslation } from "next-export-i18n";
 
 export const TransferNFTFormComp: React.FC<{
   set: string;
@@ -16,6 +17,7 @@ export const TransferNFTFormComp: React.FC<{
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
+  const { t } = useTranslation();
   const [transferData, setTransferData] = useState<{
     set: string;
     to: string;
@@ -58,7 +60,7 @@ export const TransferNFTFormComp: React.FC<{
           />
         </button>
         <h1 className="text-center text-white text-2xl">
-          Give {uid ? "NFT" : "FT"}
+          {t("give")} {uid ? "NFT" : "FT"}
         </h1>
         <Formik
           initialValues={{ to: "", price: (0).toFixed(3) }}

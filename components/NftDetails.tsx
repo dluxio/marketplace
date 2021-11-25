@@ -10,6 +10,7 @@ import { NFTMelt, SetPFP } from "../utils";
 import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { attributeColors } from "../constants";
+import { useTranslation } from "next-export-i18n";
 
 type NftDetailProps = {
   nft: any;
@@ -28,10 +29,10 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
   const [isTransfering, setIsTransfering] = useState(false);
   const [auction, setAuction] = useState(false);
   const [_braodcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+  const { t } = useTranslation();
 
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
-  const apiLink: string = useRecoilValue(apiLinkState);
 
   const handleMelt = () => {
     setConfirm(false);
@@ -128,19 +129,19 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
           onClick={() => setIsTransfering(true)}
           className="px-4 py-2 rounded-lg border-2 text-blue-500 bg-transparent border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700"
         >
-          Give
+          {t("give")}
         </button>
         <button
           onClick={() => setAuction(true)}
           className="px-4 py-2 rounded-lg border-2 text-yellow-500 bg-transparent border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-700"
         >
-          Auction
+          {t("auction")}
         </button>
         <button
           onClick={() => setSelling(true)}
           className="px-4 py-2 rounded-lg border-2 text-red-500 bg-transparent border-red-500 focus:outline-none focus:ring-2 focus:ring-red-700"
         >
-          Sell
+          {t("sell")}
         </button>
         <button
           onClick={() => setConfirm(true)}

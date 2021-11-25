@@ -33,7 +33,16 @@
         "comment": "Comment",
         "writeComment": "Write a comment...",
         "author": "Author",
-        "votes": "Votes"
+        "votes": "Votes",
+        "sell": "Sell",
+        "give": "Give",
+        "to": "To",
+        "time": "Time",
+        "confirmation": "Are you sure?",
+        "auction": "Auction",
+        "continue": "Continue",
+        "cancel": "Cancel",
+        "name": "Name"
     }
 }
     

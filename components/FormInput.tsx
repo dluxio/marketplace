@@ -1,4 +1,5 @@
-import React, { ChangeEventHandler } from 'react';
+import { useTranslation } from "next-export-i18n";
+import React, { ChangeEventHandler } from "react";
 
 type FormInputProps = {
   handleChange: ChangeEventHandler;
@@ -17,13 +18,15 @@ export const FormInput = ({
   errors,
   touched,
   name,
-  type = 'text',
+  type = "text",
 }: FormInputProps) => {
-  const formattedName = name.replace('_', ' ');
+  const formattedName = name.replace("_", " ");
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col w-full">
       <label className="text-left mb-1 text-md" htmlFor="start">
-        {formattedName.charAt(0).toUpperCase() + formattedName.slice(1)}
+        {t(formattedName).charAt(0).toUpperCase() + t(formattedName).slice(1)}
       </label>
       <input
         className="px-3 py-1 rounded-lg border bg-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"

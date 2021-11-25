@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Formik } from 'formik';
-import { FormInput } from '../components/FormInput';
+import { Formik } from "formik";
+import { FormInput } from "../components/FormInput";
 
-import { useRecoilValue } from 'recoil';
-import { userState, prefixState } from '../atoms';
+import { useRecoilValue } from "recoil";
+import { userState, prefixState } from "../atoms";
 
-import { NFTCreate } from '../utils';
+import { NFTCreate } from "../utils";
+import { useTranslation } from "next-export-i18n";
 
 const CreateNFT = () => {
   const user: any = useRecoilValue(userState);
@@ -23,6 +24,7 @@ const CreateNFT = () => {
     max_fee: number;
     bond: number;
   }>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (form) {
@@ -36,17 +38,17 @@ const CreateNFT = () => {
       <div className="flex flex-grow flex-1 justify-center items-center mt-20">
         {user ? (
           <div className="border border-gray-800 bg-gray-600  text-white w-full sm:w-1/2 text-center rounded-xl">
-            <h1 className="text-3xl py-4">Create an NFT</h1>
+            <h1 className="text-3xl py-4">{t("createNFT")}</h1>
             <Formik
               initialValues={{
-                name: '',
+                name: "",
                 type: 1 || 2,
-                script: '',
-                permlink: '',
-                start: '',
-                end: '',
-                royalty: '',
-                handling: 'svg',
+                script: "",
+                permlink: "",
+                start: "",
+                end: "",
+                royalty: "",
+                handling: "svg",
                 max_fee: 1,
                 bond: 1,
               }}
@@ -54,17 +56,17 @@ const CreateNFT = () => {
                 const errors: any = {};
 
                 if (!name) {
-                  errors.name = 'Required';
+                  errors.name = "Required";
                 } else if (!script) {
-                  errors.script = 'Required';
+                  errors.script = "Required";
                 } else if (!permlink) {
-                  errors.permlink = 'Required';
+                  errors.permlink = "Required";
                 } else if (!start) {
-                  errors.start = 'Required';
+                  errors.start = "Required";
                 } else if (!end) {
-                  errors.end = 'Required';
+                  errors.end = "Required";
                 } else if (!royalty) {
-                  errors.royalty = 'Required';
+                  errors.royalty = "Required";
                 }
 
                 if (errors) return errors;
