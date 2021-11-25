@@ -31,7 +31,9 @@
         "recent": "Recent posts",
         "comments": "Comments",
         "comment": "Comment",
-        "writeComment": "Write a comment..."
+        "writeComment": "Write a comment...",
+        "author": "Author",
+        "votes": "Votes"
     }
 }
     

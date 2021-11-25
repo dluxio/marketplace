@@ -32,7 +32,9 @@
         "comments": "Komentarai",
         "comment": "Komentuok",
         "runApp": "Paleiskite programą",
-        "writeComment": "Rašyk komentarą..."
+        "writeComment": "Rašyk komentarą...",
+        "author": "Autorius",
+        "votes": "Balsai"
     }
    
 }

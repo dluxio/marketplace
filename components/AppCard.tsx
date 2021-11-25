@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import hive from "@hiveio/hive-js";
 import router from "next/router";
+import { useTranslation } from "next-export-i18n";
 
 type AppCardProps = {
   app: any;
@@ -9,6 +10,7 @@ type AppCardProps = {
 export const AppCard = ({ app }: AppCardProps) => {
   const [image, setImage] = useState<any>("");
   const [contentResult, setContentResult] = useState<any>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchImage = (json: any) => {
@@ -60,9 +62,11 @@ export const AppCard = ({ app }: AppCardProps) => {
             className="hover:text-gray-300 cursor-pointer"
             onClick={() => router.push(`/@${app.author}`)}
           >
-            Author - {app.author}
+            {t("author")} - {app.author}
           </h1>
-          <h1>Votes - {app.votes}</h1>
+          <h1>
+            {t("votes")} - {app.votes}
+          </h1>
         </div>
         <div className="flex justify-center">
           <button
