@@ -28,7 +28,10 @@
         "trades": "Trades",
         "respond": "Respond",
         "manage": "Manage",
-        "recent": "Recent posts"
+        "recent": "Recent posts",
+        "comments": "Comments",
+        "comment": "Comment",
+        "writeComment": "Write a comment..."
     }
 }
     

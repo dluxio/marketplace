@@ -8,6 +8,7 @@ import { Discussion } from "@hiveio/dhive";
 import { RiHeartFill } from "react-icons/ri";
 import { MdComment } from "react-icons/md";
 import { useRouter } from "next/router";
+import { useLanguageQuery, useTranslation } from "next-export-i18n";
 dayjs.extend(relativeTime);
 dayjs().format();
 
@@ -18,6 +19,8 @@ export const NewsPost = ({ post }: { post: Discussion }) => {
   const [contentDataObject, setContentData] = useState<any>(null);
   const [speak, set3speak] = useState(false);
   const router = useRouter();
+  const { t } = useTranslation();
+  const [query] = useLanguageQuery();
 
   useEffect(() => {
     hive.api.getContent(post.author, post.permlink, (err: any, result: any) => {
@@ -104,12 +107,15 @@ export const NewsPost = ({ post }: { post: Discussion }) => {
           </div>
           <div
             onClick={() =>
-              router.push(`/@${contentResult.author}/${contentResult.permlink}`)
+              router.push({
+                pathname: `/@${contentResult.author}/${contentResult.permlink}`,
+                query,
+              })
             }
             className="flex items-center gap-1 cursor-pointer hover:text-gray-300"
           >
             <MdComment />
-            <h1>Comment</h1>
+            <h1>{t("comment")}</h1>
           </div>
         </div>
       </div>

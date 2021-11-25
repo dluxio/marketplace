@@ -11,6 +11,7 @@ import ReactJWPlayer from "react-jw-player";
 
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
+import { useTranslation } from "next-export-i18n";
 
 const AppDetails = () => {
   var client = new Client([
@@ -37,6 +38,7 @@ const AppDetails = () => {
   const router = useRouter();
   const user: any = useRecoilValue(userState);
   const { permlink, author } = router.query;
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (showApp) {
@@ -199,7 +201,7 @@ const AppDetails = () => {
               className="mx-auto px-4 py-2 rounded-lg border-2 text-white bg-blue-500 border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-700"
               onClick={() => setShowApp(true)}
             >
-              Run app
+              {t("runApp")}
             </button>
           )}
           <div className="p-5">
@@ -282,13 +284,13 @@ const AppDetails = () => {
             </div>
             <div className="my-2">
               <h1 className="text-white border-b-2 border-white pb-1 text-2xl">
-                Comments
+                {t("comments")}
               </h1>
               <div className="relative flex">
                 <input
                   type="text"
                   className="w-full outline-none p-2 rounded-xl my-2"
-                  placeholder="Write a comment"
+                  placeholder={t("writeComment")}
                   onChange={(e) => setCommentBody(e.target.value)}
                 />
                 <IoSend

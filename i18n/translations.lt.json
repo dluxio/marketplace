@@ -28,7 +28,11 @@
         "trades": "Sandoriai",
         "respond": "Atsiliepti",
         "manage": "Tvarkyti",
-        "recent": "Naujausi postai"
+        "recent": "Naujausi postai",
+        "comments": "Komentarai",
+        "comment": "Komentuok",
+        "runApp": "Paleiskite programą",
+        "writeComment": "Rašyk komentarą..."
     }
    
 }
