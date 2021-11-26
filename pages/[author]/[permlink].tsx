@@ -7,9 +7,9 @@ import { comment, vote } from "../../utils";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { broadcastState, ipfsLinkState, userState } from "../../atoms";
 import { CommentCard } from "../../components/CommentCard";
+import ReactMarkdown from "react-markdown";
 import ReactJWPlayer from "react-jw-player";
 import SimpleImageSlider from "react-simple-image-slider";
-import ReactMarkdown from "react-markdown";
 
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";

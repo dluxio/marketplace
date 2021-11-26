@@ -2,10 +2,10 @@ import router from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaReply } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
-import ReactMarkdown from "react-markdown";
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 import { replyComment } from "../utils";
+import hive from "@hiveio/hive-js";
 
 export const CommentCard = ({ comment }: { comment: any }) => {
   const user: any = useRecoilValue(userState);
@@ -29,6 +29,21 @@ export const CommentCard = ({ comment }: { comment: any }) => {
       permlink: `re-previous-${comment.author}-${comment.permlink}`,
     });
   };
+
+  useEffect(() => {
+    console.log(comment);
+
+    hive.api.getDiscussionsByComments(
+      {
+        start_author: comment.author,
+        start_permlink: comment.permlink,
+        limit: 10,
+      },
+      function (err: any, result: any) {
+        console.log(result);
+      }
+    );
+  });
 
   return (
     <div className="text-white bg-gray-600 p-4 rounded-xl border-2 border-gray-800">
