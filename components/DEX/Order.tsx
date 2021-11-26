@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../atoms";
-import { dexSell } from "../../utils";
+import { dlux_ccState, prefixState, userState } from "../../atoms";
+import { dexBuy, dexSell } from "../../utils";
 
 export const Order = ({ type, coin }: { type: string; coin: string }) => {
   const [orderType, setOrderType] = useState("limit");
   const [quantity, setQuantity] = useState(0);
   const [total, setTotal] = useState(0);
   const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
+  const cc: string = useRecoilValue(dlux_ccState);
 
   const handlePlaceOrder = () => {
     console.log({
@@ -18,11 +20,36 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
     });
 
     if (type === "sell" && orderType === "market") {
-      dexSell({ dlux: quantity }, user.name);
+      dexSell({ dlux: quantity }, user.name, prefix);
     } else if (type === "sell" && orderType === "limit") {
       coin === "HIVE"
-        ? dexSell({ dlux: quantity, hive: total }, user.name)
-        : dexSell({ dlux: quantity, hbd: total }, user.name);
+        ? dexSell({ dlux: quantity, hive: total }, user.name, prefix)
+        : dexSell({ dlux: quantity, hbd: total }, user.name, prefix);
+    } else if (type === "buy" && orderType === "market") {
+      dexBuy(
+        {
+          coin,
+          amount: quantity,
+          buyData: {
+            hours: 720,
+          },
+        },
+        user.name,
+        cc
+      );
+    } else if (type === "buy" && orderType === "limit") {
+      dexBuy(
+        {
+          coin,
+          amount: quantity,
+          buyData: {
+            rate: parseFloat((quantity / total).toFixed(6)),
+            hours: 720,
+          },
+        },
+        user.name,
+        cc
+      );
     }
   };
 

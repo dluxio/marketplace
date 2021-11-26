@@ -49,3 +49,8 @@ export const ipfsLinkState = atom({
   key: 'ipfsLinkState',
   default: 'https://anywhere.ipfs.dlux.io/'
 })
+
+export const dlux_ccState = atom({
+  key: 'dlux_ccState',
+  default: ''
+})

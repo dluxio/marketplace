@@ -8,7 +8,13 @@ import { CoinCard } from ".";
 import Link from "next/link";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { marketNavState, coinState, prefixState, apiLinkState } from "../atoms";
+import {
+  marketNavState,
+  coinState,
+  prefixState,
+  apiLinkState,
+  dlux_ccState,
+} from "../atoms";
 import { NewsScreen } from "./NewsScreen";
 import { AppScreen } from "./AppScreen";
 import { useTranslation } from "next-export-i18n";
@@ -17,6 +23,7 @@ export const Market = () => {
   const [nfts, setNfts] = useState([]);
   const [auction, setAuction] = useState([]);
   const [_prefix, setPrefix] = useRecoilState(prefixState);
+  const [_cc, setCC] = useRecoilState(dlux_ccState);
   const { t } = useTranslation();
 
   const selectedMarket = useRecoilValue(marketNavState);
@@ -65,8 +72,9 @@ export const Market = () => {
     };
 
     const fetchPrefix = () => {
-      axios.get(`${apiLink}api/protocol`).then((response) => {
-        setPrefix(response.data.prefix);
+      axios.get(`${apiLink}api/protocol`).then(({ data }) => {
+        setPrefix(data.prefix);
+        setCC(data.multisig);
       });
     };
 

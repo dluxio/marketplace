@@ -485,11 +485,26 @@ export const replyComment = async (data: {author: string; body: string; parent_a
   return await handleBroadcastRequest(operations, data.author);
 }
 
-export const dexSell = async (data: {dlux: number; hive?: number; hbd?: number }, username: string) => {
+export const dexSell = async (data: {dlux: number; hive?: number; hbd?: number }, username: string, prefix: string) => {
   const operations = [
-    'dlux_dex_sell',
+    `${prefix}dex_sell`,
     {...data, hours: 720}
   ]
 
   return await handleBroadcastRequest(operations, username);
+}
+
+export const dexBuy = async (data: {coin: string; amount: number; buyData: {rate?: number; hours: number}}, username: string, to: string) => {
+  const operations = [
+    'transfer',
+    {
+      from: username,
+      to, //get from /api/protocol
+      amount: `${parseFloat((data.amount/1000).toString()).toFixed(3)} ${data.coin}`,
+      memo: JSON.stringify(data.buyData),
+    },
+  ];
+
+  return await handleBroadcastRequest(operations, username);
+
 }
