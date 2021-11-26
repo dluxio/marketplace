@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const Order = ({ type }: { type: string }) => {
+export const Order = ({ type, coin }: { type: string; coin: string }) => {
   const [orderType, setOrderType] = useState("limit");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
@@ -49,7 +49,7 @@ export const Order = ({ type }: { type: string }) => {
         <div className="flex items-center justify-between">
           <div className="flex flex-col mr-5">
             <h1>Price</h1>
-            <h1 className="font-light text-sm">HIVE/DLUX</h1>
+            <h1 className="font-light text-sm">{coin}/DLUX</h1>
           </div>
           <input
             className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
@@ -73,7 +73,7 @@ export const Order = ({ type }: { type: string }) => {
         <div className="flex items-center justify-between">
           <div className="flex flex-col mr-5">
             <h1>Total</h1>
-            <h1 className="font-light text-sm">HIVE</h1>
+            <h1 className="font-light text-sm">{coin}</h1>
           </div>
           <input
             className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
