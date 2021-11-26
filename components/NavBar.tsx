@@ -156,12 +156,18 @@ export const NavBar = () => {
           <FcGlobe
             size={30}
             className="cursor-pointer"
-            onClick={() => setLanguageSelect(!languageSelect)}
+            onClick={() => {
+              setLanguageSelect(!languageSelect);
+              profDropdown === true && setProfDropdown(false);
+            }}
           />
           <div className="flex items-center gap-5">
             <h1
               className="navLink w-full"
-              onClick={() => setProfDropdown((prevState) => !prevState)}
+              onClick={() => {
+                setProfDropdown(!profDropdown);
+                languageSelect === true && setLanguageSelect(false);
+              }}
             >
               {user.name}
             </h1>
@@ -215,13 +221,24 @@ export const NavBar = () => {
           } px-2 pt-2 rounded-xl flex flex-col z-40`}
         >
           <LanguageSwitcher lang="en">
-            <a className="btn">English</a>
+            <a className={`btn ${query.lang === "en" ? "bg-gray-400" : ""}`}>
+              English
+            </a>
           </LanguageSwitcher>
           <LanguageSwitcher lang="lt">
-            <a className="btn">Lietuvių</a>
+            <a className={`btn ${query.lang === "lt" ? "bg-gray-400" : ""}`}>
+              Lietuvių
+            </a>
           </LanguageSwitcher>
           <LanguageSwitcher lang="pt">
-            <a className="btn">Português</a>
+            <a className={`btn ${query.lang === "pr" ? "bg-gray-400" : ""}`}>
+              Português
+            </a>
+          </LanguageSwitcher>
+          <LanguageSwitcher lang="fr">
+            <a className={`btn ${query.lang === "fr" ? "bg-gray-400" : ""}`}>
+              Français
+            </a>
           </LanguageSwitcher>
         </div>
       )}
