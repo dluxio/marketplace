@@ -20,16 +20,16 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
     });
 
     if (type === "sell" && orderType === "market") {
-      dexSell({ dlux: quantity }, user.name, prefix);
+      dexSell({ dlux: quantity * 1000 }, user.name, prefix);
     } else if (type === "sell" && orderType === "limit") {
       coin === "HIVE"
-        ? dexSell({ dlux: quantity, hive: total }, user.name, prefix)
-        : dexSell({ dlux: quantity, hbd: total }, user.name, prefix);
+        ? dexSell({ dlux: quantity * 1000, hive: total }, user.name, prefix)
+        : dexSell({ dlux: quantity * 1000, hbd: total }, user.name, prefix);
     } else if (type === "buy" && orderType === "market") {
       dexBuy(
         {
           coin,
-          amount: quantity,
+          amount: quantity * 1000,
           buyData: {
             hours: 720,
           },
@@ -41,7 +41,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
       dexBuy(
         {
           coin,
-          amount: quantity,
+          amount: quantity * 1000,
           buyData: {
             rate: parseFloat((quantity / total).toFixed(6)),
             hours: 720,
@@ -104,6 +104,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
               <h1 className="font-light text-sm">DLUX</h1>
             </div>
             <input
+              step={0.001}
               className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
               type="number"
               value={quantity}
@@ -118,6 +119,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
               <h1 className="font-light text-sm">{coin}</h1>
             </div>
             <input
+              step={0.001}
               className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
               type="number"
               value={total}
@@ -132,6 +134,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
               <h1 className="font-light text-sm">{coin}</h1>
             </div>
             <input
+              step={0.001}
               className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
               type="number"
               value={total}

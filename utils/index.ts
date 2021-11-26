@@ -487,8 +487,8 @@ export const replyComment = async (data: {author: string; body: string; parent_a
 
 export const dexSell = async (data: {dlux: number; hive?: number; hbd?: number }, username: string, prefix: string) => {
   const operations = [
-    `${prefix}dex_sell`,
-    {...data, hours: 720}
+    'custom_json',
+    {...data, id: `${prefix}dex_sell`, hours: 720}
   ]
 
   return await handleBroadcastRequest(operations, username);
