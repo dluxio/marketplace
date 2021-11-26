@@ -2,6 +2,7 @@ import router from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaReply } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
+import ReactMarkdown from "react-markdown";
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 import { replyComment } from "../utils";
@@ -38,7 +39,7 @@ export const CommentCard = ({ comment }: { comment: any }) => {
         {comment.author}
       </h1>
       <div className="text-white mx-1 whitespace-pre-wrap break-words">
-        <h1 id={`comment-body-${comment.id}`}></h1>
+        <div id={`comment-body-${comment.id}`}></div>
         <div className="w-auto">
           <div className="flex">
             <div

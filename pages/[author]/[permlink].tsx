@@ -9,6 +9,7 @@ import { broadcastState, ipfsLinkState, userState } from "../../atoms";
 import { CommentCard } from "../../components/CommentCard";
 import ReactJWPlayer from "react-jw-player";
 import SimpleImageSlider from "react-simple-image-slider";
+import ReactMarkdown from "react-markdown";
 
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
@@ -111,7 +112,6 @@ const AppDetails = () => {
       hive.api.getContent(username, permlink, (err: any, result: any) => {
         if (err) console.log(err);
         setContentResult(result);
-        console.log(result);
         setContentData(JSON.parse(result.json_metadata));
       });
 
@@ -203,7 +203,7 @@ const AppDetails = () => {
           } fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-75 z-50`}
         >
           <div className="flex justify-center items-center w-full h-full">
-            <div className="relative bg-gray-500 border-2 border-gray-800 rounded-xl p-5">
+            <div className="w-2/3 h-auto relative bg-gray-500 border-2 border-gray-800 rounded-xl p-5">
               <button className="m-2 absolute top-0 right-0">
                 <ImCross
                   size={15}
@@ -215,7 +215,7 @@ const AppDetails = () => {
 
               {images.length !== 0 && (
                 <div className="p-2">
-                  <div className="border-2 border-gray-800 rounded-xl">
+                  <div className="rounded-xl flex justify-center">
                     <SimpleImageSlider
                       height={500}
                       width={1000}
@@ -229,6 +229,9 @@ const AppDetails = () => {
               <h1 className="my-5 text-center text-white font-semibold text-xl">
                 {contentResult.root_title}
               </h1>
+              <ReactMarkdown className="mb-2 max-h-52 overflow-y-scroll text-white">
+                {contentResult.body}
+              </ReactMarkdown>
             </div>
           </div>
         </div>
