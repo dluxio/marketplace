@@ -1,12 +1,12 @@
 {
     "i18n": {
-        "home": "Inicio",
+        "home": "Início",
         "inventory": "Meus itens",
         "auctionHouse": "Leilões",
         "listings": "Listagens",
         "login": "Login",
         "settings": "Configurações",
-        "pendingTrades": "Negociações pendentes",
+        "pendingTrades": "Transações pendentes",
         "logout": "Sair",
         "APIlink": "API link",
         "select": "Selecionar...",
@@ -23,7 +23,7 @@
         "bids": "Lances",
         "bid": "Lance",
         "buy": "Comprar",
-        "takeBack": "Cancelar negociação",
+        "takeBack": "Cancelar transação",
         "bidder": "Licitante",
         "trades": "Negociações",
         "respond": "Responder",
@@ -34,7 +34,7 @@
         "time": "Tempo",
         "confirmation": "Tem certeza?",
         "auction": "Leiloar",
-        "continue": "Prosseguir",
+        "continue": "Continuar",
         "cancel": "Cancelar",
         "name": "Nome"
     }
