@@ -1,19 +1,29 @@
 import React, { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../atoms";
+import { dexSell } from "../../utils";
 
 export const Order = ({ type, coin }: { type: string; coin: string }) => {
   const [orderType, setOrderType] = useState("limit");
-  const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [total, setTotal] = useState(0);
+  const user: any = useRecoilValue(userState);
 
   const handlePlaceOrder = () => {
     console.log({
       orderType,
       whatToDo: type,
-      price,
       quantity,
       total,
     });
+
+    if (type === "sell" && orderType === "market") {
+      dexSell({ dlux: quantity }, user.name);
+    } else if (type === "sell" && orderType === "limit") {
+      coin === "HIVE"
+        ? dexSell({ dlux: quantity, hive: total }, user.name)
+        : dexSell({ dlux: quantity, hbd: total }, user.name);
+    }
   };
 
   return (
@@ -46,42 +56,62 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
         </div>
       </div>
       <div className="flex text-white gap-3 flex-col mr-3 mt-5">
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col mr-5">
-            <h1>Price</h1>
-            <h1 className="font-light text-sm">{coin}/DLUX</h1>
+        {orderType === "limit" && (
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col mr-5">
+              <h1>Quantity</h1>
+              <h1 className="font-light text-sm">DLUX</h1>
+            </div>
+            <input
+              className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(+e.target.value)}
+            />
           </div>
-          <input
-            className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(+e.target.value)}
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col mr-5">
-            <h1>Quantity</h1>
-            <h1 className="font-light text-sm">DLUX</h1>
+        )}
+        {orderType === "market" && type === "sell" && (
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col mr-5">
+              <h1>Quantity</h1>
+              <h1 className="font-light text-sm">DLUX</h1>
+            </div>
+            <input
+              className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(+e.target.value)}
+            />
           </div>
-          <input
-            className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(+e.target.value)}
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col mr-5">
-            <h1>Total</h1>
-            <h1 className="font-light text-sm">{coin}</h1>
+        )}
+        {orderType === "limit" && type === "sell" && (
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col mr-5">
+              <h1>Total</h1>
+              <h1 className="font-light text-sm">{coin}</h1>
+            </div>
+            <input
+              className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
+              type="number"
+              value={total}
+              onChange={(e) => setTotal(+e.target.value)}
+            />
           </div>
-          <input
-            className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
-            type="number"
-            value={total}
-            onChange={(e) => setTotal(+e.target.value)}
-          />
-        </div>
+        )}
+        {type === "buy" && (
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col mr-5">
+              <h1>Total</h1>
+              <h1 className="font-light text-sm">{coin}</h1>
+            </div>
+            <input
+              className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
+              type="number"
+              value={total}
+              onChange={(e) => setTotal(+e.target.value)}
+            />
+          </div>
+        )}
       </div>
       <div className="flex justify-end">
         <button

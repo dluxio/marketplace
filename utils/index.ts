@@ -484,3 +484,12 @@ export const replyComment = async (data: {author: string; body: string; parent_a
 
   return await handleBroadcastRequest(operations, data.author);
 }
+
+export const dexSell = async (data: {dlux: number; hive?: number; hbd?: number }, username: string) => {
+  const operations = [
+    'dlux_dex_sell',
+    {...data, hours: 720}
+  ]
+
+  return await handleBroadcastRequest(operations, username);
+}
