@@ -1,56 +1,56 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export const userState = atom({
-  key: 'userState',
+  key: "userState",
   default: null,
 });
 
 export const inventoryNavState = atom({
-  key: 'inventoryNavState',
-  default: 'nft',
+  key: "inventoryNavState",
+  default: "nft",
 });
 
 export const marketNavState = atom({
-  key: 'marketNavState',
-  default: 'exchange',
+  key: "marketNavState",
+  default: "exchange",
 });
 
 export const coinState = atom({
-  key: 'coinState',
+  key: "coinState",
   default: [],
 });
 
 export const prefixState = atom({
-  key: 'prefixState',
-  default: 'dlux_',
+  key: "prefixState",
+  default: "dlux_",
 });
 
 export const broadcastState = atom({
-  key: 'broadcastState',
+  key: "broadcastState",
   default: [],
 });
 
 export const inventoryNFTState = atom({
-  key: 'InventoryNFTState',
+  key: "InventoryNFTState",
   default: [],
 });
 
 export const refreshState = atom({
-  key: 'refreshState',
-  default: '',
+  key: "refreshState",
+  default: "",
 });
 
 export const apiLinkState = atom({
-  key: 'apiLinkState',
-  default: 'https://token.dlux.io/'
-})
+  key: "apiLinkState",
+  default: "https://token.dlux.io/",
+});
 
 export const ipfsLinkState = atom({
-  key: 'ipfsLinkState',
-  default: 'https://anywhere.ipfs.dlux.io/'
-})
+  key: "ipfsLinkState",
+  default: "https://anywhere.ipfs.dlux.io/",
+});
 
 export const dlux_ccState = atom({
-  key: 'dlux_ccState',
-  default: ''
-})
+  key: "dlux_ccState",
+  default: "",
+});

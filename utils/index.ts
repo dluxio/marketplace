@@ -1,11 +1,11 @@
-import hive from '@hiveio/hive-js';
+import hive from "@hiveio/hive-js";
 
 const _Rixits =
-  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=';
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";
 
 export const toNumber = (Base64: string) => {
   var result = 0;
-  var base64 = Base64.split('');
+  var base64 = Base64.split("");
   for (var e = 0; e < base64.length; e++) {
     result = result * 64 + _Rixits.indexOf(base64[e]);
   }
@@ -18,11 +18,11 @@ export const toBase64 = (number: number) => {
     number === null ||
     number === Number.POSITIVE_INFINITY
   )
-    throw 'The input is not valid';
+    throw "The input is not valid";
   if (number < 0) throw "Can't represent negative numbers now";
   let rixit;
   let residual = Math.floor(number);
-  let result = '';
+  let result = "";
   while (true) {
     rixit = residual % 64;
     result = _Rixits.charAt(rixit) + result;
@@ -43,19 +43,19 @@ export const formatData = (data: any) => {
 
 export const getColor = (id: string) => {
   switch (id) {
-    case 'hive':
-      return ['rgba(255, 99, 132)', 'rgba(255, 99, 132, 0.5)'];
-    case 'ethereum':
-      return ['rgba(211, 211, 211)', 'rgba(211, 211, 211, 0.5)'];
+    case "hive":
+      return ["rgba(255, 99, 132)", "rgba(255, 99, 132, 0.5)"];
+    case "ethereum":
+      return ["rgba(211, 211, 211)", "rgba(211, 211, 211, 0.5)"];
     default:
-      return ['rgba(123, 239, 178)', 'rgba(123, 239, 178, 0.5)'];
+      return ["rgba(123, 239, 178)", "rgba(123, 239, 178, 0.5)"];
   }
 };
 
 const handleBroadcastRequest = async (
   operations: any,
   username: string,
-  post: string = 'active'
+  post: string = "active"
 ) => {
   return new Promise((res, rej) => {
     // @ts-ignore
@@ -85,11 +85,11 @@ type AuctionData = {
 export const Auction = async (
   username: string,
   nftData: AuctionData,
-  prefix: string = 'dlux_'
+  prefix: string = "dlux_"
 ) => {
-  const id = `${prefix}${nftData.uid ? 'nft_auction' : 'ft_auction'}`;
+  const id = `${prefix}${nftData.uid ? "nft_auction" : "ft_auction"}`;
   const operations = [
-    'custom_json',
+    "custom_json",
     {
       required_auths: [username],
       required_posting_auths: 0,
@@ -104,11 +104,11 @@ export const Auction = async (
 export const FTOpen = async (
   username: string,
   set: string,
-  prefix: string = 'dlux_'
+  prefix: string = "dlux_"
 ) => {
   const id = `${prefix}nft_mint`;
   const operations = [
-    'custom_json',
+    "custom_json",
     {
       required_auths: [username],
       required_posting_auths: 0,
@@ -130,14 +130,14 @@ type AirdropData = {
 export const FTAirdrop = async (
   username: string,
   ftData: AirdropData,
-  prefix: string = 'dlux_'
+  prefix: string = "dlux_"
 ) => {
   const id = `${prefix}ft_airdrop`;
   hive.api.getAccounts([...ftData.to], async (err: any, result: any) => {
     if (err) throw new Error(err);
     if (result.length === ftData.to.length) {
       const operations = [
-        'custom_json',
+        "custom_json",
         {
           required_auths: [username],
           required_posting_auths: [],
@@ -162,14 +162,14 @@ type GiveData = {
 export const Give = async (
   username: string,
   giveData: GiveData,
-  prefix: string = 'dlux_'
+  prefix: string = "dlux_"
 ) => {
-  const id = `${prefix}${giveData.uid ? 'nft_transfer' : 'ft_transfer'}`;
+  const id = `${prefix}${giveData.uid ? "nft_transfer" : "ft_transfer"}`;
   await hive.api.getAccounts([giveData.to], async (err: any, result: any) => {
     if (err) throw new Error(err);
     if (result !== []) {
       const operations = [
-        'custom_json',
+        "custom_json",
         {
           required_auths: [username],
           required_posting_auths: [],
@@ -180,7 +180,7 @@ export const Give = async (
 
       return await handleBroadcastRequest(operations, username);
     } else {
-      console.log('No user to send to');
+      console.log("No user to send to");
     }
   });
 };
@@ -194,11 +194,11 @@ type SellData = {
 export const Sell = async (
   username: string,
   sellData: SellData,
-  prefix: string = 'dlux_'
+  prefix: string = "dlux_"
 ) => {
-  const id = `${prefix}${sellData.uid ? 'nft_sell' : 'ft_sell'}`;
+  const id = `${prefix}${sellData.uid ? "nft_sell" : "ft_sell"}`;
   const operations = [
-    'custom_json',
+    "custom_json",
     {
       required_auths: [username],
       required_posting_auths: [],
@@ -218,11 +218,11 @@ type MeltData = {
 export const NFTMelt = async (
   username: string,
   nftData: MeltData,
-  prefix: string = 'dlux_'
+  prefix: string = "dlux_"
 ) => {
   const id = `${prefix}nft_melt`;
   const operations = [
-    'custom_json',
+    "custom_json",
     {
       required_auths: [username],
       required_posting_auths: [],
@@ -242,11 +242,11 @@ type BuyData = {
 export const NFTBuy = async (
   username: string,
   nftData: BuyData,
-  prefix: string = 'dlux_'
+  prefix: string = "dlux_"
 ) => {
-  const id = `${prefix}${nftData.uid ? 'nft_buy' : 'ft_buy'}`;
+  const id = `${prefix}${nftData.uid ? "nft_buy" : "ft_buy"}`;
   const operations = [
-    'custom_json',
+    "custom_json",
     {
       required_auths: [username],
       required_posting_auths: 0,
@@ -267,12 +267,12 @@ type BidData = {
 export const NFTBid = async (
   username: string,
   nftData: BidData,
-  prefix: string = 'dlux_',
-  kind: 'ft' | 'nft'
+  prefix: string = "dlux_",
+  kind: "ft" | "nft"
 ) => {
   const id = `${prefix}${kind}_bid`;
   const operations = [
-    'custom_json',
+    "custom_json",
     {
       required_auths: [username],
       required_posting_auths: [],
@@ -304,7 +304,7 @@ export const NFTCreate = async (
 ) => {
   const operations = [
     [
-      'custom_json',
+      "custom_json",
       {
         required_auths: [username],
         required_posting_auths: 0,
@@ -328,7 +328,7 @@ export const SetPFP = async (
   pfpData: PFPData
 ) => {
   const operations = [
-    'custom_json',
+    "custom_json",
     {
       required_auths: 0,
       required_posting_auths: [username],
@@ -337,7 +337,7 @@ export const SetPFP = async (
     },
   ];
 
-  return await handleBroadcastRequest(operations, username, 'posting');
+  return await handleBroadcastRequest(operations, username, "posting");
 };
 
 type ReserveData = {
@@ -361,7 +361,7 @@ export const ReserveTrade = async (
           ? `${prefix}nft_reserve_transfer`
           : `${prefix}ft_escrow`;
         const operations = [
-          'custom_json',
+          "custom_json",
           {
             required_auths: [username],
             required_posting_auths: [],
@@ -380,17 +380,17 @@ export const ReserveRespond = async (
   username: string,
   prefix: string,
   reserveData: { set: string; uid?: string; price: number; kind: string },
-  response: 'cancel' | 'complete'
+  response: "cancel" | "complete"
 ) => {
   const id =
-    reserveData.kind === 'fts'
+    reserveData.kind === "fts"
       ? `${prefix}ft_escrow_${response}`
-      : response === 'complete'
+      : response === "complete"
       ? `${prefix}nft_reserve_${response}`
       : `${prefix}nft_transfer_${response}`;
 
   const operations = [
-    'custom_json',
+    "custom_json",
     {
       required_auths: [username],
       required_posting_auths: 0,
@@ -414,7 +414,7 @@ export const handleSellCancel = async (
   const id = `${prefix}${nft.kind}_sell_cancel`;
 
   const operations = [
-    'custom_json',
+    "custom_json",
     {
       required_auths: [username],
       required_posting_auths: 0,
@@ -449,62 +449,103 @@ export const redoAccountPicture = (nft: { script: string; uid: string }) => {
     });
 };
 
-export const vote = async (voter: string, author: string, permlink: string, weight: number) => {
+export const vote = async (
+  voter: string,
+  author: string,
+  permlink: string,
+  weight: number
+) => {
   const operations = [
     "vote",
     {
       voter,
       author,
       permlink,
-      weight
-    }
-  ]
+      weight,
+    },
+  ];
 
   return await handleBroadcastRequest(operations, voter);
-}
+};
 
-export const comment = async (data: {author: string; title: string; body: string; parent_author: string; parent_permlink: string; permlink: string; json_metadata: string}) => {
+export const comment = async (data: {
+  author: string;
+  title: string;
+  body: string;
+  parent_author: string;
+  parent_permlink: string;
+  permlink: string;
+  json_metadata: string;
+}) => {
   const operations = [
-    'comment',
+    "comment",
     {
-      ...data
-    }
-  ]
+      ...data,
+    },
+  ];
 
   return await handleBroadcastRequest(operations, data.author);
-}
+};
 
-export const replyComment = async (data: {author: string; body: string; parent_author: string; parent_permlink: string; permlink: string;}) => {
+export const replyComment = async (data: {
+  author: string;
+  body: string;
+  parent_author: string;
+  parent_permlink: string;
+  permlink: string;
+}) => {
   const operations = [
-    'comment',
+    "comment",
     {
-      ...data
-    }
-  ]
+      ...data,
+    },
+  ];
 
   return await handleBroadcastRequest(operations, data.author);
-}
+};
 
-export const dexSell = async (data: {dlux: number; hive?: number; hbd?: number }, username: string, prefix: string) => {
+export const dexSell = async (
+  data: { dlux: number; hive?: number; hbd?: number },
+  username: string,
+  prefix: string
+) => {
   const operations = [
-    'custom_json',
-    {...data, id: `${prefix}dex_sell`, hours: 720}
-  ]
-
-  return await handleBroadcastRequest(operations, username);
-}
-
-export const dexBuy = async (data: {coin: string; amount: number; buyData: {rate?: number; hours: number}}, username: string, to: string) => {
-  const operations = [
-    'transfer',
+    "custom_json",
     {
-      from: username,
-      to, //get from /api/protocol
-      amount: `${parseFloat((data.amount/1000).toString()).toFixed(3)} ${data.coin}`,
-      memo: JSON.stringify(data.buyData),
+      required_auths: [username],
+      id: `${prefix}dex_sell`,
+      required_posting_auths: 0,
+      json: { ...data, hours: 720 },
     },
   ];
 
   return await handleBroadcastRequest(operations, username);
+};
 
-}
+export const dexBuy = async (
+  data: {
+    coin: string;
+    amount: number;
+    buyData: { rate?: number; hours: number };
+  },
+  username: string,
+  to: string
+) => {
+  const operations = [
+    "transfer",
+    {
+      required_auths: [username],
+      required_posting_auths: 0,
+      json: {
+        from: username,
+        to,
+        amount: `${parseFloat((data.amount / 1000).toString()).toFixed(3)} ${
+          data.coin
+        }`,
+        memo: JSON.stringify(data.buyData),
+      },
+    },
+  ];
+
+  return await handleBroadcastRequest(operations, username);
+};
