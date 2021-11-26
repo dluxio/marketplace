@@ -8,7 +8,7 @@ import { InventoryNav } from "../components";
 import { MintTokenScreen } from "../components/MintTokenScreen";
 import { CryptoScreen } from "../components/CryptoScreen";
 import { NFTScreen } from "../components/NFTScreen";
-import { DEX } from "../components/DEX";
+import { DEX } from "../components/DEX/DEX";
 
 const Inventory = () => {
   const user: any = useRecoilValue(userState);
