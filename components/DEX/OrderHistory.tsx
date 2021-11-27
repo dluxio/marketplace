@@ -41,14 +41,14 @@ export const OrderHistory = ({
         <h1>TOTAL</h1>
         <h1>HIVE</h1>
         <h1>DLUX</h1>
-        <h1>RATE</h1>
+        <h1>{type === "sell" ? "ASK" : "BID"}</h1>
       </div>
       <div className="mt-2">
         {orders.map((order: any, i: number) => {
           const orderCoin = order.type.split(":")[0];
           return (
             <div className="grid grid-cols-4 gap-5 my-1">
-              <h1>{i === 0 ? "1231" : "123124542"}</h1>
+              <h1>1231</h1>
               <h1>
                 {orderCoin === "hive"
                   ? parseFloat(
