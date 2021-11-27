@@ -59,14 +59,14 @@ const Listings = () => {
       </h1>
       {showNFTs
         ? nfts && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 my-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-2 gap-5">
               {nfts.map((nft: any) => (
                 <NftCard key={nft.uid} nft={nft} />
               ))}
             </div>
           )
         : fts && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 my-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-2 gap-5">
               {fts.map((ft: any) => (
                 <FTCard key={ft.uid} ft={ft} />
               ))}
