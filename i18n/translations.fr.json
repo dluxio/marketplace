@@ -2,7 +2,7 @@
   "i18n": {
     "home": "Accueil",
     "inventory": "Inventaire",
-    "auctionHouse": "Maison de vente aux enchères",
+    "auctionHouse": "Enchères",
     "listings": "Listes",
     "login": "Connexion",
     "settings": "Paramètres",
@@ -43,6 +43,6 @@
     "continue": "Continuer",
     "cancel": "Annuler",
     "name": "Nom",
-    "runApp": ""
+    "runApp": "Commencez "
   }
 }

@@ -240,6 +240,11 @@ export const NavBar = () => {
               Français
             </a>
           </LanguageSwitcher>
+          <LanguageSwitcher lang="cn">
+            <a className={`btn ${query.lang === "cn" ? "bg-gray-400" : ""}`}>
+              中文
+            </a>
+          </LanguageSwitcher>
         </div>
       )}
       {dropdown && (
