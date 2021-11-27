@@ -46,7 +46,7 @@ export const DEX = () => {
             <Order coin={coin} type="buy" />
             <Order coin={coin} type="sell" />
           </div>
-          <div className="flex justify-between gap-10">
+          <div className="flex gap-10">
             <OrderHistory coin={coin as "HIVE" | "HBD"} type="buy" />
             <OrderHistory coin={coin as "HIVE" | "HBD"} type="sell" />
           </div>

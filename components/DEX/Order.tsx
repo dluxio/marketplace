@@ -23,8 +23,16 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
       dexSell({ dlux: quantity * 1000 }, user.name, prefix);
     } else if (type === "sell" && orderType === "limit") {
       coin === "HIVE"
-        ? dexSell({ dlux: quantity * 1000, hive: total }, user.name, prefix)
-        : dexSell({ dlux: quantity * 1000, hbd: total }, user.name, prefix);
+        ? dexSell(
+            { dlux: quantity * 1000, hive: total * 1000 },
+            user.name,
+            prefix
+          )
+        : dexSell(
+            { dlux: quantity * 1000, hbd: total * 1000 },
+            user.name,
+            prefix
+          );
     } else if (type === "buy" && orderType === "market") {
       dexBuy(
         {

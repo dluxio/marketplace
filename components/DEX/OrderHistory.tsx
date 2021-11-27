@@ -11,23 +11,9 @@ export const OrderHistory = ({
   type: "buy" | "sell";
 }) => {
   const [orders, setOrders] = useState<any>([]);
-  const [totalSum, setTotalSum] = useState(0);
   const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
-    let total = 0;
-    orders.forEach(
-      (order: any) =>
-        (total += parseFloat(
-          parseFloat(
-            (
-              +order.hivenai.amount / Math.pow(10, order.hivenai.precision)
-            ).toString()
-          ).toFixed(order.hivenai.precision)
-        ))
-    );
-    setTotalSum(total);
-
     axios.get(`${apiLink}dex`).then(({ data: { markets } }) => {
       if (coin === "HIVE" && type === "buy") {
         setOrders(markets.hive.buys);
@@ -44,77 +30,53 @@ export const OrderHistory = ({
   useEffect(() => console.log(orders), [orders]);
 
   return (
-    <div className="flex flex-col gap-2 text-white text-xl">
+    <div className="text-white text-xl">
       <div className="flex gap-3">
         <h1 className={type === "sell" ? "text-red-500" : "text-green-500"}>
           {type.charAt(0).toUpperCase() + type.slice(1)}
         </h1>
         <h1>orders</h1>
       </div>
-      <div className="flex gap-10 font-light"></div>
-      {orders && orders.length !== 0 ? (
-        orders.map((order: any, i: number) => {
+      <div className="grid grid-cols-4 gap-5 mt-3">
+        <h1>TOTAL</h1>
+        <h1>HIVE</h1>
+        <h1>DLUX</h1>
+        <h1>RATE</h1>
+      </div>
+      <div className="mt-2">
+        {orders.map((order: any, i: number) => {
           const orderCoin = order.type.split(":")[0];
           return (
-            <div className="flex gap-10 font-normal">
-              <div className="flex items-center flex-col gap-2">
-                {i === 0 && (
-                  <h1 className="font-light">
-                    TOTAL {orderCoin.toUpperCase()}
-                  </h1>
-                )}
-                <h1>{totalSum}</h1>
-              </div>
-              <div className="flex items-center flex-col gap-2">
-                {i === 0 && (
-                  <h1 className="font-light">{orderCoin.toUpperCase()}</h1>
-                )}
-                {orderCoin === "hive" ? (
-                  <h1>
-                    {parseFloat(
+            <div className="grid grid-cols-4 gap-5 my-1">
+              <h1>{i === 0 ? "1231" : "123124542"}</h1>
+              <h1>
+                {orderCoin === "hive"
+                  ? parseFloat(
                       (
                         +order.hivenai.amount /
                         Math.pow(10, order.hivenai.precision)
                       ).toString()
-                    ).toFixed(order.hivenai.precision)}
-                  </h1>
-                ) : (
-                  <h1>
-                    {parseFloat(
+                    ).toFixed(order.hivenai.precision)
+                  : parseFloat(
                       (
                         +order.hbdnai.amount /
                         Math.pow(10, order.hbdnai.precision)
                       ).toString()
                     ).toFixed(order.hbdnai.precision)}
-                  </h1>
-                )}
-              </div>
-              <div className="flex items-center flex-col gap-2">
-                {i === 0 && <h1 className="font-light">DLUX</h1>}
-                <h1>
-                  {parseFloat(
-                    (
-                      +order.amountnai.amount /
-                      Math.pow(10, order.amountnai.precision)
-                    ).toString()
-                  ).toFixed(order.amountnai.precision)}
-                </h1>
-              </div>
-              <div className="flex items-center flex-col gap-2">
-                {i === 0 && <h1 className="font-light">BID</h1>}
-                <h1>{order.rate}</h1>
-              </div>
+              </h1>
+              <h1>
+                {parseFloat(
+                  (
+                    +order.amountnai.amount /
+                    Math.pow(10, order.amountnai.precision)
+                  ).toString()
+                ).toFixed(order.amountnai.precision)}
+              </h1>
+              <h1>{order.rate}</h1>
             </div>
           );
-        })
-      ) : (
-        <div className="flex gap-10 font-light">
-          <h1>TOTAL {coin}</h1>
-          <h1>{coin}</h1>
-          <h1>DLUX</h1>
-          <h1>ASK</h1>
-        </div>
-      )}
+        })}
+      </div>
     </div>
   );
 };
