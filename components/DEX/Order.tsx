@@ -62,7 +62,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
   };
 
   return (
-    <div className="flex flex-col flex-grow my-5">
+    <div className="flex flex-col flex-grow my-5 bg-gray-700 border-2 border-gray-800 p-3 rounded-md">
       <div className="text-white text-xl flex gap-3">
         <h1 className={type === "sell" ? "text-red-500" : "text-green-500"}>
           {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -75,16 +75,16 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
           <button
             onClick={() => setOrderType("limit")}
             className={`p-2 ${
-              orderType === "limit" && "bg-gray-800"
-            } rounded-l-full bg-gray-700 text-white transition-all`}
+              orderType === "limit" && "bg-gray-900"
+            } rounded-l-full bg-gray-800 text-white transition-all`}
           >
             Limit
           </button>
           <button
             onClick={() => setOrderType("market")}
             className={`p-2 ${
-              orderType === "market" && "bg-gray-800"
-            } rounded-r-full bg-gray-700 text-white transition-all`}
+              orderType === "market" && "bg-gray-900"
+            } rounded-r-full bg-gray-800 text-white transition-all`}
           >
             Market
           </button>

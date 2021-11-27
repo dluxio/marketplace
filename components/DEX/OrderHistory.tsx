@@ -47,8 +47,12 @@ export const OrderHistory = ({
         {orders.map((order: any, i: number) => {
           const orderCoin = order.type.split(":")[0];
           return (
-            <div className="grid grid-cols-4 gap-5 my-1">
-              <h1>1231</h1>
+            <div
+              className={`${
+                i % 2 === 0 ? "bg-gray-500" : ""
+              } grid grid-cols-4 gap-5 my-1 px-2 py-1`}
+            >
+              <h1>?</h1>
               <h1>
                 {orderCoin === "hive"
                   ? parseFloat(
