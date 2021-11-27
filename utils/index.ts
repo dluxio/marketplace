@@ -534,16 +534,12 @@ export const dexBuy = async (
   const operations = [
     "transfer",
     {
-      required_auths: [username],
-      required_posting_auths: 0,
-      json: {
-        from: username,
-        to,
-        amount: `${parseFloat((data.amount / 1000).toString()).toFixed(3)} ${
-          data.coin
-        }`,
-        memo: JSON.stringify(data.buyData),
-      },
+      from: username,
+      to,
+      amount: `${parseFloat((data.amount / 1000).toString()).toFixed(3)} ${
+        data.coin
+      }`,
+      memo: JSON.stringify(data.buyData),
     },
   ];
 
