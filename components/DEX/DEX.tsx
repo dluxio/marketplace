@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Order } from "./Order";
 import { DLUXInfocard } from "./DLUXInfocard";
 import { OrderHistory } from "./OrderHistory";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { apiLinkState, dlux_ccState } from "../../atoms";
+import axios from "axios";
 
 export const DEX = () => {
   const [coin, setCoin] = useState("HIVE");
+  const [_cc, setCC] = useRecoilState(dlux_ccState);
+  const apiLink = useRecoilValue(apiLinkState);
+
+  useEffect(() => {
+    axios.get(`${apiLink}api/protocol`).then(({ data }) => {
+      setCC(data.multisig);
+    });
+  }, []);
 
   return (
     <div className="flex w-full justify-center">

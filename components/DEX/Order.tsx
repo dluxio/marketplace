@@ -29,7 +29,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
       dexBuy(
         {
           coin,
-          amount: quantity * 1000,
+          amount: total * 1000,
           buyData: {
             hours: 720,
           },
@@ -41,7 +41,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
       dexBuy(
         {
           coin,
-          amount: quantity * 1000,
+          amount: total * 1000,
           buyData: {
             rate: parseFloat((quantity / total).toFixed(6)),
             hours: 720,
@@ -90,6 +90,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
               <h1 className="font-light text-sm">DLUX</h1>
             </div>
             <input
+              step={0.001}
               className="rounded-xl outline-none px-3 py-1 bg-gray-500 text-white"
               type="number"
               value={quantity}
