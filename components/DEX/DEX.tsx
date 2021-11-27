@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Order } from "./Order";
 import { DLUXInfocard } from "./DLUXInfocard";
+import { OrderHistory } from "./OrderHistory";
 
 export const DEX = () => {
   const [coin, setCoin] = useState("HIVE");
@@ -27,10 +28,16 @@ export const DEX = () => {
           </button>
         </div>
         <div className="flex flex-col bg-gray-600 border-2 rounded-xl border-gray-800 p-5">
-          <DLUXInfocard />
-          <div className="flex justify-between">
+          <div className="flex justify-center">
+            <DLUXInfocard />
+          </div>
+          <div className="flex justify-between gap-10">
             <Order coin={coin} type="buy" />
             <Order coin={coin} type="sell" />
+          </div>
+          <div className="flex justify-between gap-10">
+            <OrderHistory coin={coin as "HIVE" | "HBD"} type="buy" />
+            <OrderHistory coin={coin as "HIVE" | "HBD"} type="sell" />
           </div>
         </div>
       </div>
