@@ -13,33 +13,32 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
   const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
+    let hiveCost = 0;
+    let hbdCost = 0;
+
+    const fetchCoins = async () => {
+      const { data: hiveData } = await axios.get(
+        "https://api.coingecko.com/api/v3/coins/hive",
+        {
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+      const { data: hbdData } = await axios.get(
+        "https://api.coingecko.com/api/v3/coins/hive_dollar",
+        {
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+      hiveCost = hiveData.market_data.current_price.usd;
+      hbdCost = hbdData.market_data.current_price.usd;
+    };
+
+    fetchCoins();
     if (coin) {
-      let hiveCost = 0;
-      let hbdCost = 0;
-
-      const fetchCoins = async () => {
-        const { data: hiveData } = await axios.get(
-          "https://api.coingecko.com/api/v3/coins/hive",
-          {
-            headers: {
-              accept: "application/json",
-            },
-          }
-        );
-        const { data: hbdData } = await axios.get(
-          "https://api.coingecko.com/api/v3/coins/hive_dollar",
-          {
-            headers: {
-              accept: "application/json",
-            },
-          }
-        );
-        hiveCost = hiveData.market_data.current_price.usd;
-        hbdCost = hbdData.market_data.current_price.usd;
-      };
-
-      fetchCoins();
-
       axios.get(`${apiLink}dex`).then(({ data: { markets } }) => {
         if (coin === "HIVE") {
           if (markets.hive.sells[0]) {

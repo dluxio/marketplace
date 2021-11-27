@@ -44,7 +44,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
           coin,
           amount: total * 1000,
           buyData: {
-            rate: parseFloat((quantity / total).toFixed(6)),
+            rate: parseFloat((total / quantity).toFixed(6)),
             hours: 720,
           },
         },
