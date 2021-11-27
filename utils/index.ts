@@ -515,7 +515,7 @@ export const dexSell = async (
       required_auths: [username],
       id: `${prefix}dex_sell`,
       required_posting_auths: 0,
-      json: { ...data, hours: 720 },
+      json: JSON.stringify({ ...data, hours: 720 }),
     },
   ];
 
