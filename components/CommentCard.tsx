@@ -31,8 +31,6 @@ export const CommentCard = ({ comment }: { comment: any }) => {
   };
 
   useEffect(() => {
-    console.log(comment);
-
     hive.api.getDiscussionsByComments(
       {
         start_author: comment.author,

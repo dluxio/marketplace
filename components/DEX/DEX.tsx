@@ -40,7 +40,7 @@ export const DEX = () => {
         </div>
         <div className="flex flex-col bg-gray-600 border-2 rounded-xl border-gray-800 p-5">
           <div className="flex justify-center">
-            <DLUXInfocard />
+            <DLUXInfocard coin={coin} />
           </div>
           <div className="flex justify-between gap-10">
             <Order coin={coin} type="buy" />

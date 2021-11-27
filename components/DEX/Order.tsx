@@ -12,13 +12,6 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
   const cc: string = useRecoilValue(dlux_ccState);
 
   const handlePlaceOrder = () => {
-    console.log({
-      orderType,
-      whatToDo: type,
-      quantity,
-      total,
-    });
-
     if (type === "sell" && orderType === "market") {
       dexSell({ dlux: quantity * 1000 }, user.name, prefix);
     } else if (type === "sell" && orderType === "limit") {
