@@ -15,6 +15,19 @@ export const OrderHistory = ({
   const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
+    let total = 0;
+    orders.forEach(
+      (order: any) =>
+        (total += parseFloat(
+          parseFloat(
+            (
+              +order.hivenai.amount / Math.pow(10, order.hivenai.precision)
+            ).toString()
+          ).toFixed(order.hivenai.precision)
+        ))
+    );
+    setTotalSum(total);
+
     axios.get(`${apiLink}dex`).then(({ data: { markets } }) => {
       if (coin === "HIVE" && type === "buy") {
         setOrders(markets.hive.buys);
@@ -42,23 +55,20 @@ export const OrderHistory = ({
       {orders && orders.length !== 0 ? (
         orders.map((order: any, i: number) => {
           const orderCoin = order.type.split(":")[0];
-          const total =
-            totalSum +
-            parseFloat(
-              parseFloat(
-                (
-                  +order.hivenai.amount / Math.pow(10, order.hivenai.precision)
-                ).toString()
-              ).toFixed(order.hivenai.precision)
-            );
           return (
             <div className="flex gap-10 font-normal">
               <div className="flex items-center flex-col gap-2">
-                {i === 0 && <h1>TOTAL {orderCoin.toUpperCase()}</h1>}
-                <h1>{total}</h1>
+                {i === 0 && (
+                  <h1 className="font-light">
+                    TOTAL {orderCoin.toUpperCase()}
+                  </h1>
+                )}
+                <h1>{totalSum}</h1>
               </div>
               <div className="flex items-center flex-col gap-2">
-                {i === 0 && <h1>{orderCoin.toUpperCase()}</h1>}
+                {i === 0 && (
+                  <h1 className="font-light">{orderCoin.toUpperCase()}</h1>
+                )}
                 {orderCoin === "hive" ? (
                   <h1>
                     {parseFloat(
@@ -80,7 +90,7 @@ export const OrderHistory = ({
                 )}
               </div>
               <div className="flex items-center flex-col gap-2">
-                {i === 0 && <h1>DLUX</h1>}
+                {i === 0 && <h1 className="font-light">DLUX</h1>}
                 <h1>
                   {parseFloat(
                     (
@@ -91,7 +101,7 @@ export const OrderHistory = ({
                 </h1>
               </div>
               <div className="flex items-center flex-col gap-2">
-                {i === 0 && <h1>BID</h1>}
+                {i === 0 && <h1 className="font-light">BID</h1>}
                 <h1>{order.rate}</h1>
               </div>
             </div>
