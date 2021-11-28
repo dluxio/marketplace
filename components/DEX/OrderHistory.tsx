@@ -12,7 +12,6 @@ export const OrderHistory = ({
   type: "buy" | "sell";
 }) => {
   const [orders, setOrders] = useState<any>([]);
-  const [totalSum, setTotalSum] = useState<any>(0);
   const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
@@ -23,15 +22,9 @@ export const OrderHistory = ({
             ? markets.hive.buys.sort((a: any, b: any) =>
                 parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
               )
-            : markets.hive.buys
-                .sort((a: any, b: any) =>
-                  parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
-                )
-                .filter((el: any, i: number, array: any) => {
-                  if (array[i + 1]) {
-                    return el.rate !== array[i + 1].rate ? el : true;
-                  }
-                })
+            : markets.hive.buys.sort((a: any, b: any) =>
+                parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
+              )
         );
       } else if (coin === "HBD" && type === "buy") {
         setOrders(
@@ -39,15 +32,9 @@ export const OrderHistory = ({
             ? markets.hbd.buys.sort((a: any, b: any) =>
                 parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
               )
-            : markets.hbd.buys
-                .sort((a: any, b: any) =>
-                  parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
-                )
-                .filter((el: any, i: number, array: any) => {
-                  if (array[i + 1]) {
-                    return el.rate !== array[i + 1].rate ? el : true;
-                  }
-                })
+            : markets.hbd.buys.sort((a: any, b: any) =>
+                parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
+              )
         );
       } else if (coin === "HIVE" && type === "sell") {
         setOrders(
@@ -55,15 +42,9 @@ export const OrderHistory = ({
             ? markets.hive.sells.sort((a: any, b: any) =>
                 parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
               )
-            : markets.hive.sells
-                .sort((a: any, b: any) =>
-                  parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
-                )
-                .filter((el: any, i: number, array: any) => {
-                  if (array[i + 1]) {
-                    return el.rate !== array[i + 1].rate ? el : true;
-                  }
-                })
+            : markets.hive.sells.sort((a: any, b: any) =>
+                parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+              )
         );
       } else if (coin === "HBD" && type === "sell") {
         setOrders(
@@ -71,15 +52,14 @@ export const OrderHistory = ({
             ? markets.hbd.sells.sort((a: any, b: any) =>
                 parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
               )
-            : markets.hbd.sell
-                .sort((a: any, b: any) =>
-                  parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
-                )
-                .filter((el: any, i: number, array: any) => {
-                  if (array[i + 1]) {
-                    return el.rate !== array[i + 1].rate ? el : true;
-                  }
-                })
+            : markets.hbd.sell.sort((a: any, b: any) =>
+                parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+              )
+          // .filter((el: any, i: number, array: any) => {
+          //   if (array[i + 1]) {
+          //     return el.rate !== array[i + 1].rate ? el : true;
+          //   }
+          // })
         );
       }
     });
