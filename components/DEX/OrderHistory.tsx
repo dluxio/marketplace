@@ -46,7 +46,7 @@ export const OrderHistory = ({
       <div className="mt-2">
         {orders &&
           orders.map((order: any, i: number) => (
-            <OrderHistoryElement i={i} order={order} />
+            <OrderHistoryElement i={i} order={order} orders={orders} />
           ))}
       </div>
     </div>

@@ -1,13 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const OrderHistoryElement = ({
   order,
   i,
+  orders,
 }: {
   order: any;
   i: number;
+  orders: any[];
 }) => {
-  const orderCoin = order.type.split(":")[0];
+  const [orderCoin, setOrderCoin] = useState("HIVE");
+  const [totalSum, setTotalSum] = useState(0);
+
+  useEffect(() => {
+    setOrderCoin(order.type.split(":")[0]);
+    let total = 0;
+
+    orders.forEach((order, index) => {
+      if (index >= i) {
+        total += parseFloat(
+          parseFloat(
+            (
+              +order.hivenai.amount / Math.pow(10, order.hivenai.precision)
+            ).toString()
+          ).toFixed(order.hivenai.precision)
+        );
+      }
+    });
+
+    setTotalSum(total);
+  }, []);
 
   return (
     <div
@@ -15,7 +37,7 @@ export const OrderHistoryElement = ({
         i % 2 === 0 ? "bg-gray-500" : ""
       } grid grid-cols-4 gap-5 my-1 px-2 py-1`}
     >
-      <h1>{}</h1>
+      <h1>{totalSum}</h1>
       <h1>
         {orderCoin === "hive"
           ? parseFloat(
