@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useTranslation } from "next-export-i18n";
 import React, { useEffect, useState } from "react";
 import { FaQuestion } from "react-icons/fa";
 
@@ -25,6 +26,7 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
   const prefix: string = useRecoilValue(prefixState);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const [randomUID, setRandomUID] = useState("==");
+  const { t } = useTranslation();
 
   const randomUIDGen = (setData: any) => {
     const num = Math.round(Math.random() * (setData.max - (setData.min || 0)));
@@ -136,20 +138,20 @@ export const NFTTradeCard = ({ trade }: TradeCardProps) => {
         {trade.kind !== "fts" ? trade.item : trade.set}
       </div>
       <div className="text-center text-md">
-        Price: {(trade.price / 1000).toFixed(3)} DLUX
+        {t("price")}: {(trade.price / 1000).toFixed(3)} DLUX
       </div>
       <div className="flex sm:justify-center pt-2 pb-4 gap-3">
         <button
           onClick={handleAccept}
           className="px-3 py-1 rounded-lg border-2 text-white bg-green-500 border-green-600 focus:outline-none focus:ring-2 focus:ring-green-700"
         >
-          Accept
+          {t("continue")}
         </button>
         <button
           onClick={handleDecline}
           className="px-3 py-1 rounded-lg border-2 text-white bg-red-500 border-red-600 focus:outline-none focus:ring-2 focus:ring-red-700"
         >
-          Decline
+          {t("cancel")}
         </button>
       </div>
     </div>
