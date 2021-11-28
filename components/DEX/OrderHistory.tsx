@@ -19,27 +19,67 @@ export const OrderHistory = ({
     axios.get(`${apiLink}dex`).then(({ data: { markets } }) => {
       if (coin === "HIVE" && type === "buy") {
         setOrders(
-          markets.hive.buys.sort((a: any, b: any) =>
-            parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
-          )
+          markets.hive.buys.length === 1
+            ? markets.hive.buys.sort((a: any, b: any) =>
+                parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+              )
+            : markets.hive.buys
+                .sort((a: any, b: any) =>
+                  parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
+                )
+                .filter((el: any, i: number, array: any) => {
+                  if (array[i + 1]) {
+                    return el.rate !== array[i + 1].rate ? el : true;
+                  }
+                })
         );
       } else if (coin === "HBD" && type === "buy") {
         setOrders(
-          markets.hbd.buys.sort((a: any, b: any) =>
-            parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
-          )
+          markets.hbd.buys.length === 1
+            ? markets.hbd.buys.sort((a: any, b: any) =>
+                parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+              )
+            : markets.hbd.buys
+                .sort((a: any, b: any) =>
+                  parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
+                )
+                .filter((el: any, i: number, array: any) => {
+                  if (array[i + 1]) {
+                    return el.rate !== array[i + 1].rate ? el : true;
+                  }
+                })
         );
       } else if (coin === "HIVE" && type === "sell") {
         setOrders(
-          markets.hive.sells.sort((a: any, b: any) =>
-            parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
-          )
+          markets.hive.sells.length === 1
+            ? markets.hive.sells.sort((a: any, b: any) =>
+                parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+              )
+            : markets.hive.sells
+                .sort((a: any, b: any) =>
+                  parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+                )
+                .filter((el: any, i: number, array: any) => {
+                  if (array[i + 1]) {
+                    return el.rate !== array[i + 1].rate ? el : true;
+                  }
+                })
         );
       } else if (coin === "HBD" && type === "sell") {
         setOrders(
-          markets.hbd.sell.sort((a: any, b: any) =>
-            parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
-          )
+          markets.hbd.sells.length === 1
+            ? markets.hbd.sells.sort((a: any, b: any) =>
+                parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+              )
+            : markets.hbd.sell
+                .sort((a: any, b: any) =>
+                  parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+                )
+                .filter((el: any, i: number, array: any) => {
+                  if (array[i + 1]) {
+                    return el.rate !== array[i + 1].rate ? el : true;
+                  }
+                })
         );
       }
     });
@@ -53,12 +93,21 @@ export const OrderHistory = ({
         </h1>
         <h1>orders</h1>
       </div>
-      <div className="grid grid-cols-4 gap-5 mt-3">
-        <h1>TOTAL</h1>
-        <h1>{coin}</h1>
-        <h1>DLUX</h1>
-        <h1>{type === "sell" ? "ASK" : "BID"}</h1>
-      </div>
+      {type === "buy" ? (
+        <div className="grid grid-cols-4 gap-5 mt-3">
+          <h1>TOTAL</h1>
+          <h1>{coin}</h1>
+          <h1>DLUX</h1>
+          <h1>BID</h1>
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-5 mt-3">
+          <h1>ASK</h1>
+          <h1>DLUX</h1>
+          <h1>{coin}</h1>
+          <h1>TOTAL</h1>
+        </div>
+      )}
       <div className="mt-2">
         {orders &&
           orders.map((order: any, i: number) => (
