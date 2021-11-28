@@ -5,6 +5,7 @@ import { OrderHistory } from "./OrderHistory";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { apiLinkState, dlux_ccState } from "../../atoms";
 import axios from "axios";
+import { TransactionHistory } from "./TransactionHistory";
 
 export const DEX = () => {
   const [coin, setCoin] = useState("HIVE");
@@ -14,10 +15,6 @@ export const DEX = () => {
   useEffect(() => {
     axios.get(`${apiLink}api/protocol`).then(({ data }) => {
       setCC(data.multisig);
-    });
-
-    axios.get(`${apiLink}dex`).then(({ data }) => {
-      console.log(data);
     });
   }, []);
 
@@ -53,6 +50,9 @@ export const DEX = () => {
           <div className="flex gap-10">
             <OrderHistory coin={coin as "HIVE" | "HBD"} type="buy" />
             <OrderHistory coin={coin as "HIVE" | "HBD"} type="sell" />
+          </div>
+          <div className="mt-3">
+            <TransactionHistory coin={coin as "HIVE" | "HBD"} />
           </div>
         </div>
       </div>
