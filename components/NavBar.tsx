@@ -225,6 +225,16 @@ export const NavBar = () => {
               English
             </a>
           </LanguageSwitcher>
+          <LanguageSwitcher lang="de">
+            <a className={`btn ${query.lang === "de" ? "bg-gray-400" : ""}`}>
+              Deutsche
+            </a>
+          </LanguageSwitcher>
+          <LanguageSwitcher lang="es">
+            <a className={`btn ${query.lang === "es" ? "bg-gray-400" : ""}`}>
+              Español
+            </a>
+          </LanguageSwitcher>
           <LanguageSwitcher lang="fr">
             <a className={`btn ${query.lang === "fr" ? "bg-gray-400" : ""}`}>
               Français
