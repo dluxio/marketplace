@@ -15,16 +15,27 @@ export const OrderHistoryElement = ({
   useEffect(() => {
     setOrderCoin(order.type.split(":")[0]);
     let total = 0;
+    let orderCoin = order.type.split(":")[0];
 
     orders.forEach((order, index) => {
       if (index >= i) {
-        total += parseFloat(
-          parseFloat(
-            (
-              +order.hivenai.amount / Math.pow(10, order.hivenai.precision)
-            ).toString()
-          ).toFixed(order.hivenai.precision)
-        );
+        if (orderCoin === "hive") {
+          total += parseFloat(
+            parseFloat(
+              (
+                +order.hivenai.amount / Math.pow(10, order.hivenai.precision)
+              ).toString()
+            ).toFixed(order.hivenai.precision)
+          );
+        } else {
+          total += parseFloat(
+            parseFloat(
+              (
+                +order.hbdnai.amount / Math.pow(10, order.hbdnai.precision)
+              ).toString()
+            ).toFixed(order.hbdnai.precision)
+          );
+        }
       }
     });
 
