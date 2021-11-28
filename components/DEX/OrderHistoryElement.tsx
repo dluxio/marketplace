@@ -18,7 +18,7 @@ export const OrderHistoryElement = ({
     let orderCoin = order.type.split(":")[0];
 
     orders.forEach((order, index) => {
-      if (index >= i) {
+      if (index <= i) {
         if (orderCoin === "hive") {
           total += parseFloat(
             parseFloat(

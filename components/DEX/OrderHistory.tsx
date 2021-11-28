@@ -18,7 +18,7 @@ export const OrderHistory = ({
   useEffect(() => {
     axios.get(`${apiLink}dex`).then(({ data: { markets } }) => {
       if (coin === "HIVE" && type === "buy") {
-        setOrders(markets.hive.buys);
+        setOrders(markets.hive.buys.reverse());
       } else if (coin === "HBD" && type === "buy") {
         setOrders(markets.hbd.buys);
       } else if (coin === "HIVE" && type === "sell") {

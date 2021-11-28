@@ -15,6 +15,10 @@ export const DEX = () => {
     axios.get(`${apiLink}api/protocol`).then(({ data }) => {
       setCC(data.multisig);
     });
+
+    axios.get(`${apiLink}dex`).then(({ data }) => {
+      console.log(data);
+    });
   }, []);
 
   return (
