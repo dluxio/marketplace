@@ -18,13 +18,29 @@ export const OrderHistory = ({
   useEffect(() => {
     axios.get(`${apiLink}dex`).then(({ data: { markets } }) => {
       if (coin === "HIVE" && type === "buy") {
-        setOrders(markets.hive.buys.reverse());
+        setOrders(
+          markets.hive.buys.sort((a: any, b: any) =>
+            parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
+          )
+        );
       } else if (coin === "HBD" && type === "buy") {
-        setOrders(markets.hbd.buys);
+        setOrders(
+          markets.hbd.buys.sort((a: any, b: any) =>
+            parseFloat(a.rate) > parseFloat(b.rate) ? -1 : 1
+          )
+        );
       } else if (coin === "HIVE" && type === "sell") {
-        setOrders(markets.hive.sells);
+        setOrders(
+          markets.hive.sells.sort((a: any, b: any) =>
+            parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+          )
+        );
       } else if (coin === "HBD" && type === "sell") {
-        setOrders(markets.hbd.sell);
+        setOrders(
+          markets.hbd.sell.sort((a: any, b: any) =>
+            parseFloat(a.rate) < parseFloat(b.rate) ? -1 : 1
+          )
+        );
       }
     });
   }, [coin]);
