@@ -93,21 +93,13 @@ export const OrderHistory = ({
         </h1>
         <h1>orders</h1>
       </div>
-      {type === "buy" ? (
-        <div className="grid grid-cols-4 gap-5 mt-3">
-          <h1>TOTAL</h1>
-          <h1>{coin}</h1>
-          <h1>DLUX</h1>
-          <h1>BID</h1>
-        </div>
-      ) : (
-        <div className="grid grid-cols-4 gap-5 mt-3">
-          <h1>ASK</h1>
-          <h1>DLUX</h1>
-          <h1>{coin}</h1>
-          <h1>TOTAL</h1>
-        </div>
-      )}
+
+      <div className="grid grid-cols-4 gap-5 mt-3">
+        <h1>TOTAL</h1>
+        <h1>{coin}</h1>
+        <h1>DLUX</h1>
+        <h1>{type === "sell" ? "ASK" : "BID"}</h1>
+      </div>
       <div className="mt-2">
         {orders &&
           orders.map((order: any, i: number) => (
