@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
+import { FTBuy } from "./Forms/FTBuy";
 
 type FTCardProps = {
   ft: {
@@ -15,12 +16,14 @@ type FTCardProps = {
     price: { precision: number; amount: number };
     by: string;
     uid: string;
+    qty: number;
   };
 };
 
 export const FTCard = ({ ft }: FTCardProps) => {
   const { set, script } = ft;
   const [colors, setColors] = useState<any>([]);
+  const [buy, setBuy] = useState(false);
   const [randomUID, setRandomUID] = useState("==");
   const [_braodcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
@@ -47,17 +50,21 @@ export const FTCard = ({ ft }: FTCardProps) => {
   }, []);
 
   const handleBuy = async () => {
-    const response: any = await NFTBuy(
-      user.name,
-      {
-        set,
-      },
-      prefix
-    );
-    if (response) {
-      if (response.success) {
-        setBroadcasts((prevState: any) => [...prevState, response]);
+    if (ft.qty === 1) {
+      const response: any = await NFTBuy(
+        user.name,
+        {
+          set,
+        },
+        prefix
+      );
+      if (response) {
+        if (response.success) {
+          setBroadcasts((prevState: any) => [...prevState, response]);
+        }
       }
+    } else {
+      setBuy(true);
     }
   };
 
@@ -125,6 +132,9 @@ export const FTCard = ({ ft }: FTCardProps) => {
           {t("by")}: {ft.by}
         </h1>
         <h1>
+          {t("availible")}: {ft.qty}
+        </h1>
+        <h1>
           {t("price")}:{" "}
           <strong>
             {parseFloat(
@@ -157,6 +167,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
           </button>
         )}
       </div>
+      {buy && <FTBuy handleClose={() => setBuy(false)} ft={ft} />}
     </div>
   );
 };
