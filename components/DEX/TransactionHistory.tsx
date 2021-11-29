@@ -7,7 +7,7 @@ import { TransactionHistoryItem } from "./TransactionHistoryItem";
 export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
   const [tickerID, setTickerID] = useState("HIVE_DLUX");
   const [transactions, setTransactions] = useState([]);
-  const [dayVolume, setDayVolume] = useRecoilState(dayVolumeState);
+  const [volume, setDayVolume] = useRecoilState(dayVolumeState);
   const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
@@ -41,10 +41,12 @@ export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
             }
           });
 
-          setDayVolume({
-            dlux: dayVolume.toFixed(3),
-            dollars: 0,
-          });
+          if (volume.dlux === "0") {
+            setDayVolume({
+              dlux: dayVolume.toFixed(3),
+              dollars: 0,
+            });
+          }
           setTransactions(sortedTransactions);
         });
     }
