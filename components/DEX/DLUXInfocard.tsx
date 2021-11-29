@@ -39,26 +39,28 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
 
     fetchCoins();
     if (coin) {
-      axios.get(`${apiLink}dex`).then(({ data: { markets } }) => {
+      axios.get(`${apiLink}dex`).then(({ data }) => {
+        console.log(data);
+
         if (coin === "HIVE") {
-          if (markets.hive.sells[0]) {
+          if (data.markets.hive.sells[0]) {
             setBidPrice({
-              dlux: markets.hive.buys[0].rate,
+              dlux: data.markets.hive.buys[0].rate,
               dollars: parseFloat(
                 (
-                  parseFloat(markets.hive.tick) *
+                  parseFloat(data.markets.hive.tick) *
                   hiveCost *
-                  markets.hive.buys[0].rate
+                  data.markets.hive.buys[0].rate
                 ).toFixed(3)
               ),
             });
             setAskPrice({
-              dlux: markets.hive.sells[0].rate,
+              dlux: data.markets.hive.sells[0].rate,
               dollars: parseFloat(
                 (
-                  parseFloat(markets.hive.tick) *
+                  parseFloat(data.markets.hive.tick) *
                   hiveCost *
-                  markets.hive.sells[0].rate
+                  data.markets.hive.sells[0].rate
                 ).toFixed(3)
               ),
             });
@@ -73,31 +75,43 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
             });
           }
 
-          setLastPrice({
-            dlux: markets.hive.tick,
+          setVwmaPrice({
+            dlux: data.stats.HiveVWMA.rate,
             dollars: parseFloat(
-              (parseFloat(markets.hive.tick) * hiveCost).toFixed(3)
+              (+data.stats.HiveVWMA.rate * +data.markets.hive.tick).toFixed(3)
+            ),
+          });
+
+          setVolumenPrice({
+            dlux: 0,
+            dollars: 0,
+          });
+
+          setLastPrice({
+            dlux: data.markets.hive.tick,
+            dollars: parseFloat(
+              (parseFloat(data.markets.hive.tick) * hiveCost).toFixed(3)
             ),
           });
         } else if (coin === "HBD") {
-          if (markets.hbd.sells[0]) {
+          if (data.markets.hbd.sells[0]) {
             setBidPrice({
-              dlux: markets.hbd.sells[0].rate,
+              dlux: data.markets.hbd.sells[0].rate,
               dollars: parseFloat(
                 (
-                  parseFloat(markets.hbd.tick) *
+                  parseFloat(data.markets.hbd.tick) *
                   hbdCost *
-                  markets.hbd.sells[0].rate
+                  data.markets.hbd.sells[0].rate
                 ).toFixed(3)
               ),
             });
             setAskPrice({
-              dlux: markets.hbd.buys[0].rate,
+              dlux: data.markets.hbd.buys[0].rate,
               dollars: parseFloat(
                 (
-                  parseFloat(markets.hbd.tick) *
+                  parseFloat(data.markets.hbd.tick) *
                   hbdCost *
-                  markets.hbd.sells[0].rate
+                  data.markets.hbd.sells[0].rate
                 ).toFixed(3)
               ),
             });
@@ -112,10 +126,22 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
             });
           }
 
-          setLastPrice({
-            dlux: markets.hbd.tick,
+          setVwmaPrice({
+            dlux: data.stats.HbdVWMA.rate,
             dollars: parseFloat(
-              (parseFloat(markets.hbd.tick) * hiveCost).toFixed(3)
+              (+data.stats.HbdVWMA.rate * +data.markets.hbd.tick).toFixed(3)
+            ),
+          });
+
+          setVolumenPrice({
+            dlux: 0,
+            dollars: 0,
+          });
+
+          setLastPrice({
+            dlux: data.markets.hbd.tick,
+            dollars: parseFloat(
+              (parseFloat(data.markets.hbd.tick) * hiveCost).toFixed(3)
             ),
           });
         }
