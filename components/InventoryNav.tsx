@@ -1,7 +1,8 @@
 import React from "react";
 
 import { useRecoilState } from "recoil";
-import { FaBitcoin } from "react-icons/fa";
+import { FaDollarSign } from "react-icons/fa";
+import { MdSwapHoriz, MdSwapVerticalCircle } from "react-icons/md";
 import { GiToken } from "react-icons/gi";
 import { MdStars } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
@@ -44,8 +45,17 @@ export const InventoryNav = () => {
             marketNavSelected === "tokens" && "border-b-2 border-blue-500"
           }`}
         >
-          <FaBitcoin size={25} color="#fff" />
+          <FaDollarSign size={25} color="#fff" />
           <p className="text-md mt-1">{t("tokens")}</p>
+        </div>
+        <div
+          onClick={() => setMarketNavSelected("dex")}
+          className={`flex flex-col items-center cursor-pointer ${
+            marketNavSelected === "dex" && "border-b-2 border-blue-500"
+          }`}
+        >
+          <MdSwapVerticalCircle size={25} color="#fff" />
+          <p className="text-md mt-1">DEX</p>
         </div>
       </div>
       <div className="flex items-center mr-10 text-white">

@@ -36,6 +36,7 @@
     "react-jw-player": "^1.19.1",
     "react-markdown": "^7.1.0",
     "react-select": "^5.2.1",
+    "react-simple-image-slider": "^2.3.0",
     "recoil": "^0.4.1"
   },
   "devDependencies": {

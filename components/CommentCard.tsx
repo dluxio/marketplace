@@ -1,11 +1,10 @@
 import router from "next/router";
 import React, { useEffect, useState } from "react";
-import { FaPassport, FaReply } from "react-icons/fa";
+import { FaReply } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 import { replyComment } from "../utils";
-import ReactMarkdown from "react-markdown";
 import hive from "@hiveio/hive-js";
 
 export const CommentCard = ({ comment }: { comment: any }) => {
@@ -13,6 +12,13 @@ export const CommentCard = ({ comment }: { comment: any }) => {
   const [reply, setReply] = useState(false);
   const [replyBody, setReplyBody] = useState("");
   const [color, setColor] = useState("#000");
+
+  useEffect(() => {
+    const commentElem = document.getElementById(`comment-body-${comment.id}`);
+    if (commentElem) {
+      commentElem!.innerHTML = comment.body;
+    }
+  }, []);
 
   const handleSendReply = () => {
     replyComment({
@@ -25,8 +31,6 @@ export const CommentCard = ({ comment }: { comment: any }) => {
   };
 
   useEffect(() => {
-    console.log(comment);
-
     hive.api.getDiscussionsByComments(
       {
         start_author: comment.author,
@@ -48,7 +52,7 @@ export const CommentCard = ({ comment }: { comment: any }) => {
         {comment.author}
       </h1>
       <div className="text-white mx-1 whitespace-pre-wrap break-words">
-        <ReactMarkdown>{comment.body}</ReactMarkdown>
+        <div id={`comment-body-${comment.id}`}></div>
         <div className="w-auto">
           <div className="flex">
             <div

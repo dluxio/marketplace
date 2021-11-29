@@ -9,10 +9,12 @@ import { broadcastState, ipfsLinkState, userState } from "../../atoms";
 import { CommentCard } from "../../components/CommentCard";
 import ReactMarkdown from "react-markdown";
 import ReactJWPlayer from "react-jw-player";
+import SimpleImageSlider from "react-simple-image-slider";
 
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { useTranslation } from "next-export-i18n";
+import { ImCross } from "react-icons/im";
 
 const AppDetails = () => {
   var client = new Client([
@@ -28,6 +30,8 @@ const AppDetails = () => {
   const [speak, set3speak] = useState(false);
   const [color, setColor] = useState("#000");
   const [upVote, setUpVote] = useState(false);
+  const [showBody, setShowBody] = useState(false);
+  const [images, setImages] = useState<{ url: string }[]>([]);
   const [downVote, setDownVote] = useState(false);
   const [image, setImage] = useState("");
   const [showApp, setShowApp] = useState(false);
@@ -107,8 +111,8 @@ const AppDetails = () => {
     if (username !== "") {
       hive.api.getContent(username, permlink, (err: any, result: any) => {
         if (err) console.log(err);
-        setContentData(JSON.parse(result.json_metadata));
         setContentResult(result);
+        setContentData(JSON.parse(result.json_metadata));
       });
 
       client.database
@@ -121,6 +125,17 @@ const AppDetails = () => {
 
   useEffect(() => {
     if (contentData) {
+      console.log(contentData);
+      const imagesArray: { url: string }[] = [];
+
+      contentData.image.forEach((image: string) => {
+        imagesArray.push({ url: image });
+      });
+
+      if (imagesArray.length !== 0) {
+        setImages(imagesArray);
+      }
+
       if (contentData.app.includes("3speak")) {
         set3speak(true);
         const file: string =
@@ -182,9 +197,50 @@ const AppDetails = () => {
   ) : (
     contentResult && (
       <div className="w-full mx-auto max-w-3xl">
+        <div
+          className={`${
+            showBody ? "" : "hidden"
+          } fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-75 z-50`}
+        >
+          <div className="flex justify-center items-center w-full h-full">
+            <div className="w-2/3 h-auto relative bg-gray-500 border-2 border-gray-800 rounded-xl p-5">
+              <button className="m-2 absolute top-0 right-0">
+                <ImCross
+                  size={15}
+                  color="#fff"
+                  opacity={100}
+                  onClick={() => setShowBody(false)}
+                />
+              </button>
+
+              {images.length !== 0 && (
+                <div className="p-2">
+                  <div className="rounded-xl flex justify-center">
+                    <SimpleImageSlider
+                      height={500}
+                      width={1000}
+                      images={images}
+                      showBullets={true}
+                      showNavs={true}
+                    />
+                  </div>
+                </div>
+              )}
+              <h1 className="my-5 text-center text-white font-semibold text-xl">
+                {contentResult.root_title}
+              </h1>
+              <ReactMarkdown className="mb-2 max-h-52 overflow-y-scroll text-white">
+                {contentResult.body}
+              </ReactMarkdown>
+            </div>
+          </div>
+        </div>
         <div className="flex justify-evenly flex-col w-full mt-10">
           {speak ? (
-            <div className="w-full flex justify-center my-2">
+            <div
+              onClick={() => setShowBody(true)}
+              className="cursor-pointer w-full flex justify-center my-2"
+            >
               <ReactJWPlayer
                 className="rounded-xl w-4/5"
                 playerId="my-unique-id"
@@ -193,7 +249,10 @@ const AppDetails = () => {
               />
             </div>
           ) : (
-            <div className="flex justify-center w-full my-2">
+            <div
+              onClick={() => setShowBody(true)}
+              className="cursor-pointer flex justify-center w-full my-2"
+            >
               <img src={image} className="w-4/5" alt="appPhoto" />
             </div>
           )}
@@ -207,7 +266,10 @@ const AppDetails = () => {
           )}
           <div className="p-5">
             <h1 className="text-white text-3xl">{contentResult?.title}</h1>
-            <h1 className="text-white text-center sm:mx-3 sm:text-left text-lg">
+            <h1
+              onClick={() => setShowBody(true)}
+              className="text-white text-center sm:mx-3 sm:text-left text-lg cursor-pointer"
+            >
               {JSON.parse(contentResult.json_metadata)?.description}
             </h1>
             <div className="flex items-center w-full my-5 mx-2 gap-2">
