@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { apiLinkState } from "../../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { apiLinkState, dayVolumeState } from "../../atoms";
 
 export const DLUXInfocard = ({ coin }: { coin: string }) => {
   const [bidPrice, setBidPrice] = useState({ dollars: 0, dlux: 0 });
   const [askPrice, setAskPrice] = useState({ dollars: 0, dlux: 0 });
   const [lastPrice, setLastPrice] = useState({ dollars: 0, dlux: 0 });
   const [vwmaPrice, setVwmaPrice] = useState({ dollars: 0, dlux: 0 });
-  const [volumenPrice, setVolumenPrice] = useState({ dollars: 0, dlux: 0 });
+  const [volumePrice, setVolumePrice] = useRecoilState(dayVolumeState);
 
   const apiLink: string = useRecoilValue(apiLinkState);
 
@@ -82,9 +82,9 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
             ),
           });
 
-          setVolumenPrice({
-            dlux: 0,
-            dollars: 0,
+          setVolumePrice({
+            dlux: volumePrice.dlux,
+            dollars: parseFloat(volumePrice.dlux) * data.markets.hive.tick,
           });
 
           setLastPrice({
@@ -133,11 +133,6 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
             ),
           });
 
-          setVolumenPrice({
-            dlux: 0,
-            dollars: 0,
-          });
-
           setLastPrice({
             dlux: data.markets.hbd.tick,
             dollars: parseFloat(
@@ -182,8 +177,8 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
       <div className="mx-3 flex flex-col justify-center items-center gap-3">
         <h1 className="px-5 py-2 bg-gray-500 rounded-xl">24h Volume</h1>
         <div className="flex flex-col justify-center items-center text-md">
-          <h1>{volumenPrice.dlux}</h1>
-          <h1>${volumenPrice.dollars}</h1>
+          <h1>{volumePrice.dlux}</h1>
+          <h1>${volumePrice.dollars}</h1>
         </div>
       </div>
     </div>

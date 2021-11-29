@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { apiLinkState } from "../../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { apiLinkState, dayVolumeState } from "../../atoms";
 import { TransactionHistoryItem } from "./TransactionHistoryItem";
 
 export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
   const [tickerID, setTickerID] = useState("HIVE_DLUX");
   const [transactions, setTransactions] = useState([]);
+  const [dayVolume, setDayVolume] = useRecoilState(dayVolumeState);
   const apiLink: string = useRecoilValue(apiLinkState);
 
   useEffect(() => {
@@ -24,11 +25,27 @@ export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
         .get(`${apiLink}api/historical/${tickerID}?depth=200`)
         .then(({ data }) => {
           const sumOfOrders = data.buy.concat(data.sell);
-          setTransactions(
-            sumOfOrders.sort((x: any, y: any) => {
-              return y.trade_timestamp - x.trade_timestamp;
-            })
-          );
+          const sortedTransactions = sumOfOrders.sort((x: any, y: any) => {
+            return y.trade_timestamp - x.trade_timestamp;
+          });
+
+          let dayVolume = 0;
+          sortedTransactions.forEach((transaction: any) => {
+            const today = new Date().getDate();
+            const transactionDay = new Date(
+              transaction.trade_timestamp
+            ).getDate();
+
+            if (today === transactionDay) {
+              dayVolume += +transaction.price;
+            }
+          });
+
+          setDayVolume({
+            dlux: dayVolume.toFixed(3),
+            dollars: 0,
+          });
+          setTransactions(sortedTransactions);
         });
     }
   }, [tickerID]);

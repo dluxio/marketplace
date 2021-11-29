@@ -54,3 +54,11 @@ export const dlux_ccState = atom({
   key: "dlux_ccState",
   default: "",
 });
+
+export const dayVolumeState = atom({
+  key: "dayVolumeState",
+  default: {
+    dlux: "0",
+    dollars: 0,
+  },
+});
