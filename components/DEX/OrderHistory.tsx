@@ -66,14 +66,13 @@ export const OrderHistory = ({
   }, [coin]);
 
   return (
-    <div className="text-white text-xl">
+    <div className="text-white text-xl w-full">
       <div className="flex gap-3">
         <h1 className={type === "sell" ? "text-red-500" : "text-green-500"}>
           {type.charAt(0).toUpperCase() + type.slice(1)}
         </h1>
         <h1>orders</h1>
       </div>
-
       <div className="grid grid-cols-4 gap-5 mt-3">
         <h1>TOTAL</h1>
         <h1>{coin}</h1>

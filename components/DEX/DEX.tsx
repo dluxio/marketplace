@@ -39,7 +39,7 @@ export const DEX = () => {
             HBD
           </button>
         </div>
-        <div className="flex flex-col bg-gray-600 mb-3 border-2 rounded-xl border-gray-800 p-5">
+        <div className="flex flex-col mx-10 bg-gray-600 mb-3 border-2 rounded-xl border-gray-800 p-5">
           <div className="flex justify-center">
             <DLUXInfocard coin={coin} />
           </div>
@@ -47,11 +47,11 @@ export const DEX = () => {
             <Order coin={coin} type="buy" />
             <Order coin={coin} type="sell" />
           </div>
-          <div className="flex gap-10">
+          <div className="flex flex-col gap-2 xl:flex-row xl:gap-10 w-full mb-4">
             <OrderHistory coin={coin as "HIVE" | "HBD"} type="buy" />
             <OrderHistory coin={coin as "HIVE" | "HBD"} type="sell" />
           </div>
-          <div className="mt-3">
+          <div className="mt-5">
             <TransactionHistory coin={coin as "HIVE" | "HBD"} />
           </div>
         </div>

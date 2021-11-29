@@ -11,7 +11,7 @@ export const OrderHistoryElement = ({
 }) => {
   const [orderCoin, setOrderCoin] = useState("HIVE");
   const [type, setType] = useState("buy");
-  const [totalSum, setTotalSum] = useState(0);
+  const [totalSum, setTotalSum] = useState("");
 
   useEffect(() => {
     setType(order.type.split(":")[1]);
@@ -41,7 +41,7 @@ export const OrderHistoryElement = ({
       }
     });
 
-    setTotalSum(total);
+    setTotalSum(total.toFixed(3));
   }, []);
 
   return (
@@ -54,22 +54,28 @@ export const OrderHistoryElement = ({
       <h1>
         {orderCoin === "hive"
           ? parseFloat(
-              (
-                +order.hivenai.amount / Math.pow(10, order.hivenai.precision)
-              ).toString()
-            ).toFixed(order.hivenai.precision)
+              parseFloat(
+                (
+                  +order.hivenai.amount / Math.pow(10, order.hivenai.precision)
+                ).toString()
+              ).toFixed(order.hivenai.precision)
+            ).toFixed(3)
           : parseFloat(
-              (
-                +order.hbdnai.amount / Math.pow(10, order.hbdnai.precision)
-              ).toString()
-            ).toFixed(order.hbdnai.precision)}
+              parseFloat(
+                (
+                  +order.hbdnai.amount / Math.pow(10, order.hbdnai.precision)
+                ).toString()
+              ).toFixed(order.hbdnai.precision)
+            ).toFixed(3)}
       </h1>
       <h1>
         {parseFloat(
-          (
-            +order.amountnai.amount / Math.pow(10, order.amountnai.precision)
-          ).toString()
-        ).toFixed(order.amountnai.precision)}
+          parseFloat(
+            (
+              +order.amountnai.amount / Math.pow(10, order.amountnai.precision)
+            ).toString()
+          ).toFixed(order.amountnai.precision)
+        ).toFixed(3)}
       </h1>
       <h1>{order.rate}</h1>
     </div>
