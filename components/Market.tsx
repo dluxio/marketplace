@@ -8,7 +8,13 @@ import { CoinCard } from ".";
 import Link from "next/link";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { marketNavState, coinState, prefixState, apiLinkState } from "../atoms";
+import {
+  marketNavState,
+  coinState,
+  prefixState,
+  apiLinkState,
+  dlux_ccState,
+} from "../atoms";
 import { NewsScreen } from "./NewsScreen";
 import { AppScreen } from "./AppScreen";
 import { useTranslation } from "next-export-i18n";
@@ -17,6 +23,7 @@ export const Market = () => {
   const [nfts, setNfts] = useState([]);
   const [auction, setAuction] = useState([]);
   const [_prefix, setPrefix] = useRecoilState(prefixState);
+  const [_cc, setCC] = useRecoilState(dlux_ccState);
   const { t } = useTranslation();
 
   const selectedMarket = useRecoilValue(marketNavState);
@@ -65,8 +72,9 @@ export const Market = () => {
     };
 
     const fetchPrefix = () => {
-      axios.get(`${apiLink}api/protocol`).then((response) => {
-        setPrefix(response.data.prefix);
+      axios.get(`${apiLink}api/protocol`).then(({ data }) => {
+        setPrefix(data.prefix);
+        setCC(data.multisig);
       });
     };
 
@@ -98,7 +106,7 @@ export const Market = () => {
               </h1>
             </Link>
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5 mx-10 my-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 mx-10 my-3">
             {nfts &&
               nfts.map(
                 (nft: any, i) =>
@@ -112,7 +120,7 @@ export const Market = () => {
               </h1>
             </Link>
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5 mx-10 my-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 mx-10 my-3">
             {auction &&
               auction.map(
                 (nft: any, i) =>

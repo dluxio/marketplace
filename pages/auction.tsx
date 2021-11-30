@@ -66,7 +66,7 @@ const Tools = () => {
         {t("auctionHouse")}
       </h1>
       {showAuctionNFT ? (
-        <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
           {auctionHouseNFT &&
             auctionHouseNFT.map((nft: any) => (
               <AuctionNFTcard key={nft.uid} nft={nft} />
@@ -74,7 +74,7 @@ const Tools = () => {
         </div>
       ) : (
         auctionHouseFT && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
             {auctionHouseFT &&
               auctionHouseFT.map((ft: any) => (
                 <AuctionFTcard key={ft.uid} ft={ft} />
