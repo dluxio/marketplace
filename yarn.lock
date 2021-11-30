@@ -1400,6 +1400,13 @@ detective@^5.2.0:
     defined "^1.0.0"
     minimist "^1.1.1"
 
+devextreme-react@^21.2.3:
+  version "21.2.3"
+  resolved "https://registry.yarnpkg.com/devextreme-react/-/devextreme-react-21.2.3.tgz#ad08a6a0f3104044a1bc20f8c57f9dd9d5a999d7"
+  integrity sha512-2YPQxLY7iRVC6e5G+YkvSit/DlguOH0NuLu4BEBB70a9o1g+D4Fl33MBq6Sz0+hcmj3xSzjU/C0ELt8sq4prQQ==
+  dependencies:
+    prop-types "^15.6.1"
+
 didyoumean@^1.2.2:
   version "1.2.2"
   resolved "https://registry.npmjs.org/didyoumean/-/didyoumean-1.2.2.tgz"
@@ -3589,7 +3596,7 @@ progress@^2.0.0:
   resolved "https://registry.npmjs.org/progress/-/progress-2.0.3.tgz"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-prop-types@^15.0.0, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.0.0, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==

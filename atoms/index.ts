@@ -59,6 +59,6 @@ export const dayVolumeState = atom({
   key: "dayVolumeState",
   default: {
     dlux: "0",
-    dollars: 0,
+    dollars: "",
   },
 });

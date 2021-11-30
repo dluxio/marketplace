@@ -18,6 +18,7 @@
     "coingecko-api": "^1.0.10",
     "cryptocharts": "^1.1.2",
     "dayjs": "^1.10.7",
+    "devextreme-react": "^21.2.3",
     "formik": "^2.2.9",
     "mustache": "^4.2.0",
     "net": "^1.0.2",
