@@ -238,6 +238,7 @@ export const NFTMelt = async (
 type BuyData = {
   set: string;
   uid?: string;
+  qty?: number;
 };
 
 export const NFTBuy = async (
@@ -245,7 +246,7 @@ export const NFTBuy = async (
   nftData: BuyData,
   prefix: string = "dlux_"
 ) => {
-  const id = `${prefix}${nftData.uid ? "nft_buy" : "ft_buy"}`;
+  const id = `${prefix}${!nftData.qty ? "nft_buy" : "ft_buy"}`;
   const operations = [
     "custom_json",
     {

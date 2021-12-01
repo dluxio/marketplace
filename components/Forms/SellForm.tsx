@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 import { FormInput } from "../FormInput";
@@ -67,7 +67,7 @@ export const SellForm = ({
               errors.price = "Required";
             }
             if (availible) {
-              if (availible > qty) {
+              if (availible < qty) {
                 errors.qty = "You don't have enough";
               }
             }
