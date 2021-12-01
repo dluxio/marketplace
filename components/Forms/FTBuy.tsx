@@ -52,14 +52,19 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
             onClick={handleClose as MouseEventHandler}
           />
         </button>
-        <h1 className="text-xl text-center whitespace-nowrap">How many?</h1>
+        <h1 className="text-xl text-center whitespace-nowrap mb-2">
+          How many?
+        </h1>
+        <h1 className="text-xl text-center whitespace-nowrap">
+          {t("availible")}: {ft.qty}
+        </h1>
         <Formik
           initialValues={{ qty: 1 }}
           validate={({ qty }) => {
             const errors: any = {};
             if (ft.qty) {
-              if (ft.qty > qty) {
-                errors.qty = "You don't have enough";
+              if (ft.qty < qty) {
+                errors.qty = "Not enough availible";
               }
             }
             return errors;
