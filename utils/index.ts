@@ -189,6 +189,7 @@ type SellData = {
   price: number;
   set: string;
   uid?: string;
+  qty?: number;
 };
 
 export const Sell = async (

@@ -41,6 +41,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
   };
 
   useEffect(() => {
+    console.log(ft);
     axios.get(`${apiLink}api/set/${set}`).then(({ data }) => {
       setInterval(() => {
         randomUIDGen(data.set);
@@ -131,9 +132,11 @@ export const FTCard = ({ ft }: FTCardProps) => {
         >
           {t("by")}: {ft.by}
         </h1>
-        <h1>
-          {t("availible")}: {ft.qty}
-        </h1>
+        {ft.qty && ft.qty !== 1 && (
+          <h1>
+            {t("availible")}: {ft.qty}
+          </h1>
+        )}
         <h1>
           {t("price")}:{" "}
           <strong>

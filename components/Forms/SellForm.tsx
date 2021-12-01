@@ -1,4 +1,4 @@
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 import { FormInput } from "../FormInput";
@@ -13,9 +13,15 @@ type SellFormProps = {
   handleClose: Function;
   set: string;
   uid?: string;
+  availible?: number;
 };
 
-export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
+export const SellForm = ({
+  handleClose,
+  set,
+  uid,
+  availible,
+}: SellFormProps) => {
   const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
@@ -24,10 +30,12 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
     price: number;
     set: string;
     uid?: string;
+    qty?: number;
   }>();
 
   useEffect(() => {
     if (sellData) {
+      console.log(sellData);
       Sell(user.name, sellData, prefix).then((response: any) => {
         if (response) {
           if (response.success) {
@@ -52,11 +60,16 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
         </button>
         <h1 className="text-center text-white text-2xl mb-3">{t("sell")}</h1>
         <Formik
-          initialValues={{ price: (10).toFixed(3) }}
-          validate={({ price }) => {
+          initialValues={{ price: (10).toFixed(3), qty: 1 }}
+          validate={({ price, qty }) => {
             const errors: any = {};
             if (!price) {
               errors.price = "Required";
+            }
+            if (availible) {
+              if (availible > qty) {
+                errors.qty = "You don't have enough";
+              }
             }
             return errors;
           }}
@@ -65,6 +78,7 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
               price: +values.price * 1000,
               set,
               uid: uid ? uid : undefined,
+              qty: values.qty ? values.qty : undefined,
             });
             setSubmitting(false);
             handleClose();
@@ -89,6 +103,17 @@ export const SellForm = ({ handleClose, set, uid }: SellFormProps) => {
                   touched={touched.price}
                   value={values.price}
                 />
+                {!uid && (
+                  <FormInput
+                    type="number"
+                    name="qty"
+                    errors={errors.qty}
+                    handleBlur={handleBlur}
+                    handleChange={handleChange}
+                    touched={touched.qty}
+                    value={values.qty}
+                  />
+                )}
                 <button
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"

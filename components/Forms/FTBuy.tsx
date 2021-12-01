@@ -1,5 +1,8 @@
 import React, { MouseEventHandler } from "react";
 import { ImCross } from "react-icons/im";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { broadcastState, prefixState, userState } from "../../atoms";
+import { NFTBuy } from "../../utils";
 
 type FTBuyProps = {
   ft: {
@@ -14,6 +17,25 @@ type FTBuyProps = {
 };
 
 export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
+  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+  const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
+
+  const handleBuy = async () => {
+    const response: any = await NFTBuy(
+      user.name,
+      {
+        set: ft.set,
+      },
+      prefix
+    );
+    if (response) {
+      if (response.success) {
+        setBroadcasts((prevState: any) => [...prevState, response]);
+      }
+    }
+  };
+
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
       <div className="p-8 bg-gray-700 rounded-xl border-4 border-gray-800 relative">
@@ -26,6 +48,7 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
           />
         </button>
         <h1>Buy FT</h1>
+        <h1>How many FTs do you want to buy?</h1>
       </div>
     </div>
   );
