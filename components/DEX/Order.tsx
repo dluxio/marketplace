@@ -13,7 +13,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
 
   const handlePlaceOrder = () => {
     if (type === "sell" && orderType === "market") {
-      dexSell({ dlux: quantity * 1000 }, user.name, prefix);
+      dexSell({ dlux: quantity * 1000, hive: 0 }, user.name, prefix);
     } else if (type === "sell" && orderType === "limit") {
       coin === "HIVE"
         ? dexSell(
