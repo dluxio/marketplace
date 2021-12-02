@@ -1,55 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { scaleTime } from "d3-scale";
-import { utcDay } from "d3-time";
 
-import { ChartCanvas, Chart } from "react-stockcharts";
-import { CandlestickSeries } from "react-stockcharts/lib/series";
-import { XAxis, YAxis } from "react-stockcharts/lib/axes";
-import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
+import { useRecoilValue } from "recoil";
+import { apiLinkState } from "../../atoms";
+import axios from "axios";
+import { IgrFinancialChart } from "igniteui-react-charts";
+import { IgrFinancialChartModule } from "igniteui-react-charts";
+import { exampleChartData } from "../../utils";
+IgrFinancialChartModule.register();
 
-export const DEXChart = ({
-  coin,
-  width,
-  ratio,
-  type,
-}: {
-  coin: string;
-  width: number;
-  ratio: number;
-  type: "svg" | "hybrid";
-}) => {
-  const [dataSource, setDataSource] = useState([]);
-  const [xExtents, setXExtents] = useState<any[]>();
-
-  const xAccessor = (d: any) => d.date;
+export const DEXChart = ({ coin }: { coin: "HIVE" | "HBD" }) => {
+  const apiLink: string = useRecoilValue(apiLinkState);
+  const [chartData, setChartData] = useState<any>([]);
 
   useEffect(() => {
-    setXExtents([
-      xAccessor(last(dataSource)),
-      xAccessor(dataSource[dataSource.length - 100]),
-    ]);
-
-    console.log("Should get chart data for ", coin);
+    setChartData(exampleChartData);
   }, []);
 
-  return (
-    <ChartCanvas
-      height={400}
-      ratio={ratio}
-      width={width}
-      margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
-      type={type}
-      seriesName="MSFT"
-      data={dataSource}
-      xAccessor={xAccessor}
-      xScale={scaleTime()}
-      xExtents={xExtents}
-    >
-      <Chart id={1} yExtents={(d: any) => [d.high, d.low]}>
-        <XAxis axisAt="bottom" orient="bottom" ticks={6} />
-        <YAxis axisAt="left" orient="left" ticks={5} />
-        <CandlestickSeries width={timeIntervalBarWidth(utcDay)} />
-      </Chart>
-    </ChartCanvas>
+  return chartData ? (
+    <div style={{ height: "50vh" }}>
+      <IgrFinancialChart
+        width="100%"
+        height="100%"
+        isToolbarVisible={false}
+        chartType="Candle"
+        chartTitle={`${coin}/DLUX`}
+        titleAlignment="Left"
+        titleLeftMargin="25"
+        titleTopMargin="10"
+        titleBottomMargin="10"
+        subtitle="Price of DLUX"
+        subtitleAlignment="Left"
+        subtitleLeftMargin="25"
+        subtitleTopMargin="5"
+        subtitleBottomMargin="10"
+        yAxisLabelLocation="OutsideLeft"
+        yAxisMode="Numeric"
+        yAxisTitle={"Price in " + coin}
+        yAxisTitleLeftMargin="10"
+        yAxisTitleRightMargin="5"
+        yAxisLabelLeftMargin="0"
+        zoomSliderType="None"
+        titleTextColor="white"
+        xAxisLabelTextColor="white"
+        subtitleTextColor="white"
+        yAxisLabelTextColor="white"
+        yAxisTitleTextColor="white"
+        dataSource={chartData}
+      />
+    </div>
+  ) : (
+    <div className="text-center text-white text-xl">Loading charts...</div>
   );
 };

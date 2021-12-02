@@ -7,9 +7,10 @@ import { apiLinkState, dlux_ccState } from "../../atoms";
 import axios from "axios";
 import { TransactionHistory } from "./TransactionHistory";
 import { DEXChart } from "./DEXChart";
+import { getData } from "../../utils";
 
 export const DEX = () => {
-  const [coin, setCoin] = useState("HIVE");
+  const [coin, setCoin] = useState<"HIVE" | "HBD">("HIVE");
   const [_cc, setCC] = useRecoilState(dlux_ccState);
   const apiLink = useRecoilValue(apiLinkState);
 
@@ -45,7 +46,7 @@ export const DEX = () => {
             <DLUXInfocard coin={coin} />
           </div>
           <div className="my-3">
-            <DEXChart coin={coin} ratio={250} type={"hybrid"} width={300} />
+            <DEXChart coin={coin} />
           </div>
           <div className="flex justify-between gap-10">
             <Order coin={coin} type="buy" />
