@@ -55,7 +55,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
   };
 
   return (
-    <div className="flex flex-col flex-grow my-5 bg-gray-700 border-2 border-gray-800 p-3 rounded-md">
+    <div className="flex flex-col flex-grow bg-gray-700 border-2 border-gray-800 p-3 rounded-md">
       <div className="text-white text-xl flex gap-3">
         <h1 className={type === "sell" ? "text-red-500" : "text-green-500"}>
           {type.charAt(0).toUpperCase() + type.slice(1)}

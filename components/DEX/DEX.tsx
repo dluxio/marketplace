@@ -7,7 +7,6 @@ import { apiLinkState, dlux_ccState } from "../../atoms";
 import axios from "axios";
 import { TransactionHistory } from "./TransactionHistory";
 import { DEXChart } from "./DEXChart";
-import { getData } from "../../utils";
 
 export const DEX = () => {
   const [coin, setCoin] = useState<"HIVE" | "HBD">("HIVE");
@@ -48,7 +47,7 @@ export const DEX = () => {
           <div className="my-3">
             <DEXChart coin={coin} />
           </div>
-          <div className="flex justify-between gap-10">
+          <div className="flex flex-col my-5 gap-2 xl:flex-row xl:justify-between xl:gap-10">
             <Order coin={coin} type="buy" />
             <Order coin={coin} type="sell" />
           </div>

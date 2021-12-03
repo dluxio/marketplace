@@ -549,42 +549,29 @@ export const dexBuy = async (
   return await handleBroadcastRequest(operations, username);
 };
 
-function parseData(parse: any) {
-  return function (d: any) {
-    d.date = parse(d.date);
-    d.open = +d.open;
-    d.high = +d.high;
-    d.low = +d.low;
-    d.close = +d.close;
-    d.volume = +d.volume;
+export const parseData = (data: any) => {
+  const result: {
+    time: Date;
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+    volume: number;
+  }[] = [];
 
-    return d;
-  };
-}
-
-const parseDate = timeParse("%Y-%m-%d");
-
-export function getData(apiLink: string, coin: string) {
-  // const dluxChartData = axios
-  //   .get(
-  //     `${apiLink}api/recent/${
-  //       coin === "HIVE" ? "HIVE_DLUX" : "HBD_DLUX"
-  //     }?depth=200`
-  //   )
-  //   .then(({ data }) => {
-  //     tsvParse(data, parseData(parseDate));
-  //   });
-  // return dluxChartData;
-  const promiseMSFT = fetch(
-    "https://cdn.rawgit.com/rrag/react-stockcharts/master/docs/data/MSFT.tsv"
-  )
-    .then((response) => response.text())
-    .then((data) => {
-      tsvParse(data, parseData(parseDate));
-      console.log(data);
+  Object.keys(data).map((key) => {
+    result.push({
+      time: new Date(+key),
+      open: data[key].o,
+      close: data[key].c,
+      high: data[key].t,
+      low: data[key].b,
+      volume: data[key].v,
     });
-  return promiseMSFT;
-}
+  });
+
+  return result;
+};
 
 export const exampleChartData = [
   {

@@ -5,16 +5,21 @@ import { apiLinkState } from "../../atoms";
 import axios from "axios";
 import { IgrFinancialChart } from "igniteui-react-charts";
 import { IgrFinancialChartModule } from "igniteui-react-charts";
-import { exampleChartData } from "../../utils";
+import { parseData } from "../../utils";
 IgrFinancialChartModule.register();
 
 export const DEXChart = ({ coin }: { coin: "HIVE" | "HBD" }) => {
   const apiLink: string = useRecoilValue(apiLinkState);
-  const [chartData, setChartData] = useState<any>([]);
+  const [chartData, setChartData] = useState<any>();
 
   useEffect(() => {
-    setChartData(exampleChartData);
-  }, []);
+    axios.get(`${apiLink}dex`).then(({ data }) => {
+      console.log(data);
+      coin === "HIVE"
+        ? setChartData(parseData(data.markets.hive.days))
+        : setChartData(parseData(data.markets.hbd.days));
+    });
+  }, [coin]);
 
   return chartData ? (
     <div style={{ height: "50vh" }}>
