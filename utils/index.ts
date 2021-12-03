@@ -551,7 +551,7 @@ export const dexBuy = async (
 
 export const parseData = (data: any) => {
   const result: {
-    time: Date;
+    date: Date;
     open: number;
     high: number;
     low: number;
@@ -561,7 +561,7 @@ export const parseData = (data: any) => {
 
   Object.keys(data).map((key) => {
     result.push({
-      time: new Date(+key),
+      date: new Date(+key),
       open: data[key].o,
       close: data[key].c,
       high: data[key].t,
