@@ -30,8 +30,8 @@ export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
           });
 
           let dayVolume = 0;
+          const today = new Date().getDate();
           sortedTransactions.forEach((transaction: any) => {
-            const today = new Date().getDate();
             const transactionDay = new Date(
               transaction.trade_timestamp
             ).getDate();
@@ -41,20 +41,14 @@ export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
             }
           });
 
-          if (volume.dlux === "0") {
-            setDayVolume({
-              dlux: dayVolume.toFixed(3),
-              dollars: 0,
-            });
-          }
+          setDayVolume({
+            dlux: dayVolume.toFixed(3),
+            dollars: "0",
+          });
           setTransactions(sortedTransactions);
         });
     }
   }, [tickerID]);
-
-  useEffect(() => {
-    console.log(transactions);
-  }, [transactions]);
 
   return (
     <div className="flex flex-col text-white">
