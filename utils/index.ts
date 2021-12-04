@@ -192,6 +192,7 @@ type SellData = {
   price: number;
   set: string;
   uid?: string;
+  qty?: number;
 };
 
 export const Sell = async (
@@ -240,6 +241,7 @@ export const NFTMelt = async (
 type BuyData = {
   set: string;
   uid?: string;
+  qty?: number;
 };
 
 export const NFTBuy = async (
@@ -247,7 +249,7 @@ export const NFTBuy = async (
   nftData: BuyData,
   prefix: string = "dlux_"
 ) => {
-  const id = `${prefix}${nftData.uid ? "nft_buy" : "ft_buy"}`;
+  const id = `${prefix}${!nftData.qty ? "nft_buy" : "ft_buy"}`;
   const operations = [
     "custom_json",
     {
@@ -543,6 +545,24 @@ export const dexBuy = async (
         data.coin
       }`,
       memo: JSON.stringify(data.buyData),
+    },
+  ];
+
+  return await handleBroadcastRequest(operations, username);
+};
+
+export const ftBuyTransfer = async (
+  ftData: { amount: string; memo: string },
+  username: string,
+  to: string
+) => {
+  const operations = [
+    "transfer",
+    {
+      from: username,
+      to,
+      amount: ftData.amount,
+      memo: ftData.memo,
     },
   ];
 

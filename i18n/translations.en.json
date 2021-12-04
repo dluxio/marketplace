@@ -43,6 +43,7 @@
     "continue": "Continue",
     "cancel": "Cancel",
     "name": "Name",
-    "runApp": "Launch"
+    "runApp": "Launch",
+    "availible": "Availible"
   }
 }

@@ -24,3 +24,41 @@ export const attributeColors: any = {
   "Facial Hair": "#004777",
   Freckle: "#FFCC00",
 };
+
+export const customSelectStyles = {
+  control: (base: any) => ({
+    ...base,
+    background: "rgba(107, 114, 128)",
+    // match with the menu
+    borderRadius: 8,
+    // Overwrittes the different states of border
+    borderColor: "white",
+    // Removes weird border around container
+    fontColor: "white",
+    color: "white",
+  }),
+  option: (base: any) => ({
+    ...base,
+    color: "white",
+  }),
+  singleValue: (base: any) => ({
+    ...base,
+    color: "white",
+  }),
+  menu: (base: any) => ({
+    ...base,
+    // override border radius to match the box
+    borderRadius: 8,
+    // kill the gap
+    marginTop: 0,
+    background: "rgba(107, 114, 128)",
+    color: "white",
+  }),
+  menuList: (base: any) => ({
+    ...base,
+    // kill the white space on first and last option
+    padding: 0,
+    background: "rgba(107, 114, 128)",
+    color: "white",
+  }),
+};
