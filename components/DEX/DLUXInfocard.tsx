@@ -9,6 +9,7 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
   const [lastPrice, setLastPrice] = useState({ dollars: 0, dlux: 0 });
   const [vwmaPrice, setVwmaPrice] = useState({ dollars: 0, dlux: 0 });
   const [volumePrice, setVolumePrice] = useRecoilState(dayVolumeState);
+  const [dexData, setDexData] = useState<{ markets: any }>();
 
   const apiLink: string = useRecoilValue(apiLinkState);
 
@@ -40,10 +41,10 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
     fetchCoins();
     if (coin) {
       axios.get(`${apiLink}dex`).then(({ data }) => {
-        console.log(data);
+        setDexData(data);
 
         if (coin === "HIVE") {
-          if (data.markets.hive.sells[0]) {
+          if (data.markets.hive.sells[0] && data.markets.buys) {
             setBidPrice({
               dlux: data.markets.hive.buys[0].rate,
               dollars: parseFloat(
@@ -80,11 +81,6 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
             dollars: parseFloat(
               (+data.stats.HiveVWMA.rate * +data.markets.hive.tick).toFixed(3)
             ),
-          });
-
-          setVolumePrice({
-            dlux: volumePrice.dlux,
-            dollars: parseFloat(volumePrice.dlux) * data.markets.hive.tick,
           });
 
           setLastPrice({
@@ -141,6 +137,29 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
           });
         }
       });
+    }
+  }, [coin]);
+
+  useEffect(() => {
+    if (dexData) {
+      if (coin === "HIVE") {
+        console.log("Set volume price");
+        console.log(volumePrice);
+        console.log(dexData);
+        setVolumePrice({
+          dlux: volumePrice.dlux,
+          dollars: (
+            parseFloat(volumePrice.dlux) * dexData.markets.hive.tick
+          ).toFixed(3),
+        });
+      } else {
+        setVolumePrice({
+          dlux: volumePrice.dlux,
+          dollars: (
+            parseFloat(volumePrice.dlux) * dexData.markets.hbd.tick
+          ).toFixed(3),
+        });
+      }
     }
   }, [coin]);
 

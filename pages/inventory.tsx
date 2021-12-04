@@ -9,6 +9,8 @@ import { MintTokenScreen } from "../components/MintTokenScreen";
 import { CryptoScreen } from "../components/CryptoScreen";
 import { NFTScreen } from "../components/NFTScreen";
 import { DEX } from "../components/DEX/DEX";
+import dynamic from "next/dynamic";
+import NoSSR from "react-no-ssr";
 
 const Inventory = () => {
   const user: any = useRecoilValue(userState);
@@ -24,7 +26,11 @@ const Inventory = () => {
             {inventoryPage === "mint" && <MintTokenScreen />}
             {inventoryPage === "nft" && <NFTScreen />}
             {inventoryPage === "tokens" && <CryptoScreen />}
-            {inventoryPage === "dex" && <DEX />}
+            {inventoryPage === "dex" && (
+              <NoSSR>
+                <DEX />
+              </NoSSR>
+            )}
           </div>
         </>
       )}
@@ -32,4 +38,4 @@ const Inventory = () => {
   );
 };
 
-export default Inventory;
+export default dynamic(() => Promise.resolve(Inventory), { ssr: false });
