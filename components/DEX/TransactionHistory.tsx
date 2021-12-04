@@ -12,7 +12,6 @@ export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
 
   useEffect(() => {
     axios.get(`${apiLink}api/pairs`).then(({ data }) => {
-      console.log(data);
       coin === "HIVE"
         ? setTickerID(data[0].ticker_id)
         : setTickerID(data[1].ticker_id);

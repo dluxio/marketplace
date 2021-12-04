@@ -14,7 +14,6 @@ export const DEXChart = ({ coin }: { coin: "HIVE" | "HBD" }) => {
 
   useEffect(() => {
     axios.get(`${apiLink}dex`).then(({ data }) => {
-      console.log(data);
       coin === "HIVE"
         ? setChartData(parseData(data.markets.hive.days))
         : setChartData(parseData(data.markets.hbd.days));

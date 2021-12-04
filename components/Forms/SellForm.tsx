@@ -35,7 +35,6 @@ export const SellForm = ({
 
   useEffect(() => {
     if (sellData) {
-      console.log(sellData);
       Sell(user.name, sellData, prefix).then((response: any) => {
         if (response) {
           if (response.success) {

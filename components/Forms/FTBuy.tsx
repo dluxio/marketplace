@@ -114,7 +114,6 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
             return errors;
           }}
           onSubmit={({ qty }, { setSubmitting }) => {
-            console.log(qty, ft);
             setBuyData({
               price:
                 parseFloat(

@@ -143,9 +143,6 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
   useEffect(() => {
     if (dexData) {
       if (coin === "HIVE") {
-        console.log("Set volume price");
-        console.log(volumePrice);
-        console.log(dexData);
         setVolumePrice({
           dlux: volumePrice.dlux,
           dollars: (

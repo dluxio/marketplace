@@ -41,7 +41,6 @@ export const FTCard = ({ ft }: FTCardProps) => {
   };
 
   useEffect(() => {
-    console.log(ft);
     axios.get(`${apiLink}api/set/${set}`).then(({ data }) => {
       setInterval(() => {
         randomUIDGen(data.set);
