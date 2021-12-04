@@ -49,26 +49,6 @@ export const FTCard = ({ ft }: FTCardProps) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleBuy = async () => {
-    if (ft.qty === 1) {
-      const response: any = await NFTBuy(
-        user.name,
-        {
-          set,
-        },
-        prefix
-      );
-      if (response) {
-        if (response.success) {
-          setBroadcasts((prevState: any) => [...prevState, response]);
-        }
-      }
-    } else {
-      setBuy(true);
-    }
-  };
-
   const handleTakeBack = async () => {
     const response: any = await handleSellCancel(
       { set: ft.set, uid: ft.uid, kind: "ft" },
@@ -147,7 +127,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
         </h1>
         {ft.by !== user?.name ? (
           <button
-            onClick={() => user && handleBuy()}
+            onClick={() => user && setBuy(true)}
             className={`px-6 py-2 mt-2 rounded-xl flex items-center gap-2 ${
               !user && "cursor-not-allowed"
             }`}

@@ -6,6 +6,8 @@ import { NFTBuy } from "../../utils";
 import { FormInput } from "../FormInput";
 import { Formik } from "formik";
 import { useTranslation } from "next-export-i18n";
+import Select from "react-select";
+import { customSelectStyles } from "../../constants";
 
 type FTBuyProps = {
   ft: {
@@ -22,6 +24,7 @@ type FTBuyProps = {
 export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
   const [buyData, setBuyData] = useState<any>();
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+  const [buyCurrency, setBuyCurrency] = useState("DLUX");
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const { t } = useTranslation();
@@ -37,7 +40,7 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
 
   useEffect(() => {
     if (buyData) {
-      handleBuy();
+      console.log(buyData);
     }
   }, [buyData]);
 
@@ -75,6 +78,7 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
               price: +ft.price.amount * 1000 * qty,
               set: ft.set,
               uid: ft.uid ? ft.uid : undefined,
+              currency: buyCurrency,
               qty,
             });
             setSubmitting(false);
@@ -100,12 +104,42 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
                   touched={touched.qty}
                   value={values.qty}
                 />
-
+                <div>
+                  <h1 className="mb-1">Currency</h1>
+                  <Select
+                    styles={customSelectStyles}
+                    defaultValue={{
+                      value: "DLUX",
+                      label: "DLUX",
+                    }}
+                    onChange={(e) => {
+                      setBuyCurrency(e!.value);
+                    }}
+                    options={[
+                      {
+                        value: "DLUX",
+                        label: "DLUX",
+                      },
+                      {
+                        value: "HIVE",
+                        label: "HIVE",
+                      },
+                      { value: "HBD", label: "HBD" },
+                    ]}
+                  />
+                </div>
                 <button
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
                 >
-                  {t("sell")}
+                  {parseFloat(
+                    parseFloat(
+                      (
+                        +ft.price.amount / Math.pow(10, ft.price.precision)
+                      ).toString()
+                    ).toFixed(ft.price.precision)
+                  ) * values.qty}{" "}
+                  {buyCurrency}
                 </button>
               </div>
             </form>
