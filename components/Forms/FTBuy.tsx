@@ -1,13 +1,19 @@
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { broadcastState, prefixState, userState } from "../../atoms";
+import {
+  apiLinkState,
+  broadcastState,
+  prefixState,
+  userState,
+} from "../../atoms";
 import { NFTBuy } from "../../utils";
 import { FormInput } from "../FormInput";
 import { Formik } from "formik";
 import { useTranslation } from "next-export-i18n";
 import Select from "react-select";
 import { customSelectStyles } from "../../constants";
+import axios from "axios";
 
 type FTBuyProps = {
   ft: {
@@ -25,8 +31,11 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
   const [buyData, setBuyData] = useState<any>();
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const [buyCurrency, setBuyCurrency] = useState("DLUX");
+  const [hiveTick, setHiveTick] = useState(1);
+  const [hbdTick, setHbdTick] = useState(1);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
+  const apiLink = useRecoilValue(apiLinkState);
   const { t } = useTranslation();
 
   const handleBuy = async () => {
@@ -38,14 +47,25 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
     }
   };
 
+  const calculateSum = (currency: string) => {
+    return currency === "HIVE" ? hiveTick : hbdTick;
+  };
+
   useEffect(() => {
     if (buyData) {
       console.log(buyData);
     }
   }, [buyData]);
 
+  useEffect(() => {
+    axios.get(`${apiLink}dex`).then(({ data }) => {
+      setHiveTick(data.markets.hive.tick);
+      setHbdTick(data.markets.hbd.tick);
+    });
+  }, []);
+
   return (
-    <div className="fixed  top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
+    <div className="fixed  top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-75 z-50">
       <div className=" p-8 bg-gray-700 rounded-xl border-4 border-gray-800 relative">
         <button className="m-2 absolute top-0 right-0">
           <ImCross
@@ -75,7 +95,11 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
           onSubmit={({ qty }, { setSubmitting }) => {
             console.log(qty, ft);
             setBuyData({
-              price: +ft.price.amount * 1000 * qty,
+              price:
+                +ft.price.amount *
+                1000 *
+                qty *
+                (buyCurrency === "DLUX" ? 1 : calculateSum(buyCurrency)),
               set: ft.set,
               uid: ft.uid ? ft.uid : undefined,
               currency: buyCurrency,
@@ -138,7 +162,11 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
                         +ft.price.amount / Math.pow(10, ft.price.precision)
                       ).toString()
                     ).toFixed(ft.price.precision)
-                  ) * values.qty}{" "}
+                  ) *
+                    values.qty *
+                    (buyCurrency === "DLUX"
+                      ? 1
+                      : calculateSum(buyCurrency))}{" "}
                   {buyCurrency}
                 </button>
               </div>
