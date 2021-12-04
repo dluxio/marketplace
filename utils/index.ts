@@ -551,6 +551,24 @@ export const dexBuy = async (
   return await handleBroadcastRequest(operations, username);
 };
 
+export const ftBuyTransfer = async (
+  ftData: { amount: string; memo: string },
+  username: string,
+  to: string
+) => {
+  const operations = [
+    "transfer",
+    {
+      from: username,
+      to,
+      amount: ftData.amount,
+      memo: ftData.memo,
+    },
+  ];
+
+  return await handleBroadcastRequest(operations, username);
+};
+
 export const parseData = (data: any) => {
   const result: { x: Date; y: any[] }[] = [];
 

@@ -4,10 +4,11 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import {
   apiLinkState,
   broadcastState,
+  dlux_ccState,
   prefixState,
   userState,
 } from "../../atoms";
-import { NFTBuy } from "../../utils";
+import { ftBuyTransfer, NFTBuy } from "../../utils";
 import { FormInput } from "../FormInput";
 import { Formik } from "formik";
 import { useTranslation } from "next-export-i18n";
@@ -36,13 +37,33 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const apiLink = useRecoilValue(apiLinkState);
+  const cc: string = useRecoilValue(dlux_ccState);
   const { t } = useTranslation();
 
   const handleBuy = async () => {
-    const response: any = await NFTBuy(user.name, buyData, prefix);
-    if (response) {
-      if (response.success) {
-        setBroadcasts((prevState: any) => [...prevState, response]);
+    if (buyCurrency === "DLUX") {
+      {
+        const response: any = await NFTBuy(user.name, buyData, prefix);
+        if (response) {
+          if (response.success) {
+            setBroadcasts((prevState: any) => [...prevState, response]);
+          }
+        }
+      }
+    } else {
+      const response: any = await ftBuyTransfer(
+        {
+          amount: `${buyData.price} ${buyCurrency}`,
+          memo: "NFT " + ft.set + ":" + ft.uid,
+        },
+        user.name,
+        cc
+      );
+
+      if (response) {
+        if (response.success) {
+          setBroadcasts((prevState: any) => [...prevState, response]);
+        }
       }
     }
   };
@@ -53,7 +74,7 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
 
   useEffect(() => {
     if (buyData) {
-      console.log(buyData);
+      handleBuy();
     }
   }, [buyData]);
 
@@ -96,8 +117,13 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
             console.log(qty, ft);
             setBuyData({
               price:
-                +ft.price.amount *
-                1000 *
+                parseFloat(
+                  parseFloat(
+                    (
+                      +ft.price.amount / Math.pow(10, ft.price.precision)
+                    ).toString()
+                  ).toFixed(ft.price.precision)
+                ) *
                 qty *
                 (buyCurrency === "DLUX" ? 1 : calculateSum(buyCurrency)),
               set: ft.set,
