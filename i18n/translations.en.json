@@ -44,6 +44,8 @@
     "cancel": "Cancel",
     "name": "Name",
     "runApp": "Launch",
-    "availible": "Availible"
+    "availible": "Availible",
+    "userNotFound": "User not found",
+    "inputUsername": "Input your username"
   }
 }

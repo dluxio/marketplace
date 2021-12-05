@@ -44,6 +44,8 @@
     "continue": "Taip",
     "cancel": "Ne",
     "name": "Pavadinimas",
-    "availible": "Galimi"
+    "availible": "Availible",
+    "userNotFound": "Paskyra nerasta",
+    "inputUsername": "Įvesk savo slapyvardį"
   }
 }
