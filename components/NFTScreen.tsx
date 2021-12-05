@@ -44,7 +44,6 @@ export const NFTScreen = () => {
   }, [inventoryNFTs]);
 
   const handleNftClick = (nft: any) => {
-    router.push("#details");
     setNftDetail(nft);
   };
 
@@ -62,6 +61,7 @@ export const NFTScreen = () => {
               onClick={() => {
                 handleNftClick(nft);
               }}
+              onDoubleClick={() => router.push(`/nft/${nft.set}:${nft.uid}`)}
             />
           ))}
         </div>
