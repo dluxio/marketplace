@@ -93,7 +93,7 @@ export const TokenCard = ({ token }: TokenCardProps) => {
       </h1>
       <div className="py-5">
         <div className="relative">
-          <div className="bg-gray-700 absolute top-0 w-full h-full bg-opacity-70 flex justify-center items-center">
+          <div className="z-40 bg-gray-700 absolute top-0 w-full h-full bg-opacity-70 flex justify-center items-center">
             <FaQuestion size={60} color="#fff" />
           </div>
           <div id={`image-${set}-${id}`} className="w-1/2 mx-auto"></div>
