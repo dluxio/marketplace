@@ -95,6 +95,9 @@ const Settings = () => {
               </div>
             </button>
           </div>
+          <h1 className="text-sm my-2 text-red-400">
+            WARNING! The desktop app is not ready for release yet...
+          </h1>
         </div>
       </div>
     </div>

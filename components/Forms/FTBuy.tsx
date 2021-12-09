@@ -75,10 +75,9 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
     } else if (currency === "DLUX") {
       return token === "HIVE" ? 1 / hiveTick : 1 / hbdTick;
     } else if (currency === "HIVE") {
-      return hiveTick;
+      return 1 / hiveTick;
     }
-
-    return hbdTick;
+    return 1 / hbdTick;
   };
 
   useEffect(() => {
