@@ -23,6 +23,8 @@ export const attributeColors: any = {
   "Color 3": "#32C8D0",
   "Facial Hair": "#004777",
   Freckle: "#FFCC00",
+  Type: "#9C2E40",
+  Rarity: "#46CDF9",
 };
 
 export const customSelectStyles = {

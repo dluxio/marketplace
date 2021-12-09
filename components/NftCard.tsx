@@ -117,6 +117,7 @@ export const NftCard = ({ nft }: NftCardProp) => {
                   nft.price.amount / Math.pow(10, nft.price.precision)
                 ).toString()
               ).toFixed(nft.price.precision)}{" "}
+              {nft.price.token}
             </strong>
           </h1>
           {nft.by !== user?.name ? (

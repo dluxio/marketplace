@@ -25,13 +25,14 @@ type FTBuyProps = {
     uid: string;
     qty: number;
   };
+  token: string;
   handleClose: Function;
 };
 
-export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
+export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
   const [buyData, setBuyData] = useState<any>();
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
-  const [buyCurrency, setBuyCurrency] = useState("DLUX");
+  const [buyCurrency, setBuyCurrency] = useState(token);
   const [hiveTick, setHiveTick] = useState(1);
   const [hbdTick, setHbdTick] = useState(1);
   const user: any = useRecoilValue(userState);
@@ -69,7 +70,14 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
   };
 
   const calculateSum = (currency: string) => {
-    return currency === "HIVE" ? hiveTick : hbdTick;
+    if (currency === token) {
+      return 1;
+    } else if (currency === "DLUX") {
+      return token === "HIVE" ? 1 / hiveTick : 1 / hbdTick;
+    } else if (currency === "HIVE") {
+      return 1 / hiveTick;
+    }
+    return 1 / hbdTick;
   };
 
   useEffect(() => {
@@ -124,7 +132,7 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
                   ).toFixed(ft.pricenai.precision)
                 ) *
                 qty *
-                (buyCurrency === "DLUX" ? 1 : calculateSum(buyCurrency)),
+                calculateSum(buyCurrency),
               set: ft.set,
               uid: ft.uid ? ft.uid : undefined,
               currency: buyCurrency,
@@ -158,8 +166,8 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
                   <Select
                     styles={customSelectStyles}
                     defaultValue={{
-                      value: "DLUX",
-                      label: "DLUX",
+                      value: token,
+                      label: token,
                     }}
                     onChange={(e) => {
                       setBuyCurrency(e!.value);
@@ -191,7 +199,7 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
                       ).toFixed(ft.pricenai.precision)
                     ) *
                     values.qty *
-                    (buyCurrency === "DLUX" ? 1 : calculateSum(buyCurrency))
+                    calculateSum(buyCurrency)
                   ).toFixed(3)}{" "}
                   {buyCurrency}
                 </button>

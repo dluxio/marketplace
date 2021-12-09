@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import axios from "axios";
-import { handleSellCancel, NFTBuy, toBase64 } from "../utils";
+import { handleSellCancel, toBase64 } from "../utils";
 import { FaMoneyBillAlt, FaQuestion } from "react-icons/fa";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
@@ -13,7 +13,7 @@ type FTCardProps = {
   ft: {
     set: string;
     script: string;
-    pricenai: { precision: number; amount: number };
+    pricenai: { precision: number; amount: number; token: string };
     by: string;
     uid: string;
     qty: number;
@@ -61,7 +61,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
     }
   };
 
-  useEffect(() => {
+  useMemo(() => {
     axios
       .get(`https://ipfs.io/ipfs/${script}?${randomUID}`)
       .then(({ data }) => {
@@ -123,7 +123,8 @@ export const FTCard = ({ ft }: FTCardProps) => {
               (
                 +ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)
               ).toString()
-            ).toFixed(ft.pricenai.precision)}
+            ).toFixed(ft.pricenai.precision)}{" "}
+            {ft.pricenai.token}
           </strong>
         </h1>
         {ft.by !== user?.name ? (
@@ -151,7 +152,13 @@ export const FTCard = ({ ft }: FTCardProps) => {
           </button>
         )}
       </div>
-      {buy && <FTBuy handleClose={() => setBuy(false)} ft={ft} />}
+      {buy && (
+        <FTBuy
+          token={ft.pricenai.token}
+          handleClose={() => setBuy(false)}
+          ft={ft}
+        />
+      )}
     </div>
   );
 };
