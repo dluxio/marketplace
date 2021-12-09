@@ -20,7 +20,7 @@ type FTBuyProps = {
   ft: {
     set: string;
     script: string;
-    price: { precision: number; amount: number };
+    pricenai: { precision: number; amount: number };
     by: string;
     uid: string;
     qty: number;
@@ -119,9 +119,9 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
                 parseFloat(
                   parseFloat(
                     (
-                      +ft.price.amount / Math.pow(10, ft.price.precision)
+                      +ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)
                     ).toString()
-                  ).toFixed(ft.price.precision)
+                  ).toFixed(ft.pricenai.precision)
                 ) *
                 qty *
                 (buyCurrency === "DLUX" ? 1 : calculateSum(buyCurrency)),
@@ -181,17 +181,18 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
                 >
-                  {parseFloat(
+                  {(
                     parseFloat(
-                      (
-                        +ft.price.amount / Math.pow(10, ft.price.precision)
-                      ).toString()
-                    ).toFixed(ft.price.precision)
-                  ) *
+                      parseFloat(
+                        (
+                          +ft.pricenai.amount /
+                          Math.pow(10, ft.pricenai.precision)
+                        ).toString()
+                      ).toFixed(ft.pricenai.precision)
+                    ) *
                     values.qty *
-                    (buyCurrency === "DLUX"
-                      ? 1
-                      : calculateSum(buyCurrency))}{" "}
+                    (buyCurrency === "DLUX" ? 1 : calculateSum(buyCurrency))
+                  ).toFixed(3)}{" "}
                   {buyCurrency}
                 </button>
               </div>

@@ -33,7 +33,7 @@ const Tools = () => {
         setAuctionHouseNFT(result);
       });
 
-      axios.get(`${apiLink}api/mintauctions`).then(({ data: { result } }) => {
+      axios.get(`${apiLink}api/mintsupply`).then(({ data: { result } }) => {
         setAuctionHouseFT(result);
       });
     };
@@ -74,10 +74,14 @@ const Tools = () => {
         </div>
       ) : (
         auctionHouseFT && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div>
             {auctionHouseFT &&
-              auctionHouseFT.map((ft: any) => (
-                <AuctionFTcard key={ft.uid} ft={ft} />
+              auctionHouseFT.map((ftset: any) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+                  {ftset.auctions.map((ft: any) => (
+                    <AuctionFTcard key={ft.uid} ft={ft} />
+                  ))}
+                </div>
               ))}
           </div>
         )

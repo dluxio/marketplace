@@ -25,7 +25,7 @@ const Listings = () => {
         setNfts(result);
       });
 
-      axios.get(`${apiLink}api/mintsales`).then(({ data: { result } }) => {
+      axios.get(`${apiLink}api/mintsupply`).then(({ data: { result } }) => {
         setFts(result);
       });
     };
@@ -66,9 +66,13 @@ const Listings = () => {
             </div>
           )
         : fts && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-2 gap-5">
-              {fts.map((ft: any) => (
-                <FTCard key={ft.uid} ft={ft} />
+            <div>
+              {fts.map((ftset: any) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-2 gap-5">
+                  {ftset.sales.map((ft: any) => (
+                    <FTCard key={ft.uid} ft={ft} />
+                  ))}
+                </div>
               ))}
             </div>
           )}
