@@ -70,7 +70,15 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
   };
 
   const calculateSum = (currency: string) => {
-    return currency === "HIVE" ? hiveTick : hbdTick;
+    if (currency === token) {
+      return 1;
+    } else if (currency === "DLUX") {
+      return token === "HIVE" ? 1 / hiveTick : 1 / hbdTick;
+    } else if (currency === "HIVE") {
+      return hiveTick;
+    }
+
+    return hbdTick;
   };
 
   useEffect(() => {
@@ -125,11 +133,7 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
                   ).toFixed(ft.pricenai.precision)
                 ) *
                 qty *
-                (buyCurrency === "DLUX"
-                  ? 1
-                  : token !== "DLUX"
-                  ? 1
-                  : calculateSum(buyCurrency)),
+                calculateSum(buyCurrency),
               set: ft.set,
               uid: ft.uid ? ft.uid : undefined,
               currency: buyCurrency,
@@ -196,11 +200,7 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
                       ).toFixed(ft.pricenai.precision)
                     ) *
                     values.qty *
-                    (buyCurrency === "DLUX"
-                      ? 1
-                      : token !== "DLUX"
-                      ? 1
-                      : calculateSum(buyCurrency))
+                    calculateSum(buyCurrency)
                   ).toFixed(3)}{" "}
                   {buyCurrency}
                 </button>
