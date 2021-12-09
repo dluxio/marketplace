@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import axios from "axios";
-import { handleSellCancel, NFTBuy, toBase64 } from "../utils";
+import { handleSellCancel, toBase64 } from "../utils";
 import { FaMoneyBillAlt, FaQuestion } from "react-icons/fa";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
@@ -61,7 +61,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
     }
   };
 
-  useEffect(() => {
+  useMemo(() => {
     axios
       .get(`https://ipfs.io/ipfs/${script}?${randomUID}`)
       .then(({ data }) => {
@@ -77,6 +77,8 @@ export const FTCard = ({ ft }: FTCardProps) => {
   }, [randomUID]);
 
   useEffect(() => {
+    console.log(ft);
+
     axios
       .get(`https://ipfs.io/ipfs/${ft.script}?${randomUID}`)
       .then(({ data }) => {
