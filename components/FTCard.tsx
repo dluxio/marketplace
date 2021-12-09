@@ -77,8 +77,6 @@ export const FTCard = ({ ft }: FTCardProps) => {
   }, [randomUID]);
 
   useEffect(() => {
-    console.log(ft);
-
     axios
       .get(`https://ipfs.io/ipfs/${ft.script}?${randomUID}`)
       .then(({ data }) => {

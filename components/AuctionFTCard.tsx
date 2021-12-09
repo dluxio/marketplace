@@ -115,6 +115,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
                     ft.price.amount / Math.pow(10, ft.price.precision)
                   ).toString()
                 ).toFixed(ft.price.precision)}{" "}
+                {ft.price.token}
               </strong>
             </h1>
             <h1>
