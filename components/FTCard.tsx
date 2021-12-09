@@ -13,7 +13,7 @@ type FTCardProps = {
   ft: {
     set: string;
     script: string;
-    price: { precision: number; amount: number };
+    pricenai: { precision: number; amount: number };
     by: string;
     uid: string;
     qty: number;
@@ -98,7 +98,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
       </h1>
       <div className="py-5">
         <div className="relative">
-          <div className="bg-gray-700 absolute top-0 w-full h-full bg-opacity-70 flex justify-center items-center">
+          <div className="z-20 bg-gray-700 absolute top-0 w-full h-full bg-opacity-70 flex justify-center items-center">
             <FaQuestion size={60} color="#fff" />
           </div>
           <div id={`image-${set}-${id}`} className="w-1/2 mx-auto"></div>
@@ -120,8 +120,10 @@ export const FTCard = ({ ft }: FTCardProps) => {
           {t("price")}:{" "}
           <strong>
             {parseFloat(
-              (+ft.price.amount / Math.pow(10, ft.price.precision)).toString()
-            ).toFixed(ft.price.precision)}
+              (
+                +ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)
+              ).toString()
+            ).toFixed(ft.pricenai.precision)}
           </strong>
         </h1>
         {ft.by !== user?.name ? (
