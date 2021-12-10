@@ -164,6 +164,7 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
                   type="number"
                   touched={touched.qty}
                   value={values.qty}
+                  min={1}
                 />
                 <div>
                   <h1 className="mb-1">Currency</h1>
