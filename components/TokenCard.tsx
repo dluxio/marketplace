@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import { ImArrowRight2, ImCross } from "react-icons/im";
 import { FaQuestion } from "react-icons/fa";
@@ -56,7 +56,7 @@ export const TokenCard = ({ token }: TokenCardProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
+  useMemo(() => {
     axios
       .get(`https://ipfs.io/ipfs/${script}?${randomUID}`)
       .then(({ data }) => {

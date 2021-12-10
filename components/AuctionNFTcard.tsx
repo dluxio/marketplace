@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import Countdown from "react-countdown";
 
@@ -25,15 +25,16 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
   const [showInfo, setShowInfo] = useState(false);
   const { t } = useTranslation();
 
-  useEffect(() => {
+  useMemo(() => {
     axios
       .get(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then(({ data }) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
-        document.getElementById(
+        const imageDiv = document.getElementById(
           `image-${nft.set}-${nft.uid}-auction`
-        )!.innerHTML = SVG.HTML;
+        );
+        if (imageDiv) imageDiv.innerHTML = SVG.HTML;
       });
   }, [nft]);
 
