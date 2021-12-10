@@ -1,7 +1,6 @@
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 
-import hive from "@hiveio/hive-js";
 import { attributeColors } from "../constants";
 
 type AuctionDetailProps = {
@@ -29,28 +28,15 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
   };
 
   useEffect(() => {
-    hive.api.setOptions({ url: "https://api.deathwing.me/" });
-    hive.config.set("address_prefix", "STM");
-    hive.config.set(
-      "chain_id",
-      "beeab0de00000000000000000000000000000000000000000000000000000000"
-    );
-    hive.config.set("alternative_api_endpoints", [
-      "https://rpc.ecency.com/",
-      "https://hived.emre.sh/",
-      "https://rpc.ausbit.dev/",
-      "https://api.hive.blog/",
-    ]);
-
     if (nft.set !== undefined && nft.uid !== undefined) {
       fetchImage();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nft]);
   return (
-    <div className="fixed top-0 left-0 h-screen w-screen overflow-hidden bg-gray-700 bg-opacity-50 z-0">
-      <div className="w-full flex flex-col justify-center items-center h-full">
-        <div className="bg-gray-600 relative p-1 sm:p-10 rounded-xl text-center border-4 border-gray-700">
+    <div className="fixed top-0 left-0 h-screen w-screen overflow-hidden bg-gray-700 bg-opacity-50 z-50">
+      <div className="w-full flex flex-col justify-center items-center h-full z-50">
+        <div className="bg-gray-600 relative p-1 sm:p-10 rounded-xl text-center border-4 border-gray-700 z-50">
           <button className="m-2 absolute top-0 right-0 z-50">
             <ImCross size={15} color="white" onClick={onExit} />
           </button>

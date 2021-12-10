@@ -65,7 +65,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         >
           <div
             id={`image-${nft.set}-${nft.uid}-auction`}
-            className="w-1/2 flex justify-center mx-auto"
+            className="w-1/2 flex justify-center mx-auto z-10"
           ></div>
           <h1 className="pt-2 text-xl">{nft.uid}</h1>
         </div>
