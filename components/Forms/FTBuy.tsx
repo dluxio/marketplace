@@ -69,15 +69,28 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
     }
   };
 
+  const getPrice = (qty: number) => {
+    return (
+      parseFloat(
+        parseFloat(
+          (+ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)).toString()
+        ).toFixed(ft.pricenai.precision)
+      ) *
+      qty *
+      calculateSum(buyCurrency)
+    );
+  };
+
   const calculateSum = (currency: string) => {
     if (currency === token) {
       return 1;
-    } else if (currency === "DLUX") {
-      return token === "HIVE" ? 1 / hiveTick : 1 / hbdTick;
     } else if (currency === "HIVE") {
-      return 1 / hiveTick;
+      return token === "HBD" ? hiveTick / hbdTick : hiveTick;
+    } else if (currency === "HBD") {
+      return token === "HIVE" ? hbdTick / hiveTick : hbdTick;
+    } else {
+      return 1 / (token === "HIVE" ? hiveTick : hbdTick);
     }
-    return 1 / hbdTick;
   };
 
   useEffect(() => {
@@ -123,16 +136,7 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
           }}
           onSubmit={({ qty }, { setSubmitting }) => {
             setBuyData({
-              price:
-                parseFloat(
-                  parseFloat(
-                    (
-                      +ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)
-                    ).toString()
-                  ).toFixed(ft.pricenai.precision)
-                ) *
-                qty *
-                calculateSum(buyCurrency),
+              price: getPrice(qty),
               set: ft.set,
               uid: ft.uid ? ft.uid : undefined,
               currency: buyCurrency,
@@ -189,19 +193,7 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
                 >
-                  {(
-                    parseFloat(
-                      parseFloat(
-                        (
-                          +ft.pricenai.amount /
-                          Math.pow(10, ft.pricenai.precision)
-                        ).toString()
-                      ).toFixed(ft.pricenai.precision)
-                    ) *
-                    values.qty *
-                    calculateSum(buyCurrency)
-                  ).toFixed(3)}{" "}
-                  {buyCurrency}
+                  {getPrice(values.qty).toFixed(3)} {buyCurrency}
                 </button>
               </div>
             </form>

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect } from 'react';
+import React, { MouseEventHandler, useEffect } from "react";
 
 type InventoryNFTProps = {
   nft: any;
@@ -12,8 +12,10 @@ export const InventoryItemCard = ({ nft, onClick }: InventoryNFTProps) => {
       .then((data) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
-        document.getElementById(`image-${nft.set}-${nft.uid}`)!.innerHTML =
-          SVG.HTML;
+        const imageDiv = document.getElementById(`image-${nft.set}-${nft.uid}`);
+        if (imageDiv) {
+          imageDiv.innerHTML = SVG.HTMl;
+        }
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
