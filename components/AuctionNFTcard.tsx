@@ -44,6 +44,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
       .then(({ data }) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
+        console.log(SVG.set);
         setColors([SVG.set.Color1, SVG.set.Color2]);
       });
   }, []);

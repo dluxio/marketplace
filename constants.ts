@@ -1,7 +1,7 @@
 export const tokenColors: any = {
-  hive: "#B11800",
-  hive_dollar: "green",
-  ethereum: "gray",
+  Hive: ["#B11822", "#FF7274"],
+  "Hive Dollar": ["#094507", "#90EE90"],
+  DLUX: ["Aqua", "Magenta"],
 };
 
 export const spinnerColors: any = [["#004777", 1]];
