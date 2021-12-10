@@ -45,7 +45,9 @@ export const CoinCard = ({ coin }: CoinCardProps) => {
         </div>
       </div>
       <div className="flex w-full justify-center items-center">
-        <h1 className="text-2xl">${coin.market_data.current_price.usd}</h1>
+        <h1 className="text-2xl">
+          ${coin.market_data.current_price.usd.toFixed(3)}
+        </h1>
       </div>
     </div>
   );
