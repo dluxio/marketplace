@@ -59,7 +59,7 @@ export const SellForm = ({
         </button>
         <h1 className="text-center text-white text-2xl mb-3">{t("sell")}</h1>
         <Formik
-          initialValues={{ price: (10).toFixed(3), qty: 1 }}
+          initialValues={{ price: (10).toFixed(2), qty: 1 }}
           validate={({ price, qty }) => {
             const errors: any = {};
             if (!price) {

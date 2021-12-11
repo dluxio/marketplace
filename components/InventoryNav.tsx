@@ -19,7 +19,7 @@ export const InventoryNav = () => {
     useRecoilState(inventoryNavState);
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-wrap items-center justify-between">
       <div className="flex mx-10 my-10 text-white gap-8 text-xl">
         <div
           onClick={() => setMarketNavSelected("nft")}
@@ -58,7 +58,7 @@ export const InventoryNav = () => {
           <p className="text-md mt-1">DEX</p>
         </div>
       </div>
-      <div className="flex items-center mr-10 text-white">
+      <div className="flex mx-10 items-center text-white">
         <div
           onClick={() => router.push({ pathname: "/create-nft", query })}
           className={`flex flex-col items-center cursor-pointer`}

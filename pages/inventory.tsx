@@ -22,7 +22,7 @@ const Inventory = () => {
       {user && (
         <>
           <InventoryNav />
-          <div className="p-10 sm:p-0">
+          <div className="">
             {inventoryPage === "mint" && <MintTokenScreen />}
             {inventoryPage === "nft" && <NFTScreen />}
             {inventoryPage === "tokens" && <CryptoScreen />}

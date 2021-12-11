@@ -194,7 +194,7 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
                 >
-                  {getPrice(values.qty).toFixed(3)} {buyCurrency}
+                  {getPrice(values.qty).toFixed(2)} {buyCurrency}
                 </button>
               </div>
             </form>

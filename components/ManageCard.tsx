@@ -120,7 +120,7 @@ export const NFTManage = ({ trade }: TradeCardProps) => {
         {trade.kind !== "fts" ? trade.item : trade.set}
       </div>
       <div className="text-center text-md">
-        {t("price")}: {(trade.price / 1000).toFixed(3)} DLUX
+        {t("price")}: {(trade.price / 1000).toFixed(2)} DLUX
       </div>
       <div className="flex sm:justify-center pt-2 pb-4 gap-3">
         <button

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, MouseEventHandler } from 'react';
+import React, { useState, useEffect, MouseEventHandler } from "react";
 
-import { Formik } from 'formik';
-import { FormInput } from '../FormInput';
-import { ImCross } from 'react-icons/im';
-import { ReserveTrade } from '../../utils';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { broadcastState, prefixState, userState } from '../../atoms';
+import { Formik } from "formik";
+import { FormInput } from "../FormInput";
+import { ImCross } from "react-icons/im";
+import { ReserveTrade } from "../../utils";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { broadcastState, prefixState, userState } from "../../atoms";
 
 export const ReserveNFTForm: React.FC<{
   set: string;
@@ -46,13 +46,13 @@ export const ReserveNFTForm: React.FC<{
           Reserve transfer
         </h1>
         <Formik
-          initialValues={{ price: (10).toFixed(3), to: '' }}
+          initialValues={{ price: (10).toFixed(2), to: "" }}
           validate={({ price, to }) => {
             const errors: any = {};
             if (!price) {
-              errors.price = 'Required';
+              errors.price = "Required";
             } else if (!to) {
-              errors.to = 'Required';
+              errors.to = "Required";
             }
             return errors;
           }}

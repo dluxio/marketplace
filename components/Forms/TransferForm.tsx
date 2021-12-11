@@ -63,7 +63,7 @@ export const TransferNFTFormComp: React.FC<{
           {t("give")} {uid ? "NFT" : "FT"}
         </h1>
         <Formik
-          initialValues={{ to: "", price: (0).toFixed(3) }}
+          initialValues={{ to: "", price: (0).toFixed(2) }}
           validate={({ to }) => {
             const errors: any = {};
             if (!to) {

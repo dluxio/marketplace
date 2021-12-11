@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { apiLinkState, dayVolumeState } from "../../atoms";
 import { TransactionHistoryItem } from "./TransactionHistoryItem";
@@ -41,7 +42,7 @@ export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
           });
 
           setDayVolume({
-            dlux: dayVolume.toFixed(3),
+            dlux: dayVolume.toFixed(2),
             dollars: "0",
           });
           setTransactions(sortedTransactions);
@@ -52,8 +53,8 @@ export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
   return (
     <div className="flex flex-col text-white">
       <h1 className="text-xl">Trade history</h1>
-      <div className="grid mt-2 mb-1 text-xl grid-cols-5">
-        <h1>DATE</h1>
+      <div className="grid mt-2 mb-1 text-xl grid-cols-4 sm:grid-cols-5">
+        {!isMobile && <h1>DATE</h1>}
         <h1>TYPE</h1>
         <h1>DLUX</h1>
         <h1>HIVE</h1>

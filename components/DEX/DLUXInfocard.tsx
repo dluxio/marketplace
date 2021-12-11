@@ -52,7 +52,7 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
                   parseFloat(data.markets.hive.tick) *
                   hiveCost *
                   data.markets.hive.buys[0].rate
-                ).toFixed(3)
+                ).toFixed(2)
               ),
             });
             setAskPrice({
@@ -62,7 +62,7 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
                   parseFloat(data.markets.hive.tick) *
                   hiveCost *
                   data.markets.hive.sells[0].rate
-                ).toFixed(3)
+                ).toFixed(2)
               ),
             });
           } else {
@@ -79,14 +79,14 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
           setVwmaPrice({
             dlux: data.stats.HiveVWMA.rate,
             dollars: parseFloat(
-              (+data.stats.HiveVWMA.rate * +data.markets.hive.tick).toFixed(3)
+              (+data.stats.HiveVWMA.rate * +data.markets.hive.tick).toFixed(2)
             ),
           });
 
           setLastPrice({
             dlux: data.markets.hive.tick,
             dollars: parseFloat(
-              (parseFloat(data.markets.hive.tick) * hiveCost).toFixed(3)
+              (parseFloat(data.markets.hive.tick) * hiveCost).toFixed(2)
             ),
           });
         } else if (coin === "HBD") {
@@ -98,7 +98,7 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
                   parseFloat(data.markets.hbd.tick) *
                   hbdCost *
                   data.markets.hbd.sells[0].rate
-                ).toFixed(3)
+                ).toFixed(2)
               ),
             });
             setAskPrice({
@@ -108,7 +108,7 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
                   parseFloat(data.markets.hbd.tick) *
                   hbdCost *
                   data.markets.hbd.sells[0].rate
-                ).toFixed(3)
+                ).toFixed(2)
               ),
             });
           } else {
@@ -125,14 +125,14 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
           setVwmaPrice({
             dlux: data.stats.HbdVWMA.rate,
             dollars: parseFloat(
-              (+data.stats.HbdVWMA.rate * +data.markets.hbd.tick).toFixed(3)
+              (+data.stats.HbdVWMA.rate * +data.markets.hbd.tick).toFixed(2)
             ),
           });
 
           setLastPrice({
             dlux: data.markets.hbd.tick,
             dollars: parseFloat(
-              (parseFloat(data.markets.hbd.tick) * hiveCost).toFixed(3)
+              (parseFloat(data.markets.hbd.tick) * hiveCost).toFixed(2)
             ),
           });
         }
@@ -147,21 +147,21 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
           dlux: volumePrice.dlux,
           dollars: (
             parseFloat(volumePrice.dlux) * dexData.markets.hive.tick
-          ).toFixed(3),
+          ).toFixed(2),
         });
       } else {
         setVolumePrice({
           dlux: volumePrice.dlux,
           dollars: (
             parseFloat(volumePrice.dlux) * dexData.markets.hbd.tick
-          ).toFixed(3),
+          ).toFixed(2),
         });
       }
     }
   }, [coin]);
 
   return (
-    <div className="flex gap-3 text-white text-xl">
+    <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-white text-xl">
       <div className="mx-3 flex flex-col justify-center items-center gap-3">
         <h1 className="px-5 py-2 bg-gray-500 rounded-xl">Bid</h1>
         <div className="flex flex-col justify-center items-center text-md">

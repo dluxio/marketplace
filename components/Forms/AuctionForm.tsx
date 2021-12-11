@@ -48,7 +48,7 @@ export const AuctionNFTForm: React.FC<{
         </button>
         <h1 className="text-center text-white text-2xl mb-3">{t("auction")}</h1>
         <Formik
-          initialValues={{ price: (10).toFixed(3), time: 1 }}
+          initialValues={{ price: (10).toFixed(2), time: 1 }}
           validate={({ price, time }) => {
             const errors: any = {};
             if (!price) {
