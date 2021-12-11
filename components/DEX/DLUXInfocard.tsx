@@ -42,11 +42,13 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
     if (coin) {
       axios.get(`${apiLink}dex`).then(({ data }) => {
         setDexData(data);
+        console.log(data.markets.hive.buys[0].rate);
+        console.log(data.markets.hive.sells[0].rate);
 
         if (coin === "HIVE") {
-          if (data.markets.hive.sells[0] && data.markets.buys) {
+          if (data.markets.hive.sells.length && data.markets.hive.buys.length) {
             setBidPrice({
-              dlux: data.markets.hive.buys[0].rate,
+              dlux: parseFloat(data.markets.hive.buys[0].rate),
               dollars: parseFloat(
                 (
                   parseFloat(data.markets.hive.tick) *
@@ -56,7 +58,7 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
               ),
             });
             setAskPrice({
-              dlux: data.markets.hive.sells[0].rate,
+              dlux: parseFloat(data.markets.hive.sells[0].rate),
               dollars: parseFloat(
                 (
                   parseFloat(data.markets.hive.tick) *
@@ -90,7 +92,7 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
             ),
           });
         } else if (coin === "HBD") {
-          if (data.markets.hbd.sells[0]) {
+          if (data.markets.hbd.sells.length && data.markets.hbd.buys.length) {
             setBidPrice({
               dlux: data.markets.hbd.sells[0].rate,
               dollars: parseFloat(
