@@ -22,8 +22,8 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
           attributeObj = { ...attributeObj, ...attr };
         });
         setAttributes(attributeObj);
-        document.getElementById(`${nft.set}-${nft.uid}-details`)!.innerHTML =
-          SVG.HTML;
+        const img = document.getElementById(`${nft.set}-${nft.uid}-details`);
+        if (img) img.innerHTML = SVG.HTML;
       });
   };
 
