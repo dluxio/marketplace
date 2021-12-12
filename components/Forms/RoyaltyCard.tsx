@@ -17,12 +17,11 @@ export const RoyaltyCard = ({ set }: { set: string }) => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(assignData.percentage);
-  }, [assignData]);
-
   const handleRoyalties = () => {
-    console.log({ ...assignData, percentage: assignData.percentage * 100 });
+    console.log("ROYALTY SET ", {
+      set,
+      distro: `${assignData.username}_${assignData.percentage * 100}`,
+    });
   };
 
   return (
