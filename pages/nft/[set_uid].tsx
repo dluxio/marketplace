@@ -9,7 +9,7 @@ import {
   userState,
 } from "../../atoms";
 import { attributeColors } from "../../constants";
-import { AiOutlineCaretDown } from "react-icons/ai";
+import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import { useTranslation } from "next-export-i18n";
 import { NFTMelt, SetPFP } from "../../utils";
 import { TransferNFTFormComp } from "../../components";
@@ -124,12 +124,13 @@ const NFTManagement = () => {
             onClick={() => setShowActions(!showActions)}
             className="px-4 py-2 h-16 flex items-center gap-3 rounded-lg border-2 text-white bg-transparent border-gray-700 bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-700"
           >
-            Actions <AiOutlineCaretDown />
+            Actions{" "}
+            {showActions ? <AiOutlineCaretUp /> : <AiOutlineCaretDown />}
           </button>
           <div
             className={`${
               showActions ? "" : "hidden"
-            } bg-gray-600 rounded-xl p-5 border-2 border-gray-800 mt-1 flex gap-2`}
+            } bg-gray-600 rounded-xl p-5 border-2 border-gray-800 my-3 flex gap-2`}
           >
             <button
               onClick={handleSetPfp}
