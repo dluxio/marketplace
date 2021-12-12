@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -85,7 +85,7 @@ const NFTManagement = () => {
       });
   };
 
-  useEffect(() => {
+  useMemo(() => {
     if (!set_uid) router.push("/");
     if (script) fetchImage();
   }, [script]);
@@ -96,7 +96,7 @@ const NFTManagement = () => {
         <div id={`${set}-${uid}-details`} className="w-1/2 mx-auto my-5"></div>
         <h1 className="text-white text-xl font-bold my-5">{uid}</h1>
         <p className="text-white text-center mx-20">{description}</p>
-        <div className="my-3">
+        <div className="my-8">
           {attributes &&
             Object.keys(attributes).map((attr: any) => (
               <div className="mx-20 flex my-2 items-center gap-5">
@@ -111,7 +111,7 @@ const NFTManagement = () => {
             ))}
         </div>
       </div>
-      <div className="flex flex-col flex-grow items-center">
+      <div className="flex flex-col my-10 flex-grow items-center">
         <RoyaltyCard set={set} />
         <div className="flex flex-col items-center">
           <button
