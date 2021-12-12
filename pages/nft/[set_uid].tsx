@@ -12,10 +12,11 @@ import { attributeColors } from "../../constants";
 import { AiOutlineCaretDown } from "react-icons/ai";
 import { useTranslation } from "next-export-i18n";
 import { NFTMelt, SetPFP } from "../../utils";
-import { TransferNFTFormComp } from "../../components";
+import { NftCard, TransferNFTFormComp } from "../../components";
 import { Confirmation } from "../../components/Confirmation";
 import { AuctionNFTForm } from "../../components/Forms/AuctionForm";
 import { SellForm } from "../../components/Forms/SellForm";
+import { RoyaltyCard } from "../../components/Forms/RoyaltyCard";
 
 const NFTManagement = () => {
   const [description, setDescription] = useState("");
@@ -110,7 +111,8 @@ const NFTManagement = () => {
             ))}
         </div>
       </div>
-      <div className="flex flex-grow justify-center">
+      <div className="flex flex-col flex-grow items-center">
+        <RoyaltyCard set={set} />
         <div className="flex flex-col items-center">
           <button
             onClick={() => setShowActions(!showActions)}

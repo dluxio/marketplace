@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import axios from "axios";
-import { handleSellCancel, NFTBuy, toBase64 } from "../utils";
+import { handleSellCancel, toBase64 } from "../utils";
 import { FaMoneyBillAlt, FaQuestion } from "react-icons/fa";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
@@ -13,7 +13,7 @@ type FTCardProps = {
   ft: {
     set: string;
     script: string;
-    price: { precision: number; amount: number };
+    pricenai: { precision: number; amount: number; token: string };
     by: string;
     uid: string;
     qty: number;
@@ -61,7 +61,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
     }
   };
 
-  useEffect(() => {
+  useMemo(() => {
     axios
       .get(`https://ipfs.io/ipfs/${script}?${randomUID}`)
       .then(({ data }) => {
@@ -98,7 +98,7 @@ export const FTCard = ({ ft }: FTCardProps) => {
       </h1>
       <div className="py-5">
         <div className="relative">
-          <div className="bg-gray-700 absolute top-0 w-full h-full bg-opacity-70 flex justify-center items-center">
+          <div className="z-20 bg-gray-700 absolute top-0 w-full h-full bg-opacity-70 flex justify-center items-center">
             <FaQuestion size={60} color="#fff" />
           </div>
           <div id={`image-${set}-${id}`} className="w-1/2 mx-auto"></div>
@@ -120,8 +120,11 @@ export const FTCard = ({ ft }: FTCardProps) => {
           {t("price")}:{" "}
           <strong>
             {parseFloat(
-              (+ft.price.amount / Math.pow(10, ft.price.precision)).toString()
-            ).toFixed(ft.price.precision)}
+              (
+                +ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)
+              ).toString()
+            ).toFixed(ft.pricenai.precision)}{" "}
+            {ft.pricenai.token}
           </strong>
         </h1>
         {ft.by !== user?.name ? (
@@ -149,7 +152,13 @@ export const FTCard = ({ ft }: FTCardProps) => {
           </button>
         )}
       </div>
-      {buy && <FTBuy handleClose={() => setBuy(false)} ft={ft} />}
+      {buy && (
+        <FTBuy
+          token={ft.pricenai.token}
+          handleClose={() => setBuy(false)}
+          ft={ft}
+        />
+      )}
     </div>
   );
 };

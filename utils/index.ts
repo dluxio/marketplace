@@ -541,7 +541,7 @@ export const dexBuy = async (
     {
       from: username,
       to,
-      amount: `${parseFloat((data.amount / 1000).toString()).toFixed(3)} ${
+      amount: `${parseFloat((data.amount / 1000).toString()).toFixed(2)} ${
         data.coin
       }`,
       memo: JSON.stringify(data.buyData),

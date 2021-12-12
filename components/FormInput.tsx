@@ -9,6 +9,7 @@ type FormInputProps = {
   touched: any;
   name: string;
   type?: string;
+  min?: number;
 };
 
 export const FormInput = ({
@@ -18,6 +19,7 @@ export const FormInput = ({
   errors,
   touched,
   name,
+  min,
   type = "text",
 }: FormInputProps) => {
   const formattedName = name.replace("_", " ");
@@ -35,6 +37,7 @@ export const FormInput = ({
         onChange={handleChange}
         onBlur={handleBlur}
         value={value}
+        min={min ? min : 0}
       />
       <h1 className="text-red-500">{errors && touched && errors}</h1>
     </div>

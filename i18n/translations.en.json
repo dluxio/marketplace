@@ -46,6 +46,7 @@
     "runApp": "Launch",
     "availible": "Availible",
     "userNotFound": "User not found",
-    "inputUsername": "Input your username"
+    "inputUsername": "Input your username",
+    "desktopApp": "Desktop app"
   }
 }

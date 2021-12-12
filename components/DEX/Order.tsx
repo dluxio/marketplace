@@ -62,7 +62,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
         </h1>
         <h1>DLUX</h1>
       </div>
-      <div className="flex items-center  mr-5 justify-between mt-2 text-white font-light">
+      <div className="flex flex-col sm:flex-row items-center  mr-5 justify-between mt-2 text-white font-light">
         <h1>Order Type</h1>
         <div className="flex justify-center">
           <button
@@ -85,7 +85,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
       </div>
       <div className="flex text-white gap-3 flex-col mr-3 mt-5">
         {orderType === "limit" && (
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col mr-5">
               <h1>Quantity</h1>
               <h1 className="font-light text-sm">DLUX</h1>
@@ -100,7 +100,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
           </div>
         )}
         {orderType === "market" && type === "sell" && (
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col mr-5">
               <h1>Quantity</h1>
               <h1 className="font-light text-sm">DLUX</h1>
@@ -115,7 +115,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
           </div>
         )}
         {orderType === "limit" && type === "sell" && (
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col mr-5">
               <h1>Total</h1>
               <h1 className="font-light text-sm">{coin}</h1>
@@ -130,7 +130,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
           </div>
         )}
         {type === "buy" && (
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col mr-5">
               <h1>Total</h1>
               <h1 className="font-light text-sm">{coin}</h1>

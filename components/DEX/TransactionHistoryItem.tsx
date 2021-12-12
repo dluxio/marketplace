@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 
 export const TransactionHistoryItem = ({
   transaction,
@@ -19,18 +20,20 @@ export const TransactionHistoryItem = ({
       }
     });
 
-    setTotalSum(total.toFixed(3));
+    setTotalSum(total.toFixed(2));
   }, []);
 
   return (
     <div
       className={`${
         i % 2 === 0 ? "bg-gray-500" : ""
-      } text-xl px-2 py-1 grid grid-cols-5`}
+      } text-xl px-2 py-1 grid grid-cols-4 sm:grid-cols-5`}
     >
-      <h1 className="w-2/3">
-        {new Date(transaction.trade_timestamp).toUTCString()}
-      </h1>
+      {!isMobile && (
+        <h1 className="w-2/3">
+          {new Date(transaction.trade_timestamp).toUTCString()}
+        </h1>
+      )}
       <h1
         className={
           transaction.type === "buy" ? "text-green-500" : "text-red-500"
@@ -38,9 +41,9 @@ export const TransactionHistoryItem = ({
       >
         {transaction.type.toUpperCase()}
       </h1>
-      <h1>{transaction.base_volume}</h1>
-      <h1>{transaction.price}</h1>
-      <h1>{totalSum}</h1>
+      <h1>{parseFloat(transaction.base_volume).toFixed(2)}</h1>
+      <h1>{parseFloat(transaction.price).toFixed(2)}</h1>
+      <h1>{parseFloat(totalSum).toFixed(2)}</h1>
     </div>
   );
 };

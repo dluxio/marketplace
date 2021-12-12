@@ -20,18 +20,19 @@ type FTBuyProps = {
   ft: {
     set: string;
     script: string;
-    price: { precision: number; amount: number };
+    pricenai: { precision: number; amount: number };
     by: string;
     uid: string;
     qty: number;
   };
+  token: string;
   handleClose: Function;
 };
 
-export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
+export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
   const [buyData, setBuyData] = useState<any>();
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
-  const [buyCurrency, setBuyCurrency] = useState("DLUX");
+  const [buyCurrency, setBuyCurrency] = useState(token);
   const [hiveTick, setHiveTick] = useState(1);
   const [hbdTick, setHbdTick] = useState(1);
   const user: any = useRecoilValue(userState);
@@ -68,8 +69,28 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
     }
   };
 
+  const getPrice = (qty: number) => {
+    return (
+      parseFloat(
+        parseFloat(
+          (+ft.pricenai.amount / Math.pow(10, ft.pricenai.precision)).toString()
+        ).toFixed(ft.pricenai.precision)
+      ) *
+      qty *
+      calculateSum(buyCurrency)
+    );
+  };
+
   const calculateSum = (currency: string) => {
-    return currency === "HIVE" ? hiveTick : hbdTick;
+    if (currency === token) {
+      return 1;
+    } else if (currency === "HIVE") {
+      return token === "HBD" ? hiveTick / hbdTick : hiveTick;
+    } else if (currency === "HBD") {
+      return token === "HIVE" ? hbdTick / hiveTick : hbdTick;
+    } else {
+      return 1 / (token === "HIVE" ? hiveTick : hbdTick);
+    }
   };
 
   useEffect(() => {
@@ -115,16 +136,7 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
           }}
           onSubmit={({ qty }, { setSubmitting }) => {
             setBuyData({
-              price:
-                parseFloat(
-                  parseFloat(
-                    (
-                      +ft.price.amount / Math.pow(10, ft.price.precision)
-                    ).toString()
-                  ).toFixed(ft.price.precision)
-                ) *
-                qty *
-                (buyCurrency === "DLUX" ? 1 : calculateSum(buyCurrency)),
+              price: getPrice(qty),
               set: ft.set,
               uid: ft.uid ? ft.uid : undefined,
               currency: buyCurrency,
@@ -152,14 +164,15 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
                   type="number"
                   touched={touched.qty}
                   value={values.qty}
+                  min={1}
                 />
                 <div>
                   <h1 className="mb-1">Currency</h1>
                   <Select
                     styles={customSelectStyles}
                     defaultValue={{
-                      value: "DLUX",
-                      label: "DLUX",
+                      value: token,
+                      label: token,
                     }}
                     onChange={(e) => {
                       setBuyCurrency(e!.value);
@@ -181,18 +194,7 @@ export const FTBuy = ({ ft, handleClose }: FTBuyProps) => {
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
                 >
-                  {parseFloat(
-                    parseFloat(
-                      (
-                        +ft.price.amount / Math.pow(10, ft.price.precision)
-                      ).toString()
-                    ).toFixed(ft.price.precision)
-                  ) *
-                    values.qty *
-                    (buyCurrency === "DLUX"
-                      ? 1
-                      : calculateSum(buyCurrency))}{" "}
-                  {buyCurrency}
+                  {getPrice(values.qty).toFixed(2)} {buyCurrency}
                 </button>
               </div>
             </form>

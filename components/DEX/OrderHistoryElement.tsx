@@ -41,7 +41,7 @@ export const OrderHistoryElement = ({
       }
     });
 
-    setTotalSum(total.toFixed(3));
+    setTotalSum(total.toFixed(2));
   }, []);
 
   return (
@@ -59,14 +59,14 @@ export const OrderHistoryElement = ({
                   +order.hivenai.amount / Math.pow(10, order.hivenai.precision)
                 ).toString()
               ).toFixed(order.hivenai.precision)
-            ).toFixed(3)
+            ).toFixed(2)
           : parseFloat(
               parseFloat(
                 (
                   +order.hbdnai.amount / Math.pow(10, order.hbdnai.precision)
                 ).toString()
               ).toFixed(order.hbdnai.precision)
-            ).toFixed(3)}
+            ).toFixed(2)}
       </h1>
       <h1>
         {parseFloat(
@@ -75,9 +75,9 @@ export const OrderHistoryElement = ({
               +order.amountnai.amount / Math.pow(10, order.amountnai.precision)
             ).toString()
           ).toFixed(order.amountnai.precision)
-        ).toFixed(3)}
+        ).toFixed(2)}
       </h1>
-      <h1>{order.rate}</h1>
+      <h1>{parseFloat(order.rate).toFixed(2)}</h1>
     </div>
   );
 };

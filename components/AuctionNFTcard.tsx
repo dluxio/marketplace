@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import Countdown from "react-countdown";
 
@@ -25,15 +25,16 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
   const [showInfo, setShowInfo] = useState(false);
   const { t } = useTranslation();
 
-  useEffect(() => {
+  useMemo(() => {
     axios
       .get(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then(({ data }) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
-        document.getElementById(
+        const imageDiv = document.getElementById(
           `image-${nft.set}-${nft.uid}-auction`
-        )!.innerHTML = SVG.HTML;
+        );
+        if (imageDiv) imageDiv.innerHTML = SVG.HTML;
       });
   }, [nft]);
 
@@ -43,6 +44,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
       .then(({ data }) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
+        console.log(SVG.set);
         setColors([SVG.set.Color1, SVG.set.Color2]);
       });
   }, []);
@@ -64,7 +66,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         >
           <div
             id={`image-${nft.set}-${nft.uid}-auction`}
-            className="w-1/2 flex justify-center mx-auto"
+            className="w-1/2 flex justify-center mx-auto z-10"
           ></div>
           <h1 className="pt-2 text-xl">{nft.uid}</h1>
         </div>
@@ -92,6 +94,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
                     nft.price.amount / Math.pow(10, nft.price.precision)
                   ).toString()
                 ).toFixed(nft.price.precision)}{" "}
+                {nft.price.token}
               </strong>
             </h1>
             <h1>

@@ -115,7 +115,8 @@ export const NavBar = () => {
             className={`${
               (url === "inventory" ||
                 url === "create-nft" ||
-                url === "trades") &&
+                url === "trades" ||
+                url === "nft") &&
               "selected"
             } ${user ? "navLink" : "text-gray-600 cursor-not-allowed"}`}
             onClick={() => {

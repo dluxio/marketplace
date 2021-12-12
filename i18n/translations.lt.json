@@ -46,6 +46,7 @@
     "name": "Pavadinimas",
     "availible": "Availible",
     "userNotFound": "Paskyra nerasta",
-    "inputUsername": "Įvesk savo slapyvardį"
+    "inputUsername": "Įvesk savo slapyvardį",
+    "desktopApp": "Desktopo programa"
   }
 }

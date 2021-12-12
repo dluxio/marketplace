@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect } from "react";
+import React, { MouseEventHandler, useMemo } from "react";
 
 type InventoryNFTProps = {
   nft: any;
@@ -11,18 +11,18 @@ export const InventoryItemCard = ({
   onClick,
   onDoubleClick,
 }: InventoryNFTProps) => {
-  useEffect(() => {
+  useMemo(() => {
     fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then((response) => response.text())
       .then((data) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
-        document.getElementById(`image-${nft.set}-${nft.uid}`)!.innerHTML =
-          SVG.HTML;
+        const imageDiv = document.getElementById(`image-${nft.set}-${nft.uid}`);
+        if (imageDiv) imageDiv.innerHTML = SVG.HTML;
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [nft]);
 
   return (
     <div

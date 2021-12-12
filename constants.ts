@@ -1,7 +1,7 @@
 export const tokenColors: any = {
-  hive: "#B11800",
-  hive_dollar: "green",
-  ethereum: "gray",
+  Hive: ["#B11822", "#FF7274"],
+  "Hive Dollar": ["#094507", "#90EE90"],
+  DLUX: ["Aqua", "Magenta"],
 };
 
 export const spinnerColors: any = [["#004777", 1]];
@@ -23,6 +23,8 @@ export const attributeColors: any = {
   "Color 3": "#32C8D0",
   "Facial Hair": "#004777",
   Freckle: "#FFCC00",
+  Type: "#9C2E40",
+  Rarity: "#46CDF9",
 };
 
 export const customSelectStyles = {

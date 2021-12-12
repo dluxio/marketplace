@@ -7,6 +7,7 @@ import { apiLinkState, dlux_ccState } from "../../atoms";
 import axios from "axios";
 import { TransactionHistory } from "./TransactionHistory";
 import { DEXChart } from "./DEXChart";
+import { isMobile } from "react-device-detect";
 
 export const DEX = () => {
   const [coin, setCoin] = useState<"HIVE" | "HBD">("HIVE");
@@ -40,13 +41,15 @@ export const DEX = () => {
             HBD
           </button>
         </div>
-        <div className="flex flex-col mx-10 bg-gray-600 mb-3 border-2 rounded-xl border-gray-800 p-5">
-          <div className="flex justify-center">
+        <div className="flex flex-col sm:mx-10 bg-gray-600 mb-3 border-2 rounded-xl border-gray-800 p-5 justify-center">
+          <div className="flex flex-wrap justify-center">
             <DLUXInfocard coin={coin} />
           </div>
-          <div className="my-3">
-            <DEXChart coin={coin} />
-          </div>
+          {!isMobile && (
+            <div className="my-3">
+              <DEXChart coin={coin} />
+            </div>
+          )}
           <div className="flex flex-col my-5 gap-2 xl:flex-row xl:justify-between xl:gap-10">
             <Order coin={coin} type="buy" />
             <Order coin={coin} type="sell" />
