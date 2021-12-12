@@ -12,7 +12,7 @@ import { attributeColors } from "../../constants";
 import { AiOutlineCaretDown } from "react-icons/ai";
 import { useTranslation } from "next-export-i18n";
 import { NFTMelt, SetPFP } from "../../utils";
-import { NftCard, TransferNFTFormComp } from "../../components";
+import { TransferNFTFormComp } from "../../components";
 import { Confirmation } from "../../components/Confirmation";
 import { AuctionNFTForm } from "../../components/Forms/AuctionForm";
 import { SellForm } from "../../components/Forms/SellForm";
@@ -35,16 +35,18 @@ const NFTManagement = () => {
   const apiLink: string = useRecoilValue(apiLinkState);
   const user: any = useRecoilValue(userState);
   const prefix = useRecoilValue(prefixState);
-  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!set_uid) router.push("/");
-
-    axios.get(`${apiLink}api/set/${set}`).then(({ data }) => {
-      setScript(data.set.script);
-      console.log(data);
-    });
+    if (set) {
+      axios.get(`${apiLink}api/set/${set}`).then(({ data }) => {
+        setScript(data.set.script);
+        console.log(data);
+      });
+    } else {
+      router.push("/");
+    }
   }, []);
 
   const handleSetPfp = () => {
@@ -69,24 +71,28 @@ const NFTManagement = () => {
   };
 
   const fetchImage = () => {
-    fetch(`https://ipfs.io/ipfs/${script}?${uid}`)
-      .then((response) => response.text())
-      .then((data) => {
-        const code = `(//${data}\n)("${uid}")`;
-        const SVG = eval(code);
-        setDescription(SVG.set.Description);
-        let attributeObj = {};
-        SVG.attributes.forEach((attr: any) => {
-          attributeObj = { ...attributeObj, ...attr };
-        });
-        setAttributes(attributeObj);
+    if (uid && set) {
+      fetch(`https://ipfs.io/ipfs/${script}?${uid}`)
+        .then((response) => response.text())
+        .then((data) => {
+          const code = `(//${data}\n)("${uid}")`;
+          const SVG = eval(code);
+          setDescription(SVG.set.Description);
+          let attributeObj = {};
+          SVG.attributes.forEach((attr: any) => {
+            attributeObj = { ...attributeObj, ...attr };
+          });
+          setAttributes(attributeObj);
 
-        document.getElementById(`${set}-${uid}-details`)!.innerHTML = SVG.HTML;
-      });
+          document.getElementById(`${set}-${uid}-details`)!.innerHTML =
+            SVG.HTML;
+        });
+    } else {
+      router.push("/");
+    }
   };
 
   useMemo(() => {
-    if (!set_uid) router.push("/");
     if (script) fetchImage();
   }, [script]);
 
