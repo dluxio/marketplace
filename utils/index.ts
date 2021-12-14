@@ -1,7 +1,4 @@
 import hive from "@hiveio/hive-js";
-import axios from "axios";
-import { tsvParse } from "d3-dsv";
-import { timeParse } from "d3-time-format";
 
 const _Rixits =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";
@@ -549,6 +546,10 @@ export const dexBuy = async (
   ];
 
   return await handleBroadcastRequest(operations, username);
+};
+
+export const handleLogin = () => {
+  const operations = [];
 };
 
 export const ftBuyTransfer = async (
