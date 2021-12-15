@@ -12,6 +12,7 @@ import { ImCross } from "react-icons/im";
 
 import hive from "@hiveio/hive-js";
 import { useTranslation } from "next-export-i18n";
+import { handleLogin } from "../utils";
 
 type LoginProps = {
   handleClose: MouseEventHandler;
@@ -32,6 +33,8 @@ export const Login = ({ handleClose }: LoginProps) => {
           if (result !== []) {
             setUser(result[0]);
             localStorage.setItem("user", JSON.stringify(result[0]));
+
+            handleLogin();
           } else {
             setErrors({ user: "hello" });
           }

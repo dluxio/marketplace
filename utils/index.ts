@@ -1,4 +1,5 @@
 import hive from "@hiveio/hive-js";
+import { HiveKeychainCeramicConnector } from "spk-auth-react";
 
 const _Rixits =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";
@@ -549,7 +550,11 @@ export const dexBuy = async (
 };
 
 export const handleLogin = () => {
-  const operations = [];
+  const connector = new HiveKeychainCeramicConnector(hive);
+
+  connector.login().then((data) => {
+    console.log(data);
+  });
 };
 
 export const ftBuyTransfer = async (
