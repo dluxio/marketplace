@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useRecoilState, useRecoilValue } from "recoil";
+import { CeramicClient } from "@ceramicnetwork/http-client";
 import {
   userState,
   broadcastState,
@@ -19,7 +20,7 @@ import { FaBars } from "react-icons/fa";
 import { FcGlobe } from "react-icons/fc";
 
 import Image from "next/image";
-import { redoProfilePicture } from "../utils";
+import { handleLogin, redoProfilePicture } from "../utils";
 
 import { isMobile } from "react-device-detect";
 import axios from "axios";
@@ -86,10 +87,13 @@ export const NavBar = () => {
   }, [pfpData]);
 
   useEffect(() => {
-    const getUser = () => {
+    const getUser = async () => {
       const userStor = localStorage.getItem("user");
 
       if (userStor) {
+        const loginResponse: CeramicClient = await handleLogin();
+        console.log(loginResponse);
+
         setUser(JSON.parse(userStor));
       }
     };

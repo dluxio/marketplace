@@ -3,6 +3,7 @@ import React, {
   MutableRefObject,
   useRef,
   useState,
+  useMemo,
 } from "react";
 
 import { useRecoilState } from "recoil";
@@ -12,7 +13,8 @@ import { ImCross } from "react-icons/im";
 
 import hive from "@hiveio/hive-js";
 import { useTranslation } from "next-export-i18n";
-import { handleLogin } from "../utils";
+import { getProfile, handleLogin } from "../utils";
+import { CeramicClient } from "@ceramicnetwork/http-client";
 
 type LoginProps = {
   handleClose: MouseEventHandler;
@@ -23,18 +25,29 @@ export const Login = ({ handleClose }: LoginProps) => {
   const [errors, setErrors] = useState({ user: "" });
   const { t } = useTranslation();
   const [_user, setUser] = useRecoilState(userState);
+  const [ceramicClient, setCeramicClient] = useState<CeramicClient>();
 
-  const handleSubmit = (e: any) => {
+  useMemo(() => {
+    const fetchAccount = async () => {
+      if (ceramicClient) {
+        const response = getProfile(ceramicClient);
+        return response;
+      }
+    };
+  }, [ceramicClient]);
+
+  const handleSubmit = async (e: any) => {
     if (e.key === "Enter") {
       hive.api.getAccounts(
         [usernameRef.current.value],
-        (err: any, result: any) => {
+        async (err: any, result: any) => {
           if (err) throw new Error(err);
           if (result !== []) {
+            const loginResponse: CeramicClient = await handleLogin();
+            console.log(loginResponse);
             setUser(result[0]);
             localStorage.setItem("user", JSON.stringify(result[0]));
-
-            handleLogin();
+            setCeramicClient(loginResponse);
           } else {
             setErrors({ user: "hello" });
           }

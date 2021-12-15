@@ -1,5 +1,7 @@
 import hive from "@hiveio/hive-js";
 import { HiveKeychainCeramicConnector } from "spk-auth-react";
+import { CeramicClient } from "@ceramicnetwork/http-client";
+const connector = new HiveKeychainCeramicConnector(undefined, hive);
 
 const _Rixits =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";
@@ -438,7 +440,8 @@ export const redoProfilePicture = (nft: { script: string; uid: string }) => {
     .then((data) => {
       const code = `(//${data}\n)("${nft.uid}")`;
       const SVG = eval(code);
-      document.getElementById(`profile-picture`)!.innerHTML = SVG.HTML;
+      const element = document.getElementById(`profile-picture`);
+      if (element) element.innerHTML = SVG.HTML;
     });
 };
 
@@ -448,7 +451,8 @@ export const redoAccountPicture = (nft: { script: string; uid: string }) => {
     .then((data) => {
       const code = `(//${data}\n)("${nft.uid}")`;
       const SVG = eval(code);
-      document.getElementById(`account-picture`)!.innerHTML = SVG.HTML;
+      const element = document.getElementById(`account-picture`);
+      if (element) element.innerHTML = SVG.HTML;
     });
 };
 
@@ -549,12 +553,18 @@ export const dexBuy = async (
   return await handleBroadcastRequest(operations, username);
 };
 
-export const handleLogin = () => {
-  const connector = new HiveKeychainCeramicConnector(hive);
+export const handleLogin = async (): Promise<CeramicClient> => {
+  const response = await connector.login();
+  return response;
+};
 
-  connector.login().then((data) => {
-    console.log(data);
-  });
+export const getProfile = async (loginResponse: CeramicClient) => {
+  if (loginResponse) {
+    const profileResponse = await connector.getBasicProfile();
+    return profileResponse;
+  }
+
+  return "Not logged in with ceramic";
 };
 
 export const ftBuyTransfer = async (
