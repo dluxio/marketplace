@@ -20,7 +20,7 @@ import { FaBars } from "react-icons/fa";
 import { FcGlobe } from "react-icons/fc";
 
 import Image from "next/image";
-import { handleLogin, redoProfilePicture } from "../utils";
+import { getProfile, handleLogin, redoProfilePicture } from "../utils";
 
 import { isMobile } from "react-device-detect";
 import axios from "axios";
@@ -92,7 +92,9 @@ export const NavBar = () => {
 
       if (userStor) {
         const loginResponse: CeramicClient = await handleLogin();
-        console.log(loginResponse);
+        const profile = await getProfile(loginResponse);
+
+        console.log(profile);
 
         setUser(JSON.parse(userStor));
       }

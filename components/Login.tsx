@@ -30,10 +30,13 @@ export const Login = ({ handleClose }: LoginProps) => {
   useMemo(() => {
     const fetchAccount = async () => {
       if (ceramicClient) {
-        const response = getProfile(ceramicClient);
+        const response = await getProfile(ceramicClient);
+        console.log(response);
         return response;
       }
     };
+
+    fetchAccount();
   }, [ceramicClient]);
 
   const handleSubmit = async (e: any) => {
@@ -44,7 +47,6 @@ export const Login = ({ handleClose }: LoginProps) => {
           if (err) throw new Error(err);
           if (result !== []) {
             const loginResponse: CeramicClient = await handleLogin();
-            console.log(loginResponse);
             setUser(result[0]);
             localStorage.setItem("user", JSON.stringify(result[0]));
             setCeramicClient(loginResponse);
