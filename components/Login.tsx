@@ -41,10 +41,26 @@ export const Login = ({ handleClose }: LoginProps) => {
   };
 
   const handleSubmit = async (e: any) => {
-    if (e.key === "Enter") {
+    if (e.key) {
+      if (e.key === "Enter") {
+        hive.api.getAccounts(
+          [usernameRef.current.value],
+          async (err: any, result: any) => {
+            if (err) throw new Error(err);
+            if (result.length) {
+              setUser(result[0]);
+              localStorage.setItem("user", JSON.stringify(result[0]));
+              handleCeramicLogin(result[0]);
+            } else {
+              setErrors({ user: "hello" });
+            }
+          }
+        );
+      }
+    } else {
       hive.api.getAccounts(
         [usernameRef.current.value],
-        async (err: any, result: any) => {
+        (err: any, result: any) => {
           if (err) throw new Error(err);
           if (result.length) {
             setUser(result[0]);
@@ -56,21 +72,6 @@ export const Login = ({ handleClose }: LoginProps) => {
         }
       );
     }
-  };
-
-  const handleButtonSubmit = () => {
-    hive.api.getAccounts(
-      [usernameRef.current.value],
-      (err: any, result: any) => {
-        if (err) throw new Error(err);
-        if (result !== []) {
-          setUser(result[0]);
-          localStorage.setItem("user", JSON.stringify(result[0]));
-        } else {
-          setErrors({ user: "hello" });
-        }
-      }
-    );
   };
 
   return (
@@ -96,7 +97,7 @@ export const Login = ({ handleClose }: LoginProps) => {
           {errors.user && <h1 className="text-red-500">{t("userNotFound")}</h1>}
 
           <button
-            onClick={handleButtonSubmit}
+            onClick={handleSubmit}
             className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
           >
             {t("login")}
