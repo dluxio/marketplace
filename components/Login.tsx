@@ -13,7 +13,7 @@ import { ImCross } from "react-icons/im";
 
 import hive from "@hiveio/hive-js";
 import { useTranslation } from "next-export-i18n";
-import { getProfile, handleLogin } from "../utils";
+import { getProfile, handleLogin, setProfile } from "../utils";
 import { CeramicClient } from "@ceramicnetwork/http-client";
 
 type LoginProps = {
@@ -24,20 +24,22 @@ export const Login = ({ handleClose }: LoginProps) => {
   const usernameRef: MutableRefObject<any> = useRef(null);
   const [errors, setErrors] = useState({ user: "" });
   const { t } = useTranslation();
-  const [_user, setUser] = useRecoilState(userState);
-  const [ceramicClient, setCeramicClient] = useState<CeramicClient>();
+  const [user, setUser] = useRecoilState<any>(userState);
 
-  useMemo(() => {
-    const fetchAccount = async () => {
-      if (ceramicClient) {
-        console.log("LOGIN RESPONSE: ", ceramicClient);
-        const profile = await getProfile(ceramicClient);
-        console.log("BASIC PROFILE: ", profile);
-      }
-    };
+  const handleCeramicLogin = async (userObject: any) => {
+    const loginResponse: CeramicClient = await handleLogin();
+    // TODO: Fix it, so that it would get to the end (GETS TO HERE)
+    const profile = await getProfile(loginResponse);
 
-    fetchAccount();
-  }, [ceramicClient]);
+    if (profile) {
+    } else {
+      const response = await setProfile(userObject.json_metadata);
+      console.log("Basic profile: ", response);
+    }
+
+    console.log("LOGIN RESPONSE: ", loginResponse);
+    console.log("BASIC PROFILE: ", profile);
+  };
 
   const handleSubmit = async (e: any) => {
     if (e.key === "Enter") {
@@ -45,11 +47,10 @@ export const Login = ({ handleClose }: LoginProps) => {
         [usernameRef.current.value],
         async (err: any, result: any) => {
           if (err) throw new Error(err);
-          if (result !== []) {
+          if (result.length) {
             setUser(result[0]);
             localStorage.setItem("user", JSON.stringify(result[0]));
-            const loginResponse: CeramicClient = await handleLogin();
-            setCeramicClient(loginResponse);
+            handleCeramicLogin(result[0]);
           } else {
             setErrors({ user: "hello" });
           }
@@ -93,7 +94,7 @@ export const Login = ({ handleClose }: LoginProps) => {
             className="px-3 py-1 rounded-lg border bg-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
             onKeyDown={handleSubmit}
           />
-          {errors.user && <h1 className="text-red">{t("userNotFound")}</h1>}
+          {errors.user && <h1 className="text-red-500">{t("userNotFound")}</h1>}
 
           <button
             onClick={handleButtonSubmit}

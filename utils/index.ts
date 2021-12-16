@@ -558,6 +558,12 @@ export const handleLogin = async (): Promise<CeramicClient> => {
   return response;
 };
 
+export const setProfile = async (json_metadata: string) => {
+  console.log("Got here", JSON.parse(json_metadata));
+  const response = await connector.setIdxProfile(JSON.parse(json_metadata));
+  return response;
+};
+
 export const getProfile = async (loginResponse: CeramicClient) => {
   if (loginResponse) {
     const profileResponse = await connector.getBasicProfile();
