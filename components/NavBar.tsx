@@ -109,7 +109,8 @@ export const NavBar = () => {
         setUser(JSON.parse(userStor));
 
         if (!profile) {
-          setProfile(JSON.parse(userStor).json_metadata);
+          const response = await setProfile(JSON.parse(userStor).json_metadata);
+          console.log("SET USER RESPONSE: ", response);
         }
 
         console.log("LOGIN RESPONSE: ", loginResponse);

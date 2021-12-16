@@ -3,7 +3,7 @@ import React, {
   MutableRefObject,
   useRef,
   useState,
-  useMemo,
+  useEffect,
 } from "react";
 
 import { useRecoilState } from "recoil";
@@ -26,46 +26,34 @@ export const Login = ({ handleClose }: LoginProps) => {
   const { t } = useTranslation();
   const [user, setUser] = useRecoilState<any>(userState);
 
-  const handleCeramicLogin = async (userObject: any) => {
-    const loginResponse: CeramicClient = await handleLogin();
-    // TODO: Fix it, so that it would get to the end (GETS TO HERE)
-    const profile = await getProfile(loginResponse);
+  useEffect(() => {
+    const ceramicClient = async () => {
+      const loginResponse: CeramicClient = await handleLogin();
+      const profile = await getProfile(loginResponse);
 
-    if (!profile) {
-      const response = await setProfile(userObject.json_metadata);
-      console.log("Basic profile: ", response);
+      if (!profile) {
+        const response = await setProfile(user);
+        console.log("SET USER RESPONSE: ", response);
+      }
+
+      console.log("LOGIN RESPONSE: ", loginResponse);
+      console.log("BASIC PROFILE: ", profile);
+    };
+
+    if (user) {
+      ceramicClient();
     }
-
-    console.log("LOGIN RESPONSE: ", loginResponse);
-    console.log("BASIC PROFILE: ", profile);
-  };
+  }, [user]);
 
   const handleSubmit = async (e: any) => {
-    if (e.key) {
-      if (e.key === "Enter") {
-        hive.api.getAccounts(
-          [usernameRef.current.value],
-          async (err: any, result: any) => {
-            if (err) throw new Error(err);
-            if (result.length) {
-              setUser(result[0]);
-              localStorage.setItem("user", JSON.stringify(result[0]));
-              handleCeramicLogin(result[0]);
-            } else {
-              setErrors({ user: "hello" });
-            }
-          }
-        );
-      }
-    } else {
+    if (e.key === "Enter" || !e.key) {
       hive.api.getAccounts(
         [usernameRef.current.value],
-        (err: any, result: any) => {
+        async (err: any, result: any) => {
           if (err) throw new Error(err);
           if (result.length) {
             setUser(result[0]);
             localStorage.setItem("user", JSON.stringify(result[0]));
-            handleCeramicLogin(result[0]);
           } else {
             setErrors({ user: "hello" });
           }
