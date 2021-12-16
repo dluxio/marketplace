@@ -45,9 +45,16 @@ export const NavBar = () => {
   const { t } = useTranslation();
   const [query] = useLanguageQuery();
 
-  const handleLogout = () => {
+  const removeLocalStorage = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("ally-supports-cache");
+    localStorage.removeItem("hive.ceramic.id");
+    localStorage.removeItem("hive.ceramic.secret");
+  };
+
+  const handleLogout = () => {
     setUser(null);
+    removeLocalStorage();
     setProfDropdown(false);
   };
 
@@ -92,9 +99,9 @@ export const NavBar = () => {
 
       if (userStor) {
         const loginResponse: CeramicClient = await handleLogin();
+        console.log("LOGIN RESPONSE: ", loginResponse);
         const profile = await getProfile(loginResponse);
-
-        console.log(profile);
+        console.log("BASIC PROFILE: ", profile);
 
         setUser(JSON.parse(userStor));
       }
