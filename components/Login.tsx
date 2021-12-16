@@ -31,8 +31,7 @@ export const Login = ({ handleClose }: LoginProps) => {
     // TODO: Fix it, so that it would get to the end (GETS TO HERE)
     const profile = await getProfile(loginResponse);
 
-    if (profile) {
-    } else {
+    if (!profile) {
       const response = await setProfile(userObject.json_metadata);
       console.log("Basic profile: ", response);
     }

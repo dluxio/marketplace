@@ -108,8 +108,7 @@ export const NavBar = () => {
 
         setUser(JSON.parse(userStor));
 
-        if (profile) {
-        } else {
+        if (!profile) {
           setProfile(JSON.parse(userStor).json_metadata);
         }
 
