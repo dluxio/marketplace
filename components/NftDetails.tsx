@@ -71,9 +71,11 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
           attributeObj = { ...attributeObj, ...attr };
         });
         setAttributes(attributeObj);
+        const element = document.getElementById(
+          `${nft.set}-${nft.uid}-details`
+        );
 
-        document.getElementById(`${nft.set}-${nft.uid}-details`)!.innerHTML =
-          SVG.HTML;
+        if (element) element.innerHTML = SVG.HTML;
       });
   };
 

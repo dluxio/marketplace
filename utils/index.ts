@@ -262,7 +262,7 @@ export const NFTBuy = async (
 
 type BidData = {
   set: string;
-  uid?: string;
+  uid: string;
   bid_amount: number;
 };
 
@@ -270,18 +270,38 @@ export const NFTBid = async (
   username: string,
   nftData: BidData,
   prefix: string = "dlux_",
-  kind: "ft" | "nft"
+  kind: "ft" | "nft",
+  type: "HIVE" | "HBD" | "DLUX",
+  cc: string
 ) => {
   const id = `${prefix}${kind}_bid`;
-  const operations = [
-    "custom_json",
-    {
-      required_auths: [username],
-      required_posting_auths: [],
-      id,
-      json: JSON.stringify(nftData),
-    },
-  ];
+
+  const amount = `${parseFloat((nftData.bid_amount / 1000).toFixed(3))} ${
+    type === "HIVE" ? "HIVE" : "HBD"
+  }`;
+
+  console.log("TYPE ", type);
+  console.log("AMOUNT ", amount);
+
+  const operations =
+    type === "DLUX"
+      ? [
+          "custom_json",
+          {
+            required_auths: [username],
+            required_posting_auths: [],
+            id,
+            json: JSON.stringify(nftData),
+          },
+        ]
+      : [
+          "transfer",
+          {
+            to: cc,
+            amount,
+            memo: `NFTbid ${nftData.set}:${nftData.uid}`,
+          },
+        ];
 
   return await handleBroadcastRequest(operations, username);
 };

@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 import { AuctionNFTcard } from "../components";
 import axios from "axios";
 import { AuctionFTcard } from "../components/AuctionFTCard";
-import { apiLinkState } from "../atoms";
-import { useRecoilValue } from "recoil";
+import { apiLinkState, dlux_ccState } from "../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useTranslation } from "next-export-i18n";
 
 const Tools = () => {
@@ -15,6 +15,7 @@ const Tools = () => {
   const [showAuctionNFT, setShowAuctionNFT] = useState(true);
   const [auctionHouseNFT, setAuctionHouseNFT] = useState([]);
   const [auctionHouseFT, setAuctionHouseFT] = useState([]);
+  const [_cc, setCC] = useRecoilState(dlux_ccState);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -37,6 +38,10 @@ const Tools = () => {
         setAuctionHouseFT(result);
       });
     };
+
+    axios.get(`${apiLink}api/protocol`).then(({ data }) => {
+      setCC(data.multisig);
+    });
 
     fetchAuction();
   }, []);

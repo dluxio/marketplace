@@ -139,6 +139,7 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
       </div>
       {isBidding && (
         <BidForm
+          type={ft.price.token}
           kind={"ft"}
           set={ft.set}
           uid={ft.uid}
