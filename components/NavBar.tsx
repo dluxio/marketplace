@@ -100,25 +100,27 @@ export const NavBar = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const userStor = localStorage.getItem("user");
+      const userStor = window.localStorage.getItem("user");
 
       if (userStor) {
-        const loginResponse: CeramicClient = await handleLogin();
-        const profile = await getProfile(loginResponse);
+        await handleLogin();
+        const profile = await getProfile();
 
+        console.log(JSON.parse(userStor).posting_json_metadata);
         setUser(JSON.parse(userStor));
 
         if (!profile) {
-          const response = await setProfile(JSON.parse(userStor).json_metadata);
+          const response = await setProfile(
+            JSON.parse(userStor).posting_json_metadata
+          );
           console.log("SET USER RESPONSE: ", response);
         }
 
-        console.log("LOGIN RESPONSE: ", loginResponse);
         console.log("BASIC PROFILE: ", profile);
       }
     };
 
-    if (!user) {
+    if (!user && window !== undefined) {
       getUser();
     }
 

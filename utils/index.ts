@@ -564,13 +564,9 @@ export const setProfile = async (json_metadata: string) => {
   return response;
 };
 
-export const getProfile = async (loginResponse: CeramicClient) => {
-  if (loginResponse) {
-    const profileResponse = await connector.getBasicProfile();
-    return profileResponse;
-  }
-
-  return "Not logged in with ceramic";
+export const getProfile = async () => {
+  const profileResponse = await connector.getBasicProfile();
+  return profileResponse;
 };
 
 export const ftBuyTransfer = async (

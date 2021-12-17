@@ -28,19 +28,18 @@ export const Login = ({ handleClose }: LoginProps) => {
 
   useEffect(() => {
     const ceramicClient = async () => {
-      const loginResponse: CeramicClient = await handleLogin();
-      const profile = await getProfile(loginResponse);
+      await handleLogin();
 
+      const profile = await getProfile();
       if (!profile) {
-        const response = await setProfile(user);
+        const response = await setProfile(user.posting_json_metadata);
         console.log("SET USER RESPONSE: ", response);
       }
 
-      console.log("LOGIN RESPONSE: ", loginResponse);
       console.log("BASIC PROFILE: ", profile);
     };
 
-    if (user) {
+    if (user && window !== undefined) {
       ceramicClient();
     }
   }, [user]);
