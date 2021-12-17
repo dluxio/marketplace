@@ -9,18 +9,26 @@ import { userState, prefixState, broadcastState } from "../../atoms";
 
 import { Auction } from "../../utils";
 import { useTranslation } from "next-export-i18n";
+import Select from "react-select/dist/declarations/src/Select";
+import { customSelectStyles } from "../../constants";
 
 export const AuctionNFTForm: React.FC<{
   set: string;
-  uid?: string;
+  uid: string;
   handleClose: Function;
 }> = ({ set, handleClose, uid }) => {
-  const [broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
+  const [currency, setCurrency] = useState("DLUX");
+  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const { t } = useTranslation();
-  const [auctionData, setAuctionData] =
-    useState<{ set: string; uid?: string; time: number; price: number }>();
+  const [auctionData, setAuctionData] = useState<{
+    set: string;
+    uid: string;
+    time: number;
+    price: number;
+    type: string;
+  }>();
 
   useEffect(() => {
     if (auctionData) {
@@ -59,20 +67,12 @@ export const AuctionNFTForm: React.FC<{
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            if (uid) {
-              setAuctionData({
-                price: +values.price * 1000,
-                time: values.time,
-                set,
-                uid,
-              });
-            } else {
-              setAuctionData({
-                price: +values.price * 1000,
-                time: values.time,
-                set,
-              });
-            }
+            setAuctionData({
+              price: +values.price * 1000,
+              time: values.time,
+              set,
+              uid,
+            });
             setSubmitting(false);
             handleClose();
           }}
@@ -108,6 +108,26 @@ export const AuctionNFTForm: React.FC<{
                       handleChange={handleChange}
                       touched={touched.time}
                       value={values.time}
+                    />
+                  </div>
+                  <div>
+                    <h1 className="mb-1">Currency</h1>
+                    <Select
+                      styles={customSelectStyles}
+                      onChange={(e) => {
+                        setCurrency(e!.value);
+                      }}
+                      options={[
+                        {
+                          value: "DLUX",
+                          label: "DLUX",
+                        },
+                        {
+                          value: "HIVE",
+                          label: "HIVE",
+                        },
+                        { value: "HBD", label: "HBD" },
+                      ]}
                     />
                   </div>
                 </div>

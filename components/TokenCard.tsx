@@ -17,7 +17,7 @@ type TokenCardProps = {
 };
 
 export const TokenCard = ({ token }: TokenCardProps) => {
-  const { set, script, qty } = token;
+  const { set, script, qty, uid } = token;
   const [colors, setColors] = useState<any>([]);
   const [isSelling, setIsSelling] = useState(false);
   const [auction, setAuction] = useState(false);
@@ -161,7 +161,11 @@ export const TokenCard = ({ token }: TokenCardProps) => {
       )}
       {airdrop && <Airdrop set={set} handleClose={() => setAirdrop(false)} />}
       {auction && (
-        <AuctionNFTForm set={set} handleClose={() => setAuction(false)} />
+        <AuctionNFTForm
+          uid={uid}
+          set={set}
+          handleClose={() => setAuction(false)}
+        />
       )}
       {isSelling && (
         <SellForm
