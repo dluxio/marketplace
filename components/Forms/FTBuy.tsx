@@ -13,7 +13,7 @@ import { FormInput } from "../FormInput";
 import { Formik } from "formik";
 import { useTranslation } from "next-export-i18n";
 import Select from "react-select";
-import { customSelectStyles } from "../../constants";
+import { customSelectStyles, selectOptions } from "../../constants";
 import axios from "axios";
 
 type FTBuyProps = {
@@ -170,24 +170,11 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
                   <h1 className="mb-1">Currency</h1>
                   <Select
                     styles={customSelectStyles}
-                    defaultValue={{
-                      value: token,
-                      label: token,
-                    }}
+                    defaultValue={selectOptions[0]}
                     onChange={(e) => {
                       setBuyCurrency(e!.value);
                     }}
-                    options={[
-                      {
-                        value: "DLUX",
-                        label: "DLUX",
-                      },
-                      {
-                        value: "HIVE",
-                        label: "HIVE",
-                      },
-                      { value: "HBD", label: "HBD" },
-                    ]}
+                    options={selectOptions}
                   />
                 </div>
                 <button

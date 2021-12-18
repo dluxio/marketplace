@@ -58,7 +58,6 @@ const User = () => {
 
       client.database.getAccounts([username]).then((response: any) => {
         if (response[0]) {
-          console.log(JSON.parse(response[0].posting_json_metadata).profile);
           setUserData(JSON.parse(response[0].posting_json_metadata).profile);
         }
       });

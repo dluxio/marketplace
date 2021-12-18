@@ -27,6 +27,18 @@ export const attributeColors: any = {
   Rarity: "#46CDF9",
 };
 
+export const selectOptions = [
+  {
+    value: "DLUX",
+    label: "DLUX",
+  },
+  {
+    value: "HIVE",
+    label: "HIVE",
+  },
+  { value: "HBD", label: "HBD" },
+];
+
 export const customSelectStyles = {
   control: (base: any) => ({
     ...base,
