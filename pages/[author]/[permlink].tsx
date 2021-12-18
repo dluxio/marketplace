@@ -125,7 +125,6 @@ const AppDetails = () => {
 
   useEffect(() => {
     if (contentData) {
-      console.log(contentData);
       const imagesArray: { url: string }[] = [];
 
       contentData.image.forEach((image: string) => {

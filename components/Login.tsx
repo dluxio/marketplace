@@ -21,20 +21,6 @@ export const Login = ({ handleClose }: LoginProps) => {
   const usernameRef: MutableRefObject<any> = useRef(null);
   const [errors, setErrors] = useState({ user: "" });
   const { t } = useTranslation();
-
-  hive.api.setOptions({ url: "https://api.deathwing.me/" });
-  hive.config.set("address_prefix", "STM");
-  hive.config.set(
-    "chain_id",
-    "beeab0de00000000000000000000000000000000000000000000000000000000"
-  );
-  hive.config.set("alternative_api_endpoints", [
-    "https://rpc.ecency.com/",
-    "https://hived.emre.sh/",
-    "https://rpc.ausbit.dev/",
-    "https://api.hive.blog/",
-  ]);
-
   const [_user, setUser] = useRecoilState(userState);
 
   const handleSubmit = (e: any) => {
