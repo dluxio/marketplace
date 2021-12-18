@@ -42,7 +42,6 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
     if (coin) {
       axios.get(`${apiLink}dex`).then(({ data }) => {
         setDexData(data);
-
         if (coin === "HIVE") {
           if (data.markets.hive.sells.length && data.markets.hive.buys.length) {
             setBidPrice({

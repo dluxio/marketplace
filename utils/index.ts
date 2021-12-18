@@ -80,24 +80,50 @@ const handleBroadcastRequest = async (
 
 type AuctionData = {
   set: string;
-  uid?: string;
+  uid: string;
   price: number;
   time: number;
+  type: string;
+  kind: string;
 };
 
 export const Auction = async (
   username: string,
-  nftData: AuctionData,
+  auctionData: AuctionData,
   prefix: string = "dlux_"
 ) => {
-  const id = `${prefix}${nftData.uid ? "nft_auction" : "ft_auction"}`;
+  let id = `${prefix}`;
+
+  if (auctionData.kind === "nft") {
+    if (auctionData.type === "DLUX") {
+      id += "nft_auction";
+    } else id += "nft_hauction";
+  } else {
+    id += "ft_auction";
+  }
+
   const operations = [
     "custom_json",
     {
       required_auths: [username],
       required_posting_auths: 0,
       id,
-      json: JSON.stringify(nftData),
+      json: JSON.stringify(
+        auctionData.type === "DLUX"
+          ? {
+              set: auctionData.set,
+              uid: auctionData.uid,
+              price: auctionData.price,
+              time: auctionData.time,
+            }
+          : {
+              set: auctionData.set,
+              uid: auctionData.uid,
+              price: auctionData.price,
+              time: auctionData.time,
+              type: auctionData.type,
+            }
+      ),
     },
   ];
 
@@ -265,7 +291,7 @@ export const NFTBuy = async (
 
 type BidData = {
   set: string;
-  uid?: string;
+  uid: string;
   bid_amount: number;
 };
 
@@ -273,18 +299,38 @@ export const NFTBid = async (
   username: string,
   nftData: BidData,
   prefix: string = "dlux_",
-  kind: "ft" | "nft"
+  kind: "ft" | "nft",
+  type: "HIVE" | "HBD" | "DLUX",
+  cc: string
 ) => {
   const id = `${prefix}${kind}_bid`;
-  const operations = [
-    "custom_json",
-    {
-      required_auths: [username],
-      required_posting_auths: [],
-      id,
-      json: JSON.stringify(nftData),
-    },
-  ];
+
+  const amount = `${parseFloat((nftData.bid_amount / 1000).toFixed(3))} ${
+    type === "HIVE" ? "HIVE" : "HBD"
+  }`;
+
+  console.log("TYPE ", type);
+  console.log("AMOUNT ", amount);
+
+  const operations =
+    type === "DLUX"
+      ? [
+          "custom_json",
+          {
+            required_auths: [username],
+            required_posting_auths: [],
+            id,
+            json: JSON.stringify(nftData),
+          },
+        ]
+      : [
+          "transfer",
+          {
+            to: cc,
+            amount,
+            memo: `NFTbid ${nftData.set}:${nftData.uid}`,
+          },
+        ];
 
   return await handleBroadcastRequest(operations, username);
 };

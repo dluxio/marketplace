@@ -123,6 +123,7 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
           set={nft.set}
           kind="nft"
           uid={nft.uid}
+          type={nft.price.token}
           handleClose={() => setIsBidding(false)}
         />
       )}

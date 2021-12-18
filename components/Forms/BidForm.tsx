@@ -3,7 +3,12 @@ import React, { useState, useEffect, MouseEventHandler } from "react";
 import { Formik } from "formik";
 import { FormInput } from "../FormInput";
 import { ImCross } from "react-icons/im";
-import { broadcastState, prefixState, userState } from "../../atoms";
+import {
+  broadcastState,
+  dlux_ccState,
+  prefixState,
+  userState,
+} from "../../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import { NFTBid } from "../../utils";
@@ -12,23 +17,27 @@ export const BidForm: React.FC<{
   set: string;
   uid: string;
   kind: "ft" | "nft";
+  type: "HIVE" | "HBD" | "DLUX";
   handleClose: Function;
-}> = ({ set, handleClose, uid, kind }) => {
+}> = ({ set, handleClose, uid, kind, type }) => {
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
+  const cc: string = useRecoilValue(dlux_ccState);
   const prefix: string = useRecoilValue(prefixState);
   const [bidData, setBidData] =
     useState<{ set: string; bid_amount: number; uid: string }>();
 
   useEffect(() => {
     if (bidData && user) {
-      NFTBid(user.name, bidData, prefix, kind).then((response: any) => {
-        if (response) {
-          if (response.success) {
-            setBroadcasts((prevState: any) => [...prevState, response]);
+      NFTBid(user.name, bidData, prefix, kind, type, cc).then(
+        (response: any) => {
+          if (response) {
+            if (response.success) {
+              setBroadcasts((prevState: any) => [...prevState, response]);
+            }
           }
         }
-      });
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bidData, user]);
