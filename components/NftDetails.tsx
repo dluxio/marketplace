@@ -161,6 +161,7 @@ export const NftDetails = ({ nft }: NftDetailProps) => {
       )}
       {auction && (
         <AuctionNFTForm
+          kind={"nft"}
           set={nft.set}
           uid={nft.uid}
           handleClose={() => setAuction(false)}

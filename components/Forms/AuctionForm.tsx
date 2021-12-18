@@ -9,14 +9,15 @@ import { userState, prefixState, broadcastState } from "../../atoms";
 
 import { Auction } from "../../utils";
 import { useTranslation } from "next-export-i18n";
-import Select from "react-select/dist/declarations/src/Select";
-import { customSelectStyles } from "../../constants";
+import Select from "react-select";
+import { customSelectStyles, selectOptions } from "../../constants";
 
 export const AuctionNFTForm: React.FC<{
   set: string;
   uid: string;
+  kind: string;
   handleClose: Function;
-}> = ({ set, handleClose, uid }) => {
+}> = ({ set, handleClose, uid, kind }) => {
   const [currency, setCurrency] = useState("DLUX");
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
@@ -28,6 +29,7 @@ export const AuctionNFTForm: React.FC<{
     time: number;
     price: number;
     type: string;
+    kind: string;
   }>();
 
   useEffect(() => {
@@ -72,6 +74,8 @@ export const AuctionNFTForm: React.FC<{
               time: values.time,
               set,
               uid,
+              type: currency,
+              kind,
             });
             setSubmitting(false);
             handleClose();
@@ -110,27 +114,23 @@ export const AuctionNFTForm: React.FC<{
                       value={values.time}
                     />
                   </div>
-                  <div>
+                </div>
+                {kind === "nft" && (
+                  <div className="flex justify-center flex-col items-center">
                     <h1 className="mb-1">Currency</h1>
                     <Select
                       styles={customSelectStyles}
+                      defaultValue={selectOptions[0]}
                       onChange={(e) => {
                         setCurrency(e!.value);
                       }}
-                      options={[
-                        {
-                          value: "DLUX",
-                          label: "DLUX",
-                        },
-                        {
-                          value: "HIVE",
-                          label: "HIVE",
-                        },
-                        { value: "HBD", label: "HBD" },
-                      ]}
+                      options={selectOptions}
                     />
+                    <h1 className="mt-1">
+                      fee: {currency === "DLUX" ? "0%" : "1%"}
+                    </h1>
                   </div>
-                </div>
+                )}
                 <button
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"

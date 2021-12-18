@@ -162,6 +162,7 @@ export const TokenCard = ({ token }: TokenCardProps) => {
       {airdrop && <Airdrop set={set} handleClose={() => setAirdrop(false)} />}
       {auction && (
         <AuctionNFTForm
+          kind={"ft"}
           uid={uid}
           set={set}
           handleClose={() => setAuction(false)}
