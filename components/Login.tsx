@@ -3,6 +3,7 @@ import React, {
   MutableRefObject,
   useRef,
   useState,
+  useEffect,
 } from "react";
 
 import { useRecoilState } from "recoil";
@@ -12,6 +13,8 @@ import { ImCross } from "react-icons/im";
 
 import hive from "@hiveio/hive-js";
 import { useTranslation } from "next-export-i18n";
+import { getProfile, handleLogin, setProfile } from "../utils";
+import { CeramicClient } from "@ceramicnetwork/http-client";
 
 type LoginProps = {
   handleClose: MouseEventHandler;
@@ -21,15 +24,33 @@ export const Login = ({ handleClose }: LoginProps) => {
   const usernameRef: MutableRefObject<any> = useRef(null);
   const [errors, setErrors] = useState({ user: "" });
   const { t } = useTranslation();
-  const [_user, setUser] = useRecoilState(userState);
+  const [user, setUser] = useRecoilState<any>(userState);
 
-  const handleSubmit = (e: any) => {
-    if (e.key === "Enter") {
+  useEffect(() => {
+    const ceramicClient = async () => {
+      await handleLogin();
+
+      const profile = await getProfile();
+      if (!profile) {
+        const response = await setProfile(user.posting_json_metadata);
+        console.log("SET USER RESPONSE: ", response);
+      }
+
+      console.log("BASIC PROFILE: ", profile);
+    };
+
+    if (user && window !== undefined) {
+      ceramicClient();
+    }
+  }, [user]);
+
+  const handleSubmit = async (e: any) => {
+    if (e.key === "Enter" || !e.key) {
       hive.api.getAccounts(
         [usernameRef.current.value],
-        (err: any, result: any) => {
+        async (err: any, result: any) => {
           if (err) throw new Error(err);
-          if (result !== []) {
+          if (result.length) {
             setUser(result[0]);
             localStorage.setItem("user", JSON.stringify(result[0]));
           } else {
@@ -38,21 +59,6 @@ export const Login = ({ handleClose }: LoginProps) => {
         }
       );
     }
-  };
-
-  const handleButtonSubmit = () => {
-    hive.api.getAccounts(
-      [usernameRef.current.value],
-      (err: any, result: any) => {
-        if (err) throw new Error(err);
-        if (result !== []) {
-          setUser(result[0]);
-          localStorage.setItem("user", JSON.stringify(result[0]));
-        } else {
-          setErrors({ user: "hello" });
-        }
-      }
-    );
   };
 
   return (
@@ -75,10 +81,10 @@ export const Login = ({ handleClose }: LoginProps) => {
             className="px-3 py-1 rounded-lg border bg-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
             onKeyDown={handleSubmit}
           />
-          {errors.user && <h1 className="text-red">{t("userNotFound")}</h1>}
+          {errors.user && <h1 className="text-red-500">{t("userNotFound")}</h1>}
 
           <button
-            onClick={handleButtonSubmit}
+            onClick={handleSubmit}
             className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
           >
             {t("login")}
