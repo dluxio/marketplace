@@ -47,6 +47,7 @@
     "availible": "Availible",
     "userNotFound": "User not found",
     "inputUsername": "Input your username",
-    "desktopApp": "Desktop app"
+    "desktopApp": "Desktop app",
+    "owner": "Owner"
   }
 }

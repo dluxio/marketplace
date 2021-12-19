@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    loader: 'imgix',
+    loader: "imgix",
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     return config;
@@ -12,16 +12,17 @@ module.exports = {
     { dev, dir, outDir, distDir, buildId }
   ) {
     return {
-      '/': { page: '/' },
-      '/inventory': { page: '/inventory' },
-      '/auction': { page: '/auction' },
-      '/create-nft': { page: '/create-nft' },
-      '/listings': { page: '/listings' },
-      '/trades': { page: '/trades' },
-      '/404': { page: '/404' },
-      '/[author]/[permlink]': {page: '/[author]/[permlink]'},
-      '/settings': {page: '/settings'},
-      '/[author]': {page: '/[author]'}
+      "/": { page: "/" },
+      "/inventory": { page: "/inventory" },
+      "/auction": { page: "/auction" },
+      "/create-nft": { page: "/create-nft" },
+      "/listings": { page: "/listings" },
+      "/trades": { page: "/trades" },
+      "/404": { page: "/404" },
+      "/[author]/[permlink]": { page: "/[author]/[permlink]" },
+      "/settings": { page: "/settings" },
+      "/[author]": { page: "/[author]" },
+      "/set/[setName]": { page: "/set/[setName]" },
     };
   },
 };

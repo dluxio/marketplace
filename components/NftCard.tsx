@@ -83,10 +83,11 @@ export const NftCard = ({ nft }: NftCardProp) => {
     <>
       <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white flex flex-col">
         <h1
-          className="text-center w-full rounded-t-xl font-black py-2 text-xl"
+          className="cursor-pointer text-center w-full rounded-t-xl font-black py-2 text-xl"
           style={{
             background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
           }}
+          onClick={() => router.push(`/set/${nft.set}`)}
         >
           {nft.set}
         </h1>

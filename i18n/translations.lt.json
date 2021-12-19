@@ -47,6 +47,7 @@
     "availible": "Availible",
     "userNotFound": "Paskyra nerasta",
     "inputUsername": "Įvesk savo slapyvardį",
-    "desktopApp": "Desktopo programa"
+    "desktopApp": "Desktopo programa",
+    "owner": "Savininkas"
   }
 }
