@@ -12,6 +12,7 @@
     "@hiveio/dhive": "^1.1.1",
     "@hiveio/hive-js": "^2.0.4",
     "@hiveio/keychain": "^1.0.4",
+    "@spknetwork/hive-keychain-ceramic": "^0.0.3",
     "@types/canvasjs": "^1.9.7",
     "@types/d3-dsv": "^3.0.0",
     "@types/d3-time-format": "^4.0.0",
@@ -56,7 +57,8 @@
     "react-simple-image-slider": "^2.3.0",
     "react-stockcharts": "^0.7.8",
     "recoil": "^0.4.1",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "spk-auth-react": "^0.0.1"
   },
   "devDependencies": {
     "@types/coingecko-api": "^1.0.2",

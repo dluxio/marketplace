@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useRecoilState, useRecoilValue } from "recoil";
+import { CeramicClient } from "@ceramicnetwork/http-client";
 import {
   userState,
   broadcastState,
@@ -19,7 +20,12 @@ import { FaBars } from "react-icons/fa";
 import { FcGlobe } from "react-icons/fc";
 
 import Image from "next/image";
-import { redoProfilePicture } from "../utils";
+import {
+  getProfile,
+  handleLogin,
+  redoProfilePicture,
+  setProfile,
+} from "../utils";
 
 import { isMobile } from "react-device-detect";
 import axios from "axios";
@@ -44,9 +50,16 @@ export const NavBar = () => {
   const { t } = useTranslation();
   const [query] = useLanguageQuery();
 
-  const handleLogout = () => {
+  const removeLocalStorage = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("ally-supports-cache");
+    localStorage.removeItem("hive.ceramic.id");
+    localStorage.removeItem("hive.ceramic.secret");
+  };
+
+  const handleLogout = () => {
     setUser(null);
+    removeLocalStorage();
     setProfDropdown(false);
   };
 
@@ -86,15 +99,28 @@ export const NavBar = () => {
   }, [pfpData]);
 
   useEffect(() => {
-    const getUser = () => {
-      const userStor = localStorage.getItem("user");
+    const getUser = async () => {
+      const userStor = window.localStorage.getItem("user");
 
       if (userStor) {
+        await handleLogin();
+        const profile = await getProfile();
+
+        console.log(JSON.parse(userStor).posting_json_metadata);
         setUser(JSON.parse(userStor));
+
+        if (!profile) {
+          const response = await setProfile(
+            JSON.parse(userStor).posting_json_metadata
+          );
+          console.log("SET USER RESPONSE: ", response);
+        }
+
+        console.log("BASIC PROFILE: ", profile);
       }
     };
 
-    if (!user) {
+    if (!user && window !== undefined) {
       getUser();
     }
 

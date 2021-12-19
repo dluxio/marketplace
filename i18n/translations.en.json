@@ -47,6 +47,17 @@
     "availible": "Availible",
     "userNotFound": "User not found",
     "inputUsername": "Input your username",
-    "desktopApp": "Desktop app"
+    "desktopApp": "Desktop app",
+    "ask": "Ask",
+    "hourVolume": "24h Volume",
+    "orderType": "Order Type",
+    "type": "Type",
+    "limit": "Limit",
+    "qty": "Quantity",
+    "total": "Total",
+    "last": "Last",
+    "orders": "orders",
+    "date": "Date",
+    "tradeHistory": "Trade History"
   }
 }
