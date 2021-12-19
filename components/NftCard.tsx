@@ -104,12 +104,15 @@ export const NftCard = ({ nft }: NftCardProp) => {
           </div>
         </div>
         <div className="px-5 py-4 w-full flex flex-col justify-between items-center">
-          <h1
-            className="hover:text-gray-300 cursor-pointer"
-            onClick={() => router.push(`/@${nft.by}`)}
-          >
-            {t("by")}: {nft.by}
-          </h1>
+          <div className="flex gap-1">
+            <h1>{t("by")}: </h1>
+            <h1
+              className="hover:text-gray-300 cursor-pointer"
+              onClick={() => router.push(`/@${nft.by}`)}
+            >
+              {nft.by}
+            </h1>
+          </div>
           <h1>
             {t("price")}:{" "}
             <strong>

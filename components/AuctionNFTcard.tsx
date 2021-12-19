@@ -72,19 +72,25 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
         <div className="px-2 sm:px-4 py-4 w-full flex text-center flex-col justify-between items-center gap-3">
           <div>
             {nft.bidder && (
+              <div className="flex gap-1 justify-center">
+                <h1>{t("bidder")}: </h1>
+                <h1
+                  className="hover:text-gray-300 cursor-pointer"
+                  onClick={() => router.push(`/@${nft.bidder}`)}
+                >
+                  {nft.bidder}
+                </h1>
+              </div>
+            )}
+            <div className="flex gap-1 justify-center">
+              <h1>{t("by")}: </h1>
               <h1
                 className="hover:text-gray-300 cursor-pointer"
-                onClick={() => router.push(`/@${nft.bidder}`)}
+                onClick={() => router.push(`/@${nft.by}`)}
               >
-                {t("bidder")}: <strong>{nft.bidder}</strong>
+                {nft.by}
               </h1>
-            )}
-            <h1
-              className="hover:text-gray-300 cursor-pointer"
-              onClick={() => router.push(`/@${nft.by}`)}
-            >
-              {t("by")}: <strong>{nft.by}</strong>
-            </h1>
+            </div>
             <h1>
               {t("price")}:{" "}
               <strong>
