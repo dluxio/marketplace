@@ -37,9 +37,7 @@ export const CommentCard = ({ comment }: { comment: any }) => {
         start_permlink: comment.permlink,
         limit: 10,
       },
-      function (err: any, result: any) {
-        console.log(result);
-      }
+      function (err: any, result: any) {}
     );
   });
 
