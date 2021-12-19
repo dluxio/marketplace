@@ -48,6 +48,17 @@
     "userNotFound": "Paskyra nerasta",
     "inputUsername": "Įvesk savo slapyvardį",
     "desktopApp": "Desktopo programa",
+    "ask": "Prašo",
+    "hourVolume": "24val Kiekis",
+    "orderType": "Užsakymo Tipas",
+    "type": "Tipas",
+    "limit": "Limitas",
+    "qty": "Kiekis",
+    "total": "Kiek",
+    "last": "Paskutinis",
+    "orders": "užsakymai",
+    "date": "Data",
+    "tradeHistory": "Užsakymų istorija",
     "owner": "Savininkas"
   }
 }
