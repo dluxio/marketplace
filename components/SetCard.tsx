@@ -58,7 +58,9 @@ export const SetCard = ({ nft }: { nft: any }) => {
             <h1>{t("owner")}:</h1>
             <h1
               className="hover:text-gray-300 cursor-pointer font-bold"
-              onClick={() => router.push(`/@${nft.owner}`)}
+              onClick={() =>
+                router.push(nft.owner === "ah" ? "/auction" : `/@${nft.owner}`)
+              }
             >
               {nft.owner}
             </h1>
