@@ -1,3 +1,4 @@
+import { useTranslation } from "next-export-i18n";
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { dlux_ccState, prefixState, userState } from "../../atoms";
@@ -10,6 +11,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
   const user: any = useRecoilValue(userState);
   const prefix: string = useRecoilValue(prefixState);
   const cc: string = useRecoilValue(dlux_ccState);
+  const { t } = useTranslation();
 
   const handlePlaceOrder = () => {
     if (type === "sell" && orderType === "market") {
@@ -58,12 +60,12 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
     <div className="flex flex-col flex-grow bg-gray-700 border-2 border-gray-800 p-3 rounded-md">
       <div className="text-white text-xl flex gap-3">
         <h1 className={type === "sell" ? "text-red-500" : "text-green-500"}>
-          {type.charAt(0).toUpperCase() + type.slice(1)}
+          {t(type)}
         </h1>
         <h1>DLUX</h1>
       </div>
       <div className="flex flex-col sm:flex-row items-center  mr-5 justify-between mt-2 text-white font-light">
-        <h1>Order Type</h1>
+        <h1>{t("orderType")}</h1>
         <div className="flex justify-center">
           <button
             onClick={() => setOrderType("limit")}
@@ -71,7 +73,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
               orderType === "limit" && "bg-gray-900"
             } rounded-l-full bg-gray-800 text-white transition-all`}
           >
-            Limit
+            {t("limit")}
           </button>
           <button
             onClick={() => setOrderType("market")}
@@ -79,7 +81,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
               orderType === "market" && "bg-gray-900"
             } rounded-r-full bg-gray-800 text-white transition-all`}
           >
-            Market
+            {t("market")}
           </button>
         </div>
       </div>
@@ -87,7 +89,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
         {orderType === "limit" && (
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col mr-5">
-              <h1>Quantity</h1>
+              <h1>{t("qty")}</h1>
               <h1 className="font-light text-sm">DLUX</h1>
             </div>
             <input
@@ -102,7 +104,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
         {orderType === "market" && type === "sell" && (
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col mr-5">
-              <h1>Quantity</h1>
+              <h1>{t("qty")}</h1>
               <h1 className="font-light text-sm">DLUX</h1>
             </div>
             <input
@@ -117,7 +119,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
         {orderType === "limit" && type === "sell" && (
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col mr-5">
-              <h1>Total</h1>
+              <h1>{t("total")}</h1>
               <h1 className="font-light text-sm">{coin}</h1>
             </div>
             <input
@@ -132,7 +134,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
         {type === "buy" && (
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col mr-5">
-              <h1>Total</h1>
+              <h1>{t("total")}</h1>
               <h1 className="font-light text-sm">{coin}</h1>
             </div>
             <input
@@ -154,7 +156,7 @@ export const Order = ({ type, coin }: { type: string; coin: string }) => {
               : "bg-green-500 focus:ring-green-600"
           } text-white mx-4 mt-5 px-4 py-2 rounded-xl focus:ring-2 `}
         >
-          {type.charAt(0).toUpperCase() + type.slice(1)}
+          {t(type)}
         </button>
       </div>
     </div>
