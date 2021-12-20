@@ -16,7 +16,6 @@ export const SetCard = ({ nft }: { nft: any }) => {
       .then(({ data }) => {
         const code = `(//${data}\n)("${nft.uid}")`;
         const SVG = eval(code);
-        console.log(SVG);
         const elem = document.getElementById(`image-${nft.set}-${nft.uid}`);
         setColors([SVG.set.Color1, SVG.set.Color2]);
         if (elem) {
