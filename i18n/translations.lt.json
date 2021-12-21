@@ -58,6 +58,7 @@
     "last": "Paskutinis",
     "orders": "užsakymai",
     "date": "Data",
-    "tradeHistory": "Užsakymų istorija"
+    "tradeHistory": "Užsakymų istorija",
+    "owner": "Savininkas"
   }
 }
