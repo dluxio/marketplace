@@ -5,12 +5,15 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { apiLinkState } from "../../atoms";
 import { SetCard } from "../../components/SetCard";
+import { FaInfoCircle } from "react-icons/fa";
 
 const SetPage = () => {
   const [nfts, setNfts] = useState([]);
   const [logoLink, setLogoLink] = useState("");
   const [bannerLink, setBannerLink] = useState("");
-  const [setData, setSetData] = useState<{ logo: string }>();
+  const [colors, setColors] = useState<string[]>([]);
+  const [setData, setSetData] =
+    useState<{ logo: string; Description: string }>();
   const apiLink: string = useRecoilValue(apiLinkState);
   const router = useRouter();
   const { setName } = router.query;
@@ -19,24 +22,35 @@ const SetPage = () => {
     if (!setName) router.push("/");
 
     if (setName) {
-      axios.get(`${apiLink}api/set/${setName}`).then(({ data: data1 }) => {
-        setNfts(data1.result);
-        console.log(data1);
-        const elem = document.getElementById("set-name");
-        if (elem && data1) elem.innerHTML = data1.set?.name_long;
+      axios
+        .get(`${apiLink}api/set/${setName}`)
+        .then(({ data: { set, result } }) => {
+          setNfts(result);
+          const elem = document.getElementById("set-name");
+          if (elem && set) elem.innerHTML = set?.name_long;
+          const bondElem = document.getElementById("bond-amount");
+          const royaltyElem = document.getElementById("royalty-amount");
 
-        axios
-          .get(`https://ipfs.io/ipfs/${data1.set.script}`)
-          .then(({ data: data2 }) => {
-            const code = `(//${data2}\n)('0')`;
-            const SVG = eval(code);
+          if (royaltyElem) royaltyElem.innerHTML = `${set.royalty / 100} %`;
 
-            console.log(SVG.set);
-            setSetData(SVG.set);
-            setLogoLink(`https://ipfs.io/ipfs/${SVG.set.logo}`);
-            setBannerLink(`https://ipfs.io/ipfs/${SVG.set.banner}`);
-          });
-      });
+          if (bondElem)
+            bondElem.innerHTML = `${parseFloat(
+              (set.bond.amount / Math.pow(10, set.bond.precision)).toString()
+            ).toFixed(set.bond.precision)} ${set.bond.token}`;
+
+          axios
+            .get(`https://ipfs.io/ipfs/${set.script}`)
+            .then(({ data: data2 }) => {
+              const code = `(//${data2}\n)('0')`;
+              const SVG = eval(code);
+              console.log(SVG);
+              setColors([SVG.set.Color1, SVG.set.Color2]);
+
+              setSetData(SVG.set);
+              setLogoLink(`https://ipfs.io/ipfs/${SVG.set.logo}`);
+              setBannerLink(`https://ipfs.io/ipfs/${SVG.set.banner}`);
+            });
+        });
     }
   }, []);
 
@@ -55,9 +69,43 @@ const SetPage = () => {
         }}
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 z-20" />
-        <div className="flex flex-col items-center z-30">
-          <img className="w-36" src={logoLink} alt="set-logo" />
-          <h1 className="text-xl my-2 font-bold" id="set-name"></h1>
+        <div className="flex gap-5 z-30">
+          <div className="flex flex-col items-center ">
+            <img className="w-36" src={logoLink} alt="set-logo" />
+            <h1 className="text-xl my-2 font-bold" id="set-name"></h1>
+          </div>
+          <div className="flex gap-2 flex-col justify-center text-xl text-white">
+            {setData && (
+              <div className="flex gap-3 items-center">
+                <FaInfoCircle />
+                <h1>
+                  {setData.Description.length > 90
+                    ? setData.Description.slice(0, 90) + "..."
+                    : setData.Description}
+                </h1>
+              </div>
+            )}
+            <div className="flex gap-3 items-center">
+              <h1 className="font-bold">Bond: </h1>
+              <h1
+                style={{
+                  background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
+                }}
+                className="p-1 bg-gray-400 rounded-xl"
+                id="bond-amount"
+              ></h1>
+            </div>
+            <div className="flex gap-3 items-center">
+              <h1 className="font-bold">Royalty:</h1>
+              <h1
+                style={{
+                  background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
+                }}
+                className="p-1 bg-gray-400 rounded-xl"
+                id="royalty-amount"
+              ></h1>
+            </div>
+          </div>
         </div>
       </div>
       {nfts && (
