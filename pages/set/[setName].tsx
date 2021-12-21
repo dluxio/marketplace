@@ -6,9 +6,12 @@ import { useRecoilValue } from "recoil";
 import { apiLinkState } from "../../atoms";
 import { SetCard } from "../../components/SetCard";
 import { FaInfoCircle } from "react-icons/fa";
+import { BsFillPersonFill } from "react-icons/bs";
 
 const SetPage = () => {
   const [nfts, setNfts] = useState([]);
+  const [minMax, setMinMax] = useState<number[]>([]);
+  const [author, setAuthor] = useState("");
   const [logoLink, setLogoLink] = useState("");
   const [bannerLink, setBannerLink] = useState("");
   const [colors, setColors] = useState<string[]>([]);
@@ -30,9 +33,10 @@ const SetPage = () => {
           if (elem && set) elem.innerHTML = set?.name_long;
           const bondElem = document.getElementById("bond-amount");
           const royaltyElem = document.getElementById("royalty-amount");
+          setAuthor(set.author);
+          setMinMax([set.minted, set.max]);
 
           if (royaltyElem) royaltyElem.innerHTML = `${set.royalty / 100} %`;
-
           if (bondElem)
             bondElem.innerHTML = `${parseFloat(
               (set.bond.amount / Math.pow(10, set.bond.precision)).toString()
@@ -43,7 +47,6 @@ const SetPage = () => {
             .then(({ data: data2 }) => {
               const code = `(//${data2}\n)('0')`;
               const SVG = eval(code);
-              console.log(SVG);
               setColors([SVG.set.Color1, SVG.set.Color2]);
 
               setSetData(SVG.set);
@@ -71,20 +74,32 @@ const SetPage = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 z-20" />
         <div className="flex gap-5 z-30">
           <div className="flex flex-col items-center ">
-            <img className="w-36" src={logoLink} alt="set-logo" />
+            <img className="w-36 rounded-xl" src={logoLink} alt="set-logo" />
             <h1 className="text-xl my-2 font-bold" id="set-name"></h1>
           </div>
           <div className="flex gap-2 flex-col justify-center text-xl text-white">
             {setData && (
-              <div className="flex gap-3 items-center">
-                <FaInfoCircle />
-                <h1>
-                  {setData.Description.length > 90
-                    ? setData.Description.slice(0, 90) + "..."
-                    : setData.Description}
-                </h1>
-              </div>
+              <>
+                <div className="flex gap-3 items-center">
+                  <FaInfoCircle />
+                  <h1>
+                    {setData.Description.length > 90
+                      ? setData.Description.slice(0, 90) + "..."
+                      : setData.Description}
+                  </h1>
+                </div>
+                <div className="flex gap-3 items-center">
+                  <BsFillPersonFill />
+                  <h1
+                    className="hover:text-gray-300 cursor-pointer"
+                    onClick={() => router.push(`/@${author}`)}
+                  >
+                    {author}
+                  </h1>
+                </div>
+              </>
             )}
+
             <div className="flex gap-3 items-center">
               <h1 className="font-bold">Bond: </h1>
               <h1
@@ -104,6 +119,21 @@ const SetPage = () => {
                 className="p-1 bg-gray-400 rounded-xl"
                 id="royalty-amount"
               ></h1>
+            </div>
+            <div>
+              <div className="flex gap-2 items-center">
+                <h1 className="font-bold">Minted:</h1>
+                <h1>
+                  {minMax[0]}/{minMax[1]}
+                </h1>
+              </div>
+              <div
+                className="p-1 w-full"
+                style={{
+                  background: `linear-gradient(to right,  ${colors[0]} 0%,${colors[1]} 100%)`,
+                  width: `${(minMax[0] * 100) / minMax[1]}%`,
+                }}
+              ></div>
             </div>
           </div>
         </div>
