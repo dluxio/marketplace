@@ -615,6 +615,25 @@ export const getProfile = async () => {
   return profileResponse;
 };
 
+export const addRoyalties = async (
+  royaltieString: string,
+  set: string,
+  username: string,
+  prefix: string
+) => {
+  const operations = [
+    "custom_json",
+    {
+      required_auths: [username],
+      id: `${prefix}dex_sell`,
+      required_posting_auths: 0,
+      json: JSON.stringify({ set, distro: royaltieString }),
+    },
+  ];
+
+  return await handleBroadcastRequest(operations, username);
+};
+
 export const ftBuyTransfer = async (
   ftData: { amount: string; memo: string },
   username: string,

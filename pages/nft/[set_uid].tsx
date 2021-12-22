@@ -30,8 +30,14 @@ const NFTManagement = () => {
 
   const router = useRouter();
   const { set_uid } = router.query;
-  let uid = set_uid ? (set_uid as string)!.split(":")[1] : "";
-  let set = set_uid ? (set_uid as string)!.split(":")[0] : "";
+  let uid = useMemo(
+    () => (set_uid ? (set_uid as string)!.split(":")[1] : ""),
+    []
+  );
+  let set = useMemo(
+    () => (set_uid ? (set_uid as string)!.split(":")[0] : ""),
+    []
+  );
   const apiLink: string = useRecoilValue(apiLinkState);
   const user: any = useRecoilValue(userState);
   const prefix = useRecoilValue(prefixState);
@@ -39,10 +45,9 @@ const NFTManagement = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (set) {
+    if (set && user) {
       axios.get(`${apiLink}api/set/${set}`).then(({ data }) => {
         setScript(data.set.script);
-        console.log(data);
       });
     } else {
       router.push("/");
@@ -177,6 +182,7 @@ const NFTManagement = () => {
           set={set}
           uid={uid}
           handleClose={() => setAuction(false)}
+          kind={"nft"}
         />
       )}
       {selling && (

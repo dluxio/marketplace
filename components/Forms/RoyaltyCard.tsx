@@ -1,30 +1,51 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { apiLinkState } from "../../atoms";
+import { apiLinkState, prefixState, userState } from "../../atoms";
+import { addRoyalties } from "../../utils";
 
 export const RoyaltyCard = ({ set }: { set: string }) => {
+  const apiLink: string = useRecoilValue(apiLinkState);
+  const user: any = useRecoilValue(userState);
+  const prefix: string = useRecoilValue(prefixState);
+  const [royaltyObject, setRoyaltyObject] = useState<any>({});
   const [assignData, setAssignData] = useState({
     username: "",
     percentage: 0,
   });
-  const apiLink = useRecoilValue(apiLinkState);
 
   useEffect(() => {
-    console.log(set);
-    axios.get(`${apiLink}api/set/${set}`).then(({ data }) => {
-      console.log(data);
-    });
+    if (user && set) {
+      axios.get(`${apiLink}api/set/${set}`).then(({ data }) => {
+        const royaltyValues: any = {};
+
+        data.set.royalty_accounts.split(",").forEach((dataPoint: string) => {
+          royaltyValues[dataPoint.split("_")[0]] = +dataPoint.split("_")[1];
+        });
+
+        console.log(royaltyValues);
+
+        setRoyaltyObject(royaltyValues);
+      });
+    }
   }, []);
 
   const handleRoyalties = () => {
-    console.log("ROYALTY SET ", {
-      set,
-      distro: `${assignData.username}_${assignData.percentage * 100}`,
-    });
+    const removePercentageFrom = royaltyObject[user.name];
+    const userPercentage = (removePercentageFrom / 100) * assignData.percentage;
+    royaltyObject[user.name] = removePercentageFrom - userPercentage;
+    royaltyObject[assignData.username] = userPercentage;
+
+    console.log(royaltyObject);
+    let royaltyString = "";
+    Object.keys(royaltyObject).forEach(
+      (key) => (royaltyString += `${key}_${royaltyObject[key]},`)
+    );
+
+    addRoyalties(royaltyString, set, user.name, prefix);
   };
 
-  return (
+  return user && royaltyObject[user.name] ? (
     <div className="p-3 bg-gray-600 border-2 border-gray-800 rounded-xl mb-4 w-full mx-5 sm:w-3/4 mr-5">
       <h1 className="text-center">Assign royalties</h1>
       <div className="my-2">
@@ -48,9 +69,9 @@ export const RoyaltyCard = ({ set }: { set: string }) => {
             setAssignData({ ...assignData, percentage: +e.target.value })
           }
           className="px-3 w-full py-1 rounded-lg border bg-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
-          min="1"
+          min={1}
           name="percentage"
-          max="100"
+          max={100}
           type="number"
           step={0.1}
           defaultValue={1}
@@ -64,6 +85,10 @@ export const RoyaltyCard = ({ set }: { set: string }) => {
           Assign
         </button>
       </div>
+    </div>
+  ) : (
+    <div className="mb-10">
+      <h1>You can't assign royalties</h1>
     </div>
   );
 };
