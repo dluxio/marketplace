@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 
@@ -10,6 +11,7 @@ type AuctionDetailProps = {
 
 export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
   const [attributes, setAttributes] = useState<any>({});
+  const router = useRouter();
 
   const fetchImage = () => {
     fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
@@ -45,9 +47,15 @@ export const AuctionDetail = ({ onExit, nft }: AuctionDetailProps) => {
             className="w-1/2 mx-auto mb-10"
           ></div>
           <div className="text-white text-md sm:text-xl">
-            <h1 className="text-white text-xl font-bold mt-5">
-              {nft.set} : {nft.uid}
-            </h1>
+            <div className="flex gap-1 justify-center">
+              <h1
+                className="text-white text-xl font-bold mt-5 cursor-pointer hover:text-gray-400"
+                onClick={() => router.push(`/set/${nft.set}`)}
+              >
+                {nft.set}
+              </h1>
+              <h1 className="text-white text-xl font-bold mt-5">: {nft.uid}</h1>
+            </div>
             {Object.keys(attributes).map((attr: any) => (
               <div className="mx-20 flex my-2 items-center gap-5">
                 <h1

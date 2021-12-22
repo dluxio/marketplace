@@ -89,10 +89,11 @@ export const FTCard = ({ ft }: FTCardProps) => {
   return (
     <div className="border shadow-xl h-auto border-transparent bg-gray-700 rounded-xl  text-white flex flex-col">
       <h1
-        className="text-center w-full rounded-t-xl font-black py-2 text-xl"
+        className="cursor-pointer text-center w-full rounded-t-xl font-black py-2 text-xl"
         style={{
           background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
         }}
+        onClick={() => router.push(`/set/${set}`)}
       >
         {set}
       </h1>
@@ -105,12 +106,15 @@ export const FTCard = ({ ft }: FTCardProps) => {
         </div>
       </div>
       <div className="px-5 py-4 w-full flex flex-col justify-between items-center">
-        <h1
-          className="hover:text-gray-300 cursor-pointer"
-          onClick={() => router.push(`/@${ft.by}`)}
-        >
-          {t("by")}: {ft.by}
-        </h1>
+        <div className="flex gap-1">
+          <h1>{t("by")}: </h1>
+          <h1
+            className="hover:text-gray-300 cursor-pointer"
+            onClick={() => router.push(`/@${ft.by}`)}
+          >
+            {ft.by}
+          </h1>
+        </div>
         {ft.qty && ft.qty !== 1 && (
           <h1>
             {t("availible")}: {ft.qty}

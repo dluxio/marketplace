@@ -58,6 +58,7 @@
     "last": "Last",
     "orders": "orders",
     "date": "Date",
-    "tradeHistory": "Trade History"
+    "tradeHistory": "Trade History",
+    "owner": "Owner"
   }
 }
