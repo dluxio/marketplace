@@ -83,7 +83,7 @@ const User = () => {
         <div
           className={`relative overflow-hidden border-2 text-white p-5 rounded-xl border-gray-800 ${
             userData?.cover_image ? "bg-black" : "bg-gray-600"
-          } flex flex-col sm:flex-row items-center h-full sm:items-start gap-3 w-full`}
+            } flex flex-col sm:flex-row items-center ${pfpData?.set?.n === 'hf' ? 'h-56' : 'h-full'} sm:items-start gap-3 w-full`}
         >
           <div className="flex flex-col items-center justify-center z-10">
             {userData && !userData.profile_image.includes("dlux") ? (
@@ -96,7 +96,7 @@ const User = () => {
                 alt="profile"
               />
             ) : (
-              <div className="w-52" id="account-picture"></div>
+                <div className="w-44" id="account-picture"></div>
             )}
             <h1 className="text-xl my-2">{author}</h1>
           </div>

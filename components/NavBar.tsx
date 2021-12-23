@@ -79,6 +79,7 @@ export const NavBar = () => {
         setSigning(false);
         setProfDropdown(false);
         axios.get(`${apiLink}api/pfp/${user.name}`).then(({ data }) => {
+          console.log(data.result[0]);
           setPfp(data.result[0]);
         });
       }
@@ -201,7 +202,7 @@ export const NavBar = () => {
             <div className="flex items-center w-full ">
               <div
                 id="profile-picture"
-                className="w-9 cursor-pointer"
+                className={`w-9 ${pfpData?.set?.n === 'hf' ? 'mb-5' : ''} cursor-pointer`}
                 onClick={() => router.push(`/@${user.name}`)}
               >
                 <Image height={30} width={30} src={placeHolder} alt="profile" />
