@@ -129,7 +129,7 @@ const SetPage = () => {
               </div>
               <div className="rounded-xl w-full bg-gray-400 border-2 border-gray-800">
                 <div
-                  className="p-1 w-full"
+                  className="p-1 w-full rounded-xl"
                   style={{
                     background: `linear-gradient(to right,  ${colors[0]} 0%,${colors[1]} 100%)`,
                     width: `${(minMax[0] * 100) / minMax[1]}%`,
