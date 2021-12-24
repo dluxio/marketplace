@@ -73,7 +73,7 @@ const SetPage = () => {
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 z-20" />
         <div className="flex gap-5 z-30">
-          <div className="flex flex-col items-center ">
+          <div className="flex flex-col justify-center items-center ">
             <img className="w-36 rounded-xl" src={logoLink} alt="set-logo" />
             <h1 className="text-xl my-2 font-bold" id="set-name"></h1>
           </div>
