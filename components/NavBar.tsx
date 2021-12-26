@@ -200,7 +200,7 @@ export const NavBar = () => {
             <div className="flex items-center w-full ">
               <div
                 id="profile-picture"
-                className="w-9 cursor-pointer"
+                className={`w-9 ${pfpData?.set?.n === 'hf' ? 'mb-5' : ''} cursor-pointer`}
                 onClick={() => router.push(`/@${user.name}`)}
               >
                 <Image height={30} width={30} src={placeHolder} alt="profile" />
