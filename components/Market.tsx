@@ -125,7 +125,7 @@ export const Market = () => {
           </div>
           {auction.length !== 0 && (
             <Link href="/auction" passHref={true}>
-              <h1 className="cursor-pointer text-3xl ml-10 mb-4 w-1/5 mt-10 text-white font-medium">
+              <h1 className="cursor-pointer text-3xl mx-10 my-4 text-white font-medium">
                 {t("auctionHouse").toUpperCase()}
               </h1>
             </Link>
