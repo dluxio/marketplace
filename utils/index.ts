@@ -604,7 +604,6 @@ export const dexBuy = async (
 
 export const handleLogin = async (): Promise<CeramicClient> => {
   const response = await connector.login();
-  console.log(response)
   return response;
 };
 
