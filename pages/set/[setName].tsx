@@ -72,15 +72,15 @@ const SetPage = () => {
         }}
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 z-20" />
-        <div className="flex gap-5 z-30">
-          <div className="flex flex-col items-center ">
+        <div className="flex flex-col sm:flex-row gap-5 z-30">
+          <div className="flex flex-col justify-center items-center ">
             <img className="w-36 rounded-xl" src={logoLink} alt="set-logo" />
             <h1 className="text-xl my-2 font-bold" id="set-name"></h1>
           </div>
           <div className="flex gap-2 flex-col justify-center text-xl text-white">
             {setData && (
               <>
-                <div className="flex gap-3 items-center">
+                <div className="sm:flex hidden gap-3 items-center">
                   <FaInfoCircle />
                   <h1>
                     {setData.Description.length > 90
@@ -99,7 +99,6 @@ const SetPage = () => {
                 </div>
               </>
             )}
-
             <div className="flex gap-3 items-center">
               <h1 className="font-bold">Bond: </h1>
               <h1
@@ -127,13 +126,15 @@ const SetPage = () => {
                   {minMax[0]}/{minMax[1]}
                 </h1>
               </div>
-              <div
-                className="p-1 w-full"
-                style={{
-                  background: `linear-gradient(to right,  ${colors[0]} 0%,${colors[1]} 100%)`,
-                  width: `${(minMax[0] * 100) / minMax[1]}%`,
-                }}
-              ></div>
+              <div className="rounded-xl w-full bg-gray-400 border-2 border-gray-800">
+                <div
+                  className="p-1 w-full rounded-xl"
+                  style={{
+                    background: `linear-gradient(to right,  ${colors[0]} 0%,${colors[1]} 100%)`,
+                    width: `${(minMax[0] * 100) / minMax[1]}%`,
+                  }}
+                ></div>
+              </div>
             </div>
           </div>
         </div>
