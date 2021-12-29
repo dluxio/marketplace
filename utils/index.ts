@@ -1,7 +1,10 @@
 import hive from "@hiveio/hive-js";
 import { HiveKeychainCeramicConnector } from "spk-auth-react";
-import { CeramicClient } from "@ceramicnetwork/http-client";
+import Ceramic, { CeramicClient } from "@ceramicnetwork/http-client";
+import { IDX } from '@ceramicstudio/idx'
+
 const connector = new HiveKeychainCeramicConnector(undefined, hive);
+const idx = new IDX({ ceramic: new Ceramic("https://ceramic-clay.3boxlabs.com") })
 
 const _Rixits =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";
@@ -601,17 +604,19 @@ export const dexBuy = async (
 
 export const handleLogin = async (): Promise<CeramicClient> => {
   const response = await connector.login();
+  console.log(response)
   return response;
 };
 
 export const setProfile = async (json_metadata: string) => {
-  console.log("Got here", JSON.parse(json_metadata));
-  const response = await connector.setIdxProfile(JSON.parse(json_metadata));
-  return response;
+  if (idx.authenticated) {
+    const response = await idx.set('basicProfile', JSON.parse(json_metadata));
+    return response;
+  }
 };
 
-export const getProfile = async () => {
-  const profileResponse = await connector.getBasicProfile();
+export const getProfile = async (didId: string) => {
+  const profileResponse = await idx.get("basicProfile", didId);
   return profileResponse;
 };
 

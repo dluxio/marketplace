@@ -14,7 +14,6 @@ import { ImCross } from "react-icons/im";
 import hive from "@hiveio/hive-js";
 import { useTranslation } from "next-export-i18n";
 import { getProfile, handleLogin, setProfile } from "../utils";
-import { CeramicClient } from "@ceramicnetwork/http-client";
 
 type LoginProps = {
   handleClose: MouseEventHandler;
@@ -28,15 +27,18 @@ export const Login = ({ handleClose }: LoginProps) => {
 
   useEffect(() => {
     const ceramicClient = async () => {
-      await handleLogin();
+      const response = await handleLogin();
+      console.log(response);
+      const didId = response?.context?.did?.id;
 
-      const profile = await getProfile();
-      if (!profile) {
-        const response = await setProfile(user.posting_json_metadata);
-        console.log("SET USER RESPONSE: ", response);
+      if (didId) {
+        let profile = await getProfile(didId);
+        if (!profile) {
+          profile = await setProfile(user.posting_json_metadata);
+        }
+
+        console.log("PROFILE: ", profile);
       }
-
-      console.log("BASIC PROFILE: ", profile);
     };
 
     if (user && window !== undefined) {

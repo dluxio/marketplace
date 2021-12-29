@@ -103,20 +103,20 @@ export const NavBar = () => {
       const userStor = window.localStorage.getItem("user");
 
       if (userStor) {
-        await handleLogin();
-        const profile = await getProfile();
-
-        console.log(JSON.parse(userStor).posting_json_metadata);
         setUser(JSON.parse(userStor));
+        const response = await handleLogin();
+        const didId = response?.context?.did?.id;
 
-        if (!profile) {
-          const response = await setProfile(
-            JSON.parse(userStor).posting_json_metadata
-          );
-          console.log("SET USER RESPONSE: ", response);
+        if (didId) {
+          let profile = await getProfile(didId);
+          if (!profile) {
+            profile = await setProfile(
+              JSON.parse(userStor).posting_json_metadata
+            );
+          }
+
+          console.log("PROFILE: ", profile);
         }
-
-        console.log("BASIC PROFILE: ", profile);
       }
     };
 
@@ -200,7 +200,9 @@ export const NavBar = () => {
             <div className="flex items-center w-full ">
               <div
                 id="profile-picture"
-                className={`w-9 ${pfpData?.set?.n === 'hf' ? 'mb-5' : ''} cursor-pointer`}
+                className={`w-9 ${
+                  pfpData?.set?.n === "hf" ? "mb-5" : ""
+                } cursor-pointer`}
                 onClick={() => router.push(`/@${user.name}`)}
               >
                 <Image height={30} width={30} src={placeHolder} alt="profile" />

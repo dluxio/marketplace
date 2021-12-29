@@ -90,7 +90,7 @@ export const CommentCard = ({ comment }: { comment: any }) => {
         }
 
         return (
-          <div className="mx-3">
+          <div key={replie.id} className="mx-3">
             <a target="_blank" href={`https://peakd.com/@${replie.author}`}>
               <h1 className="text-xl font-semibold text-white hover:text-blue-200 cursor-pointer">
                 {replie.author}

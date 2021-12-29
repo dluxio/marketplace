@@ -21,7 +21,7 @@ export const AppScreen = () => {
   return (
     <div className={`mx-10 mb-5 grid grid-cols-1 sm:grid-cols-3 gap-3`}>
       {apps.map((app: any) => {
-        return <AppCard app={app} key={app.permlink} />;
+        return <AppCard key={app.permlink} app={app} />;
       })}
     </div>
   );
