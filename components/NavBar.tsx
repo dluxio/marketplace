@@ -21,12 +21,10 @@ import { FcGlobe } from "react-icons/fc";
 
 import Image from "next/image";
 import {
-  getProfile,
-  handleLogin,
   redoProfilePicture,
-  setProfile,
 } from "../utils";
 
+import { useHiveKeychainCeramic } from "spk-auth-react";
 import { isMobile } from "react-device-detect";
 import axios from "axios";
 import {
@@ -48,6 +46,7 @@ export const NavBar = () => {
   const broadcasts: any = useRecoilValue(broadcastState);
   const refresh: string = useRecoilValue(refreshState);
   const { t } = useTranslation();
+  const connector = useHiveKeychainCeramic();
   const [query] = useLanguageQuery();
 
   const removeLocalStorage = () => {
@@ -104,15 +103,13 @@ export const NavBar = () => {
 
       if (userStor) {
         setUser(JSON.parse(userStor));
-        const response = await handleLogin();
+        const response = await connector.login();
         const didId = response?.context?.did?.id;
 
         if (didId) {
-          let profile = await getProfile(didId);
+          let profile = await connector.idx.get("basicProfile", didId);
           if (!profile) {
-            profile = await setProfile(
-              JSON.parse(userStor).posting_json_metadata
-            );
+            profile = await connector.idx.set('basicProfile', JSON.parse(JSON.parse(userStor).posting_json_metadata));
           }
 
           console.log("PROFILE: ", profile);

@@ -188,7 +188,7 @@
     rxjs "^7.0.0"
     uint8arrays "^2.0.5"
 
-"@ceramicnetwork/core@^1.2.0":
+"@ceramicnetwork/core@^1.12.0":
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/@ceramicnetwork/core/-/core-1.12.0.tgz#42087b88b459dd09bdbc26727feef380a025405d"
   integrity sha512-OqRTcj4oeeqFHz39e0oJyMt5TKM8lnU3fstRJc0ot9FhbC6gUOnkauZpHbWq2YkcZluJst2e5PqXlJd5rZVAkA==
@@ -233,7 +233,7 @@
     query-string "7.0.1"
     rxjs "^7.0.0"
 
-"@ceramicnetwork/http-client@^1.0.7":
+"@ceramicnetwork/http-client@^1.5.3":
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/@ceramicnetwork/http-client/-/http-client-1.5.3.tgz#f9917c0a6ac99e2cfe2e0a026111ac31df2f17bf"
   integrity sha512-M/9Y624AwZGfwNcMHVzvih5DKNyN6nmJzdZJy+iCPIfgUV/++grhLkb5svlZ36yJCmwI6bvzFz7yrGtPkKa1ww==
@@ -319,7 +319,7 @@
     fast-json-patch "^2.2.1"
     uint8arrays "^2.0.5"
 
-"@ceramicnetwork/stream-tile@^1.0.7", "@ceramicnetwork/stream-tile@^1.5.3":
+"@ceramicnetwork/stream-tile@^1.5.3":
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/@ceramicnetwork/stream-tile/-/stream-tile-1.5.3.tgz#09af53e7686eb8645410ff05e62b061b56cabf73"
   integrity sha512-enqbQHyOQgLANoqRNs8Rni4f2tkxUZvcSKtOJ6AB3plozwjfw4PTIyPO86UQ1DFOscrdW5Qw7qCyD0hC0eKl4w==
@@ -1119,18 +1119,48 @@
   resolved "https://registry.yarnpkg.com/@sovpro/delimited-stream/-/delimited-stream-1.1.0.tgz#4334bba7ee241036e580fdd99c019377630d26b4"
   integrity sha512-kQpk267uxB19X3X2T1mvNMjyvIEonpNSHrMlK5ZaBU6aZxw7wPbpgKJOjHN3+/GPVpXgAV9soVT2oyHpLkLtyw==
 
-"@spknetwork/graph-client@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@spknetwork/graph-client/-/graph-client-1.0.3.tgz#2c81e49fc5551c9b5f995e66ef08b74786916103"
-  integrity sha512-PMemdOKbDIFU6nUO96ohABU0ULS5DdRLQHwwZPVfdDMNLeJrPUPAkhpl74GwWn1UxEKhQzWpmUGDoVfOKTo8hw==
+"@spknetwork/auth-react@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@spknetwork/auth-react/-/auth-react-0.0.4.tgz#aabbac7810ff329f3b319ba50498770c3c97fede"
+  integrity sha512-MCvuyvXMsiOAG1ONFTlcgX3/y0PQesoL+Ny95LCdRIzAsrMQ5T0f38lMCOCCA2Cfxd3s3gnHm1AmepHaUJAL1w==
   dependencies:
-    "@ceramicnetwork/core" "^1.2.0"
-    "@ceramicnetwork/http-client" "^1.0.7"
-    "@ceramicnetwork/stream-tile" "^1.0.7"
+    "3id-did-provider" "^1.1.1"
+    "@ceramicnetwork/3id-did-resolver" "^1.4.9"
+    "@ceramicnetwork/http-client" "^1.5.0"
+    "@ceramicstudio/idx" "^0.12.2"
+    "@ceramicstudio/idx-constants" "^1.0.0"
+    "@hiveio/dhive" "^1.1.1"
+    "@spknetwork/hive-keychain-ceramic" "0.0.4"
+    "@stablelib/sha256" "^1.0.1"
+    dids "^2.4.2"
+    jotai "^1.4.5"
+
+"@spknetwork/graph-client@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@spknetwork/graph-client/-/graph-client-1.0.5.tgz#fda1d89fff4597bed70849d382797ec218725507"
+  integrity sha512-NBTwDAXXiBmaNW7gz58Vnj5m+erWgTFQGygzYNmuAh58/pHJaDc5NkdgDax03jFU34jGLzp3a0gjx1wCdMGQMA==
+  dependencies:
+    "@ceramicnetwork/core" "^1.12.0"
+    "@ceramicnetwork/http-client" "^1.5.3"
+    "@ceramicnetwork/stream-tile" "^1.5.3"
     "@ceramicstudio/idx" "^0.12.1"
     "@stablelib/random" "^1.0.1"
     axios "^0.24.0"
     base64url "^3.0.1"
+
+"@spknetwork/hive-keychain-ceramic@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@spknetwork/hive-keychain-ceramic/-/hive-keychain-ceramic-0.0.4.tgz#9f8717f44a97284824ef2feaa8b06cefac377cf8"
+  integrity sha512-7nqaX3I2Kq+k9GFbm/YvSihn2WKEJyjaXAY4uNnL4TRQqltx8NoMxis2nmS+z8SymXZkwyoZbHP6JbSNu8iGPg==
+  dependencies:
+    "3id-did-provider" "^1.1.1"
+    "@ceramicnetwork/3id-did-resolver" "^1.4.9"
+    "@ceramicnetwork/http-client" "^1.5.0"
+    "@ceramicstudio/idx" "^0.12.2"
+    "@ceramicstudio/idx-constants" "^1.0.0"
+    "@hiveio/dhive" "^1.1.1"
+    "@stablelib/sha256" "^1.0.1"
+    dids "^2.4.2"
 
 "@spknetwork/hive-keychain-ceramic@^0.0.3":
   version "0.0.3"

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { placeHolder } from "../constants";
-import { getProfile } from "../utils";
 import { Client, Discussion } from "@hiveio/dhive";
 import { NewsPost } from "../components/NewsPost";
 import { RiMapPinUserFill, RiUser3Fill, RiLinksFill } from "react-icons/ri";
@@ -14,6 +13,7 @@ import {
   GrTwitter,
 } from "react-icons/gr";
 import { useTranslation } from "next-export-i18n";
+import { useHiveKeychainCeramic } from "spk-auth-react";
 
 const User = () => {
   var client = new Client([
@@ -27,6 +27,7 @@ const User = () => {
   const [username, setUsername] = useState({ username: "", provider: "" });
   const [posts, setPosts] = useState<Discussion[]>([]);
   const [userData, setUserData] = useState<any>(null);
+  const connector = useHiveKeychainCeramic();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const User = () => {
 
   useEffect(() => {
     const getCeramicProfile = async (didId: string) => {
-      const response = await getProfile(didId);
+      const response = await connector.idx.get("basicProfile", didId);
       return response;
     } 
 

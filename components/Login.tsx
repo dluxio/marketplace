@@ -13,7 +13,7 @@ import { ImCross } from "react-icons/im";
 
 import hive from "@hiveio/hive-js";
 import { useTranslation } from "next-export-i18n";
-import { getProfile, handleLogin, setProfile } from "../utils";
+import { useHiveKeychainCeramic } from 'spk-auth-react'
 
 type LoginProps = {
   handleClose: MouseEventHandler;
@@ -22,19 +22,21 @@ type LoginProps = {
 export const Login = ({ handleClose }: LoginProps) => {
   const usernameRef: MutableRefObject<any> = useRef(null);
   const [errors, setErrors] = useState({ user: "" });
-  const { t } = useTranslation();
   const [user, setUser] = useRecoilState<any>(userState);
+  const { t } = useTranslation();
+  const connector = useHiveKeychainCeramic();
 
   useEffect(() => {
     const ceramicClient = async () => {
-      const response = await handleLogin();
-      console.log(response);
+      const response = await connector.login();
       const didId = response?.context?.did?.id;
 
       if (didId) {
-        let profile = await getProfile(didId);
+        let profile = await connector.idx.get("basicProfile", didId);
         if (!profile) {
-          profile = await setProfile(user.posting_json_metadata);
+          if (connector.idx.authenticated) {
+            profile = await connector.idx.set('basicProfile', JSON.parse(user.json_metadata));
+          }
         }
 
         console.log("PROFILE: ", profile);

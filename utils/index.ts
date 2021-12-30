@@ -1,12 +1,9 @@
 import hive from "@hiveio/hive-js";
-import { HiveKeychainCeramicConnector } from "spk-auth-react";
-import Ceramic, { CeramicClient } from "@ceramicnetwork/http-client";
-import { IDX } from '@ceramicstudio/idx'
+import CeramicClient from "@ceramicnetwork/http-client";
+import { SpkClient } from '@spknetwork/graph-client';
 
-
-const ceramic = new Ceramic("https://ceramic-clay.3boxlabs.com")
-const connector = new HiveKeychainCeramicConnector(undefined, hive);
-const idx = new IDX({ ceramic })
+const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
+const spkClient = new SpkClient('https://us-01.infra.3speak.tv', ceramic);
 
 const _Rixits =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";
@@ -462,6 +459,11 @@ export const ReserveRespond = async (
   return await handleBroadcastRequest(operations, username);
 };
 
+export const getUserPosts = async (did: string) => {
+  const response = await spkClient.getDocumentsForUser(did)
+  console.log(response)
+}
+
 export const handleSellCancel = async (
   nft: { set: string; uid: string; kind: string },
   username: string,
@@ -602,23 +604,6 @@ export const dexBuy = async (
   ];
 
   return await handleBroadcastRequest(operations, username);
-};
-
-export const handleLogin = async (): Promise<CeramicClient> => {
-  const response = await connector.login();
-  return response;
-};
-
-export const setProfile = async (json_metadata: string) => {
-  if (idx.authenticated) {
-    const response = await idx.set('basicProfile', JSON.parse(json_metadata));
-    return response;
-  }
-};
-
-export const getProfile = async (didId: string) => {
-  const profileResponse = await idx.get("basicProfile", didId);
-  return profileResponse;
 };
 
 export const ftBuyTransfer = async (
