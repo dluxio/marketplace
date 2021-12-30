@@ -11,6 +11,7 @@
   "dependencies": {
     "@ceramicnetwork/http-client": "^1.5.3",
     "@ceramicstudio/idx": "^0.12.2",
+    "@ceramicstudio/idx-constants": "^1.0.0",
     "@hiveio/dhive": "^1.1.1",
     "@hiveio/hive-js": "^2.0.4",
     "@hiveio/keychain": "^1.0.4",
