@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+const withTM = require("next-transpile-modules")([
+  "@spknetwork/auth-react",
+  "@spknetwork/hive-keychain-ceramic",
+]);
+
+const config = {
   reactStrictMode: true,
   images: {
     loader: "imgix",
@@ -26,3 +31,5 @@ module.exports = {
     };
   },
 };
+
+module.exports = withTM(config);
