@@ -1,10 +1,8 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { apiLinkState } from "../atoms";
 import { placeHolder } from "../constants";
-import { redoAccountPicture } from "../utils";
+import { getProfile } from "../utils";
 import { Client, Discussion } from "@hiveio/dhive";
 import { NewsPost } from "../components/NewsPost";
 import { RiMapPinUserFill, RiUser3Fill, RiLinksFill } from "react-icons/ri";
@@ -26,56 +24,55 @@ const User = () => {
   ]);
   const router = useRouter();
   const { author } = router.query;
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState({ username: "", provider: "" });
   const [posts, setPosts] = useState<Discussion[]>([]);
   const [userData, setUserData] = useState<any>(null);
-  const [pfpData, setPfp] = useState<any>("");
-  const apiLink: string = useRecoilValue(apiLinkState);
   const { t } = useTranslation();
 
   useEffect(() => {
     if (author && (author! as string).substr(0, 1) === "@") {
-      setUsername((author! as string).substr(1, author!.length));
+      setUsername({
+        username: (author! as string).substr(1, author!.length),
+        provider: "hive",
+      });
     } else {
-      setUsername(author as string);
+      setUsername({ username: author as string, provider: "ceramic" });
     }
   }, [author]);
 
   useEffect(() => {
+    const getCeramicProfile = async (didId: string) => {
+      const response = await getProfile(didId);
+      return response;
+    } 
+
     if (username) {
-      axios.get(`${apiLink}api/pfp/${username}`).then(({ data }) => {
-        setPfp(data.result[0]);
-      });
+      if (username.provider === "hive") {
+        const query = {
+          tag: username.username,
+          limit: 10,
+        };
 
-      const query = {
-        tag: username,
-        limit: 10,
-      };
+        client.database.getDiscussions("blog", query).then((response) => {
+          setPosts(response);
+        });
 
-      client.database.getDiscussions("blog", query).then((response) => {
-        setPosts(response);
-      });
-
-      client.database.getAccounts([username]).then((response: any) => {
-        if (response[0]) {
-          setUserData(JSON.parse(response[0].posting_json_metadata).profile);
-        }
-      });
-    }
-  }, [username]);
-
-  useEffect(() => {
-    if (pfpData) {
-      const uid = pfpData.pfp?.split(":");
-      const script = pfpData.set?.s;
-
-      if (pfpData.pfp !== placeHolder) {
-        if (uid && script) {
-          redoAccountPicture({ script, uid });
-        }
+        client.database
+          .getAccounts([username.username])
+          .then((response: any) => {
+            if (response[0]) {
+              setUserData(
+                JSON.parse(response[0].posting_json_metadata).profile
+              );
+            }
+          });
+      } else if (username.username) {
+        getCeramicProfile(username.username).then((profile) => {
+          if (profile) setUserData((profile as any).profile);
+        });
       }
     }
-  }, [pfpData]);
+  }, [username]);
 
   return (
     <div className="flex flex-col text-white my-10 mx-2 sm:mx-10">
@@ -86,7 +83,7 @@ const User = () => {
             } flex flex-col sm:flex-row items-center sm:items-start gap-3 w-full`}
         >
           <div className="flex flex-col items-center justify-center z-10">
-            {userData && !userData.profile_image.includes("dlux") ? (
+            {userData && (
               <img
                 height={165}
                 width={165}
@@ -95,10 +92,8 @@ const User = () => {
                 }
                 alt="profile"
               />
-            ) : (
-                <div className={`w-52 ${pfpData?.set?.n === 'hf' && 'h-52'}`} id="account-picture"></div>
             )}
-            <h1 className="text-xl my-2">{author}</h1>
+            <h1 className="text-xl my-2">{username.provider === 'hive' ? author : userData?.name}</h1>
           </div>
           {userData && (
             <div className="z-40 mx-5 my-auto">

@@ -3,8 +3,10 @@ import { HiveKeychainCeramicConnector } from "spk-auth-react";
 import Ceramic, { CeramicClient } from "@ceramicnetwork/http-client";
 import { IDX } from '@ceramicstudio/idx'
 
+
+const ceramic = new Ceramic("https://ceramic-clay.3boxlabs.com")
 const connector = new HiveKeychainCeramicConnector(undefined, hive);
-const idx = new IDX({ ceramic: new Ceramic("https://ceramic-clay.3boxlabs.com") })
+const idx = new IDX({ ceramic })
 
 const _Rixits =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";

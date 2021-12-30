@@ -13,6 +13,7 @@
     "@hiveio/dhive": "^1.1.1",
     "@hiveio/hive-js": "^2.0.4",
     "@hiveio/keychain": "^1.0.4",
+    "@spknetwork/graph-client": "^1.0.3",
     "@spknetwork/hive-keychain-ceramic": "^0.0.3",
     "@types/canvasjs": "^1.9.7",
     "@types/d3-dsv": "^3.0.0",
