@@ -38,8 +38,6 @@ export const Login = ({ handleClose }: LoginProps) => {
             profile = await connector.idx.set('basicProfile', JSON.parse(user.json_metadata));
           }
         }
-
-        console.log("PROFILE: ", profile);
       }
     };
 

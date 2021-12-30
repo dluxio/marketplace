@@ -111,8 +111,6 @@ export const NavBar = () => {
           if (!profile) {
             profile = await connector.idx.set('basicProfile', JSON.parse(JSON.parse(userStor).posting_json_metadata));
           }
-
-          console.log("PROFILE: ", profile);
         }
       }
     };
