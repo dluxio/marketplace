@@ -14,6 +14,7 @@ import {
 } from "react-icons/gr";
 import { useTranslation } from "next-export-i18n";
 import { useHiveKeychainCeramic } from "spk-auth-react";
+import { getUserPosts } from "../utils";
 
 const User = () => {
   var client = new Client([
@@ -71,6 +72,10 @@ const User = () => {
         getCeramicProfile(username.username).then((profile) => {
           if (profile) setUserData((profile as any).profile);
         });
+
+        getUserPosts(username.username).then(posts => {
+          console.log(posts)
+        })
       }
     }
   }, [username]);

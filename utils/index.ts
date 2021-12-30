@@ -461,7 +461,7 @@ export const ReserveRespond = async (
 
 export const getUserPosts = async (did: string) => {
   const response = await spkClient.getDocumentsForUser(did)
-  console.log(response)
+  return response;
 }
 
 export const handleSellCancel = async (
