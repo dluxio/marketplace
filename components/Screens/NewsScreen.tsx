@@ -1,5 +1,5 @@
 import React from "react";
-import { NewsPost } from "./NewsPost";
+import { NewsPost } from "../NewsPost";
 
 export const NewsScreen = () => {
   return (

@@ -3,14 +3,14 @@ import React, { useEffect, useState, useMemo } from "react";
 import { ImArrowRight2, ImCross } from "react-icons/im";
 import { FaQuestion } from "react-icons/fa";
 
-import { toBase64, FTOpen } from "../utils";
-import { Airdrop } from "./Forms/AirdropForm";
+import { toBase64, FTOpen } from "../../utils";
+import { Airdrop } from "../Modals/AirdropForm";
 import axios from "axios";
-import { AuctionNFTForm } from "./Forms/AuctionForm";
-import { SellForm } from "./Forms/SellForm";
-import { TransferNFTFormComp } from ".";
+import { AuctionNFTForm } from "../Modals/AuctionForm";
+import { SellForm } from "../Modals/SellForm";
+import { TransferNFTFormComp } from "..";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
+import { apiLinkState, broadcastState, prefixState, userState } from "../../atoms";
 
 type TokenCardProps = {
   token?: any;

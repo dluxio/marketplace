@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 
-import { attributeColors } from "../constants";
+import { attributeColors } from "../../constants";
 
 type AuctionDetailProps = {
   onExit: MouseEventHandler;

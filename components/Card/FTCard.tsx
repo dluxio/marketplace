@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import axios from "axios";
-import { handleSellCancel, toBase64 } from "../utils";
+import { handleSellCancel, toBase64 } from "../../utils";
 import { FaMoneyBillAlt, FaQuestion } from "react-icons/fa";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
+import { apiLinkState, broadcastState, prefixState, userState } from "../../atoms";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
-import { FTBuy } from "./Forms/FTBuy";
+import { FTBuy } from "../Modals/FTBuy";
 
 type FTCardProps = {
   ft: {
@@ -134,9 +134,8 @@ export const FTCard = ({ ft }: FTCardProps) => {
         {ft.by !== user?.name ? (
           <button
             onClick={() => user && setBuy(true)}
-            className={`px-6 py-2 mt-2 rounded-xl flex items-center gap-2 ${
-              !user && "cursor-not-allowed"
-            }`}
+            className={`px-6 py-2 mt-2 rounded-xl flex items-center gap-2 ${!user && "cursor-not-allowed"
+              }`}
             style={{
               background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
             }}
@@ -147,9 +146,8 @@ export const FTCard = ({ ft }: FTCardProps) => {
         ) : (
           <button
             onClick={handleTakeBack}
-            className={`px-3 py-2 mt-2 rounded-xl flex items-center gap-2 ${
-              !user && "cursor-not-allowed"
-            }`}
+            className={`px-3 py-2 mt-2 rounded-xl flex items-center gap-2 ${!user && "cursor-not-allowed"
+              }`}
             style={{ backgroundColor: "orange" }}
           >
             {t("takeBack")}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-import { AppCard } from "./AppCard";
+import { AppCard } from "../Card/AppCard";
 
 export const AppScreen = () => {
   const [apps, setApps] = useState([]);

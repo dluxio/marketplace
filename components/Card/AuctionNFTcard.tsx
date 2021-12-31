@@ -5,11 +5,11 @@ import Countdown from "react-countdown";
 import axios from "axios";
 
 import { GiTakeMyMoney } from "react-icons/gi";
-import { AuctionDetail } from "./Detail";
-import { BidForm } from "./Forms/BidForm";
+import { AuctionDetail } from "../Modals/Detail";
+import { BidForm } from "../Modals/BidForm";
 
 import { useRecoilValue } from "recoil";
-import { userState } from "../atoms";
+import { userState } from "../../atoms";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 
@@ -109,9 +109,8 @@ export const AuctionNFTcard = ({ nft }: AuctionCardProps) => {
           <button
             disabled={!user ? true : false}
             onClick={() => user && setIsBidding(true)}
-            className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
-              !user && "cursor-not-allowed"
-            }`}
+            className={`px-6 py-2 rounded-xl flex items-center gap-2 ${!user && "cursor-not-allowed"
+              }`}
             style={{
               background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
             }}

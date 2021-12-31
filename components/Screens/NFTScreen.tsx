@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { InventoryItemCard, NftDetails } from ".";
+import { InventoryItemCard, NftDetails } from "..";
 import {
   apiLinkState,
   inventoryNFTState,
   refreshState,
   userState,
-} from "../atoms";
+} from "../../atoms";
 
 import axios from "axios";
 import { useRouter } from "next/router";

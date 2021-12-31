@@ -5,11 +5,11 @@ import Countdown from "react-countdown";
 import axios from "axios";
 
 import { GiTakeMyMoney } from "react-icons/gi";
-import { BidForm } from "./Forms/BidForm";
+import { BidForm } from "../Modals/BidForm";
 
 import { useRecoilValue } from "recoil";
-import { apiLinkState, userState } from "../atoms";
-import { toBase64 } from "../utils";
+import { apiLinkState, userState } from "../../atoms";
+import { toBase64 } from "../../utils";
 import { FaQuestion } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
@@ -125,9 +125,8 @@ export const AuctionFTcard = ({ ft }: AuctionCardProps) => {
           <button
             disabled={!user ? true : false}
             onClick={() => user && setIsBidding(true)}
-            className={`px-6 py-2 rounded-xl flex items-center gap-2 ${
-              !user && "cursor-not-allowed"
-            }`}
+            className={`px-6 py-2 rounded-xl flex items-center gap-2 ${!user && "cursor-not-allowed"
+              }`}
             style={{
               background: `linear-gradient(${colors[0]} 30%, ${colors[1]})`,
             }}

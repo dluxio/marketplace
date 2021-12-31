@@ -3,8 +3,8 @@ import { useRecoilValue } from "recoil";
 import { apiLinkState, refreshState, userState } from "../atoms";
 
 import axios from "axios";
-import { NFTTradeCard as RespondCard } from "../components/ResponseCard";
-import { NFTManage as ManageCard } from "../components/ManageCard";
+import { NFTTradeCard as RespondCard } from "../components/Card/ResponseCard";
+import { NFTManage as ManageCard } from "../components/Card/ManageCard";
 import { useTranslation } from "next-export-i18n";
 
 const Trades = () => {

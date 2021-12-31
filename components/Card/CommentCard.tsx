@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { FaReply } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { useRecoilValue } from "recoil";
-import { userState } from "../atoms";
-import { replyComment } from "../utils";
+import { userState } from "../../atoms";
+import { replyComment } from "../../utils";
 import hive from "@hiveio/hive-js";
 
 export const CommentCard = ({ comment }: { comment: any }) => {
@@ -37,7 +37,7 @@ export const CommentCard = ({ comment }: { comment: any }) => {
         start_permlink: comment.permlink,
         limit: 10,
       },
-      function (err: any, result: any) {}
+      function (err: any, result: any) { }
     );
   });
 

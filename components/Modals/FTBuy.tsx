@@ -9,7 +9,7 @@ import {
   userState,
 } from "../../atoms";
 import { ftBuyTransfer, NFTBuy } from "../../utils";
-import { FormInput } from "../FormInput";
+import { FormInput } from "../Utils/FormInput";
 import { Formik } from "formik";
 import { useTranslation } from "next-export-i18n";
 import Select from "react-select";

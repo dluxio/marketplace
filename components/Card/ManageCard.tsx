@@ -3,8 +3,8 @@ import { useTranslation } from "next-export-i18n";
 import React, { useEffect, useState } from "react";
 import { FaQuestion } from "react-icons/fa";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { userState, prefixState, broadcastState, apiLinkState } from "../atoms";
-import { ReserveRespond, toBase64 } from "../utils";
+import { userState, prefixState, broadcastState, apiLinkState } from "../../atoms";
+import { ReserveRespond, toBase64 } from "../../utils";
 
 type TradeCardProps = {
   trade: {

@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { ImCross } from 'react-icons/im';
-import { FormInput } from '../FormInput';
+import { FormInput } from '../Utils/FormInput';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { prefixState, userState, broadcastState } from '../../atoms';

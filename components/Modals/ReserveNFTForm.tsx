@@ -1,7 +1,7 @@
 import React, { useState, useEffect, MouseEventHandler } from "react";
 
 import { Formik } from "formik";
-import { FormInput } from "../FormInput";
+import { FormInput } from "../Utils/FormInput";
 import { ImCross } from "react-icons/im";
 import { ReserveTrade } from "../../utils";
 import { useRecoilState, useRecoilValue } from "recoil";

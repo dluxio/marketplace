@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { AuctionDetail } from "./Detail";
+import { AuctionDetail } from "../Modals/Detail";
 import { useTranslation } from "next-export-i18n";
 
 export const SetCard = ({ nft }: { nft: any }) => {

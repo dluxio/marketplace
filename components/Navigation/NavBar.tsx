@@ -7,14 +7,14 @@ import {
   broadcastState,
   refreshState,
   apiLinkState,
-} from "../atoms";
+} from "../../atoms";
 
-import { Login } from "./Login";
+import { Login } from "../Login";
 
 import { useRouter } from "next/router";
-import { Spinner } from "./Spinner";
+import { Spinner } from "../Spinner";
 
-import { placeHolder } from "../constants";
+import { placeHolder } from "../../constants";
 
 import { FaBars } from "react-icons/fa";
 import { FcGlobe } from "react-icons/fc";
@@ -22,7 +22,7 @@ import { FcGlobe } from "react-icons/fc";
 import Image from "next/image";
 import {
   redoProfilePicture,
-} from "../utils";
+} from "../../utils";
 
 import { useHiveKeychainCeramic } from "spk-auth-react";
 import { isMobile } from "react-device-detect";
@@ -133,12 +133,11 @@ export const NavBar = () => {
             {t("home")}
           </p>
           <p
-            className={`${
-              (url === "inventory" ||
+            className={`${(url === "inventory" ||
                 url === "create-nft" ||
                 url === "trades") &&
               "selected"
-            } ${user ? "navLink" : "text-gray-600 cursor-not-allowed"}`}
+              } ${user ? "navLink" : "text-gray-600 cursor-not-allowed"}`}
             onClick={() => {
               if (user) {
                 router.push({ pathname: "/inventory", query });
@@ -195,9 +194,8 @@ export const NavBar = () => {
             <div className="flex items-center w-full ">
               <div
                 id="profile-picture"
-                className={`w-9 ${
-                  pfpData?.set?.n === "hf" ? "mb-5" : ""
-                } cursor-pointer`}
+                className={`w-9 ${pfpData?.set?.n === "hf" ? "mb-5" : ""
+                  } cursor-pointer`}
                 onClick={() => router.push(`/@${user.name}`)}
               >
                 <Image height={30} width={30} src={placeHolder} alt="profile" />
@@ -206,9 +204,8 @@ export const NavBar = () => {
           </div>
 
           <div
-            className={`${
-              profDropdown ? "" : "hidden"
-            } absolute bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col z-40`}
+            className={`${profDropdown ? "" : "hidden"
+              } absolute bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col z-40`}
           >
             <a onClick={handleSettings} className="btn">
               {t("settings")}
@@ -237,11 +234,9 @@ export const NavBar = () => {
       {signing && <Login handleClose={() => setSigning(false)} />}
       {languageSelect && (
         <div
-          className={`${
-            languageSelect ? "" : "hidden"
-          } absolute bg-white top-14 ${
-            user ? "right-32" : "right-24"
-          } px-2 pt-2 rounded-xl flex flex-col z-40`}
+          className={`${languageSelect ? "" : "hidden"
+            } absolute bg-white top-14 ${user ? "right-32" : "right-24"
+            } px-2 pt-2 rounded-xl flex flex-col z-40`}
         >
           <LanguageSwitcher lang="en">
             <a className={`btn ${query.lang === "en" ? "bg-gray-400" : ""}`}>
@@ -284,24 +279,21 @@ export const NavBar = () => {
       {dropdown && (
         <div className="absolute top-14 p-2 bg-white rounded-xl text-center z-50">
           <p
-            className={`${
-              url === "" && "selected"
-            } navLink text-black hover:text-gray-800`}
+            className={`${url === "" && "selected"
+              } navLink text-black hover:text-gray-800`}
             onClick={() => router.push("/")}
           >
             {t("home")}
           </p>
           <p
-            className={`${
-              (url === "inventory" ||
+            className={`${(url === "inventory" ||
                 url === "create-nft" ||
                 url === "trades") &&
               "selected"
-            } ${
-              user
+              } ${user
                 ? "navLink text-black hover:text-gray-800"
                 : "text-gray-600 pb-2 cursor-not-allowed"
-            }`}
+              }`}
             onClick={() => {
               if (user) {
                 router.push("/inventory");
@@ -311,17 +303,15 @@ export const NavBar = () => {
             {t("inventory")}
           </p>
           <p
-            className={`${
-              url === "auction" && "selected"
-            } navLink text-black hover:text-gray-800`}
+            className={`${url === "auction" && "selected"
+              } navLink text-black hover:text-gray-800`}
             onClick={() => router.push("/auction")}
           >
             {t("auctionHouse")}
           </p>
           <p
-            className={`${
-              url === "listings" && "selected"
-            } navLink text-black hover:text-gray-800`}
+            className={`${url === "listings" && "selected"
+              } navLink text-black hover:text-gray-800`}
             onClick={() => router.push("/listings")}
           >
             {t("listings")}

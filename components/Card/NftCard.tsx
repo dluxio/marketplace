@@ -7,13 +7,13 @@ dayjs.extend(objectSupport);
 import { FaMoneyBillAlt } from "react-icons/fa";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { userState, broadcastState, prefixState } from "../atoms";
-import { AuctionDetail } from "./Detail";
+import { userState, broadcastState, prefixState } from "../../atoms";
+import { AuctionDetail } from "../Modals/Detail";
 import { useTranslation } from "next-export-i18n";
 
 import axios from "axios";
 
-import { handleSellCancel, NFTBuy } from "../utils";
+import { handleSellCancel, NFTBuy } from "../../utils";
 import { useRouter } from "next/router";
 
 type NftCardProp = {
@@ -127,9 +127,8 @@ export const NftCard = ({ nft }: NftCardProp) => {
           {nft.by !== user?.name ? (
             <button
               onClick={() => user && handleBuy()}
-              className={`px-6 py-2 rounded-xl flex mt-2 items-center gap-2 ${
-                !user && "cursor-not-allowed"
-              }`}
+              className={`px-6 py-2 rounded-xl flex mt-2 items-center gap-2 ${!user && "cursor-not-allowed"
+                }`}
               style={{
                 background: `linear-gradient(to bottom,  ${colors[0]} 0%,${colors[1]} 100%)`,
               }}
@@ -140,9 +139,8 @@ export const NftCard = ({ nft }: NftCardProp) => {
           ) : (
             <button
               onClick={handleTakeBack}
-              className={`px-3 py-2 rounded-xl mt-2 flex items-center gap-2 ${
-                !user && "cursor-not-allowed"
-              }`}
+              className={`px-3 py-2 rounded-xl mt-2 flex items-center gap-2 ${!user && "cursor-not-allowed"
+                }`}
               style={{ backgroundColor: "orange" }}
             >
               {t("takeBack")}

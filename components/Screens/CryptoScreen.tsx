@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import { useRecoilValue } from "recoil";
-import { apiLinkState, userState } from "../atoms";
+import { apiLinkState, userState } from "../../atoms";
 
 import axios from "axios";
-import { BalanceCard } from "./BalanceCard";
+import { BalanceCard } from "../Card/BalanceCard";
 import { useTranslation } from "next-export-i18n";
 
-export const CryptoScreen = ({}) => {
+export const CryptoScreen = ({ }) => {
   const [dluxBal, setDluxBal] = useState(0);
   const [hiveBal, setHiveBal] = useState(0);
   const user: any = useRecoilValue(userState);

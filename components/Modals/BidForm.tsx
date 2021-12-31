@@ -1,52 +1,46 @@
 import React, { useState, useEffect, MouseEventHandler } from "react";
 
 import { Formik } from "formik";
-import { FormInput } from "../FormInput";
+import { FormInput } from "../Utils/FormInput";
 import { ImCross } from "react-icons/im";
+import {
+  broadcastState,
+  dlux_ccState,
+  prefixState,
+  userState,
+} from "../../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 
-import { Give, ReserveTrade } from "../../utils";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { prefixState, userState, broadcastState } from "../../atoms";
-import { useTranslation } from "next-export-i18n";
+import { NFTBid } from "../../utils";
 
-export const TransferNFTFormComp: React.FC<{
+export const BidForm: React.FC<{
   set: string;
-  uid?: string;
+  uid: string;
+  kind: "ft" | "nft";
+  type: "HIVE" | "HBD" | "DLUX";
   handleClose: Function;
-}> = ({ set, handleClose, uid }) => {
+}> = ({ set, handleClose, uid, kind, type }) => {
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const user: any = useRecoilValue(userState);
+  const cc: string = useRecoilValue(dlux_ccState);
   const prefix: string = useRecoilValue(prefixState);
-  const { t } = useTranslation();
-  const [transferData, setTransferData] = useState<{
-    set: string;
-    to: string;
-    uid?: string;
-    price?: number;
-  }>();
+  const [bidData, setBidData] =
+    useState<{ set: string; bid_amount: number; uid: string }>();
 
   useEffect(() => {
-    if (transferData) {
-      if (!transferData.price) {
-        Give(user.name, transferData, prefix).then((response: any) => {
+    if (bidData && user) {
+      NFTBid(user.name, bidData, prefix, kind, type, cc).then(
+        (response: any) => {
           if (response) {
             if (response.success) {
               setBroadcasts((prevState: any) => [...prevState, response]);
             }
           }
-        });
-      } else {
-        ReserveTrade(user.name, prefix, transferData).then((response: any) => {
-          if (response) {
-            if (response.success) {
-              setBroadcasts((prevState: any) => [...prevState, response]);
-            }
-          }
-        });
-      }
+        }
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transferData, user]);
+  }, [bidData, user]);
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-50 z-50">
@@ -59,33 +53,18 @@ export const TransferNFTFormComp: React.FC<{
             onClick={handleClose as MouseEventHandler}
           />
         </button>
-        <h1 className="text-center text-white text-2xl">
-          {t("give")} {uid ? "NFT" : "FT"}
-        </h1>
+        <h1 className="text-center text-white text-2xl mb-3">Bid</h1>
         <Formik
-          initialValues={{ to: "", price: (0).toFixed(2) }}
-          validate={({ to }) => {
+          initialValues={{ bid_amount: (10).toFixed(2) }}
+          validate={({ bid_amount }) => {
             const errors: any = {};
-            if (!to) {
-              errors.to = "Required";
+            if (!bid_amount) {
+              errors.bid_amount = "Required";
             }
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            if (+values.price * 1000 === 0) {
-              setTransferData({
-                to: values.to,
-                set,
-                uid: uid && uid,
-              });
-            } else {
-              setTransferData({
-                to: values.to,
-                set,
-                uid: uid && uid,
-                price: +values.price * 1000,
-              });
-            }
+            setBidData({ bid_amount: +values.bid_amount * 1000, set, uid });
             setSubmitting(false);
             handleClose();
           }}
@@ -101,27 +80,19 @@ export const TransferNFTFormComp: React.FC<{
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col justify-center gap-5 text-white">
                 <FormInput
-                  name="to"
-                  errors={errors.to}
-                  handleBlur={handleBlur}
-                  handleChange={handleChange}
-                  touched={touched.to}
-                  value={values.to}
-                />
-                <FormInput
                   type="number"
-                  name="price"
-                  errors={errors.price}
+                  name="bid_amount"
+                  errors={errors.bid_amount}
                   handleBlur={handleBlur}
                   handleChange={handleChange}
-                  touched={touched.price}
-                  value={values.price}
+                  touched={touched.bid_amount}
+                  value={values.bid_amount}
                 />
                 <button
                   type="submit"
                   className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
                 >
-                  Transfer
+                  Bid
                 </button>
               </div>
             </form>

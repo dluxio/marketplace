@@ -6,7 +6,7 @@ import { Client } from "@hiveio/dhive";
 import { comment, vote } from "../../utils";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { broadcastState, ipfsLinkState, userState } from "../../atoms";
-import { CommentCard } from "../../components/CommentCard";
+import { CommentCard } from "../../components/Card/CommentCard";
 import ReactMarkdown from "react-markdown";
 import ReactJWPlayer from "react-jw-player";
 import SimpleImageSlider from "react-simple-image-slider";

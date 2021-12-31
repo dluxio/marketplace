@@ -6,7 +6,7 @@ import { NewsPost } from "../components/NewsPost";
 import { useTranslation } from "next-export-i18n";
 import { useHiveKeychainCeramic } from "spk-auth-react";
 import { getUserPosts } from "../utils";
-import { ProfileCard } from "../components/ProfileCard";
+import { ProfileCard } from "../components/Card/ProfileCard";
 
 const User = () => {
   const client = new Client(hiveApi);

@@ -1,7 +1,7 @@
 import React from 'react'
 import { GrFacebook, GrInstagram, GrGithub, GrLinkedin, GrTwitter } from 'react-icons/gr'
 import { RiUser3Fill, RiMapPinUserFill, RiLinksFill } from 'react-icons/ri'
-import { placeHolder } from '../constants'
+import { placeHolder } from '../../constants'
 
 type IProfileCard = { userData: any, username: { provider: string, username: string }, author: string }
 

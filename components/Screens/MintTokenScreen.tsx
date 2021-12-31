@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { apiLinkState, refreshState, userState } from "../atoms";
+import { apiLinkState, refreshState, userState } from "../../atoms";
 
 import { useRouter } from "next/router";
 
-import { TokenCard } from "./TokenCard";
+import { TokenCard } from "../Card/TokenCard";
 import { useTranslation } from "next-export-i18n";
 
 export const MintTokenScreen = () => {
