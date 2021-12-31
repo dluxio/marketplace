@@ -5,7 +5,7 @@ import ReactJWPlayer from "react-jw-player";
 type IPost = {
   title: string;
   body: string;
-  images: { url: string }[];
+  images?: { url: string }[];
   votes: any[];
   playlist?: any[];
   speak: boolean;
@@ -27,19 +27,29 @@ export const PostCard = ({
         {speak ? (
           <div className="w-full flex justify-center">
             <ReactJWPlayer
-              className="rounded-xl w-4/5"
+              className="rounded-t-xl w-full"
               playerId="my-unique-id"
               playerScript="https://cdn.jwplayer.com/libraries/HT7Dts3H.js"
               playlist={playlist}
             />
           </div>
+        ) : images && images.length === 1 ? (
+          <img
+            className="w-full h-full rounded-t-xl"
+            src={images[0].url}
+            alt="thumbnail"
+          />
         ) : (
           <SimpleImageSlider
-              height="100%"
-              width="100%"
-              images={images}
-              showBullets={false}
-              showNavs={true}
+            height="100%"
+            width="100%"
+            style={{
+              borderTopLeftRadius: "0.75rem",
+              borderTopRightRadius: "0.75rem",
+            }}
+            images={images!}
+            showBullets={false}
+            showNavs={true}
           />
         )}
       </div>
