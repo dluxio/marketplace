@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import Masonary from "react-masonry-css";
+import { isMobile } from "react-device-detect";
 import { useRouter } from "next/router";
-import { ceramicApi, hiveApi } from "../constants";
-import { Client, Discussion } from "@hiveio/dhive";
-import { NewsPost } from "../components/NewsPost";
+import { ceramicApi, hiveApi, placeHolder } from "../constants";
+import { Client } from "@hiveio/dhive";
 import { useTranslation } from "next-export-i18n";
 import { useHiveKeychainCeramic } from "spk-auth-react";
 import { getUserPosts } from "../utils";
 import { ProfileCard } from "../components/Card/ProfileCard";
+import { PostCard } from "../components/Card/PostCard";
 
 const User = () => {
   const client = new Client(hiveApi);
@@ -14,18 +16,24 @@ const User = () => {
   const router = useRouter();
   const { author } = router.query;
   const [username, setUsername] = useState({ username: "", provider: "" });
-  const [posts, setPosts] = useState<Discussion[]>([]);
+  const [posts, setPosts] = useState<any[]>([]);
   const [userData, setUserData] = useState<any>(null);
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (author && (author! as string).slice(0, 1) === "@") {
-      setUsername({
-        username: (author! as string).slice(1, author!.length),
-        provider: "hive",
-      });
-    } else {
-      setUsername({ username: author as string, provider: "ceramic" });
+    if (author) {
+      const firstChar = (author! as string).slice(0, 1);
+
+      if (firstChar === "@") {
+        setUsername({
+          username: (author! as string).slice(1, author!.length),
+          provider: "hive",
+        });
+      } else if (firstChar === "d") {
+        setUsername({ username: author as string, provider: "ceramic" });
+      } else {
+        router.push("/404");
+      }
     }
   }, [author]);
 
@@ -33,7 +41,7 @@ const User = () => {
     const getCeramicProfile = async (didId: string) => {
       const response = await connector.idx.get("basicProfile", didId);
       return response;
-    } 
+    };
 
     if (username) {
       if (username.provider === "hive") {
@@ -58,20 +66,24 @@ const User = () => {
       } else if (username.username) {
         getCeramicProfile(username.username).then((profile: any) => {
           if (profile) {
-            setUserData(profile.profile ? profile.profile : {
-              about: profile.description || null,
-              name: profile.name || null,
-              profile_image: profile.image || null,
-              cover_image: profile.background || null,
-              website: profile.url || null,
-              location: profile.homeLocation || null,
-            })
+            setUserData(
+              profile.profile
+                ? profile.profile
+                : {
+                    about: profile.description || null,
+                    name: profile.name || null,
+                    profile_image: profile.image || null,
+                    cover_image: profile.background || null,
+                    website: profile.url || null,
+                    location: profile.homeLocation || null,
+                  }
+            );
           }
         });
 
-        getUserPosts(username.username).then(response => {
-          console.log(response);
-        })
+        getUserPosts(username.username).then((response) => {
+          setPosts(response);
+        });
       }
     }
   }, [username]);
@@ -85,12 +97,35 @@ const User = () => {
       />
       <div className="text-center">
         <h1 className="my-3 font-bold text-xl">{t("recent")}</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full my-4">
+        <Masonary
+          breakpointCols={isMobile ? 1 : 2}
+          className="masonry-grid sm:mx-4"
+          columnClassName="masonry-grid_column"
+        >
           {posts.map((post) => {
+            const metadata = post.json_metadata
+              ? JSON.parse(post.json_metadata)
+              : null;
             console.log(post);
-            return <NewsPost key={post.permlink} post={post} />;
+            return post.active_votes ? (
+              <PostCard
+                key={post.permlink}
+                author={post.author}
+                permlink={post.permlink}
+                speak={false}
+                title={post.title}
+                votes={post.active_votes}
+                images={metadata.image}
+                playlist={[]}
+                pfp={
+                  userData?.profile_image ? userData.profile_image : placeHolder
+                }
+              />
+            ) : (
+              <h1>Something</h1>
+            );
           })}
-        </div>
+        </Masonary>
       </div>
     </div>
   );
