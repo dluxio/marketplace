@@ -78,13 +78,18 @@ const User = () => {
 
   return (
     <div className="flex flex-col text-white my-10 mx-2 sm:mx-10">
-      <ProfileCard userData={userData} username={username} author={(author as string)} />
+      <ProfileCard
+        userData={userData}
+        username={username}
+        author={author as string}
+      />
       <div className="text-center">
         <h1 className="my-3 font-bold text-xl">{t("recent")}</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full my-4">
-          {posts.map((post) => (
-            <NewsPost key={post.permlink} post={post} />
-          ))}
+          {posts.map((post) => {
+            console.log(post);
+            return <NewsPost key={post.permlink} post={post} />;
+          })}
         </div>
       </div>
     </div>
