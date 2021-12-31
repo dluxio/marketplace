@@ -122,7 +122,21 @@ const User = () => {
                 }
               />
             ) : (
-              <h1>Something</h1>
+              <PostCard
+                key={post.permlink}
+                author={
+                  post.content?.debug_metadata?.auth_id
+                    ? post.content.debug_metadata.auth_id.split(":")[1]
+                    : "unknown"
+                }
+                permlink={post.permlink}
+                pfp={placeHolder}
+                speak={false}
+                title={post.content.title ? post.content.title : ""}
+                votes={[]}
+                images={[]}
+                playlist={[]}
+              />
             );
           })}
         </Masonary>
