@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import { useRouter } from "next/router";
 import hive from "@hiveio/hive-js";
@@ -9,20 +9,14 @@ import { broadcastState, ipfsLinkState, userState } from "../../atoms";
 import { CommentCard } from "../../components/Card/CommentCard";
 import ReactMarkdown from "react-markdown";
 import ReactJWPlayer from "react-jw-player";
-import SimpleImageSlider from "react-simple-image-slider";
 
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { useTranslation } from "next-export-i18n";
-import { ImCross } from "react-icons/im";
+import { hiveApi } from "../../constants";
 
 const AppDetails = () => {
-  var client = new Client([
-    "https://api.hive.blog",
-    "https://api.hivekings.com",
-    "https://anyx.io",
-    "https://api.openhive.network",
-  ]);
+  var client = new Client(hiveApi);
   const [voteWeight, setVoteWeight] = useState(0);
   const [commentBody, setCommentBody] = useState("");
   const [playlist, setPlaylist] = useState<any>([]);
@@ -30,8 +24,7 @@ const AppDetails = () => {
   const [speak, set3speak] = useState(false);
   const [color, setColor] = useState("#000");
   const [upVote, setUpVote] = useState(false);
-  const [showBody, setShowBody] = useState(false);
-  const [images, setImages] = useState<{ url: string }[]>([]);
+  const [images, setImages] = useState<{ id: number; url: string }[]>([]);
   const [downVote, setDownVote] = useState(false);
   const [image, setImage] = useState("");
   const [showApp, setShowApp] = useState(false);
@@ -82,28 +75,29 @@ const AppDetails = () => {
   };
 
   useEffect(() => {
-    if (!author) router.push("/");
-    if (author && (author! as string).substr(0, 1) === "@") {
+    if (author && (author! as string).slice(0, 1) === "@") {
       if (ipfsLink === "https://anywhere.ipfs.dlux.io/") {
         const subauthor = (author! as string)
-          .substr(1, author!.length)
+          .slice(1, author!.length)
           .replace(".", "-");
         setIpfsLink(`https://${subauthor}.ipfs.dlux.io/`);
       }
-      setUsername((author! as string).substr(1, author!.length));
+      setUsername((author! as string).slice(1, author!.length));
     }
   }, []);
 
   const handleSendComment = () => {
-    comment({
-      author: user.name,
-      title: "",
-      body: commentBody,
-      parent_author: username,
-      parent_permlink: permlink as string,
-      permlink: `re-previous-${username}-${permlink}`,
-      json_metadata: JSON.stringify({ tags: ["hiveio"] }),
-    });
+    if (commentBody) {
+      comment({
+        author: user.name,
+        title: "",
+        body: commentBody,
+        parent_author: username,
+        parent_permlink: permlink as string,
+        permlink: `re-previous-${username}-${permlink}`,
+        json_metadata: JSON.stringify({ tags: ["hiveio"] }),
+      });
+    }
     setCommentBody("");
   };
 
@@ -125,10 +119,10 @@ const AppDetails = () => {
 
   useEffect(() => {
     if (contentData) {
-      const imagesArray: { url: string }[] = [];
+      const imagesArray: { id: number; url: string }[] = [];
 
-      contentData.image.forEach((image: string) => {
-        imagesArray.push({ url: image });
+      contentData.image.forEach((image: string, id: number) => {
+        imagesArray.push({ id, url: image });
       });
 
       if (imagesArray.length !== 0) {
@@ -175,6 +169,23 @@ const AppDetails = () => {
     }
   }, [contentData]);
 
+  const carouselData = useMemo(
+    () =>
+      images.map((row) => {
+        return {
+          key: String(row.id),
+          children: (
+            <div
+              style={{
+                backgroundImage: `url(${row.url})`,
+              }}
+            />
+          ),
+        };
+      }),
+    [images]
+  );
+
   return showApp ? (
     <div className="w-full h-screen fixed top-0 left-0 bg-black text-white text-2xl font-bold bg-opacity-70">
       <div className="flex px-10 justify-between w-full bg-blue-500">
@@ -195,51 +206,10 @@ const AppDetails = () => {
     </div>
   ) : (
     contentResult && (
-      <div className="w-full mx-auto max-w-3xl">
-        <div
-          className={`${
-            showBody ? "" : "hidden"
-          } fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-75 z-50`}
-        >
-          <div className="flex justify-center items-center w-full h-full">
-            <div className="w-2/3 h-auto relative bg-gray-500 border-2 border-gray-800 rounded-xl p-5">
-              <button className="m-2 absolute top-0 right-0">
-                <ImCross
-                  size={15}
-                  color="#fff"
-                  opacity={100}
-                  onClick={() => setShowBody(false)}
-                />
-              </button>
-
-              {images.length !== 0 && (
-                <div className="p-2">
-                  <div className="rounded-xl flex justify-center">
-                    <SimpleImageSlider
-                      height={500}
-                      width={1000}
-                      images={images}
-                      showBullets={true}
-                      showNavs={true}
-                    />
-                  </div>
-                </div>
-              )}
-              <h1 className="my-5 text-center text-white font-semibold text-xl">
-                {contentResult.root_title}
-              </h1>
-              <ReactMarkdown className="mb-2 max-h-52 overflow-y-scroll text-white">
-                {contentResult.body}
-              </ReactMarkdown>
-            </div>
-          </div>
-        </div>
+      <div className={`w-full mx-auto max-w-3xl`}>
         <div className="flex justify-evenly flex-col w-full mt-10">
           {speak ? (
-            <div
-              onClick={() => setShowBody(true)}
-              className="cursor-pointer w-full flex justify-center my-2"
-            >
+            <div className="w-full flex justify-center my-2">
               <ReactJWPlayer
                 className="rounded-xl w-4/5"
                 playerId="my-unique-id"
@@ -248,11 +218,8 @@ const AppDetails = () => {
               />
             </div>
           ) : (
-            <div
-              onClick={() => setShowBody(true)}
-              className="cursor-pointer flex justify-center w-full my-2"
-            >
-              <img src={image} className="w-4/5" alt="appPhoto" />
+            <div className="flex justify-center w-full my-2">
+              <img src={image} alt="thumbnail" />
             </div>
           )}
           {JSON.parse(contentResult.json_metadata).vrHash && (
@@ -265,10 +232,7 @@ const AppDetails = () => {
           )}
           <div className="p-5">
             <h1 className="text-white text-3xl">{contentResult?.title}</h1>
-            <h1
-              onClick={() => setShowBody(true)}
-              className="text-white text-center sm:mx-3 sm:text-left text-lg cursor-pointer"
-            >
+            <h1 className="text-white text-center sm:mx-3 sm:text-left text-lg cursor-pointer">
               {JSON.parse(contentResult.json_metadata)?.description}
             </h1>
             <div className="flex items-center w-full my-5 mx-2 gap-2">
@@ -361,7 +325,7 @@ const AppDetails = () => {
                   onMouseEnter={() => setColor("#dcdcdc")}
                   onMouseLeave={() => setColor("#000")}
                   onClick={handleSendComment}
-                  className="absolute right-4 top-4 cursor-pointer"
+                  className="absolute right-4 top-4 transition-all cursor-pointer"
                 />
               </div>
               <div className="flex flex-col justify-center gap-3 my-3">

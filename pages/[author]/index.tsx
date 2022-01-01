@@ -2,13 +2,13 @@ import React, { useEffect, useState, useMemo } from "react";
 import Masonary from "react-masonry-css";
 import { isMobile } from "react-device-detect";
 import { useRouter } from "next/router";
-import { ceramicApi, hiveApi, placeHolder } from "../constants";
+import { ceramicApi, hiveApi, placeHolder } from "../../constants";
 import { Client } from "@hiveio/dhive";
 import { useTranslation } from "next-export-i18n";
 import { useHiveKeychainCeramic } from "spk-auth-react";
-import { getUserPosts } from "../utils";
-import { ProfileCard } from "../components/Card/ProfileCard";
-import { PostCard } from "../components/Card/PostCard";
+import { getUserPosts } from "../../utils";
+import { ProfileCard } from "../../components/Card/ProfileCard";
+import { PostCard } from "../../components/Card/PostCard";
 
 const User = () => {
   const client = new Client(hiveApi);

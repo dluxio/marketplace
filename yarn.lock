@@ -7045,11 +7045,6 @@ react-select@^5.2.1:
     prop-types "^15.6.0"
     react-transition-group "^4.3.0"
 
-react-simple-image-slider@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/react-simple-image-slider/-/react-simple-image-slider-2.3.0.tgz#b33aa060ff62ab6a77e1a72a8cdb8e205d4336cc"
-  integrity sha512-oVira6wedep7v+ltBKNRtLKCY5ZgJB8bOjWpc9faUTB0Pa4ZdufKkxoEiH+Dke4rKHpzaV7TyuMI3sjTP6JRAw==
-
 react-stockcharts@^0.7.8:
   version "0.7.8"
   resolved "https://registry.yarnpkg.com/react-stockcharts/-/react-stockcharts-0.7.8.tgz#d127a113479835be1a0ef7c37e5b5808740b9803"

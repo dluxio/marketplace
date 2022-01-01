@@ -64,13 +64,13 @@ export const PostCard = ({
         <div className="flex justify-center">{title}</div>
         <div className="p-2 flex justify-center gap-2">
           <button
-            onClick={() => router.replace(`/${author}/${permlink}`)}
+            onClick={() => router.replace(`/@${author}/${permlink}`)}
             className="flex gap-1 items-center bg-red-500 hover:bg-red-600 transition-all p-1 px-2 rounded-xl"
           >
             <RiHeartFill /> {votes ? votes.length : 0}
           </button>
           <button
-            onClick={() => router.replace(`/${author}/${permlink}`)}
+            onClick={() => router.replace(`/@${author}/${permlink}`)}
             className="flex gap-1 justify-center px-5 items-center bg-blue-500 hover:bg-blue-600 transition-all p-1 rounded-xl"
           >
             <MdComment />
