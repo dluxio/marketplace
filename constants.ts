@@ -39,7 +39,7 @@ export const selectOptions = [
   { value: "HBD", label: "HBD" },
 ];
 
-export const ceramicApi = 'https://d12-b-ceramic.3boxlabs.com';
+export const ceramicApi = 'https://ceramic-clay.3boxlabs.com';
 export const hiveApi = [
   "https://api.hive.blog",
   "https://api.hivekings.com",

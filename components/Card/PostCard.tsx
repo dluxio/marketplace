@@ -41,7 +41,7 @@ export const PostCard = ({
           </div>
         ) : (
           images &&
-          images.length && (
+          images.length >= 1 && (
             <img
               className="w-full h-full rounded-t-xl border-b-2 border-gray-800"
               src={images[0]}
