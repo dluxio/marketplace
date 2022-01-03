@@ -5,12 +5,33 @@ import { placeHolder } from '../../constants'
 
 type IProfileCard = { userData: any, username: { provider: string, username: string }, author: string }
 
+const urls: string[] = ["https://", "http://"];
+
 export const ProfileCard = ({ userData, username, author }: IProfileCard) => {
+  const formatWebsite = (url: string) => {
+    let result = "";
+
+    urls.forEach((start) => {
+      if (url.includes(start)) {
+        result = url.split("").splice(start.length, url.length).join("");
+
+        if (result.includes("www.")) {
+          result = url.split("www.", result.length)[1];
+        }
+      }
+    });
+
+    return result || url;
+  };
+
   return (
     <div className="flex flex-col items-center w-full">
       <div
-        className={`relative overflow-hidden border-2 text-white p-5 rounded-xl border-gray-800 ${userData?.cover_image ? "bg-black" : "bg-gray-600"
-          } flex-col ${userData ? 'flex' : 'hidden'} sm:flex-row items-center sm:items-start gap-3 w-full`}
+        className={`relative overflow-hidden border-2 text-white p-5 rounded-xl border-gray-800 ${
+          userData?.cover_image ? "bg-black" : "bg-gray-600"
+        } flex-col ${
+          userData ? "flex" : "hidden"
+        } sm:flex-row items-center sm:items-start gap-3 w-full`}
       >
         <div className="flex flex-col items-center justify-center z-10">
           {userData && (
@@ -23,7 +44,9 @@ export const ProfileCard = ({ userData, username, author }: IProfileCard) => {
               alt="profile"
             />
           )}
-          <h1 className="text-xl my-2">{username.provider === 'hive' ? author : userData?.name}</h1>
+          <h1 className="text-xl my-2">
+            {username.provider === "hive" ? author : userData?.name}
+          </h1>
         </div>
         {userData && (
           <div className="z-40 mx-5 my-auto">
@@ -44,11 +67,7 @@ export const ProfileCard = ({ userData, username, author }: IProfileCard) => {
               <a target="_blank" href={userData.website}>
                 <div className="flex items-center gap-2 hover:text-gray-300">
                   <RiLinksFill />
-                  <h1>
-                    {userData.website.substr(0, 12) === "https://www."
-                      ? userData.website.substr(12, userData.website.length)
-                      : userData.website}
-                  </h1>
+                  <h1>{formatWebsite(userData.website)}</h1>
                 </div>
               </a>
             )}
@@ -114,5 +133,5 @@ export const ProfileCard = ({ userData, username, author }: IProfileCard) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
