@@ -12,12 +12,6 @@ export const AppScreen = () => {
     });
   }, []);
 
-  const handleClose = () => {
-    if (document.getElementById("iframe-app")) {
-      document.getElementById("iframe-app")!.innerHTML = "";
-    }
-  };
-
   return (
     <div className={`mx-10 mb-5 grid grid-cols-1 sm:grid-cols-3 gap-3`}>
       {apps.map((app: any) => {

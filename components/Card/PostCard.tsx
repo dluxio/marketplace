@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactJWPlayer from "react-jw-player";
 import { RiHeartFill } from "react-icons/ri";
 import { useRouter } from "next/router";
