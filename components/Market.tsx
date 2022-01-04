@@ -15,8 +15,8 @@ import {
   apiLinkState,
   dlux_ccState,
 } from "../atoms";
-import { NewsScreen } from "./NewsScreen";
-import { AppScreen } from "./AppScreen";
+import { NewsScreen } from "./Screens/NewsScreen";
+import { AppScreen } from "./Screens/AppScreen";
 import { useTranslation } from "next-export-i18n";
 
 export const Market = () => {

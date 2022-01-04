@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { NftCard } from "../components";
-import { FTCard } from "../components/FTCard";
+import { FTCard } from "../components/Card/FTCard";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { apiLinkState } from "../atoms";

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { apiLinkState } from "../../atoms";
-import { SetCard } from "../../components/SetCard";
+import { SetCard } from "../../components/Card/SetCard";
 import { FaInfoCircle } from "react-icons/fa";
 import { BsFillPersonFill } from "react-icons/bs";
 
