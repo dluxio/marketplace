@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import Masonary from "react-masonry-css";
 import { isMobile } from "react-device-detect";
 import { useRouter } from "next/router";
@@ -72,10 +72,15 @@ const User = () => {
                 : {
                     about: profile.description || null,
                     name: profile.name || null,
-                    profile_image: profile.image || null,
-                    cover_image: profile.background || null,
+                    profile_image:
+                      "https://ipfs-3speak.b-cdn.net/ipfs/" +
+                        profile.image.original.src.split("ipfs://")[1] || null,
+                    cover_image:
+                      "https://ipfs-3speak.b-cdn.net/ipfs/" +
+                        profile.background.original.src.split("ipfs://")[1] ||
+                      null,
                     website: profile.url || null,
-                    location: profile.homeLocation || null,
+                    location: profile.residenceCountry || null,
                   }
             );
           }
@@ -106,7 +111,6 @@ const User = () => {
             const metadata = post.json_metadata
               ? JSON.parse(post.json_metadata)
               : null;
-            console.log(post);
             return post.active_votes ? (
               <PostCard
                 key={post.permlink}
@@ -124,11 +128,7 @@ const User = () => {
             ) : (
               <PostCard
                 key={post.permlink}
-                author={
-                  post.content?.debug_metadata?.auth_id
-                    ? post.content.debug_metadata.auth_id.split(":")[1]
-                    : "unknown"
-                }
+                author={post.creatorId}
                 permlink={post.permlink}
                 pfp={placeHolder}
                 speak={false}

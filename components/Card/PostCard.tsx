@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactJWPlayer from "react-jw-player";
 import { RiHeartFill } from "react-icons/ri";
 import { useRouter } from "next/router";
 import { MdComment } from "react-icons/md";
+import { useHiveKeychainCeramic } from "spk-auth-react";
+import { ceramicApi } from "../../constants";
 
 type IPost = {
   title: string;
@@ -25,7 +27,27 @@ export const PostCard = ({
   permlink,
   pfp,
 }: IPost) => {
+  const [username, setUsername] = useState(author);
+  const [profilePicture, setProfilePicture] = useState(pfp);
   const router = useRouter();
+  const connector = useHiveKeychainCeramic(ceramicApi);
+
+  useEffect(() => {
+    const getCeramicProfile = async (didId: string) => {
+      const response = await connector.idx.get("basicProfile", didId);
+      return response;
+    };
+
+    if (author[0] === "d") {
+      getCeramicProfile(author).then((profile: any) => {
+        setUsername(profile.name);
+        setProfilePicture(
+          "https://ipfs-3speak.b-cdn.net/ipfs/" +
+            profile.image.original.src.split("ipfs://")[1]
+        );
+      });
+    }
+  }, []);
 
   return (
     <div className="border-2 my-3 border-gray-800 rounded-xl w-full bg-gray-600">
@@ -53,13 +75,13 @@ export const PostCard = ({
       <div className="pt-2 px-5">
         <div className="flex items-center gap-2">
           <img
-            src={pfp}
+            src={profilePicture}
             className="rounded-full"
             height={30}
             width={30}
             alt="profile_picture"
           />
-          <h1>{author}</h1>
+          <h1>{username}</h1>
         </div>
         <div className="flex justify-center">{title}</div>
         <div className="p-2 flex justify-center gap-2">
