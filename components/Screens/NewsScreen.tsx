@@ -9,6 +9,7 @@ type SPKPost = {
   permlink: string;
   creatorId: string;
   content: any;
+  last_updated: string;
 };
 
 export const NewsScreen = () => {
@@ -33,17 +34,16 @@ export const NewsScreen = () => {
       >
         {posts.map((post: SPKPost) => {
           console.log(post);
+
           return (
             <PostCard
+              date={new Date(post.last_updated)}
               key={post.permlink}
               author={post.creatorId ? post.creatorId : "unknown"}
               permlink={post.permlink}
               pfp={placeHolder}
-              speak={false}
               title={post.content?.title ? post.content.title : ""}
-              votes={[]}
               images={[]}
-              playlist={[]}
             />
           );
         })}

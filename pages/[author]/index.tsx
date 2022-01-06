@@ -108,34 +108,34 @@ const User = () => {
           columnClassName="masonry-grid_column"
         >
           {posts.map((post) => {
+            console.log(post);
             const metadata = post.json_metadata
               ? JSON.parse(post.json_metadata)
               : null;
+
             return post.active_votes ? (
               <PostCard
+                date={new Date(post.created)}
                 key={post.permlink}
                 author={post.author}
                 permlink={post.permlink}
-                speak={false}
                 title={post.title}
                 votes={post.active_votes}
                 images={metadata.image}
-                playlist={[]}
                 pfp={
                   userData?.profile_image ? userData.profile_image : placeHolder
                 }
               />
             ) : (
               <PostCard
+                date={new Date()}
                 key={post.permlink}
                 author={post.creatorId}
                 permlink={post.permlink}
                 pfp={placeHolder}
-                speak={false}
                 title={post.content.title ? post.content.title : ""}
                 votes={[]}
                 images={[]}
-                playlist={[]}
               />
             );
           })}

@@ -1,32 +1,35 @@
 import React, { useEffect, useState } from "react";
 import ReactJWPlayer from "react-jw-player";
+import dayjs from "dayjs";
+import RelativeTime from "dayjs/plugin/relativeTime";
 import { RiHeartFill } from "react-icons/ri";
 import { useRouter } from "next/router";
 import { MdComment } from "react-icons/md";
 import { useHiveKeychainCeramic } from "spk-auth-react";
 import { ceramicApi } from "../../constants";
+dayjs.extend(RelativeTime);
 
 type IPost = {
   title: string;
   images?: string[];
-  votes: any[];
-  playlist?: any[];
-  speak: boolean;
+  votes?: any[];
   author: any;
   permlink: string;
   pfp: string;
+  date: Date;
 };
 
 export const PostCard = ({
   title,
   images,
-  votes,
-  speak,
-  playlist,
+  votes = [],
   author,
   permlink,
   pfp,
+  date,
 }: IPost) => {
+  const [speak, setSpeak] = useState(false);
+  const [playlist, setPlaylist] = useState([]);
   const [username, setUsername] = useState(author);
   const [profilePicture, setProfilePicture] = useState(pfp);
   const router = useRouter();
@@ -73,15 +76,18 @@ export const PostCard = ({
         )}
       </div>
       <div className="pt-2 px-5">
-        <div className="flex items-center gap-2">
-          <img
-            src={profilePicture}
-            className="rounded-full"
-            height={30}
-            width={30}
-            alt="profile_picture"
-          />
-          <h1>{username}</h1>
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <img
+              src={profilePicture}
+              className="rounded-full"
+              height={30}
+              width={30}
+              alt="profile_picture"
+            />
+            <h1>{username}</h1>
+          </div>
+          <h1>{dayjs().to(date)}</h1>
         </div>
         <div className="flex justify-center">{title}</div>
         <div className="p-2 flex justify-center gap-2">
