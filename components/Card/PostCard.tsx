@@ -6,7 +6,8 @@ import { RiHeartFill } from "react-icons/ri";
 import { useRouter } from "next/router";
 import { MdComment } from "react-icons/md";
 import { useHiveKeychainCeramic } from "spk-auth-react";
-import { ceramicApi } from "../../constants";
+import { ceramicApi, hiveApi, placeHolder } from "../../constants";
+import { Client } from "@hiveio/dhive";
 dayjs.extend(RelativeTime);
 
 type IPost = {
@@ -15,7 +16,6 @@ type IPost = {
   votes?: any[];
   author: any;
   permlink: string;
-  pfp: string;
   date: Date;
 };
 
@@ -25,13 +25,13 @@ export const PostCard = ({
   votes = [],
   author,
   permlink,
-  pfp,
   date,
 }: IPost) => {
+  const client = new Client(hiveApi);
   const [speak, setSpeak] = useState(false);
   const [playlist, setPlaylist] = useState([]);
   const [username, setUsername] = useState(author);
-  const [profilePicture, setProfilePicture] = useState(pfp);
+  const [profilePicture, setProfilePicture] = useState(placeHolder);
   const router = useRouter();
   const connector = useHiveKeychainCeramic(ceramicApi);
 
@@ -41,13 +41,21 @@ export const PostCard = ({
       return response;
     };
 
-    if (author[0] === "d") {
+    if (author.split(":")[0] === "did") {
       getCeramicProfile(author).then((profile: any) => {
         setUsername(profile.name);
         setProfilePicture(
           "https://ipfs-3speak.b-cdn.net/ipfs/" +
             profile.image.original.src.split("ipfs://")[1]
         );
+      });
+    } else {
+      client.database.getAccounts([author]).then((response: any) => {
+        if (response[0]) {
+          setProfilePicture(
+            JSON.parse(response[0].posting_json_metadata).profile.profile_image
+          );
+        }
       });
     }
   }, []);
@@ -85,7 +93,14 @@ export const PostCard = ({
               width={30}
               alt="profile_picture"
             />
-            <h1>{username}</h1>
+            <h1
+              className="hover:text-gray-300 cursor-pointer"
+              onClick={() =>
+                author.split(":")[0] !== "did" && router.push(`/@${username}`)
+              }
+            >
+              {username}
+            </h1>
           </div>
           <h1>{dayjs().to(date)}</h1>
         </div>

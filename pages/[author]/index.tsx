@@ -122,9 +122,6 @@ const User = () => {
                 title={post.title}
                 votes={post.active_votes}
                 images={metadata.image}
-                pfp={
-                  userData?.profile_image ? userData.profile_image : placeHolder
-                }
               />
             ) : (
               <PostCard
@@ -132,7 +129,6 @@ const User = () => {
                 key={post.permlink}
                 author={post.creatorId}
                 permlink={post.permlink}
-                pfp={placeHolder}
                 title={post.content.title ? post.content.title : ""}
                 votes={[]}
                 images={[]}
