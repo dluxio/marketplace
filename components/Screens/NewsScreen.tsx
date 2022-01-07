@@ -32,8 +32,6 @@ export const NewsScreen = () => {
         columnClassName="masonry-grid_column"
       >
         {posts.map((post: SPKPost) => {
-          console.log(post);
-
           return (
             <PostCard
               date={new Date(post.last_updated)}

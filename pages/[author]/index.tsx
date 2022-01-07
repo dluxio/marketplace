@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { ceramicApi, hiveApi, placeHolder } from "../../constants";
 import { Client } from "@hiveio/dhive";
 import { useTranslation } from "next-export-i18n";
-import { useHiveKeychainCeramic } from "spk-auth-react";
+import { useHiveKeychainCeramic } from "@spknetwork/auth-react";
 import { getUserPosts } from "../../utils";
 import { ProfileCard } from "../../components/Card/ProfileCard";
 import { PostCard } from "../../components/Card/PostCard";
@@ -39,7 +39,7 @@ const User = () => {
 
   useEffect(() => {
     const getCeramicProfile = async (didId: string) => {
-      const response = await connector.idx.get("basicProfile", didId);
+      const response = await connector.idxUtils.getUserProfile(didId);
       return response;
     };
 

@@ -21,10 +21,10 @@ import { FcGlobe } from "react-icons/fc";
 
 import Image from "next/image";
 import {
-  redoProfilePicture,
+  redoProfilePicture, setProfile,
 } from "../../utils";
 
-import { useHiveKeychainCeramic } from "spk-auth-react";
+import { useHiveKeychainCeramic } from "@spknetwork/auth-react";
 import { isMobile } from "react-device-detect";
 import axios from "axios";
 import {
@@ -107,9 +107,14 @@ export const NavBar = () => {
         const didId = response?.context?.did?.id;
 
         if (didId) {
-          let profile = await connector.idx.get("basicProfile", didId);
+          let profile = await connector.idxUtils.getOwnProfile();
           if (!profile) {
-            profile = await connector.idx.set('basicProfile', JSON.parse(JSON.parse(userStor).posting_json_metadata));
+            const metadata = JSON.parse(
+              JSON.parse(userStor).posting_json_metadata
+            );
+
+            const response = setProfile(metadata);
+            console.log("Profile set: ", response);
           }
         }
       }
@@ -133,11 +138,12 @@ export const NavBar = () => {
             {t("home")}
           </p>
           <p
-            className={`${(url === "inventory" ||
+            className={`${
+              (url === "inventory" ||
                 url === "create-nft" ||
                 url === "trades") &&
               "selected"
-              } ${user ? "navLink" : "text-gray-600 cursor-not-allowed"}`}
+            } ${user ? "navLink" : "text-gray-600 cursor-not-allowed"}`}
             onClick={() => {
               if (user) {
                 router.push({ pathname: "/inventory", query });
@@ -194,8 +200,9 @@ export const NavBar = () => {
             <div className="flex items-center w-full ">
               <div
                 id="profile-picture"
-                className={`w-9 ${pfpData?.set?.n === "hf" ? "mb-5" : ""
-                  } cursor-pointer`}
+                className={`w-9 ${
+                  pfpData?.set?.n === "hf" ? "mb-5" : ""
+                } cursor-pointer`}
                 onClick={() => router.push(`/@${user.name}`)}
               >
                 <Image height={30} width={30} src={placeHolder} alt="profile" />
@@ -204,8 +211,9 @@ export const NavBar = () => {
           </div>
 
           <div
-            className={`${profDropdown ? "" : "hidden"
-              } absolute bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col z-40`}
+            className={`${
+              profDropdown ? "" : "hidden"
+            } absolute bg-white top-14 right-2 px-2 pt-2 rounded-xl flex flex-col z-40`}
           >
             <a onClick={handleSettings} className="btn">
               {t("settings")}
@@ -234,9 +242,11 @@ export const NavBar = () => {
       {signing && <Login handleClose={() => setSigning(false)} />}
       {languageSelect && (
         <div
-          className={`${languageSelect ? "" : "hidden"
-            } absolute bg-white top-14 ${user ? "right-32" : "right-24"
-            } px-2 pt-2 rounded-xl flex flex-col z-40`}
+          className={`${
+            languageSelect ? "" : "hidden"
+          } absolute bg-white top-14 ${
+            user ? "right-32" : "right-24"
+          } px-2 pt-2 rounded-xl flex flex-col z-40`}
         >
           <LanguageSwitcher lang="en">
             <a className={`btn ${query.lang === "en" ? "bg-gray-400" : ""}`}>
@@ -279,21 +289,24 @@ export const NavBar = () => {
       {dropdown && (
         <div className="absolute top-14 p-2 bg-white rounded-xl text-center z-50">
           <p
-            className={`${url === "" && "selected"
-              } navLink text-black hover:text-gray-800`}
+            className={`${
+              url === "" && "selected"
+            } navLink text-black hover:text-gray-800`}
             onClick={() => router.push("/")}
           >
             {t("home")}
           </p>
           <p
-            className={`${(url === "inventory" ||
+            className={`${
+              (url === "inventory" ||
                 url === "create-nft" ||
                 url === "trades") &&
               "selected"
-              } ${user
+            } ${
+              user
                 ? "navLink text-black hover:text-gray-800"
                 : "text-gray-600 pb-2 cursor-not-allowed"
-              }`}
+            }`}
             onClick={() => {
               if (user) {
                 router.push("/inventory");
@@ -303,15 +316,17 @@ export const NavBar = () => {
             {t("inventory")}
           </p>
           <p
-            className={`${url === "auction" && "selected"
-              } navLink text-black hover:text-gray-800`}
+            className={`${
+              url === "auction" && "selected"
+            } navLink text-black hover:text-gray-800`}
             onClick={() => router.push("/auction")}
           >
             {t("auctionHouse")}
           </p>
           <p
-            className={`${url === "listings" && "selected"
-              } navLink text-black hover:text-gray-800`}
+            className={`${
+              url === "listings" && "selected"
+            } navLink text-black hover:text-gray-800`}
             onClick={() => router.push("/listings")}
           >
             {t("listings")}

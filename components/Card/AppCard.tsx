@@ -24,7 +24,7 @@ export const AppCard = ({ app }: AppCardProps) => {
       } else {
         imagestring = "https://www.dlux.io/img/dlux-sdk.png";
       }
-      if (imagestring.substr(0, 5) !== "https") {
+      if (imagestring?.substr(0, 5) !== "https") {
         imagestring = "https://www.dlux.io/img/dlux-sdk.png";
       }
       setImage(imagestring);

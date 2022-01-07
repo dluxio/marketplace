@@ -5,7 +5,7 @@ import RelativeTime from "dayjs/plugin/relativeTime";
 import { RiHeartFill } from "react-icons/ri";
 import { useRouter } from "next/router";
 import { MdComment } from "react-icons/md";
-import { useHiveKeychainCeramic } from "spk-auth-react";
+import { useHiveKeychainCeramic } from "@spknetwork/auth-react";
 import { ceramicApi, hiveApi, placeHolder } from "../../constants";
 import { Client } from "@hiveio/dhive";
 dayjs.extend(RelativeTime);
@@ -37,7 +37,7 @@ export const PostCard = ({
 
   useEffect(() => {
     const getCeramicProfile = async (didId: string) => {
-      const response = await connector.idx.get("basicProfile", didId);
+      const response = await connector.idxUtils.getUserProfile(didId);
       return response;
     };
 
