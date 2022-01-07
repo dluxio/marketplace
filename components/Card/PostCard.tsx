@@ -43,10 +43,12 @@ export const PostCard = ({
 
     if (author.split(":")[0] === "did") {
       getCeramicProfile(author).then((profile: any) => {
-        setUsername(profile.name);
+        setUsername(profile?.name);
         setProfilePicture(
-          "https://ipfs-3speak.b-cdn.net/ipfs/" +
-            profile.image.original.src.split("ipfs://")[1]
+          profile?.image
+            ? "https://ipfs-3speak.b-cdn.net/ipfs/" +
+                profile?.image.original.src.split("ipfs://")[1]
+            : placeHolder
         );
       });
     } else {

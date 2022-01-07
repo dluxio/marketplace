@@ -2,12 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Masonary from "react-masonry-css";
 import { isMobile } from "react-device-detect";
-import { placeHolder } from "../../constants";
 import { PostCard } from "../Card/PostCard";
 
 type SPKPost = {
   permlink: string;
-  creatorId: string;
+  creator_id: string;
   content: any;
   last_updated: string;
 };
@@ -39,9 +38,8 @@ export const NewsScreen = () => {
             <PostCard
               date={new Date(post.last_updated)}
               key={post.permlink}
-              author={post.creatorId ? post.creatorId : "unknown"}
+              author={post.creator_id ? post.creator_id : "unknown"}
               permlink={post.permlink}
-              pfp={placeHolder}
               title={post.content?.title ? post.content.title : ""}
               images={[]}
             />
