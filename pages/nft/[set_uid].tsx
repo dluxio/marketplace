@@ -13,10 +13,10 @@ import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import { useTranslation } from "next-export-i18n";
 import { NFTMelt, SetPFP } from "../../utils";
 import { TransferNFTFormComp } from "../../components";
-import { Confirmation } from "../../components/Confirmation";
-import { AuctionNFTForm } from "../../components/Forms/AuctionForm";
-import { SellForm } from "../../components/Forms/SellForm";
-import { RoyaltyCard } from "../../components/Forms/RoyaltyCard";
+import { Confirmation } from "../../components/Modals/Confirmation";
+import { AuctionNFTForm } from "../../components/Modals/AuctionForm";
+import { SellForm } from "../../components/Modals/SellForm";
+import { RoyaltyCard } from "../../components/Modals/RoyaltyCard";
 
 const NFTManagement = () => {
   const [description, setDescription] = useState("");
