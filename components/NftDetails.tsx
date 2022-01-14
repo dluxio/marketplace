@@ -7,7 +7,7 @@ import { SellForm } from "./Modals/SellForm";
 import { Confirmation } from "./Modals/Confirmation";
 
 import { NFTMelt, SetPFP } from "../utils";
-import { apiLinkState, broadcastState, prefixState, userState } from "../atoms";
+import { broadcastState, prefixState, userState } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { attributeColors } from "../constants";
 import { useTranslation } from "next-export-i18n";
@@ -15,11 +15,6 @@ import { useTranslation } from "next-export-i18n";
 type NftDetailProps = {
   nft: any;
 };
-
-interface details {
-  title: string;
-  url: string;
-}
 
 export const NftDetails = ({ nft }: NftDetailProps) => {
   const [description, setDescription] = useState("");

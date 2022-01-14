@@ -78,6 +78,7 @@ export const NavBar = () => {
         setSigning(false);
         setProfDropdown(false);
         axios.get(`${apiLink}api/pfp/${user.name}`).then(({ data }) => {
+          console.log(data.result[0]);
           setPfp(data.result[0]);
         });
       }
@@ -141,7 +142,8 @@ export const NavBar = () => {
             className={`${
               (url === "inventory" ||
                 url === "create-nft" ||
-                url === "trades") &&
+                url === "trades" ||
+                url === "nft") &&
               "selected"
             } ${user ? "navLink" : "text-gray-600 cursor-not-allowed"}`}
             onClick={() => {

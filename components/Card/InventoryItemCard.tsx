@@ -3,9 +3,14 @@ import React, { MouseEventHandler, useMemo } from "react";
 type InventoryNFTProps = {
   nft: any;
   onClick: MouseEventHandler;
+  onDoubleClick: MouseEventHandler;
 };
 
-export const InventoryItemCard = ({ nft, onClick }: InventoryNFTProps) => {
+export const InventoryItemCard = ({
+  nft,
+  onClick,
+  onDoubleClick,
+}: InventoryNFTProps) => {
   useMemo(() => {
     fetch(`https://ipfs.io/ipfs/${nft.script}?${nft.uid}`)
       .then((response) => response.text())
@@ -22,6 +27,7 @@ export const InventoryItemCard = ({ nft, onClick }: InventoryNFTProps) => {
   return (
     <div
       onClick={onClick}
+      onDoubleClick={onDoubleClick}
       className="p-3 bg-gray-600 rounded-xl border-gray-700 border-4 cursor-pointer"
     >
       <div id={`image-${nft.set}-${nft.uid}`}></div>
