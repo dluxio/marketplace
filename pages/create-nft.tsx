@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Formik } from "formik";
-import { FormInput } from "../components/FormInput";
+import { FormInput } from "../components/Utils/FormInput";
 
 import { useRecoilValue } from "recoil";
 import { userState, prefixState } from "../atoms";

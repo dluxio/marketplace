@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { AuctionNFTcard } from "../components";
 import axios from "axios";
-import { AuctionFTcard } from "../components/AuctionFTCard";
+import { AuctionFTcard } from "../components/Card/AuctionFTCard";
 import { apiLinkState, dlux_ccState } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useTranslation } from "next-export-i18n";

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import hive from "@hiveio/hive-js";
 import { TransferNFTFormComp } from "./";
-import { AuctionNFTForm } from "./Forms/AuctionForm";
-import { SellForm } from "./Forms/SellForm";
-import { Confirmation } from "./Confirmation";
+import { AuctionNFTForm } from "./Modals/AuctionForm";
+import { SellForm } from "./Modals/SellForm";
+import { Confirmation } from "./Modals/Confirmation";
 
 import { NFTMelt, SetPFP } from "../utils";
 import { broadcastState, prefixState, userState } from "../atoms";

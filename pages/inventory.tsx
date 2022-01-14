@@ -5,9 +5,9 @@ import { userState, inventoryNavState } from "../atoms";
 
 import { InventoryNav } from "../components";
 
-import { MintTokenScreen } from "../components/MintTokenScreen";
-import { CryptoScreen } from "../components/CryptoScreen";
-import { NFTScreen } from "../components/NFTScreen";
+import { MintTokenScreen } from "../components/Screens/MintTokenScreen";
+import { CryptoScreen } from "../components/Screens/CryptoScreen";
+import { NFTScreen } from "../components/Screens/NFTScreen";
 import { DEX } from "../components/DEX/DEX";
 import dynamic from "next/dynamic";
 import NoSSR from "react-no-ssr";

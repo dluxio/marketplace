@@ -39,6 +39,14 @@ export const selectOptions = [
   { value: "HBD", label: "HBD" },
 ];
 
+export const ceramicApi = 'https://ceramic-clay.3boxlabs.com';
+export const hiveApi = [
+  "https://api.hive.blog",
+  "https://api.hivekings.com",
+  "https://anyx.io",
+  "https://api.openhive.network",
+]
+
 export const customSelectStyles = {
   control: (base: any) => ({
     ...base,
