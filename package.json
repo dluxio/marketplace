@@ -18,6 +18,7 @@
     "@spknetwork/auth-react": "^0.0.6",
     "@spknetwork/graph-client": "^1.0.5",
     "@spknetwork/hive-keychain-ceramic": "^0.0.3",
+    "@spknetwork/idx-data-utils": "^0.0.3",
     "@types/canvasjs": "^1.9.7",
     "@types/d3-dsv": "^3.0.0",
     "@types/d3-time-format": "^4.0.0",
