@@ -53,7 +53,7 @@ export const NFTScreen = () => {
         {inventoryNFTs.length === 0 && (
           <h1 className="text-white text-xl text-center">{t("noNFT")}</h1>
         )}
-        <div className="grid grid-cols-1 grid-row-auto sm:grid-cols-2 xl:grid-cols-4 w-4/5 gap-4 mx-auto sm:mx-10">
+        <div className="grid grid-cols-1 grid-row-auto sm:grid-cols-2 lg:grid-cols-3 w-4/5 gap-4 mx-auto sm:mx-10">
           {inventoryNFTs.map((nft: any) => (
             <InventoryItemCard
               key={`${nft.set}_${nft.uid}`}

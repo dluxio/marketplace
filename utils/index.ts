@@ -132,6 +132,21 @@ export const Auction = async (
   return await handleBroadcastRequest(operations, username);
 };
 
+export const claim = async (username: string, gov: boolean) => {
+
+  const operations = [
+    'custom_json',
+    {
+      required_auths: [username],
+      id: 'dlux_claim',
+      required_posting_auths: 0,
+      json: JSON.stringify({ gov }),
+    }
+  ]
+
+  return await handleBroadcastRequest(operations, username);
+}
+
 export const FTOpen = async (
   username: string,
   set: string,

@@ -21,6 +21,10 @@ a {
   box-sizing: border-box;
 }
 
+.checkbox {
+  @apply bg-gray-500
+}
+
 .selected {
   @apply text-gray-500 border-b-4 border-blue-500;
 }
