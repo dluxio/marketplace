@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useTranslation } from "next-export-i18n";
 import React, { useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { apiLinkState, dayVolumeState } from "../../atoms";
+import { useQuery } from "../../constants/breakpoints";
 import { TransactionHistoryItem } from "./TransactionHistoryItem";
 
 export const TransactionHistory = ({ coin }: { coin: "HIVE" | "HBD" }) => {
+  const { isMobile } = useQuery();
   const [tickerID, setTickerID] = useState("HIVE_DLUX");
   const [transactions, setTransactions] = useState([]);
   const apiLink: string = useRecoilValue(apiLinkState);

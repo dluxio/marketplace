@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
+import { useQuery } from "../../constants/breakpoints";
 
 export const TransactionHistoryItem = ({
   transaction,
@@ -10,6 +10,7 @@ export const TransactionHistoryItem = ({
   i: number;
   transactions: any[];
 }) => {
+  const { isMobile } = useQuery();
   const [totalSum, setTotalSum] = useState("");
 
   useEffect(() => {

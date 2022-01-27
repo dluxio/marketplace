@@ -7,9 +7,10 @@ import { apiLinkState, dlux_ccState } from "../../atoms";
 import axios from "axios";
 import { TransactionHistory } from "./TransactionHistory";
 import { DEXChart } from "./DEXChart";
-import { isMobile } from "react-device-detect";
+import { useQuery } from "../../constants/breakpoints";
 
 export const DEX = () => {
+  const { isMobile } = useQuery();
   const [coin, setCoin] = useState<"HIVE" | "HBD">("HIVE");
   const [_cc, setCC] = useRecoilState(dlux_ccState);
   const apiLink = useRecoilValue(apiLinkState);
