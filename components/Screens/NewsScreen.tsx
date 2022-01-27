@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Masonary from "react-masonry-css";
-import { isMobile } from "react-device-detect";
+import { useQuery } from "../../constants/breakpoints";
 import { PostCard } from "../Card/PostCard";
 
 type SPKPost = {
@@ -12,6 +12,7 @@ type SPKPost = {
 };
 
 export const NewsScreen = () => {
+  const { isMobile } = useQuery();
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -34,7 +35,9 @@ export const NewsScreen = () => {
         {posts.map((post: SPKPost) => {
           return (
             <PostCard
-              date={new Date(post.last_updated)}
+              date={
+                post.last_updated ? new Date(post.last_updated) : new Date()
+              }
               key={post.permlink}
               author={post.creator_id ? post.creator_id : "unknown"}
               permlink={post.permlink}

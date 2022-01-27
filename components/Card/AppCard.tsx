@@ -6,7 +6,7 @@ import { FaPlay } from "react-icons/fa";
 import { RiUser3Fill, RiHeartFill } from "react-icons/ri";
 
 import { ceramicApi, hiveApi, placeHolder } from "../../constants";
-import { useHiveKeychainCeramic } from "spk-auth-react";
+import { useHiveKeychainCeramic } from "@spknetwork/auth-react";
 
 type AppCardProps = {
   app: any;
@@ -21,7 +21,7 @@ export const AppCard = ({ app }: AppCardProps) => {
 
   useEffect(() => {
     const getCeramicProfile = async (didId: string) => {
-      const response = await connector.idx.get("basicProfile", didId);
+      const response = await connector.idxUtils.getUserProfile(didId);
       return response;
     };
 
