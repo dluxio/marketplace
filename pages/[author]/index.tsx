@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Masonary from "react-masonry-css";
-import { isMobile } from "react-device-detect";
 import { useRouter } from "next/router";
 import { ceramicApi, hiveApi, placeHolder } from "../../constants";
 import { Client } from "@hiveio/dhive";
@@ -9,8 +8,10 @@ import { useHiveKeychainCeramic } from "@spknetwork/auth-react";
 import { getUserPosts } from "../../utils";
 import { ProfileCard } from "../../components/Card/ProfileCard";
 import { PostCard } from "../../components/Card/PostCard";
+import { useQuery } from "../../constants/breakpoints";
 
 const User = () => {
+  const { isMobile } = useQuery();
   const client = new Client(hiveApi);
   const connector = useHiveKeychainCeramic(ceramicApi);
   const router = useRouter();

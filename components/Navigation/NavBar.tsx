@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { CeramicClient } from "@ceramicnetwork/http-client";
 import {
   userState,
   broadcastState,
@@ -25,15 +24,16 @@ import {
 } from "../../utils";
 
 import { useHiveKeychainCeramic } from "@spknetwork/auth-react";
-import { isMobile } from "react-device-detect";
 import axios from "axios";
 import {
   useLanguageQuery,
   useTranslation,
   LanguageSwitcher,
 } from "next-export-i18n";
+import { useQuery } from "../../constants/breakpoints";
 
 export const NavBar = () => {
+  const { isMobile } = useQuery();
   const [profDropdown, setProfDropdown] = useState(false);
   const [languageSelect, setLanguageSelect] = useState(false);
   const [dropdown, setDropdown] = useState(false);
@@ -110,12 +110,10 @@ export const NavBar = () => {
         if (didId) {
           let profile = await connector.idxUtils.getOwnProfile();
           if (!profile) {
-            const metadata = JSON.parse(
-              JSON.parse(userStor).posting_json_metadata
+            profile = await connector.idx.set(
+              "basicProfile",
+              JSON.parse(JSON.parse(userStor).posting_json_metadata)
             );
-
-            const response = setProfile(metadata);
-            console.log("Profile set: ", response);
           }
         }
       }
