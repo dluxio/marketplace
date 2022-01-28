@@ -39,11 +39,6 @@ const User = () => {
   }, [author]);
 
   useEffect(() => {
-    const getCeramicProfile = async (didId: string) => {
-      const response = await connector.idxUtils.getUserProfile(didId);
-      return response;
-    };
-
     if (username) {
       if (username.provider === "hive") {
         const query = {
@@ -65,27 +60,30 @@ const User = () => {
             }
           });
       } else if (username.username) {
-        getCeramicProfile(username.username).then((profile: any) => {
-          if (profile) {
-            setUserData(
-              profile.profile
-                ? profile.profile
-                : {
-                    about: profile.description || null,
-                    name: profile.name || null,
-                    profile_image:
-                      "https://ipfs-3speak.b-cdn.net/ipfs/" +
-                        profile.image.original.src.split("ipfs://")[1] || null,
-                    cover_image:
-                      "https://ipfs-3speak.b-cdn.net/ipfs/" +
-                        profile.background.original.src.split("ipfs://")[1] ||
-                      null,
-                    website: profile.url || null,
-                    location: profile.residenceCountry || null,
-                  }
-            );
-          }
-        });
+        connector.idxUtils
+          .getUserProfile(username.username)
+          .then((profile: any) => {
+            if (profile) {
+              setUserData(
+                profile.profile
+                  ? profile.profile
+                  : {
+                      about: profile.description || null,
+                      name: profile.name || null,
+                      profile_image:
+                        "https://ipfs-3speak.b-cdn.net/ipfs/" +
+                          profile.image.original.src.split("ipfs://")[1] ||
+                        null,
+                      cover_image:
+                        "https://ipfs-3speak.b-cdn.net/ipfs/" +
+                          profile.background.original.src.split("ipfs://")[1] ||
+                        null,
+                      website: profile.url || null,
+                      location: profile.residenceCountry || null,
+                    }
+              );
+            }
+          });
 
         getUserPosts(username.username).then((response) => {
           setPosts(response);

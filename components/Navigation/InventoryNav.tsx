@@ -11,15 +11,14 @@ import { useLanguageQuery, useTranslation } from "next-export-i18n";
 
 import router from "next/router";
 import axios from "axios";
-import { claim } from "../../utils";
+import { GovForm } from "../Modals/GovForm";
 
 export const InventoryNav = () => {
   const [canClaim, setCanClaim] = useState(false);
-  const [gov, setGov] = useState(false);
+  const [claiming, setClaiming] = useState(false);
   const { t } = useTranslation();
   const [query] = useLanguageQuery();
   const user = useRecoilValue<any>(userState);
-  const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
   const [marketNavSelected, setMarketNavSelected] =
     useRecoilState(inventoryNavState);
 
@@ -38,17 +37,9 @@ export const InventoryNav = () => {
     }
   }, [user]);
 
-  const handleClaim = async () => {
-    const response: any = await claim(user.name, gov);
-    if (response) {
-      if (response.success) {
-        setBroadcasts((prevState: any) => [...prevState, response]);
-      }
-    }
-  };
-
   return (
     <div className="flex flex-wrap items-center justify-between">
+      {claiming && <GovForm handleClose={() => setClaiming(false)} />}
       <div className="flex mx-10 my-10 text-white gap-8 text-xl">
         <div
           onClick={() => setMarketNavSelected("nft")}
@@ -86,23 +77,13 @@ export const InventoryNav = () => {
           <MdSwapVerticalCircle size={25} color="#fff" />
           <p className="text-md mt-1">DEX</p>
         </div>
-        {canClaim && (
-          <div className="flex gap-3 justify-center items-center">
-            <button
-              onClick={handleClaim}
-              className="p-4 flex jsutify-center items-center bg-gradient-to-r from-green-400 to-blue-500 rounded-xl"
-            >
-              <FaGift size="1.5rem" />
-            </button>
-            <div className="flex gap-2 items-center justify-center">
-              <input
-                className="checkbox"
-                type="checkbox"
-                onChange={(e) => setGov(e.target.checked)}
-              />
-              <h1>Governance</h1>
-            </div>
-          </div>
+        {!canClaim && (
+          <button
+            onClick={() => setClaiming(true)}
+            className="p-4 flex jsutify-center items-center bg-gradient-to-r from-green-400 to-blue-500 rounded-xl"
+          >
+            <FaGift size="1.5rem" />
+          </button>
         )}
       </div>
       <div className="flex mx-10 items-center text-white">

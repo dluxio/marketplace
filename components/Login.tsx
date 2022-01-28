@@ -36,9 +36,8 @@ export const Login = ({ handleClose }: LoginProps) => {
         let profile = await connector.idxUtils.getUserProfile(didId);
         if (!profile) {
           const metadata = JSON.parse(user.json_metadata);
-          if (connector.ceramic.did !== null) {
-            const response = setProfile(metadata);
-            console.log('Profile set: ', response)
+          if (connector.ceramic.did?.id !== null) {
+            setProfile(metadata);
           }
         }
       }

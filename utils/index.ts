@@ -7,7 +7,6 @@ const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
 const spkClient = new SpkClient('https://us-01.infra.3speak.tv', ceramic);
 const service = new IdxDataService(ceramic)
 
-
 const _Rixits =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";
 
@@ -150,10 +149,12 @@ export const claim = async (username: string, gov: boolean) => {
   return await handleBroadcastRequest(operations, username);
 }
   
-export const setProfile = (profile: any) => {
-  service.writeOwnProfile(profile).then(response => {
+export const setProfile = async (profile: any) => {
+  await service.init()
+
+  await service.writeOwnProfile(profile).then(response => {
     return response
-  })
+  }).catch((e) => console.log(e))
 }
 
 export const FTOpen = async (
