@@ -77,7 +77,7 @@ export const InventoryNav = () => {
           <MdSwapVerticalCircle size={25} color="#fff" />
           <p className="text-md mt-1">DEX</p>
         </div>
-        {!canClaim && (
+        {canClaim && (
           <button
             onClick={() => setClaiming(true)}
             className="p-4 flex jsutify-center items-center bg-gradient-to-r from-green-400 to-blue-500 rounded-xl"
