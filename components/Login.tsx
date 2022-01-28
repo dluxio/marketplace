@@ -13,7 +13,8 @@ import { ImCross } from "react-icons/im";
 
 import hive from "@hiveio/hive-js";
 import { useTranslation } from "next-export-i18n";
-import { useHiveKeychainCeramic } from 'spk-auth-react'
+import { useHiveKeychainCeramic } from "@spknetwork/auth-react";
+import { setProfile } from "../utils";
 
 type LoginProps = {
   handleClose: MouseEventHandler;
@@ -32,10 +33,12 @@ export const Login = ({ handleClose }: LoginProps) => {
       const didId = response?.context?.did?.id;
 
       if (didId) {
-        let profile = await connector.idx.get("basicProfile", didId);
+        let profile = await connector.idxUtils.getUserProfile(didId);
         if (!profile) {
-          if (connector.idx.authenticated) {
-            profile = await connector.idx.set('basicProfile', JSON.parse(user.json_metadata));
+          const metadata = JSON.parse(user.json_metadata);
+          if (connector.ceramic.did !== null) {
+            const response = setProfile(metadata);
+            console.log('Profile set: ', response)
           }
         }
       }
@@ -95,4 +98,4 @@ export const Login = ({ handleClose }: LoginProps) => {
       </div>
     </div>
   );
-};
+};;

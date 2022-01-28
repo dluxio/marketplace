@@ -19,9 +19,11 @@ import { FaBars } from "react-icons/fa";
 import { FcGlobe } from "react-icons/fc";
 
 import Image from "next/image";
-import { redoProfilePicture } from "../../utils";
+import {
+  redoProfilePicture, setProfile,
+} from "../../utils";
 
-import { useHiveKeychainCeramic } from "spk-auth-react";
+import { useHiveKeychainCeramic } from "@spknetwork/auth-react";
 import axios from "axios";
 import {
   useLanguageQuery,
@@ -106,7 +108,7 @@ export const NavBar = () => {
         const didId = response?.context?.did?.id;
 
         if (didId) {
-          let profile = await connector.idx.get("basicProfile", didId);
+          let profile = await connector.idxUtils.getOwnProfile();
           if (!profile) {
             profile = await connector.idx.set(
               "basicProfile",

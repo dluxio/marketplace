@@ -10,14 +10,15 @@
   },
   "dependencies": {
     "@ceramicnetwork/http-client": "^1.5.3",
-    "@ceramicstudio/idx": "^0.12.2",
-    "@ceramicstudio/idx-constants": "^1.0.0",
+    "@glazed/devtools": "^0.1.3",
+    "@glazed/did-datastore": "^0.2.1",
     "@hiveio/dhive": "^1.1.1",
     "@hiveio/hive-js": "^2.0.4",
     "@hiveio/keychain": "^1.0.4",
-    "@spknetwork/auth-react": "^0.0.4",
+    "@spknetwork/auth-react": "^0.0.6",
     "@spknetwork/graph-client": "^1.0.5",
     "@spknetwork/hive-keychain-ceramic": "^0.0.3",
+    "@spknetwork/idx-data-utils": "^0.0.3",
     "@types/canvasjs": "^1.9.7",
     "@types/d3-dsv": "^3.0.0",
     "@types/d3-time-format": "^4.0.0",
@@ -63,8 +64,7 @@
     "react-select": "^5.2.1",
     "react-stockcharts": "^0.7.8",
     "recoil": "^0.4.1",
-    "shortid": "^2.2.16",
-    "spk-auth-react": "^0.0.1"
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "@types/coingecko-api": "^1.0.2",

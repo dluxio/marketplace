@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { ceramicApi, hiveApi, placeHolder } from "../../constants";
 import { Client } from "@hiveio/dhive";
 import { useTranslation } from "next-export-i18n";
-import { useHiveKeychainCeramic } from "spk-auth-react";
+import { useHiveKeychainCeramic } from "@spknetwork/auth-react";
 import { getUserPosts } from "../../utils";
 import { ProfileCard } from "../../components/Card/ProfileCard";
 import { PostCard } from "../../components/Card/PostCard";
@@ -40,7 +40,7 @@ const User = () => {
 
   useEffect(() => {
     const getCeramicProfile = async (didId: string) => {
-      const response = await connector.idx.get("basicProfile", didId);
+      const response = await connector.idxUtils.getUserProfile(didId);
       return response;
     };
 
@@ -109,34 +109,30 @@ const User = () => {
           columnClassName="masonry-grid_column"
         >
           {posts.map((post) => {
+            console.log(post);
             const metadata = post.json_metadata
               ? JSON.parse(post.json_metadata)
               : null;
+
             return post.active_votes ? (
               <PostCard
+                date={new Date(post.created)}
                 key={post.permlink}
                 author={post.author}
                 permlink={post.permlink}
-                speak={false}
                 title={post.title}
                 votes={post.active_votes}
                 images={metadata.image}
-                playlist={[]}
-                pfp={
-                  userData?.profile_image ? userData.profile_image : placeHolder
-                }
               />
             ) : (
               <PostCard
+                date={new Date()}
                 key={post.permlink}
                 author={post.creatorId}
                 permlink={post.permlink}
-                pfp={placeHolder}
-                speak={false}
                 title={post.content.title ? post.content.title : ""}
                 votes={[]}
                 images={[]}
-                playlist={[]}
               />
             );
           })}

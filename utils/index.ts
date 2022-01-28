@@ -1,9 +1,12 @@
 import hive from "@hiveio/hive-js";
 import CeramicClient from "@ceramicnetwork/http-client";
 import { SpkClient } from '@spknetwork/graph-client';
+import { IdxDataService } from "@spknetwork/idx-data-utils";
 
 const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
 const spkClient = new SpkClient('https://us-01.infra.3speak.tv', ceramic);
+const service = new IdxDataService(ceramic)
+
 
 const _Rixits =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";
@@ -145,6 +148,12 @@ export const claim = async (username: string, gov: boolean) => {
   ]
 
   return await handleBroadcastRequest(operations, username);
+}
+  
+export const setProfile = (profile: any) => {
+  service.writeOwnProfile(profile).then(response => {
+    return response
+  })
 }
 
 export const FTOpen = async (

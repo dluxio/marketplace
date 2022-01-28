@@ -2,6 +2,7 @@
 const withTM = require("next-transpile-modules")([
   "@spknetwork/auth-react",
   "@spknetwork/hive-keychain-ceramic",
+  "@spknetwork/idx-data-utils",
 ]);
 
 const config = {
