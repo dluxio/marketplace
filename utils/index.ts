@@ -336,9 +336,6 @@ export const NFTBid = async (
     type === "HIVE" ? "HIVE" : "HBD"
   }`;
 
-  console.log("TYPE ", type);
-  console.log("AMOUNT ", amount);
-
   const operations =
     type === "DLUX"
       ? [

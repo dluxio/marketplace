@@ -23,8 +23,6 @@ export const RoyaltyCard = ({ set }: { set: string }) => {
           royaltyValues[dataPoint.split("_")[0]] = +dataPoint.split("_")[1];
         });
 
-        console.log(royaltyValues);
-
         setRoyaltyObject(royaltyValues);
       });
     }
@@ -36,7 +34,6 @@ export const RoyaltyCard = ({ set }: { set: string }) => {
     royaltyObject[user.name] = removePercentageFrom - userPercentage;
     royaltyObject[assignData.username] = userPercentage;
 
-    console.log(royaltyObject);
     let royaltyString = "";
     Object.keys(royaltyObject).forEach(
       (key) => (royaltyString += `${key}_${royaltyObject[key]},`)

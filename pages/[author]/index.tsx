@@ -107,7 +107,6 @@ const User = () => {
           columnClassName="masonry-grid_column"
         >
           {posts.map((post) => {
-            console.log(post);
             const metadata = post.json_metadata
               ? JSON.parse(post.json_metadata)
               : null;
