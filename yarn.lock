@@ -1177,10 +1177,18 @@
     "@stablelib/sha256" "^1.0.1"
     dids "^2.4.2"
 
-"@spknetwork/idx-data-utils@0.0.3", "@spknetwork/idx-data-utils@^0.0.3":
+"@spknetwork/idx-data-utils@0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@spknetwork/idx-data-utils/-/idx-data-utils-0.0.3.tgz#06bf2e2fe98297cd90d93f1df59d624d58a32b95"
   integrity sha512-IzjrqUbNvlpkqs63yoxz+5PKXyV2ssQzAGdXdzVZH5hUsQifSA80NMf0pRf44Htm7y1T0h1MYe4eQG9bX46SIA==
+  dependencies:
+    "@ceramicnetwork/common" "^1.10.1"
+    "@datamodels/identity-profile-basic" "^0.1.2"
+
+"@spknetwork/idx-data-utils@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@spknetwork/idx-data-utils/-/idx-data-utils-0.1.0.tgz#2105644b9ecbf4df6675ac6d41384e52da1bf339"
+  integrity sha512-rjVpxbZuDE1if6ABxmTLuPJ+RUhcu2BUUIu44mI0PC/sto1XPlTm4RxqblZSIF8CjYu4fNizFxtcoPVsx/Rcow==
   dependencies:
     "@ceramicnetwork/common" "^1.10.1"
     "@datamodels/identity-profile-basic" "^0.1.2"

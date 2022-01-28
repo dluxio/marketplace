@@ -150,7 +150,9 @@ export const claim = async (username: string, gov: boolean) => {
 }
   
 export const setProfile = async (profile: any) => {
-  await service.init();
+  if (!service.isInitialized) {
+    await service.init();
+  }
 
   await service.writeOwnProfile(profile).then(response => {
     return response
