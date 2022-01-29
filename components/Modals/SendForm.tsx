@@ -23,10 +23,13 @@ export const SendDLUX = ({
       <h1 className="text-xl mb-2">Send DLUX</h1>
       <Formik
         initialValues={{ to: "", amount: 1, memo: "" }}
-        validate={({ to }) => {
-          const errors: any = {};
+        validate={({ to, amount }) => {
+          const errors: { to?: string; amount?: string } = {};
           if (!to) {
             errors.to = "Required";
+          }
+          if (amount > balance) {
+            errors.amount = "Not enough DLUX";
           }
           return errors;
         }}

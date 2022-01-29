@@ -10,6 +10,7 @@ type FormInputProps = {
   name: string;
   type?: string;
   min?: number;
+  max?: number;
   title?: string;
 };
 
@@ -21,6 +22,7 @@ export const FormInput = ({
   touched,
   name,
   min,
+  max,
   type = "text",
   title,
 }: FormInputProps) => {
@@ -43,6 +45,7 @@ export const FormInput = ({
         onBlur={handleBlur}
         value={value}
         min={min ? min : 0}
+        max={max ? max : Number.MAX_VALUE}
       />
       <h1 className="text-red-500">{errors && touched && errors}</h1>
     </div>

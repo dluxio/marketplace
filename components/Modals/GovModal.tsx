@@ -28,6 +28,15 @@ export const GovModal = ({
       </h1>
       <Formik
         initialValues={{ amount: 1 }}
+        validate={({ amount }) => {
+          const errors: { amount?: string } = {};
+
+          if (amount > balance) {
+            errors.amount = "Not enough GOV";
+          }
+
+          return errors;
+        }}
         onSubmit={({ amount }, { setSubmitting }) => {
           if (user) {
             gov(amount, user.name, up).then((response: any) => {
