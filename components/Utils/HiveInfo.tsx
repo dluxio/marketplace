@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { BiPaperPlane } from "react-icons/bi";
+import { Send } from "../Modals/SendForm";
 
 export const HiveInfo = ({ balance }: { balance: number }) => {
   const [send, setSend] = useState(false);
 
   return (
     <div className="flex flex-col mt-3 pt-3 border-t-2 border-gray-500">
+      {send && (
+        <Send
+          currency="HIVE"
+          balance={balance}
+          handleClose={() => setSend(false)}
+        />
+      )}
       <div className="flex justify-between gap-5">
         <div>
           <h1>HIVE Token ({balance.toFixed(2)} Bal)</h1>

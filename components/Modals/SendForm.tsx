@@ -79,9 +79,13 @@ export const Send = ({
                 touched={touched.amount}
                 value={values.amount}
               />
-              <div className="absolute top-8 right-9">
+              <div className={`absolute top-8 right-9`}>
                 <img
-                  src="https://www.dlux.io/img/dlux-hive-logo-alpha.svg"
+                  src={
+                    currency === "DLUX"
+                      ? "https://www.dlux.io/img/dlux-hive-logo-alpha.svg"
+                      : "https://www.dlux.io/img/hextacular.svg"
+                  }
                   width={25}
                   height={25}
                   alt="logo"
@@ -100,7 +104,11 @@ export const Send = ({
             </div>
             <button
               type="submit"
-              className="px-2 py-1 mx-auto mt-5 flex items-center gap-3 rounded-lg border-2 text-white bg-gradient-to-b from-pink-500 to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className={`px-2 py-1 mx-auto mt-5 flex items-center gap-3 rounded-lg border-2 text-white bg-gradient-to-b ${
+                currency === "DLUX"
+                  ? "from-pink-500 to-blue-500"
+                  : "from-white to-red-500"
+              } focus:outline-none focus:ring-2 focus:ring-blue-600`}
             >
               Send
               <BiPaperPlane size="1.5rem" />
