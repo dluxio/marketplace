@@ -159,6 +159,20 @@ export const setProfile = async (profile: any) => {
   }).catch((e) => console.log(e))
 }
 
+export const sendDLUX = async (data: { to: string; amount: number; memo: string; }, username: string) => {
+  const operations = [
+    'custom_json',
+    {
+      required_auths: [username],
+      id: 'dlux_send',
+      required_posting_auths: 0,
+      json: JSON.stringify({ ...data, from: username })
+    }
+  ]
+
+  return await handleBroadcastRequest(operations, username);
+}
+
 export const FTOpen = async (
   username: string,
   set: string,
