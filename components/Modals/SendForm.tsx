@@ -8,7 +8,13 @@ import { FormInput } from "../Utils/FormInput";
 import { sendDLUX } from "../../utils";
 import { broadcastState, userState } from "../../atoms";
 
-export const SendDLUX = ({ handleClose }: { handleClose: any }) => {
+export const SendDLUX = ({
+  handleClose,
+  balance,
+}: {
+  handleClose: any;
+  balance: number;
+}) => {
   const user = useRecoilValue<any>(userState);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
@@ -59,6 +65,7 @@ export const SendDLUX = ({ handleClose }: { handleClose: any }) => {
             <div className="mt-2 relative">
               <FormInput
                 min={1}
+                title={`Amount (${balance.toFixed(2)} DLUX)`}
                 name="amount"
                 type="number"
                 errors={errors.amount}

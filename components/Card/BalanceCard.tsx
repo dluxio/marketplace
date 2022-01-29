@@ -20,9 +20,15 @@ export const BalanceCard = ({
     <div
       className={`bg-gray-700 w-full px-5 py-3 text-white  rounded-xl border-2 border-gray-800`}
     >
-      {send && <SendDLUX handleClose={() => setSend(false)} />}
+      {send && (
+        <SendDLUX
+          balance={(balance as { DLUX: number }).DLUX / 1000}
+          handleClose={() => setSend(false)}
+        />
+      )}
       {gov.show && (
         <GovModal
+          balance={(balance as { GOV: number }).GOV}
           handleClose={() => setGov({ ...gov, show: false })}
           up={gov.up}
         />

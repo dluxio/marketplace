@@ -11,9 +11,11 @@ import { FaLock, FaUnlock } from "react-icons/fa";
 
 export const GovModal = ({
   handleClose,
+  balance,
   up = true,
 }: {
   handleClose: any;
+  balance: number;
   up?: boolean;
 }) => {
   const user = useRecoilValue<any>(userState);
@@ -52,6 +54,7 @@ export const GovModal = ({
           <form onSubmit={handleSubmit}>
             <div className="mt-2 relative">
               <FormInput
+                title={`Amount (${balance.toFixed(2)} GOV)`}
                 min={1}
                 name="amount"
                 type="number"
