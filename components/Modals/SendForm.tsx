@@ -26,15 +26,13 @@ export const SendDLUX = ({ handleClose }: { handleClose: any }) => {
         }}
         onSubmit={(data, { setSubmitting }) => {
           if (user) {
-            sendDLUX({ ...data, amount: data.amount * 1000 }, user.name).then(
-              (response: any) => {
-                if (response) {
-                  if (response.success) {
-                    setBroadcasts((prevState: any) => [...prevState, response]);
-                  }
+            sendDLUX(data, user.name).then((response: any) => {
+              if (response) {
+                if (response.success) {
+                  setBroadcasts((prevState: any) => [...prevState, response]);
                 }
               }
-            );
+            });
           }
 
           setSubmitting(false);

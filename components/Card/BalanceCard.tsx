@@ -57,7 +57,10 @@ export const BalanceCard = ({
         <div className="flex flex-col mt-3 pt-3 border-t-2 border-gray-500">
           <div className="flex justify-between gap-5">
             <div>
-              <h1>DLUX Token</h1>
+              <h1>
+                DLUX Token (
+                {((balance as { DLUX: number }).DLUX / 1000).toFixed(2)} Bal)
+              </h1>
               <h1 className="text-gray-400 pt-2">
                 The utility token for content distribution and smart contracts,
                 also called a smart media token (SMT)
@@ -75,7 +78,10 @@ export const BalanceCard = ({
           </div>
           <div className="flex justify-between gap-10 border-t-2 border-gray-600 mt-2 pt-2">
             <div>
-              <h1>DLUX Governance</h1>
+              <h1>
+                DLUX Governance (
+                {((balance as { GOV: number }).GOV / 1000).toFixed(2)} Bal)
+              </h1>
               <h1 className="text-gray-400 pt-2">
                 Locked tokens used to determine concensus and earn rewards for
                 running a node
@@ -102,7 +108,7 @@ export const BalanceCard = ({
                 <div className="bg-gray-600 rounded-xl p-3">
                   <button
                     onClick={() => setGov({ show: true, up: true })}
-                    className="flex items-center whitespace-nowrap gap-2 bg-gray-500 w-full px-2 py-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-700"
+                    className="flex justify-between items-center whitespace-nowrap gap-2 bg-gray-500 w-full px-2 py-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-700"
                   >
                     Lock GOV <FaLock />
                   </button>
