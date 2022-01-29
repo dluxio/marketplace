@@ -695,6 +695,20 @@ export const ftBuyTransfer = async (
   return await handleBroadcastRequest(operations, username);
 };
 
+export const sendHIVE = async (data: { to: string; amount: number; memo: string }, username: string) => {
+  const operations = [
+    'transfer',
+    {
+      required_auths: [username],
+      id: 'dlux_send',
+      required_posting_auths: 0,
+      json: JSON.stringify({ ...data, from: username, amount: `${data.amount.toFixed(3)} HIVE` })
+    }
+  ]
+
+  return await handleBroadcastRequest(operations, username);
+}
+
 export const parseData = (data: any) => {
   const result: { x: Date; y: any[] }[] = [];
 

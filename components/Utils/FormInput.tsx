@@ -44,6 +44,7 @@ export const FormInput = ({
         onChange={handleChange}
         onBlur={handleBlur}
         value={value}
+        step={0.1}
         min={min ? min : 0}
         max={max ? max : Number.MAX_VALUE}
       />
