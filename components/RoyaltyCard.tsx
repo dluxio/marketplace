@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { apiLinkState, prefixState, userState } from "../../atoms";
-import { addRoyalties } from "../../utils";
+import { apiLinkState, prefixState, userState } from "../atoms";
+import { addRoyalties } from "../utils";
 
 export const RoyaltyCard = ({ set }: { set: string }) => {
   const apiLink: string = useRecoilValue(apiLinkState);

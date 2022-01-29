@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
+import { TokenManagement } from "../Modals/TokenManagement";
 
 export const BalanceCard = ({
   currency,
@@ -8,8 +8,20 @@ export const BalanceCard = ({
   currency: string;
   balance: number;
 }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
-    <div className="bg-gray-700 px-5 py-3 text-white  rounded-xl border-2 border-gray-800">
+    <div
+      onClick={
+        currency === "DLUX" ? () => setModalOpen((prev) => !prev) : () => {}
+      }
+      className={`bg-gray-700 px-5 py-3 text-white  rounded-xl border-2 border-gray-800 ${
+        currency === "DLUX" && "cursor-pointer"
+      }`}
+    >
+      {modalOpen && (
+        <TokenManagement handleClose={() => setModalOpen((prev) => !prev)} />
+      )}
       <div className="flex items-center justify-between">
         {currency === "DLUX" && (
           <img

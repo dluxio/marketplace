@@ -16,7 +16,7 @@ import { TransferNFTFormComp } from "../../components";
 import { Confirmation } from "../../components/Modals/Confirmation";
 import { AuctionNFTForm } from "../../components/Modals/AuctionForm";
 import { SellForm } from "../../components/Modals/SellForm";
-import { RoyaltyCard } from "../../components/Modals/RoyaltyCard";
+import { RoyaltyCard } from "../../components/RoyaltyCard";
 
 const NFTManagement = () => {
   const [description, setDescription] = useState("");
