@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { BiPaperPlane } from "react-icons/bi";
+import { useRecoilState } from "recoil";
+import { inventoryNavState } from "../../atoms";
 import { Send } from "../Modals/SendForm";
 
 export const HiveInfo = ({ balance }: { balance: number }) => {
   const [send, setSend] = useState(false);
+  const [_marketNavSelected, setMarketNavSelected] =
+    useRecoilState(inventoryNavState);
 
   return (
     <div className="flex flex-col mt-3 pt-3 border-t-2 border-gray-500">
@@ -25,12 +29,25 @@ export const HiveInfo = ({ balance }: { balance: number }) => {
         <div className="flex items-center">
           <button
             onClick={() => setSend(true)}
-            className="px-4 py-3 flex items-center gap-3 rounded-lg border-2 text-white bg-gradient-to-b from-white to-red-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="px-4 py-3 flex items-center gap-3 rounded-lg border-2 text-white bg-gradient-to-b from-white to-red-500 focus:outline-none focus:ring-2 focus:ring-red-600"
           >
             Send
             <BiPaperPlane size="1.5rem" />
           </button>
         </div>
+      </div>
+      <div className="mx-auto mb-3 mt-7">
+        <button
+          onClick={() => setMarketNavSelected("dex")}
+          className="px-4 py-3 flex items-center gap-3 rounded-lg border-2 text-white bg-gradient-to-b from-white to-red-500 focus:outline-none focus:ring-2 focus:ring-red-600"
+        >
+          Trade
+          <img
+            src="https://www.dlux.io/img/dlux-hive-logo-alpha.svg"
+            alt="dlux_logo"
+            width={30}
+          />
+        </button>
       </div>
     </div>
   );

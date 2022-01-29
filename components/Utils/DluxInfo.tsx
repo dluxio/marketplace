@@ -31,7 +31,7 @@ export const DluxInfo = ({
           up={gov.up}
         />
       )}
-      <div className="flex justify-between gap-5">
+      <div className="flex flex-col sm:flex-row justify-between gap-5">
         <div>
           <h1>DLUX Token ({(balance.DLUX / 1000).toFixed(2)} Bal)</h1>
           <h1 className="text-gray-400 pt-2">
@@ -49,7 +49,7 @@ export const DluxInfo = ({
           </button>
         </div>
       </div>
-      <div className="flex justify-between gap-10 border-t-2 border-gray-600 mt-2 pt-2">
+      <div className="flex flex-col sm:flex-row justify-between gap-10 border-t-2 border-gray-600 mt-2 pt-2">
         <div>
           <h1>DLUX Governance ({(balance.GOV / 1000).toFixed(2)} Bal)</h1>
           <h1 className="text-gray-400 pt-2">
@@ -64,7 +64,7 @@ export const DluxInfo = ({
             <li>4. 1 Week Lock | 4 Week Unlock | 1 Week Convert</li>
           </ul>
         </div>
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-center lg:items-end">
           <button
             onClick={() => setShowActions(!showActions)}
             className="px-3 py-3 flex items-center gap-3 rounded-lg border-2 text-white bg-transparent border-gray-700 bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-700"
