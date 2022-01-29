@@ -5,7 +5,7 @@ import { BiPaperPlane } from "react-icons/bi";
 
 import { ModalWrapper } from "../Utils/ModalWrapper";
 import { FormInput } from "../Utils/FormInput";
-import { sendDLUX } from "../../utils";
+import { sendDLUX, sendHIVE } from "../../utils";
 import { broadcastState, userState } from "../../atoms";
 
 export const Send = ({
@@ -37,13 +37,23 @@ export const Send = ({
         }}
         onSubmit={(data, { setSubmitting }) => {
           if (user) {
-            sendDLUX(data, user.name).then((response: any) => {
-              if (response) {
-                if (response.success) {
-                  setBroadcasts((prevState: any) => [...prevState, response]);
+            if (currency === "DLUX") {
+              sendDLUX(data, user.name).then((response: any) => {
+                if (response) {
+                  if (response.success) {
+                    setBroadcasts((prevState: any) => [...prevState, response]);
+                  }
                 }
-              }
-            });
+              });
+            } else {
+              sendHIVE(data, user.name).then((response: any) => {
+                if (response) {
+                  if (response.success) {
+                    setBroadcasts((prevState: any) => [...prevState, response]);
+                  }
+                }
+              });
+            }
           }
 
           setSubmitting(false);
@@ -69,7 +79,6 @@ export const Send = ({
             />
             <div className="mt-2 relative">
               <FormInput
-                min={1}
                 title={`Amount (${balance.toFixed(2)} ${currency})`}
                 name="amount"
                 type="number"
