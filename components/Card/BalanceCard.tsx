@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SendDLUX } from "../Modals/SendForm";
+import { Send } from "../Modals/SendForm";
 import { GovModal } from "../Modals/GovModal";
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 import { FaLock, FaUnlock } from "react-icons/fa";
@@ -12,7 +12,7 @@ export const BalanceCard = ({
   currency: string;
   balance: number | { DLUX: number; GOV: number };
 }) => {
-  const [send, setSend] = useState(false);
+  const [send, setSend] = useState({ show: false, currency: "DLUX" });
   const [gov, setGov] = useState({ show: false, up: false });
   const [showActions, setShowActions] = useState(false);
 
@@ -20,10 +20,15 @@ export const BalanceCard = ({
     <div
       className={`bg-gray-700 w-full px-5 py-3 text-white  rounded-xl border-2 border-gray-800`}
     >
-      {send && (
-        <SendDLUX
-          balance={(balance as { DLUX: number }).DLUX / 1000}
-          handleClose={() => setSend(false)}
+      {send.show && (
+        <Send
+          currency={send.currency}
+          balance={
+            send.currency === "DLUX"
+              ? (balance as { DLUX: number }).DLUX / 1000
+              : (balance as number)
+          }
+          handleClose={() => setSend({ ...send, show: false })}
         />
       )}
       {gov.show && (
@@ -74,7 +79,7 @@ export const BalanceCard = ({
             </div>
             <div className="flex items-center">
               <button
-                onClick={() => setSend(true)}
+                onClick={() => setSend({ show: true, currency: "DLUX" })}
                 className="px-4 py-3 flex items-center gap-3 rounded-lg border-2 text-white bg-gradient-to-b from-pink-500 to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               >
                 Send

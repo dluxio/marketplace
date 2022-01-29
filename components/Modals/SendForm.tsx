@@ -8,19 +8,21 @@ import { FormInput } from "../Utils/FormInput";
 import { sendDLUX } from "../../utils";
 import { broadcastState, userState } from "../../atoms";
 
-export const SendDLUX = ({
+export const Send = ({
   handleClose,
   balance,
+  currency,
 }: {
   handleClose: any;
   balance: number;
+  currency: string;
 }) => {
   const user = useRecoilValue<any>(userState);
   const [_broadcasts, setBroadcasts] = useRecoilState<any>(broadcastState);
 
   return (
     <ModalWrapper handleClose={handleClose}>
-      <h1 className="text-xl mb-2">Send DLUX</h1>
+      <h1 className="text-xl mb-2">Send {currency}</h1>
       <Formik
         initialValues={{ to: "", amount: 1, memo: "" }}
         validate={({ to, amount }) => {
@@ -29,7 +31,7 @@ export const SendDLUX = ({
             errors.to = "Required";
           }
           if (amount > balance) {
-            errors.amount = "Not enough DLUX";
+            errors.amount = `Not enough ${currency}`;
           }
           return errors;
         }}
@@ -68,7 +70,7 @@ export const SendDLUX = ({
             <div className="mt-2 relative">
               <FormInput
                 min={1}
-                title={`Amount (${balance.toFixed(2)} DLUX)`}
+                title={`Amount (${balance.toFixed(2)} ${currency})`}
                 name="amount"
                 type="number"
                 errors={errors.amount}
