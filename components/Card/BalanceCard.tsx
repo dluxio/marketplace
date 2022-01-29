@@ -1,5 +1,6 @@
 import React from "react";
 import { DluxInfo } from "../Utils/DluxInfo";
+import { HiveInfo } from "../Utils/HiveInfo";
 
 export const BalanceCard = ({
   currency,
@@ -41,6 +42,7 @@ export const BalanceCard = ({
       {currency === "DLUX" && (
         <DluxInfo balance={balance as { DLUX: number; GOV: number }} />
       )}
+      {currency === "HIVE" && <HiveInfo balance={balance as number} />}
     </div>
   );
 };
