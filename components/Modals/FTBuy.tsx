@@ -15,6 +15,7 @@ import { useTranslation } from "next-export-i18n";
 import Select from "react-select";
 import { customSelectStyles, selectOptions } from "../../constants";
 import axios from "axios";
+import { ModalWrapper } from "../Utils/ModalWrapper";
 
 type FTBuyProps = {
   ft: {
@@ -107,87 +108,75 @@ export const FTBuy = ({ ft, handleClose, token }: FTBuyProps) => {
   }, []);
 
   return (
-    <div className="fixed  top-0 left-0 flex justify-center items-center h-screen w-screen bg-gray-700 bg-opacity-75 z-50">
-      <div className=" p-8 bg-gray-700 rounded-xl border-4 border-gray-800 relative">
-        <button className="m-2 absolute top-0 right-0">
-          <ImCross
-            size={15}
-            color="#fff"
-            opacity={100}
-            onClick={handleClose as MouseEventHandler}
-          />
-        </button>
-        <h1 className="text-xl text-center whitespace-nowrap mb-2">
-          How many?
-        </h1>
-        <h1 className="text-xl text-center whitespace-nowrap">
-          {t("availible")}: {ft.qty}
-        </h1>
-        <Formik
-          initialValues={{ qty: 1 }}
-          validate={({ qty }) => {
-            const errors: any = {};
-            if (ft.qty) {
-              if (ft.qty < qty) {
-                errors.qty = "Not enough availible";
-              }
+    <ModalWrapper handleClose={handleClose}>
+      <h1 className="text-xl text-center whitespace-nowrap mb-2">How many?</h1>
+      <h1 className="text-xl text-center whitespace-nowrap">
+        {t("availible")}: {ft.qty}
+      </h1>
+      <Formik
+        initialValues={{ qty: 1 }}
+        validate={({ qty }) => {
+          const errors: any = {};
+          if (ft.qty) {
+            if (ft.qty < qty) {
+              errors.qty = "Not enough availible";
             }
-            return errors;
-          }}
-          onSubmit={({ qty }, { setSubmitting }) => {
-            setBuyData({
-              price: getPrice(qty),
-              set: ft.set,
-              uid: ft.uid ? ft.uid : undefined,
-              currency: buyCurrency,
-              qty,
-            });
-            setSubmitting(false);
-            handleClose();
-          }}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-          }) => (
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col justify-center gap-5 text-white">
-                <FormInput
-                  errors={errors.qty}
-                  handleBlur={handleBlur}
-                  handleChange={handleChange}
-                  name="qty"
-                  type="number"
-                  touched={touched.qty}
-                  value={values.qty}
-                  min={1}
+          }
+          return errors;
+        }}
+        onSubmit={({ qty }, { setSubmitting }) => {
+          setBuyData({
+            price: getPrice(qty),
+            set: ft.set,
+            uid: ft.uid ? ft.uid : undefined,
+            currency: buyCurrency,
+            qty,
+          });
+          setSubmitting(false);
+          handleClose();
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col justify-center gap-5 text-white">
+              <FormInput
+                errors={errors.qty}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+                name="qty"
+                type="number"
+                touched={touched.qty}
+                value={values.qty}
+                min={1}
+              />
+              <div>
+                <h1 className="mb-1">Currency</h1>
+                <Select
+                  styles={customSelectStyles}
+                  defaultValue={selectOptions[0]}
+                  onChange={(e) => {
+                    setBuyCurrency(e!.value);
+                  }}
+                  options={selectOptions}
                 />
-                <div>
-                  <h1 className="mb-1">Currency</h1>
-                  <Select
-                    styles={customSelectStyles}
-                    defaultValue={selectOptions[0]}
-                    onChange={(e) => {
-                      setBuyCurrency(e!.value);
-                    }}
-                    options={selectOptions}
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
-                >
-                  {getPrice(values.qty).toFixed(2)} {buyCurrency}
-                </button>
               </div>
-            </form>
-          )}
-        </Formik>
-      </div>
-    </div>
+              <button
+                type="submit"
+                className="rounded-lg border border-white py-1 w-2/3 px-2 bg-gray-500 focus:ring-4 mx-auto focus:outline-none focus:ring-gray-700"
+              >
+                {getPrice(values.qty).toFixed(2)} {buyCurrency}
+              </button>
+            </div>
+          </form>
+        )}
+      </Formik>
+    </ModalWrapper>
   );
 };

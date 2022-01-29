@@ -10,6 +10,8 @@ type FormInputProps = {
   name: string;
   type?: string;
   min?: number;
+  max?: number;
+  title?: string;
 };
 
 export const FormInput = ({
@@ -20,7 +22,9 @@ export const FormInput = ({
   touched,
   name,
   min,
+  max,
   type = "text",
+  title,
 }: FormInputProps) => {
   const formattedName = name.replace("_", " ");
   const { t } = useTranslation();
@@ -28,7 +32,10 @@ export const FormInput = ({
   return (
     <div className="flex flex-col w-full">
       <label className="text-left mb-1 text-md" htmlFor="start">
-        {t(formattedName).charAt(0).toUpperCase() + t(formattedName).slice(1)}
+        {title
+          ? title
+          : t(formattedName).charAt(0).toUpperCase() +
+            t(formattedName).slice(1)}
       </label>
       <input
         className="px-3 py-1 rounded-lg border bg-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
@@ -38,6 +45,7 @@ export const FormInput = ({
         onBlur={handleBlur}
         value={value}
         min={min ? min : 0}
+        max={max ? max : Number.MAX_VALUE}
       />
       <h1 className="text-red-500">{errors && touched && errors}</h1>
     </div>

@@ -18,7 +18,7 @@ const Inventory = () => {
 
   return (
     <div>
-      <title>{user ? `Inv-${user.name}` : "Inventory"}</title>
+      <title>{user ? `Inv @${user.name}` : "Inventory"}</title>
       {user && (
         <>
           <InventoryNav />
