@@ -1,4 +1,4 @@
-import hive from "@hiveio/hive-js";
+import hive, { memo } from "@hiveio/hive-js";
 import CeramicClient from "@ceramicnetwork/http-client";
 import { SpkClient } from '@spknetwork/graph-client';
 import { IdxDataService } from "@spknetwork/idx-data-utils";
@@ -351,6 +351,18 @@ type BidData = {
   uid: string;
   bid_amount: number;
 };
+
+export const validateWitnessKey = ({ mskey, mschallenge }: { mskey: string; mschallenge: string }) => {
+  try {
+    const verifyKey = memo.decode(mskey);
+    const nowhammies = memo.encode(mskey, mschallenge, verifyKey);
+    const isValid = memo.encode(mskey, mskey, '#try')
+
+    if (typeof isValid == 'string' && verifyKey == `#${mskey}` && nowhammies != mschallenge) mskey = mskey
+  } catch (e) {
+    console.error(e)
+  }
+}
 
 export const NFTBid = async (
   username: string,
