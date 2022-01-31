@@ -352,15 +352,12 @@ type BidData = {
   bid_amount: number;
 };
 
-export const validateWitnessKey = ({ mskey, mschallenge }: { mskey: string; mschallenge: string }) => {
+export const validateWitnessKey = ({ mskey, msPrivKey, toPubKey }: { mskey: string; msPrivKey: string; toPubKey: string }) => {
   try {
-    const verifyKey = memo.decode(mskey);
-    const nowhammies = memo.encode(mskey, mschallenge, verifyKey);
-    const isValid = memo.encode(mskey, mskey, '#try')
-
-    if (typeof isValid == 'string' && verifyKey == `#${mskey}` && nowhammies != mschallenge) mskey = mskey
+    return memo.encode(msPrivKey, toPubKey, '#' + mskey)
   } catch (e) {
     console.error(e)
+    return ''
   }
 }
 
