@@ -9,12 +9,10 @@ import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div>
-      <RecoilRoot>
-        <NavBar />
-        <Component {...pageProps} />
-      </RecoilRoot>
-    </div>
+    <RecoilRoot>
+      <NavBar />
+      <Component {...pageProps} />
+    </RecoilRoot>
   );
 }
 export default MyApp;

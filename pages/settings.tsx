@@ -1,24 +1,33 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { apiLinkState } from "../atoms";
+import axios from "axios";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Ping from "ping.js";
-import Select from "react-select";
 import { useTranslation } from "next-export-i18n";
 import { FaWindows, FaApple, FaLinux } from "react-icons/fa";
+import { Formik } from "formik";
+import Select from "react-select";
+
+import { apiLinkState, userState } from "../atoms";
+import { FormInput } from "../components/Utils/FormInput";
+import { hiveApi } from "../constants";
+import { Client } from "@hiveio/dhive";
+import { WitnessSettings } from "../components/Card/WitnessSettings";
+import { ISettings, witnessSettings } from "../utils";
 
 type optionEl = {
   value: string;
   label: string;
   pingTime: number;
 };
-
 const p = new Ping();
+
 const Settings = () => {
+  const [showSettings, setShowSettings] = useState(false);
   const [options, setOptions] = useState<any>();
   const [toShow, setToShow] = useState([]);
   const [apiLink, setApiLink] = useRecoilState(apiLinkState);
   const { t } = useTranslation();
+  const user = useRecoilValue<any>(userState);
 
   useEffect(() => {
     setToShow([]);
@@ -48,6 +57,11 @@ const Settings = () => {
         });
       });
 
+      const witness = options.find(
+        (option: { api_url: string; node: string }) => option.node === user.name
+      );
+      if (witness) setShowSettings(true);
+
       setToShow(
         newOptions.sort((a: optionEl, b: optionEl) =>
           a.pingTime < b.pingTime ? 1 : -1
@@ -57,6 +71,10 @@ const Settings = () => {
       setToShow(options);
     }
   }, [options]);
+
+  const handleSubmit = (data: ISettings) => {
+    witnessSettings(data, user.name);
+  };
 
   return (
     <div className="text-white text-3xl">
@@ -73,6 +91,7 @@ const Settings = () => {
             }}
           />
         </div>
+        {showSettings && <WitnessSettings handleSubmit={handleSubmit} />}
         <div className="w-full mx-2 sm:w-1/2">
           <h1 className="text-2xl mb-3">{t("desktopApp")}</h1>
           <div className="flex flex-col sm:flex-row gap-3">
