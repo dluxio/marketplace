@@ -33,7 +33,6 @@ const Settings = () => {
     setToShow([]);
     axios.get(`${apiLink}api/mirrors`).then(({ data }) => {
       const optionsToPush: any = [];
-      console.log(data);
 
       data.apis.forEach((api: any) => {
         if (api.api_url.includes(api.node)) {
