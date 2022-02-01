@@ -37,8 +37,11 @@ export const WitnessSettings = ({
           return errors;
         }}
         onSubmit={(data, { setSubmitting }) => {
-          console.log(data);
-          handleSubmit(data);
+          handleSubmit({
+            ...data,
+            prevKey: data.prevKey.trim(),
+            pubKey: data.pubKey.trim(),
+          });
           setSubmitting(false);
         }}
       >

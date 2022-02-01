@@ -2,6 +2,7 @@ import hive, { memo } from "@hiveio/hive-js";
 import CeramicClient from "@ceramicnetwork/http-client";
 import { SpkClient } from '@spknetwork/graph-client';
 import { IdxDataService } from "@spknetwork/idx-data-utils";
+import axios from "axios";
 
 const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
 const spkClient = new SpkClient('https://us-01.infra.3speak.tv', ceramic);
@@ -353,6 +354,7 @@ type BidData = {
 };
 
 export const validateWitnessKey = ({ pubKey, prevKey, toPubKey }: { pubKey: string; prevKey: string; toPubKey: string }) => {
+  console.log({ pubKey, prevKey, toPubKey })
   try {
     return memo.encode(prevKey, toPubKey, '#' + pubKey)
   } catch (e) {
@@ -382,10 +384,14 @@ export const witnessSettings = async (data: ISettings, username: string) => {
     }
   ]
 
+  const response = await axios.get('https://token.dlux.io/api/protocol')
+  let memoKey = response.data.memoKey;
+  console.log(memoKey);
+
   if (validateWitnessKey({
     pubKey: data.pubKey,
     prevKey: data.prevKey,
-    toPubKey: ''
+    toPubKey: memoKey
   })) {
     return await handleBroadcastRequest(operations, username);
   } else {

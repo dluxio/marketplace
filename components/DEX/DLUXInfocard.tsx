@@ -8,7 +8,6 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
   const [bidPrice, setBidPrice] = useState({ dollars: 0, dlux: 0 });
   const [askPrice, setAskPrice] = useState({ dollars: 0, dlux: 0 });
   const [lastPrice, setLastPrice] = useState({ dollars: 0, dlux: 0 });
-  const [vwmaPrice, setVwmaPrice] = useState({ dollars: 0, dlux: 0 });
   const [volumePrice, setVolumePrice] = useRecoilState(dayVolumeState);
   const [dexData, setDexData] = useState<{ markets: any }>();
   const { t } = useTranslation();
@@ -77,13 +76,6 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
             });
           }
 
-          setVwmaPrice({
-            dlux: data.stats.HiveVWMA.rate,
-            dollars: parseFloat(
-              (+data.stats.HiveVWMA.rate * +data.markets.hive.tick).toFixed(2)
-            ),
-          });
-
           setLastPrice({
             dlux: data.markets.hive.tick,
             dollars: parseFloat(
@@ -123,13 +115,6 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
             });
           }
 
-          setVwmaPrice({
-            dlux: data.stats.HbdVWMA.rate,
-            dollars: parseFloat(
-              (+data.stats.HbdVWMA.rate * +data.markets.hbd.tick).toFixed(2)
-            ),
-          });
-
           setLastPrice({
             dlux: data.markets.hbd.tick,
             dollars: parseFloat(
@@ -162,7 +147,7 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
   }, [coin]);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-white text-xl">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-white text-xl">
       <div className="mx-3 flex flex-col justify-center items-center gap-3">
         <h1 className="px-5 py-2 bg-gray-500 rounded-xl">{t("bid")}</h1>
         <div className="flex flex-col justify-center items-center text-md">
@@ -182,13 +167,6 @@ export const DLUXInfocard = ({ coin }: { coin: string }) => {
         <div className="flex flex-col justify-center items-center text-md">
           <h1>{lastPrice.dlux}</h1>
           <h1>${lastPrice.dollars}</h1>
-        </div>
-      </div>
-      <div className="mx-3 flex flex-col justify-center items-center gap-3">
-        <h1 className="px-5 py-2 bg-gray-500 rounded-xl">VWMA</h1>
-        <div className="flex flex-col justify-center items-center text-md">
-          <h1>{vwmaPrice.dlux}</h1>
-          <h1>${vwmaPrice.dollars}</h1>
         </div>
       </div>
       <div className="mx-3 flex flex-col justify-center items-center gap-3">
