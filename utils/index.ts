@@ -352,12 +352,44 @@ type BidData = {
   bid_amount: number;
 };
 
-export const validateWitnessKey = ({ mskey, msPrivKey, toPubKey }: { mskey: string; msPrivKey: string; toPubKey: string }) => {
+export const validateWitnessKey = ({ pubKey, prevKey, toPubKey }: { pubKey: string; prevKey: string; toPubKey: string }) => {
   try {
-    return memo.encode(msPrivKey, toPubKey, '#' + mskey)
+    return memo.encode(prevKey, toPubKey, '#' + pubKey)
   } catch (e) {
     console.error(e)
     return ''
+  }
+}
+
+export type ISettings = {
+  escrow: boolean;
+  mirror: boolean;
+  bidRate: number;
+  marketingRate: number;
+  domain: string;
+  pubKey: string;
+  prevKey: string;
+}
+
+export const witnessSettings = async (data: ISettings, username: string) => {
+  const operations = [
+    'custom_json',
+    {
+      required_auths: [username],
+      required_posting_auths: 0,
+      id: 'dlux_node_add',
+      json: JSON.stringify(data)
+    }
+  ]
+
+  if (validateWitnessKey({
+    pubKey: data.pubKey,
+    prevKey: data.prevKey,
+    toPubKey: ''
+  })) {
+    return await handleBroadcastRequest(operations, username);
+  } else {
+    return 'Incorrect key pair'
   }
 }
 
