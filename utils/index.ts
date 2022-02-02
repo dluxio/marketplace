@@ -254,7 +254,7 @@ export const Give = async (
   const id = `${prefix}${giveData.uid ? "nft_transfer" : "ft_transfer"}`;
   await hive.api.getAccounts([giveData.to], async (err: any, result: any) => {
     if (err) throw new Error(err);
-    if (result !== []) {
+    if (result.length) {
       const operations = [
         "custom_json",
         {
